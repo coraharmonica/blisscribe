@@ -13,14 +13,20 @@ public class testHash {
     // initializes engToBliss hashmap
     Map engToBliss = new HashMap();
 
-    // create key-val dictionary pairs for English & Bliss words, like so:
-    engToBliss.put("dog", "bliss_dog.jpg");
+    // TODO: create key-val dictionary pairs for English & Bliss words, like so:
+    engToBliss.put("dog", "blissymbol-dog.jpg");
     engToBliss.put("rain", "bliss_rain.png");
-    // except actual .PNG/.JPG/etc. files as values
+    // except actual .PNG/.JPG/etc. files as values.
+
+    // What would be the best way to create the dictionary? Write a method to compile an
+    // English-to-Bliss dictionary from input file?
 
     public void insert(String engWord, Image blissImg) {
-        // Adds given English word and corresponding
-        // Blissymbol as key-val pair to engToBliss.
+        // Adds English word engWord and Blissymbol blissImg as key-val pair to engToBliss.
+        //
+        // N.B. For now, a key will only be a string and a value will only be an image;
+        // in the future however both may need to be lists (of strings and of images) to
+        // allow for single words/symbols with multiple meanings.
         engToBliss.put(engWord, blissImg);
     }
 }
