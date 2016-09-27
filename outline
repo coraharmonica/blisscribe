@@ -150,7 +150,7 @@
 #
 # what is blisspeak?
 # -----------------
-# Blisspeak is a translation service which slowly converts a language (now only English) into Blissymbols.  The translation begins with nouns
+# Blisspeak is a translation program that converts a language (now only English) to Blissymbols.  The translation begins with nouns
 # and verbs, since these are the most salient symbols.  This allows you to not only learn Blissymbols more intuitively, but to transform your
 # experience of language such that the experience of reading comes closer to actual sensation than words.
 #
