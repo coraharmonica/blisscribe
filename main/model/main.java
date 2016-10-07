@@ -6,9 +6,6 @@ import java.util.Map;
 
 import static com.sun.tools.doclint.Entity.image;
 
-/**
- * Created by courtney on 2016-09-26.
- */
 public class dummyHash {
     // initializes engToBliss hashmap
     Map engToBliss = new HashMap();
