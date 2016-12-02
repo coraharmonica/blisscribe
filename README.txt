@@ -27,7 +27,7 @@
  
   B) constants
   ============
-  1) preexisting sorted list of x most common English (/ origin language) words
+  1) preexisting sorted list of X most common English (/ origin language) words
   2) preexisting English/Blissymbols dictionary (English keys, Blissymbol values)
     - figure out how to store/display Blissymbols in Java (as images, ASCII/text, rich
       text/LaTeX, etc.)
