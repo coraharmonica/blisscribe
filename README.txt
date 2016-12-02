@@ -6,15 +6,10 @@
  table of contents
  =================
 
-A) summary
-
-B) constants
-
-C) functions
-
-D) caveats
-
-
+ A) summary
+ B) constants
+ C) functions
+ D) caveats
 
 
   A) summary
