@@ -5,7 +5,6 @@
 
  table of contents
  =================
-
  A) summary
  B) constants
  C) functions
