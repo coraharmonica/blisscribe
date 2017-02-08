@@ -1,3 +1,10 @@
+"""
+REMEMBER:
+ To get this on GitHub, commit to VCS and
+ select "commit and push changes" option.
+"""
+
+
 # Libraries
 import collections
 
@@ -31,10 +38,10 @@ def wordFreq(phrase):
     Takes in a non-empty string of words,
     returns a word frequency dictionary.
     """
-    rawPhrase = nltk.word_tokenize(phrase)
+    words = nltk.word_tokenize(phrase)
     freqs = collections.defaultdict(int)
 
-    for word in rawPhrase:
+    for word in words:
         freqs[word] += 1
 
     return freqs
@@ -63,7 +70,7 @@ def replaceWords(phrase):
     language of choice.
     """
     tokenPhrase = nltk.word_tokenize(phrase)
-    rawPhrase = [word.lower() for word in tokenPhrase] #nltk.word_tokenize(phrase.lower())
+    rawPhrase = [word.lower() for word in tokenPhrase]
     blissDict = translation_dictionary.blissDict
     sortedFreqs = []
 
@@ -145,7 +152,7 @@ def replaceWords(phrase):
     sortFreqs()
     renderTranslation()
 
-#replaceWords(excerpts.aliceInWonderland)
+replaceWords(excerpts.aliceInWonderland)
 
 def loadBlissGlyphs():
     """
