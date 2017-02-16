@@ -55,7 +55,7 @@ def wordFreq(phrase):
 
 def sortByUsage(freqs):
     """
-    :param freqs: dict of words and word frequencies,
+    :param freqs: dict of words and word frequencies
     :return: dict where...
         keys == frequencies > 1 (sorted in decreasing order)
         vals == lists of words with that frequency
@@ -82,8 +82,8 @@ def getWordWidth(word):
 
 def getWordImg(word):
     """
-    :param word: string
-    :return: image of input string
+    :param word: str
+    :return: image of input str
     """
     img = Image.new('RGBA', (getWordWidth(word), fontSize * 10), (255, 255, 255, 255))
     sketch = ImageDraw.Draw(img)
@@ -93,13 +93,8 @@ def getWordImg(word):
 
 def translate(phrase):
     """
-    Given a phrase, determines the most-used words and
-    returns the phrase with the second instances of the
-    most-used words replaced with foreign words in the
-    language of choice.
-
-    :param phrase:
-    :return:
+    :param phrase: non-empty English text
+    :return: image of English text w/ Blissymbols
     """
     tokenPhrase = nltk.word_tokenize(phrase)  # phrase tokenized into word tokens
     blissDict = translation_dictionary.blissDict
@@ -138,37 +133,28 @@ def translate(phrase):
 
     def renderTranslation():
         """
-        :return: image of English text with Blissymbols
+        :return: rendered image of English text w/ Blissymbols
         """
-        # TODO: make it so only second instances of bliss words are translated, otherwise print English word
         # TODO: make spacing between punctuation/words pretty
-        # TODO: make it so script doesn't get written off page
-        # TODO: modify translation/rendering function so it only renders the NNs (or other specified classes)
         rawPhrase = [word.lower() for word in tokenPhrase]  # token words in lowercase
 
-        bgWidth = 2000
+        bgWidth = 2200
         bgHeight = bgWidth/2
-        bg = Image.new("RGBA", (bgWidth, bgHeight), (255, 255, 255, 255))
         indent = 0
         lineNo = 0
+        bg = Image.new("RGBA", (bgWidth, bgHeight), (255, 255, 255, 255))
 
         seen = set([])
         changed = set([])
         idx = 0
 
-        def pasteImg(img):
-            """
-            :param img: input image (English text or Blissymbol)
-            """
-            bg.paste(img, (indent, lineNo * 100))
-
         for word in rawPhrase:
             if word in blissDict.keys() and word in taggedDict.keys():
-                if word in seen:
-                    if word in changed:
-                        word = blissDict[word]
-                        img = word
-                    elif word in sortedFreqs[-1]:
+                # if word can be validly translated into Blissymbols...
+                if word in seen or word in changed:
+                    # if we've already seen or translated the word before...
+                    if word in sortedFreqs[-1]:
+                        # removes word from sortedFreqs
                         changed.add(word)
 
                         if len(sortedFreqs[-1]) > 1:
@@ -176,28 +162,33 @@ def translate(phrase):
                         else:
                             sortedFreqs.remove(sortedFreqs[-1])
 
-                        word = blissDict[word]
-                        img = word
+                    word = blissDict[word]  # string -> Bliss image
+                    img = word
+
                 else:
+                    # if we haven't seen or translated the word before,
+                    # then render English text
                     img = getWordImg(tokenPhrase[idx])
                     seen.add(word)
+
             else:
+                # if word can't be translated to Blissymbols,
+                # then render English text
                 img = getWordImg(tokenPhrase[idx])
 
             if indent + getWordWidth(word) > bgWidth:
                 indent = 0
                 lineNo += 1
 
-            pasteImg(img)
+            bg.paste(img, (indent, lineNo * 100))
             indent += getWordWidth(word)
             idx += 1
 
         bg.show()
-
 
     tagsToDict()
     sortFreqs()
     renderTranslation()
 
 
-translate(excerpts.aliceInWonderland)
+translate(excerpts.littlePrince)
