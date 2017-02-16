@@ -1,4 +1,6 @@
 from PIL import Image
+import matplotlib.pyplot as plt
+import numpy as np
 
 directory = "/Users/courtney/Documents/creation/programming/\
 personal projects/bliss translator/symbols/"                   # shortcut

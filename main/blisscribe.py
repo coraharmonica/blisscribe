@@ -12,14 +12,19 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 import nltk
-import ttf_parser
+import matplotlib
+import pygame
+import glyph
+import fontTools
 from nltk.corpus import treebank
-#from nltk import word_tokenize
 
-#from nltk import downloader
-#nltk.downloader.download()
+# To update NLTK:
+#  from nltk import downloader
+#  nltk.downloader.download()
 
+# Local modules
 import excerpts
+import ttf_parser
 import translation_dictionary
 
 # Fonts
@@ -70,9 +75,23 @@ def replaceWords(phrase):
     language of choice.
     """
     tokenPhrase = nltk.word_tokenize(phrase)
+    taggedPhrase = nltk.pos_tag(tokenPhrase)
     rawPhrase = [word.lower() for word in tokenPhrase]
     blissDict = translation_dictionary.blissDict
     sortedFreqs = []
+    taggedDict = {}
+
+    def tagsToDict():
+        """
+        Creates a dict from taggedPhrase.
+        """
+        for tup in taggedPhrase:
+            if tup[1] == "NN":
+                print(tup[0])
+            if tup[0] in blissDict and tup[1] == "NN":
+                taggedDict[tup[0]] = tup[1]
+
+    # TODO: modify translation/rendering function so it only renders the NNs
 
     def sortFreqs():
         """
@@ -106,7 +125,7 @@ def replaceWords(phrase):
         idx = 0
 
         for word in rawPhrase:
-            if word not in blissDict.keys():
+            if word not in taggedDict:
                 word = tokenPhrase[idx]
                 wordWidth = (fontSize/2) + len(word) * (fontSize/2)
                 img = Image.new('RGBA', (wordWidth, fontSize * 10), (255, 255, 255, 255))
@@ -116,7 +135,8 @@ def replaceWords(phrase):
                 indent += wordWidth
                 line += (indent/bgWidth)*100
 
-            elif word in blissDict.keys():
+            elif word in taggedDict:
+                # TODO: if word in blissDict.keys() vs not
                 if word in sortedFreqs[-1]:
                     if word in acc["seen"]:
                         bg.paste(blissDict[word], (indent%bgWidth, line))
@@ -149,10 +169,11 @@ def replaceWords(phrase):
 
         bg.show()
 
+    tagsToDict()
     sortFreqs()
     renderTranslation()
 
-replaceWords(excerpts.aliceInWonderland)
+replaceWords(excerpts.littlePrince)
 
 def loadBlissGlyphs():
     """
@@ -163,8 +184,3 @@ def loadBlissGlyphs():
     blissParser = ttf_parser.TTFParser(blissFontPath)
     blissParser.debug_printIndex()
     glyf = blissParser.seek_table("glyf", +0x0000A124)
-    print glyf
-
-
-
-loadBlissGlyphs()
