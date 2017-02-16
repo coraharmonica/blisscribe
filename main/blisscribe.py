@@ -4,8 +4,8 @@ REMEMBER:
  select "commit and push changes" option.
 """
 
-
 # Libraries
+# =========
 import collections
 
 # To update NLTK:
@@ -22,24 +22,32 @@ import glyph
 import fontTools
 from nltk.corpus import treebank
 
-
 # Local modules
+# =============
 import excerpts
 import ttf_parser
 import translation_dictionary
 
 # Fonts
+# =====
 romanFontPath = "/Users/courtney/Library/Fonts/BLISGRID.TTF" # Helvetica: "/Library/Fonts/Helvetica.dfont
 blissFontPath = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
 fontSize = 30
 romanFont = ImageFont.truetype(romanFontPath, fontSize)
 
 # Lists of most common words...
+# =============================
 langCommonWords = [] # in origin language
 textCommonWords = [] # in origin text
 
 
-def wordFreq(phrase):
+# FUNCTIONS
+# =========
+
+# Helpers
+# -------
+
+def getWordFreqDict(phrase):
     """
     :param phrase: non-empty string of words
     :return: word frequency dictionary for phrase
@@ -53,7 +61,7 @@ def wordFreq(phrase):
     return freqs
 
 
-def sortByUsage(freqs):
+def getSortedFreqDict(freqs):
     """
     :param freqs: dict of words and word frequencies
     :return: dict where...
@@ -91,6 +99,9 @@ def getWordImg(word):
     return img
 
 
+# Translator
+# ----------
+
 def translate(phrase):
     """
     :param phrase: non-empty English text
@@ -103,7 +114,8 @@ def translate(phrase):
 
     def tagsToDict():
         """
-        Creates a dict from taggedPhrase.
+        Adds translatable Blissymbol nouns
+        from taggedPhrase to taggedDict.
         """
         taggedPhrase = nltk.pos_tag(tokenPhrase)  # tokens tagged according to word type
 
@@ -115,10 +127,11 @@ def translate(phrase):
     def sortFreqs():
         """
         Creates a list of word sets sorted
-        from lowest to highest frequency.
+        from lowest to highest frequency,
+        and appends to sortedFreqs.
         """
-        wordFreqs = wordFreq(phrase)
-        usageFreqs = sortByUsage(wordFreqs)
+        wordFreqs = getWordFreqDict(phrase)
+        usageFreqs = getSortedFreqDict(wordFreqs)
 
         for k in sorted(usageFreqs):
             newSet = set([])
@@ -191,4 +204,4 @@ def translate(phrase):
     renderTranslation()
 
 
-translate(excerpts.littlePrince)
+translate(excerpts.aliceInWonderland)
