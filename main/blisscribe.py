@@ -74,9 +74,7 @@ def replaceWords(phrase):
     most-used words replaced with foreign words in the
     language of choice.
     """
-    tokenPhrase = nltk.word_tokenize(phrase)
-    taggedPhrase = nltk.pos_tag(tokenPhrase)
-    rawPhrase = [word.lower() for word in tokenPhrase]
+    tokenPhrase = nltk.word_tokenize(phrase)  # phrase tokenized into word tokens
     blissDict = translation_dictionary.blissDict
     sortedFreqs = []
     taggedDict = {}
@@ -85,6 +83,8 @@ def replaceWords(phrase):
         """
         Creates a dict from taggedPhrase.
         """
+        taggedPhrase = nltk.pos_tag(tokenPhrase)  # tokens tagged according to word type
+
         for tup in taggedPhrase:
             if tup[1] == "NN":
                 print(tup[0])
@@ -112,17 +112,24 @@ def replaceWords(phrase):
                 sortedFreqs.append(newList)
 
     def renderTranslation():
+        """
+        :return: image of English text with Blissymbols
+        """
         # TODO: make it so only second instances of bliss words are translated, otherwise print English word
         # TODO: make spacing between punctuation/words pretty
         # TODO: make it so script doesn't get written off page
+
+        rawPhrase = [word.lower() for word in tokenPhrase]  # token words in lowercase
+
         bgWidth = 2000
         bgHeight = bgWidth/2
         bg = Image.new("RGBA", (bgWidth, bgHeight), (255, 255, 255, 255))
         indent = 0
-        line = 0
+        lineNo = 0
 
         acc = {"seen": [], "changed": []}
         idx = 0
+
 
         for word in rawPhrase:
             if word not in taggedDict:
@@ -131,35 +138,35 @@ def replaceWords(phrase):
                 img = Image.new('RGBA', (wordWidth, fontSize * 10), (255, 255, 255, 255))
                 sketch = ImageDraw.Draw(img)
                 sketch.text((10, fontSize), word, font=romanFont, fill="black")
-                bg.paste(img, (indent % bgWidth, line))
+                bg.paste(img, (indent % bgWidth, lineNo))
                 indent += wordWidth
-                line += (indent/bgWidth)*100
+                lineNo += (indent/bgWidth)*100
 
             elif word in taggedDict:
                 # TODO: if word in blissDict.keys() vs not
                 if word in sortedFreqs[-1]:
                     if word in acc["seen"]:
-                        bg.paste(blissDict[word], (indent%bgWidth, line))
+                        bg.paste(blissDict[word], (indent%bgWidth, lineNo))
                         indent += blissDict[word].size[0] + 10
-                        line += (indent/bgWidth)*100
+                        lineNo += (indent/bgWidth)*100
                         if len(sortedFreqs[-1]) > 0:
                             sortedFreqs[-1].remove(word)
                         else:
                             sortedFreqs.remove(sortedFreqs[-1])
                         acc["changed"].append(word)
                     elif word in acc["changed"]:
-                        bg.paste(blissDict[word], (indent%bgWidth, line))
+                        bg.paste(blissDict[word], (indent%bgWidth, lineNo))
                         indent += blissDict[word].size[0] + 10
-                        line += (indent/bgWidth)*100
+                        lineNo += (indent/bgWidth)*100
                     else:
                         word = tokenPhrase[idx]
                         wordWidth = (fontSize / 2) + len(word) * (fontSize / 2)
                         img = Image.new('RGBA', (wordWidth, fontSize * 10), (255, 255, 255, 255))
                         sketch = ImageDraw.Draw(img)
                         sketch.text((10, fontSize), word, font=romanFont, fill="black")
-                        bg.paste(img, (indent % bgWidth, line))
+                        bg.paste(img, (indent % bgWidth, lineNo))
                         indent += wordWidth
-                        line += (indent / bgWidth) * 100
+                        lineNo += (indent / bgWidth) * 100
                         acc["seen"].append(word)
 
             if indent > bgWidth:
@@ -172,6 +179,16 @@ def replaceWords(phrase):
     tagsToDict()
     sortFreqs()
     renderTranslation()
+
+
+def translate(phrase):
+    """
+
+    :param phrase:
+    :return:
+    """
+    return ""
+    
 
 replaceWords(excerpts.littlePrince)
 
