@@ -8,19 +8,20 @@ REMEMBER:
 # Libraries
 import collections
 
+# To update NLTK:
+#  from nltk import downloader
+#  nltk.downloader.download()
+
+import nltk
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-import nltk
 import matplotlib
 import pygame
 import glyph
 import fontTools
 from nltk.corpus import treebank
 
-# To update NLTK:
-#  from nltk import downloader
-#  nltk.downloader.download()
 
 # Local modules
 import excerpts
@@ -51,6 +52,7 @@ def wordFreq(phrase):
 
     return freqs
 
+
 def sortByUsage(freqs):
     """
     Takes in a dict of words and word frequencies,
@@ -65,6 +67,28 @@ def sortByUsage(freqs):
             sortedFreqs[freqs[word]].append(word)
 
     return sortedFreqs
+
+
+def getWordWidth(word):
+    """
+    :param word: input string or Image
+    :return: word width in pixels
+    """
+    if type(word) == str:
+        return (fontSize / 2) + len(word) * (fontSize / 2)
+    else:
+        return word.size[0] + 10
+
+
+def getWordImg(word):
+    """
+    :param word: input string
+    :return: image of input string
+    """
+    img = Image.new('RGBA', (getWordWidth(word), fontSize * 10), (255, 255, 255, 255))
+    sketch = ImageDraw.Draw(img)
+    sketch.text((10, fontSize), word, font=romanFont, fill="black")
+    return img
 
 
 def replaceWords(phrase):
@@ -86,30 +110,28 @@ def replaceWords(phrase):
         taggedPhrase = nltk.pos_tag(tokenPhrase)  # tokens tagged according to word type
 
         for tup in taggedPhrase:
-            if tup[1] == "NN":
-                print(tup[0])
             if tup[0] in blissDict and tup[1] == "NN":
                 taggedDict[tup[0]] = tup[1]
 
-    # TODO: modify translation/rendering function so it only renders the NNs
 
     def sortFreqs():
         """
-        Creates a list of lists of words sorted
+        Creates a list of word sets sorted
         from lowest to highest frequency.
         """
         wordFreqs = wordFreq(phrase)
         usageFreqs = sortByUsage(wordFreqs)
 
         for k in sorted(usageFreqs):
-            newList = []
+            newSet = set([])
 
             for word in usageFreqs[k]:
-                if word in blissDict:
-                    newList.append(word)
+                if word in blissDict.keys():
+                    newSet.add(word)
 
-            if len(newList) > 0:
-                sortedFreqs.append(newList)
+            if len(newSet) > 0:
+                sortedFreqs.append(newSet)
+
 
     def renderTranslation():
         """
@@ -118,7 +140,7 @@ def replaceWords(phrase):
         # TODO: make it so only second instances of bliss words are translated, otherwise print English word
         # TODO: make spacing between punctuation/words pretty
         # TODO: make it so script doesn't get written off page
-
+        # TODO: modify translation/rendering function so it only renders the NNs (or other specified classes)
         rawPhrase = [word.lower() for word in tokenPhrase]  # token words in lowercase
 
         bgWidth = 2000
@@ -127,54 +149,48 @@ def replaceWords(phrase):
         indent = 0
         lineNo = 0
 
-        acc = {"seen": [], "changed": []}
+        seen = set([])
+        changed = set([])
         idx = 0
 
+        def pasteImg(img):
+            """
+            :param img: input image (English text or Blissymbol)
+            """
+            bg.paste(img, (indent, lineNo * 100))
 
         for word in rawPhrase:
-            if word not in taggedDict:
-                word = tokenPhrase[idx]
-                wordWidth = (fontSize/2) + len(word) * (fontSize/2)
-                img = Image.new('RGBA', (wordWidth, fontSize * 10), (255, 255, 255, 255))
-                sketch = ImageDraw.Draw(img)
-                sketch.text((10, fontSize), word, font=romanFont, fill="black")
-                bg.paste(img, (indent % bgWidth, lineNo))
-                indent += wordWidth
-                lineNo += (indent/bgWidth)*100
+            if word in blissDict.keys() and word in taggedDict.keys():
+                if word in seen:
+                    if word in changed:
+                        word = blissDict[word]
+                        img = word
+                    elif word in sortedFreqs[-1]:
+                        changed.add(word)
 
-            elif word in taggedDict:
-                # TODO: if word in blissDict.keys() vs not
-                if word in sortedFreqs[-1]:
-                    if word in acc["seen"]:
-                        bg.paste(blissDict[word], (indent%bgWidth, lineNo))
-                        indent += blissDict[word].size[0] + 10
-                        lineNo += (indent/bgWidth)*100
-                        if len(sortedFreqs[-1]) > 0:
+                        if len(sortedFreqs[-1]) > 1:
                             sortedFreqs[-1].remove(word)
                         else:
                             sortedFreqs.remove(sortedFreqs[-1])
-                        acc["changed"].append(word)
-                    elif word in acc["changed"]:
-                        bg.paste(blissDict[word], (indent%bgWidth, lineNo))
-                        indent += blissDict[word].size[0] + 10
-                        lineNo += (indent/bgWidth)*100
-                    else:
-                        word = tokenPhrase[idx]
-                        wordWidth = (fontSize / 2) + len(word) * (fontSize / 2)
-                        img = Image.new('RGBA', (wordWidth, fontSize * 10), (255, 255, 255, 255))
-                        sketch = ImageDraw.Draw(img)
-                        sketch.text((10, fontSize), word, font=romanFont, fill="black")
-                        bg.paste(img, (indent % bgWidth, lineNo))
-                        indent += wordWidth
-                        lineNo += (indent / bgWidth) * 100
-                        acc["seen"].append(word)
 
-            if indent > bgWidth:
+                        word = blissDict[word]
+                        img = word
+                else:
+                    img = getWordImg(tokenPhrase[idx])
+                    seen.add(word)
+            else:
+                img = getWordImg(tokenPhrase[idx])
+
+            if indent + getWordWidth(word) > bgWidth:
                 indent = 0
+                lineNo += 1
 
+            pasteImg(img)
+            indent += getWordWidth(word)
             idx += 1
 
         bg.show()
+
 
     tagsToDict()
     sortFreqs()
@@ -190,7 +206,7 @@ def translate(phrase):
     return ""
     
 
-replaceWords(excerpts.littlePrince)
+replaceWords(excerpts.aliceInWonderland)
 
 def loadBlissGlyphs():
     """

@@ -28,12 +28,10 @@ large rabbit-hole under the hedge.
 littlePrince = """
 Once when I was six years old I saw a magnificent picture in a book, called True Stories from Nature, about the primeval forest. It was a picture of a boa constrictor in the act of swallowing an animal. Here is a copy of the drawing.
 
-boa constrictor swallowing an animal
 In the book it said: "Boa constrictors swallow their prey whole, without chewing it. After that they are not able to move, and they sleep through the six months that they need for digestion."
 
 I pondered deeply, then, over the adventures of the jungle. And after some work with a colored pencil I succeeded in making my first drawing. My Drawing Number One. It looked something like this:
 
-Drawing Number One
 I showed my masterpiece to the grown-ups, and asked them whether the drawing frightened them.
 
 But they answered: "Frighten? Why should any one be frightened by a hat?"
