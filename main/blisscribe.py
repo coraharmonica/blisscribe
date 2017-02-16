@@ -41,8 +41,8 @@ textCommonWords = [] # in origin text
 
 def wordFreq(phrase):
     """
-    Takes in a non-empty string of words,
-    returns a word frequency dictionary.
+    :param phrase: non-empty string of words
+    :return: word frequency dictionary for phrase
     """
     words = nltk.word_tokenize(phrase)
     freqs = collections.defaultdict(int)
@@ -55,8 +55,8 @@ def wordFreq(phrase):
 
 def sortByUsage(freqs):
     """
-    Takes in a dict of words and word frequencies,
-    returns dict where:
+    :param freqs: dict of words and word frequencies,
+    :return: dict where...
         keys == frequencies > 1 (sorted in decreasing order)
         vals == lists of words with that frequency
     """
@@ -71,7 +71,7 @@ def sortByUsage(freqs):
 
 def getWordWidth(word):
     """
-    :param word: input string or Image
+    :param word: str or Image
     :return: word width in pixels
     """
     if type(word) == str:
@@ -82,7 +82,7 @@ def getWordWidth(word):
 
 def getWordImg(word):
     """
-    :param word: input string
+    :param word: string
     :return: image of input string
     """
     img = Image.new('RGBA', (getWordWidth(word), fontSize * 10), (255, 255, 255, 255))
@@ -91,12 +91,15 @@ def getWordImg(word):
     return img
 
 
-def replaceWords(phrase):
+def translate(phrase):
     """
     Given a phrase, determines the most-used words and
     returns the phrase with the second instances of the
     most-used words replaced with foreign words in the
     language of choice.
+
+    :param phrase:
+    :return:
     """
     tokenPhrase = nltk.word_tokenize(phrase)  # phrase tokenized into word tokens
     blissDict = translation_dictionary.blissDict
@@ -197,23 +200,4 @@ def replaceWords(phrase):
     renderTranslation()
 
 
-def translate(phrase):
-    """
-
-    :param phrase:
-    :return:
-    """
-    return ""
-    
-
-replaceWords(excerpts.aliceInWonderland)
-
-def loadBlissGlyphs():
-    """
-    Uses a Blissymbols glyphs parser to create a dictionary
-    of Blissymbols.
-    :return:
-    """
-    blissParser = ttf_parser.TTFParser(blissFontPath)
-    blissParser.debug_printIndex()
-    glyf = blissParser.seek_table("glyf", +0x0000A124)
+translate(excerpts.aliceInWonderland)
