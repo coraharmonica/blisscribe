@@ -32,7 +32,9 @@ import translation_dictionary
 # =====
 romanFontPath = "/Users/courtney/Library/Fonts/BLISGRID.TTF" # Helvetica: "/Library/Fonts/Helvetica.dfont
 blissFontPath = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
-fontSize = 30
+firstBlissChar = "\ue00a"
+lastBlissChar = "\uf3c0"
+fontSize = 35
 romanFont = ImageFont.truetype(romanFontPath, fontSize)
 
 # Lists of most common words...
@@ -192,6 +194,11 @@ def translate(phrase):
             if indent + getWordWidth(word) > bgWidth:
                 indent = 0
                 lineNo += 1
+
+            if (lineNo * 100) + 100 > bgHeight:
+                bg.show()
+                bg = Image.new("RGBA", (bgWidth, bgHeight), (255, 255, 255, 255))
+                lineNo = 0
 
             bg.paste(img, (indent, lineNo * 100))
             indent += getWordWidth(word)
