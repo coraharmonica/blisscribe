@@ -37,6 +37,7 @@ def render_symbol(name, size):
     #drawing.line([(start, start), (end, start)], fill=(0,0,0,255), width=3)
     # "eye"
     drawing.ellipse((start,end,start,end), fill=(0,0,0,255), outline=5)
+    over.paste(blissDict[0])
 
     out = Image.alpha_composite(base, over)
 

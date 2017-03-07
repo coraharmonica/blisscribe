@@ -29,8 +29,6 @@ import translation_dictionary
 # =====
 romanFontPath = "/Users/courtney/Library/Fonts/BLISGRID.TTF" # Helvetica: "/Library/Fonts/Helvetica.dfont
 blissFontPath = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
-firstBlissChar = "\ue00a"
-lastBlissChar = "\uf3c0"
 fontSize = 35
 romanFont = ImageFont.truetype(romanFontPath, fontSize)
 
@@ -179,8 +177,8 @@ def translate(phrase):
                         else:
                             sortedFreqs.remove(sortedFreqs[-1])
 
-                    word = blissDict[word]  # string -> Bliss image
-                    img = word
+                    word = blissDict[word]           # string -> Bliss image
+                    img = word.thumbnail((fontSize, bgWidth/2))
 
                 else:
                     # if we haven't seen or translated the word before,
@@ -202,6 +200,12 @@ def translate(phrase):
                 bg = Image.new("RGBA", (bgWidth, bgHeight), (255, 255, 255, 255))
                 lineNo = 0
 
+            x = indent
+            y = lineNo * 100
+            #x2 = indent + img.width
+            #y2 = (lineNo * 100) + img.height
+
+            # TODO: fix paste to work with new bliss png files (provide a box)
             bg.paste(img, (indent, lineNo * 100))
             indent += getWordWidth(word)
             idx += 1
@@ -212,5 +216,5 @@ def translate(phrase):
     sortFreqs()
     renderTranslation()
 
-
+translate("Look at my face, my face")
 #translate(excerpts.aliceInWonderland)

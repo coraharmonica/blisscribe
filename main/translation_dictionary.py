@@ -1,10 +1,8 @@
-from PIL import Image
-import matplotlib.pyplot as plt
-import numpy as np
-import pysvg
+from PIL import Image, ImageDraw, ImageFont
+from decimal import *
 
 directory = "/Users/courtney/Documents/creation/programming/\
-personal projects/bliss translator/symbols/full/png/"            # shortcut
+personal projects/bliss translator/symbols/full/png/small/"            # shortcut
 
 # alphabetized English-to-Blissymbols dictionary
 """
@@ -2003,6 +2001,20 @@ blissDict = {
     'atheism': Image.open(directory + 'atheism.png'),
     'gynecologist': Image.open(directory + 'gynecologist.png'),
 }
+
+baseheight = 100
+bg = Image.new("RGBA", (500, 500), (255, 255, 255, 255))
+sym = blissDict["gynecologist"]
+over = Image.new("RGBA", (sym.width, sym.height), (255, 255, 255, 0))
+over.paste(sym, (250,250))
+
+hpercent = Decimal(baseheight) / Decimal(over.height)
+wsize = Decimal(over.width * 0.1)
+over = over.resize((wsize, baseheight))
+bg.paste(over)
+bg.show()
+
+
 
 def createTranslationDict(lex):
     """
@@ -7616,5 +7628,3 @@ tennis_(activity)
 visual_impairment
 visually_impaired
 """
-
-print createTranslationDict(lexicon)
