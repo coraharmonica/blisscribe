@@ -97,4 +97,4 @@ def getNextGlyphAddresses(first, last):
     return addresses
 
 
-#print getNextGlyphAddresses(firstBlissChar, lastBlissChar)
+#getNextGlyphAddresses(firstBlissChar, lastBlissChar)

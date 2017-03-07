@@ -1,18 +1,18 @@
+# Notes
+# =====
 """
 REMEMBER:
  To get this on GitHub, commit to VCS and
  select "commit and push changes" option.
 """
 
-# Libraries
-# =========
+# Imports
+# =======
 import collections
-
+import nltk
 # To update NLTK:
 #  from nltk import downloader
 #  nltk.downloader.download()
-
-import nltk
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -21,9 +21,6 @@ import pygame
 import glyph
 import fontTools
 from nltk.corpus import treebank
-
-# Local modules
-# =============
 import excerpts
 import ttf_parser
 import translation_dictionary
@@ -36,6 +33,11 @@ firstBlissChar = "\ue00a"
 lastBlissChar = "\uf3c0"
 fontSize = 35
 romanFont = ImageFont.truetype(romanFontPath, fontSize)
+
+# ImageMagick Terminal prompt
+# ===========================
+# Converts
+# convert -background none -fill black -font CcfSymbolFont-bliss-2012.ttf -pointsize 300 label:"\ue00a" 1.png
 
 # Lists of most common words...
 # =============================
@@ -211,4 +213,4 @@ def translate(phrase):
     renderTranslation()
 
 
-translate(excerpts.aliceInWonderland)
+#translate(excerpts.aliceInWonderland)
