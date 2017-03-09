@@ -1,40 +1,11 @@
-from PIL import Image
+# Notes
+# -----
+"""
+LEXICON:
 
-directory = "/Users/courtney/Documents/creation/programming/\
-personal projects/bliss translator/symbols/full/png/whitebg/"
-
-directory2 = "/Users/courtney/Documents/creation/programming/\
-personal projects/bliss translator/blissymbols git/main/"
-
-blissD = {}
-
-with open(directory2 + "lexicon.txt", "rb") as lex:
-
-    for item in lex:
-        item = item[:-1] # cut off \n character at end
-        words = []       # multiple definitions
-
-        for i in item.split(","):
-            if "_" not in i and "(" not in i:
-                words.append(i)
-
-        for word in words:
-            try:
-                Image.open(directory + item + ".png")
-            except IOError:
-                continue
-            else:
-                blissD[word] = item + ".png"
-
-
-def printDict():
-    print("{")
-    for k in blissD:
-        print('    "' + k + '": ' + '"' + str(blissD[k]) + '",')
-    print("}")
-
-printDict()
-
+    Holds a Blissymbols dictionary with English words
+    as keys and corresponding .png filenames as values.
+"""
 
 blissDict = {
     "bagpipe": "bagpipe.png",

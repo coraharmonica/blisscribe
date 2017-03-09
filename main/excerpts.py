@@ -1,4 +1,15 @@
-# sample English texts
+# Notes
+# -----
+"""
+EXCERPTS:
+
+    Holds sample English texts used for testing.
+
+    Contains excerpts from:
+        Infinite Jest (David Foster Wallace)
+        Alice in Wonderland (Lewis Carroll)
+        The Little Prince (Antoine de Saint-Exupery)
+"""
 
 DFW = "I am seated in an office, surrounded by heads and bodies. My posture is consciously congruent \
 to the shape of my hard chair. This is a cold room in University Administration, wood-walled, Remington-hung, \
