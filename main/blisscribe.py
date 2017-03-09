@@ -16,14 +16,8 @@ import nltk
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-import matplotlib
-import pygame
-import glyph
-import fontTools
-from nltk.corpus import treebank
 import excerpts
-import ttf_parser
-import translation_dictionary
+import lexicon
 
 # Fonts
 # =====
@@ -31,11 +25,7 @@ romanFontPath = "/Users/courtney/Library/Fonts/BLISGRID.TTF" # Helvetica: "/Libr
 blissFontPath = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
 fontSize = 35
 romanFont = ImageFont.truetype(romanFontPath, fontSize)
-
-# ImageMagick Terminal prompt
-# ===========================
-# Converts
-# convert -background none -fill black -font CcfSymbolFont-bliss-2012.ttf -pointsize 300 label:"\ue00a" 1.png
+blissDict = lexicon.blissDict
 
 # Lists of most common words...
 # =============================
@@ -110,7 +100,6 @@ def translate(phrase):
     :return: image of English text w/ Blissymbols
     """
     tokenPhrase = nltk.word_tokenize(phrase)  # phrase tokenized into word tokens
-    blissDict = translation_dictionary.blissDict
     sortedFreqs = []
     taggedDict = {}
 
@@ -122,7 +111,7 @@ def translate(phrase):
         taggedPhrase = nltk.pos_tag(tokenPhrase)  # tokens tagged according to word type
 
         for tup in taggedPhrase:
-            if tup[0] in blissDict and tup[1] == "NN":
+            if tup[0] in blissDict and (tup[1] == "NN" or tup[1] == "VP"):
                 taggedDict[tup[0]] = tup[1]
 
 
@@ -168,17 +157,19 @@ def translate(phrase):
                 # if word can be validly translated into Blissymbols...
                 if word in seen or word in changed:
                     # if we've already seen or translated the word before...
-                    if word in sortedFreqs[-1]:
-                        # removes word from sortedFreqs
-                        changed.add(word)
+                    if word in sortedFreqs:
+                        if word in sortedFreqs[-1]:
+                            # removes word from sortedFreqs
+                            changed.add(word)
 
-                        if len(sortedFreqs[-1]) > 1:
-                            sortedFreqs[-1].remove(word)
-                        else:
-                            sortedFreqs.remove(sortedFreqs[-1])
+                            if len(sortedFreqs[-1]) > 1:
+                                sortedFreqs[-1].remove(word)
+                            else:
+                                sortedFreqs.remove(sortedFreqs[-1])
 
-                    word = blissDict[word]           # string -> Bliss image
-                    img = word.thumbnail((fontSize, bgWidth/2))
+                    word = Image.open(lexicon.directory + blissDict[word])          # string -> Bliss image
+                    img = word
+                    img.thumbnail((bgWidth/2, fontSize * 3))
 
                 else:
                     # if we haven't seen or translated the word before,
@@ -200,12 +191,7 @@ def translate(phrase):
                 bg = Image.new("RGBA", (bgWidth, bgHeight), (255, 255, 255, 255))
                 lineNo = 0
 
-            x = indent
-            y = lineNo * 100
-            #x2 = indent + img.width
-            #y2 = (lineNo * 100) + img.height
-
-            # TODO: fix paste to work with new bliss png files (provide a box)
+            # TODO: modify paste to work with vector bliss files
             bg.paste(img, (indent, lineNo * 100))
             indent += getWordWidth(word)
             idx += 1
@@ -216,5 +202,5 @@ def translate(phrase):
     sortFreqs()
     renderTranslation()
 
-translate("Look at my face, my face")
-#translate(excerpts.aliceInWonderland)
+#translate("Look at my face, my face, my face")
+translate(excerpts.aliceInWonderland)
