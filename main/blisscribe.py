@@ -13,9 +13,7 @@ import nltk
 # To update NLTK:
 #  from nltk import downloader
 #  nltk.downloader.download()
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
+from PIL import Image, ImageDraw, ImageFont
 import excerpts
 import lexicon
 
@@ -158,23 +156,27 @@ def translate(phrase):
         idx = 0
 
         for word in rawPhrase:
-            if word in blissDict.keys() and word in taggedDict.keys():
+            if word in taggedDict.keys():
                 # if word can be validly translated into Blissymbols...
                 if word in seen or word in changed:
                     # if we've already seen or translated the word before...
-                    if word in sortedFreqs:
-                        if word in sortedFreqs[-1]:
-                            # removes word from sortedFreqs
-                            changed.add(word)
+                    try:
+                        blissDict[word]
+                    except KeyError:
+                        continue
+                    else:
+                        blissWord = Image.open(imgPath + blissDict[word])          # string -> Bliss image
+                        img = blissWord
+                        img.thumbnail((bgWidth/2, fontSize * 3))
 
-                            if len(sortedFreqs[-1]) > 1:
-                                sortedFreqs[-1].remove(word)
-                            else:
-                                sortedFreqs.remove(sortedFreqs[-1])
+                    if word in sortedFreqs[-1]:
+                        # removes word from sortedFreqs
+                        changed.add(word)
 
-                    blissWord = Image.open(imgPath + blissDict[word])          # string -> Bliss image
-                    img = blissWord
-                    img.thumbnail((bgWidth/2, fontSize * 3))
+                        if len(sortedFreqs[-1]) > 1:
+                            sortedFreqs[-1].remove(word)
+                        else:
+                            sortedFreqs.remove(sortedFreqs[-1])
 
                     # TODO: modify following code so that supertitles appear above words translated first time
                     """
