@@ -1,11 +1,3 @@
-# Notes
-# -----
-"""
-REMEMBER:
- To get this on GitHub, commit to VCS and
- select "commit and push changes" option.
-"""
-
 # Imports
 # -------
 import collections
@@ -18,15 +10,16 @@ import excerpts
 import lexicon
 
 
-# Fonts
-# -----
-romanFontPath = "/Users/courtney/Library/Fonts/BLISGRID.TTF" # Helvetica: "/Library/Fonts/Helvetica.dfont
-blissFontPath = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
-imgPath = "/Users/courtney/Documents/creation/programming/\
+# Constants
+# ---------
+roman_font_path = "/Users/courtney/Library/Fonts/BLISGRID.TTF"
+# Helvetica: "/Library/Fonts/Helvetica.dfont
+bliss_font_path = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
+img_path = "/Users/courtney/Documents/creation/programming/\
 personal projects/bliss translator/symbols/full/png/whitebg/"
-fontSize = 30
-romanFont = ImageFont.truetype(romanFontPath, fontSize)
-blissDict = lexicon.blissDict
+font_size = 30
+roman_font = ImageFont.truetype(roman_font_path, font_size)
+bliss_dict = lexicon.blissDict
 
 
 # FUNCTIONS
@@ -37,8 +30,11 @@ blissDict = lexicon.blissDict
 
 def getWordFreqDict(phrase):
     """
-    :param phrase: non-empty string of words
-    :return: word frequency dictionary for phrase
+    Returns a dictionary with a frequency count for each
+    word from input phrase.
+
+    :param phrase: str, non-empty string of words
+    :return: dict, word frequency dictionary for phrase
     """
     words = nltk.word_tokenize(phrase)
     freqs = collections.defaultdict(int)
@@ -49,81 +45,101 @@ def getWordFreqDict(phrase):
     return freqs
 
 
-def getSortedFreqDict(freqs):
+def getWordsFreqDict(freqs):
     """
-    :param freqs: dict of words and word frequencies
-    :return: dict where...
-        keys == frequencies > 1 (sorted in decreasing order)
-        vals == lists of words with that frequency
+    Returns a dictionary where each value is a list of
+    words occuring at a given frequency (> 1).
+
+    :param freqs: dict, of words and word frequencies
+    :return: dict, where...
+        key (int) frequency > 1
+        val (list) list of words with given frequency
     """
-    sortedFreqs = collections.defaultdict(list)
+    sorted_freqs = collections.defaultdict(list)
 
     for word in freqs:
         if freqs[word] > 1:
-            sortedFreqs[freqs[word]].append(word)
+            sorted_freqs[freqs[word]].append(word)
 
-    return sortedFreqs
+    return sorted_freqs
 
 
 def getWordWidth(word):
     """
+    Returns the width of the given string or Image in pixels.
+
     :param word: str or Image
-    :return: word width in pixels
+    :return: int, word width in pixels
     """
     if type(word) == str:
-        return (fontSize / 2) + len(word) * (fontSize / 2)
+        return (font_size / 2) + len(word) * (font_size / 2)
     else:
         return word.size[0] + 10
 
 
 def getWordImg(word):
     """
+    Draws and returns an Image of the given string.
+
     :param word: str
-    :return: image of input str
+    :return: Image, image of input str
     """
-    img = Image.new('RGBA', (getWordWidth(word), fontSize * 10), (255, 255, 255, 255))
+    if word.isalpha():
+        word_width = getWordWidth(word)
+    else:
+        word_width = getWordWidth(word) - (font_size / 2)
+
+    img = Image.new('RGBA', (word_width, font_size * 10), (255, 255, 255, 255))
     sketch = ImageDraw.Draw(img)
-    sketch.text((10, fontSize), word, font=romanFont, fill="black")
+    sketch.text((10, font_size), word, font=roman_font, fill="black")
+
     return img
 
 
-def tagsToDict(tokenPhrase):
+def tagsToDict(token_phrase):
     """
-    :param tokenPhrase: list of word tokens in given phrase
-    :return: dict with translatable Blissymbols
+    Given a list of word tokens in a phrase, returns a
+    dictionary of Blissymbols that can be translated into
+    said tokens.
+
+    :param token_phrase: list, of word tokens from a phrase
+    :return: dict, of translatable Blissymbols and their tokens
     """
-    taggedPhrase = nltk.pos_tag(tokenPhrase)  # tokens tagged according to word type
-    taggedDict = {}
-    validPhrases = ["NN", "VB", "JJ", "VBD"] # TODO: expand validPhrases as much as possible
+    tagged_phrase = nltk.pos_tag(token_phrase)  # tokens tagged according to word type
+    tagged_dict = {}
+    valid_phrases = ["NN", "VB", "JJ", "VBD"]   # desirable tags (nouns, verbs, adjectives)
+    # TODO: expand valid_phrases as much as possible
 
-    for tup in taggedPhrase:
-        if tup[0] in blissDict and tup[1] in validPhrases:
-            taggedDict[tup[0]] = tup[1]
+    for tup in tagged_phrase:
+        if tup[0] in bliss_dict and tup[1] in valid_phrases:
+            tagged_dict[tup[0]] = tup[1]
 
-    return taggedDict
+    return tagged_dict
 
 
 def sortFreqs(phrase):
     """
-    :param phrase: input string of words
-    :return: a list of word sets in phrase,
+    Returns a list of word sets in phrase
     sorted from lowest to highest frequency.
+
+    :param phrase: str, input string of words
+    :return: list, a list of word sets from phrase
     """
-    wordFreqs = getWordFreqDict(phrase)
-    usageFreqs = getSortedFreqDict(wordFreqs)
-    sortedFreqs = []
+    word_freqs = getWordFreqDict(phrase)
+    usage_freqs = getWordsFreqDict(word_freqs)
+    sorted_freqs = []
 
-    for k in sorted(usageFreqs):
-        newSet = set([])
+    for k in sorted(usage_freqs):
+        new_set = set([])
 
-        for word in usageFreqs[k]:
-            if word in blissDict.keys():
-                newSet.add(word)
+        for word in usage_freqs[k]:
+            if word in bliss_dict.keys():
+                new_set.add(word)
 
-        if len(newSet) > 0:
-            sortedFreqs.append(newSet)
+        if len(new_set) > 0:
+            sorted_freqs.append(new_set)
 
-    return sortedFreqs
+    return sorted_freqs
 
 
 # Translator
@@ -131,85 +147,86 @@ def sortFreqs(phrase):
 
 def translate(phrase):
     """
-    :param phrase: non-empty English text
-    :return: image of English text w/ Blissymbols
+    Displays image of input English text partially translated to Blissymbols.
+
+    :param phrase: str, non-empty English text
     """
-    tokenPhrase = nltk.word_tokenize(phrase)  # phrase split into word tokens
-    taggedDict = tagsToDict(tokenPhrase)
-    sortedFreqs = sortFreqs(phrase)
+    token_phrase = nltk.word_tokenize(phrase)  # phrase split into word tokens
+    tagged_dict = tagsToDict(token_phrase)
+    sorted_freqs = sortFreqs(phrase)
 
     def renderTranslation():
         """
-        :return: rendered image of English text w/ Blissymbols
+        Renders image of English text and Blissymbols.
         """
         # TODO: make spacing between punctuation/words pretty
-        rawPhrase = [word.lower() for word in tokenPhrase]  # token words in lowercase
+        raw_phrase = [word.lower() for word in token_phrase]  # token words in lowercase
 
-        bgWidth = 2200
-        bgHeight = bgWidth/2
+        bg_width = 2200
+        bg_height = bg_width/2
         indent = 0
-        lineNo = 0
-        bg = Image.new("RGBA", (bgWidth, bgHeight), (255, 255, 255, 255))
+        line_no = 0
+        bg = Image.new("RGBA", (bg_width, bg_height), (255, 255, 255, 255))
 
         seen = set([])
         changed = set([])
         idx = 0
 
-        for word in rawPhrase:
-            if word in taggedDict.keys():
+        for word in raw_phrase:
+            if word in tagged_dict.keys():
                 # if word can be validly translated into Blissymbols...
                 if word in seen or word in changed:
                     # if we've already seen or translated the word before...
                     try:
-                        blissDict[word]
+                        bliss_dict[word]
                     except KeyError:
                         continue
                     else:
-                        blissWord = Image.open(imgPath + blissDict[word])          # string -> Bliss image
-                        img = blissWord
-                        img.thumbnail((bgWidth/2, fontSize * 3))
+                        bliss_word = Image.open(img_path + bliss_dict[word])          # string -> Bliss image
+                        img = bliss_word
+                        img.thumbnail((bg_width / 2, font_size * 3))
 
-                    if word in sortedFreqs[-1]:
-                        # removes word from sortedFreqs
+                    if word in sorted_freqs[-1]:
+                        # removes word from sorted_freqs
                         changed.add(word)
 
-                        if len(sortedFreqs[-1]) > 1:
-                            sortedFreqs[-1].remove(word)
+                        if len(sorted_freqs[-1]) > 1:
+                            sorted_freqs[-1].remove(word)
                         else:
-                            sortedFreqs.remove(sortedFreqs[-1])
+                            sorted_freqs.remove(sorted_freqs[-1])
 
                     # TODO: modify following code so that supertitles appear above words translated first time
-                    """
+                    '''
                     if word not in changed:
-                        superTitle = getWordImg(tokenPhrase[idx])
-                        new = Image.new("RGBA", (max(getWordWidth(img), getWordWidth(superTitle)), img.size[1] + superTitle.size[1]), (255,255,255,255))
-                        new.paste(superTitle, (0, 0))
-                        new.paste(blissWord, (0, blissWord.size[1]))
+                        super_title = getWordImg(token_phrase[idx])
+                        new = Image.new("RGBA", (max(getWordWidth(img), getWordWidth(super_title)), img.size[1] + super_title.size[1]), (255,255,255,255))
+                        new.paste(super_title, (0, 0))
+                        new.paste(bliss_word, (0, bliss_word.size[1]))
                         img = new
-                    """
+                    '''
 
                 else:
                     # if we haven't seen or translated the word before,
                     # then render English text
-                    img = getWordImg(tokenPhrase[idx])
+                    img = getWordImg(token_phrase[idx])
                     seen.add(word)
 
             else:
                 # if word can't be translated to Blissymbols,
                 # then render English text
-                img = getWordImg(tokenPhrase[idx])
+                img = getWordImg(token_phrase[idx])
 
-            if indent + getWordWidth(img) > bgWidth:
+            if indent + getWordWidth(img) > bg_width:
                 indent = 0
-                lineNo += 1
+                line_no += 1
 
-            if (lineNo * 100) + 100 > bgHeight:
+            if (line_no * 100) + 100 > bg_height:
                 bg.show()
-                bg = Image.new("RGBA", (bgWidth, bgHeight), (255, 255, 255, 255))
-                lineNo = 0
+                bg = Image.new("RGBA", (bg_width, bg_height), (255, 255, 255, 255))
+                line_no = 0
 
             # TODO: modify paste to work with vector bliss files
-            bg.paste(img, (indent, lineNo * (fontSize * 3)))
+            bg.paste(img, (indent, line_no * (font_size * 3)))
             indent += getWordWidth(img)
             idx += 1
 

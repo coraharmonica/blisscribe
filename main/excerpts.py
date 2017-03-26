@@ -85,7 +85,7 @@ whiskers, how late it's getting!' She was close behind it when she turned the co
 seen: she found herself in a long, low hall, which was lit up by a row of lamps hanging from the roof.
 
 There were doors all round the hall, but they were all locked; and when Alice had been all the way down one side and up the \
-other, trying every door, she walked sadly down the middle, wondering how she was ever to get out again.
+misc, trying every door, she walked sadly down the middle, wondering how she was ever to get out again.
 """
 
 littlePrince = """
