@@ -16,10 +16,9 @@ from PIL import Image
 
 # Constants
 # ---------
-imgPath = "/Users/courtney/Documents/creation/programming/\
+img_path = "/Users/courtney/Documents/creation/programming/\
 personal projects/bliss translator/symbols/full/png/whitebg/"
-
-filePath = "/Users/courtney/Documents/creation/programming/\
+file_path = "/Users/courtney/Documents/creation/programming/\
 personal projects/bliss translator/blissymbols git/main/"
 
 
@@ -28,12 +27,15 @@ personal projects/bliss translator/blissymbols git/main/"
 
 def parseLexicon(lexicon):
     """
-    :param lexicon: text file of words (each word separated by \n)
-    :return: dictionary of words with definitions
-    """
-    blissDict = {}
+    Parses lexicon file with given filename and returns a dictionary of words
+    with corresponding image file links.
 
-    with open(filePath + lexicon, "rb") as lex:
+    :param lexicon: str, filename of text file for lexicon (each word sep. by \n)
+    :return: dict, words with image file links
+    """
+    bliss_dict = {}
+
+    with open(file_path + lexicon, "rb") as lex:
 
         for item in lex:
             item = item[:-1] # cut off \n character at end
@@ -45,24 +47,26 @@ def parseLexicon(lexicon):
 
             for word in words:
                 try:
-                    Image.open(imgPath + item + ".png")
+                    Image.open(img_path + item + ".png")
                 except IOError:
                     continue
                 else:
-                    blissDict[word] = item + ".png"
+                    bliss_dict[word] = item + ".png"
 
-    return blissDict
+    return bliss_dict
 
 
 def printDict(d):
     """
     Prints the given dictionary as if it were written in code.
-    :param d: input dictionary
-    :return: None
+
+    :param d: dict, input dictionary
     """
     print("{")
+
     for k in d:
         print('    "' + k + '": ' + '"' + str(d[k]) + '",')
+
     print("}")
 
 

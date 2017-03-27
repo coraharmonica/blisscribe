@@ -19,7 +19,7 @@ img_path = "/Users/courtney/Documents/creation/programming/\
 personal projects/bliss translator/symbols/full/png/whitebg/"
 font_size = 30
 roman_font = ImageFont.truetype(roman_font_path, font_size)
-bliss_dict = lexicon.blissDict
+bliss_dict = lexicon.bliss_dict
 
 
 # FUNCTIONS
@@ -48,7 +48,7 @@ def getWordFreqDict(phrase):
 def getWordsFreqDict(freqs):
     """
     Returns a dictionary where each value is a list of
-    words occuring at a given frequency (> 1).
+    words occurring at a given frequency (> 1).
 
     :param freqs: dict, of words and word frequencies
     :return: dict, where...
@@ -84,11 +84,7 @@ def getWordImg(word):
     :param word: str
     :return: Image, image of input str
     """
-    if word.isalpha():
-        word_width = getWordWidth(word)
-    else:
-        word_width = getWordWidth(word) - (font_size / 2)
-
+    word_width = getWordWidth(word)
     img = Image.new('RGBA', (word_width, font_size * 10), (255, 255, 255, 255))
     sketch = ImageDraw.Draw(img)
     sketch.text((10, font_size), word, font=roman_font, fill="black")
@@ -162,7 +158,7 @@ def translate(phrase):
         # TODO: make spacing between punctuation/words pretty
         raw_phrase = [word.lower() for word in token_phrase]  # token words in lowercase
 
-        bg_width = 2200
+        bg_width = 2400
         bg_height = bg_width/2
         indent = 0
         line_no = 0
@@ -234,5 +230,5 @@ def translate(phrase):
 
     renderTranslation()
 
-
-translate(excerpts.aliceInWonderland)
+#translate(excerpts.alice_in_wonderland)
+translate(excerpts.wizard_of_oz)

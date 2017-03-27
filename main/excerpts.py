@@ -6,9 +6,52 @@ EXCERPTS:
     Holds sample English texts used for testing.
 
     Contains excerpts from:
+        The Wizard of Oz (L. Frank Baum)
+        Moby Dick (Herman Melville)
         Infinite Jest (David Foster Wallace)
         Alice in Wonderland (Lewis Carroll)
         The Little Prince (Antoine de Saint-Exupery)
+"""
+
+wizard_of_oz = """
+Dorothy lived in the midst of the great Kansas prairies, with Uncle Henry, who was a farmer, and Aunt Em, who \
+was the farmer's wife. Their house was small, for the lumber to build it had to be carried by wagon many miles. \
+There were four walls, a floor and a roof, which made one room; and this room contained a rusty looking cookstove, \
+a cupboard for the dishes, a table, three or four chairs, and the beds. Uncle Henry and Aunt Em had a big bed in \
+one corner, and Dorothy a little bed in another corner. There was no garret at all, and no cellar--except a small \
+hole dug in the ground, called a cyclone cellar, where the family could go in case one of those great whirlwinds \
+arose, mighty enough to crush any building in its path. It was reached by a trap door in the middle of the floor, \
+from which a ladder led down into the small, dark hole.
+
+When Dorothy stood in the doorway and looked around, she could see nothing but the great gray prairie on every \
+side. Not a tree nor a house broke the broad sweep of flat country that reached to the edge of the sky in all \
+directions. The sun had baked the plowed land into a gray mass, with little cracks running through it. Even the \
+grass was not green, for the sun had burned the tops of the long blades until they were the same gray color to be \
+seen everywhere. Once the house had been painted, but the sun blistered the paint and the rains washed it away, and \
+now the house was as dull and gray as everything else.
+"""
+
+moby_dick = """
+Call me Ishmael. Some years ago-never mind how long precisely-having little or no money in my purse, and nothing \
+particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. \
+It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim \
+about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing \
+before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get \
+such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into \
+the street, and methodically knocking people's hats off-then, I account it high time to get to sea as soon as I can.\
+ This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I \
+ quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, \
+ some time or other, cherish very nearly the same feelings towards the ocean with me.
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs-commerce \
+surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where \
+that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look \
+at the crowds of water-gazers there.
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by \
+Whitehall, northward. What do you see?-Posted like silent sentinels all around the town, stand thousands upon \
+thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; \
+some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still \
+better seaward peep. But these are all landsmen; of week days pent up in lath and plaster-tied to counters, nailed to \
+benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
 """
 
 DFW = "I am seated in an office, surrounded by heads and bodies. My posture is consciously congruent \
@@ -20,7 +63,7 @@ Three faces have resolved into place above summer-weight sportcoats and half-Win
 conference table shiny with the spidered light of an Arizona noon. These are three Deans - of Admissions, \
 Academic Affairs, Athletic Affairs. I do not know which face belongs to whom."
 
-aliceInWonderland = """
+alice_in_wonderland = """
 Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or \
  twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and \
  what is the use of a book,' thought Alice `without pictures or conversation?'
@@ -88,7 +131,7 @@ There were doors all round the hall, but they were all locked; and when Alice ha
 misc, trying every door, she walked sadly down the middle, wondering how she was ever to get out again.
 """
 
-littlePrince = """
+little_prince = """
 Once when I was six years old I saw a magnificent picture in a book, called True Stories from Nature, about the primeval \
 forest. It was a picture of a boa constrictor in the act of swallowing an animal. Here is a copy of the drawing.
 

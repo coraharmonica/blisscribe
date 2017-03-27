@@ -7,7 +7,7 @@ LEXICON:
     as keys and corresponding .png filenames as values.
 """
 
-blissDict = {
+bliss_dict = {
     "bagpipe": "bagpipe.png",
     "Shevat": "Shevat,Shvat.png",
     "pardon": "forgiveness,pardon.png",
