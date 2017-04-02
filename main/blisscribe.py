@@ -17,7 +17,7 @@ roman_font_path = "/Users/courtney/Library/Fonts/BLISGRID.TTF"
 bliss_font_path = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
 img_path = "/Users/courtney/Documents/creation/programming/\
 personal projects/bliss translator/symbols/full/png/whitebg/"
-font_size = 30
+font_size = 35
 roman_font = ImageFont.truetype(roman_font_path, font_size)
 bliss_dict = lexicon.bliss_dict
 
@@ -72,9 +72,9 @@ def getWordWidth(word):
     :return: int, word width in pixels
     """
     if type(word) == str:
-        return (font_size / 2) + len(word) * (font_size / 2)
+        return len(word) * (font_size / 2)
     else:
-        return word.size[0] + 10
+        return word.size[0]
 
 
 def getWordImg(word):
@@ -87,7 +87,23 @@ def getWordImg(word):
     word_width = getWordWidth(word)
     img = Image.new('RGBA', (word_width, font_size * 10), (255, 255, 255, 255))
     sketch = ImageDraw.Draw(img)
-    sketch.text((10, font_size), word, font=roman_font, fill="black")
+    sketch.text((0, font_size), word, font=roman_font, fill="black")
+
+    return img
+
+
+def getBlissImg(word, max_width):
+    """
+    Draws and returns a thumbnail Image of the given str's Blissymbol,
+    with a maximum width of max_width.
+
+    :param word: str
+    :param max_width: int, maximum width of Blissymbol
+    :return: Image, image of input str's Blissymbol
+    """
+    bliss_word = Image.open(img_path + bliss_dict[word])  # string -> Bliss image
+    img = bliss_word
+    img.thumbnail((max_width, font_size * 3))
 
     return img
 
@@ -103,11 +119,12 @@ def tagsToDict(token_phrase):
     """
     tagged_phrase = nltk.pos_tag(token_phrase)  # tokens tagged according to word type
     tagged_dict = {}
-    valid_phrases = ["NN", "VB", "JJ", "VBD"]   # desirable tags (nouns, verbs, adjectives)
+    valid_phrases = ["NN", "NNS", "VB", "JJ", "VBD"]   # desirable tags (nouns, verbs, adjectives)
     # TODO: expand valid_phrases as much as possible
+    # TODO: translate plural nouns by translating the singular root and adding plural ending
 
     for tup in tagged_phrase:
-        if tup[0] in bliss_dict and tup[1] in valid_phrases:
+        if tup[1] in valid_phrases and tup[0] in bliss_dict:
             tagged_dict[tup[0]] = tup[1]
 
     return tagged_dict
@@ -155,11 +172,16 @@ def translate(phrase):
         """
         Renders image of English text and Blissymbols.
         """
-        # TODO: make spacing between punctuation/words pretty
+        # TODO: make spacing between punctuation/words pretty (& lern 2 kern)
         raw_phrase = [word.lower() for word in token_phrase]  # token words in lowercase
 
-        bg_width = 2400
-        bg_height = bg_width/2
+        if len(raw_phrase) == 1:
+            bg_width = 200
+            bg_height = 200
+        else:
+            bg_width = 2100
+            bg_height = bg_width/2
+
         indent = 0
         line_no = 0
         bg = Image.new("RGBA", (bg_width, bg_height), (255, 255, 255, 255))
@@ -171,25 +193,28 @@ def translate(phrase):
         for word in raw_phrase:
             if word in tagged_dict.keys():
                 # if word can be validly translated into Blissymbols...
-                if word in seen or word in changed:
+                if word not in seen or word in changed:
                     # if we've already seen or translated the word before...
                     try:
                         bliss_dict[word]
                     except KeyError:
                         continue
                     else:
-                        bliss_word = Image.open(img_path + bliss_dict[word])          # string -> Bliss image
-                        img = bliss_word
-                        img.thumbnail((bg_width / 2, font_size * 3))
+                        img = getBlissImg(word, bg_width / 2)
 
-                    if word in sorted_freqs[-1]:
-                        # removes word from sorted_freqs
-                        changed.add(word)
+                    try:
+                        sorted_freqs[-1]
+                    except IndexError:
+                        continue
+                    else:
+                        if word in sorted_freqs[-1]:
+                            # removes word from sorted_freqs
+                            changed.add(word)
 
-                        if len(sorted_freqs[-1]) > 1:
-                            sorted_freqs[-1].remove(word)
-                        else:
-                            sorted_freqs.remove(sorted_freqs[-1])
+                            if len(sorted_freqs[-1]) > 1:
+                                sorted_freqs[-1].remove(word)
+                            else:
+                                sorted_freqs.remove(sorted_freqs[-1])
 
                     # TODO: modify following code so that supertitles appear above words translated first time
                     '''
@@ -212,7 +237,17 @@ def translate(phrase):
                 # then render English text
                 img = getWordImg(token_phrase[idx])
 
-            if indent + getWordWidth(img) > bg_width:
+            try:
+                raw_phrase[idx+1]
+            except IndexError:
+                continue
+            else:
+                if raw_phrase[idx+1].isalpha() or not word.isalpha() or word in changed and indent != 0:
+                    space = font_size / 2
+                else:
+                    space = font_size / 2
+
+            if indent + getWordWidth(img) + space > bg_width:
                 indent = 0
                 line_no += 1
 
@@ -222,8 +257,8 @@ def translate(phrase):
                 line_no = 0
 
             # TODO: modify paste to work with vector bliss files
-            bg.paste(img, (indent, line_no * (font_size * 3)))
-            indent += getWordWidth(img)
+            bg.paste(img, (indent + space, line_no * (font_size * 3)))
+            indent += getWordWidth(img) + space
             idx += 1
 
         bg.show()
@@ -231,4 +266,4 @@ def translate(phrase):
     renderTranslation()
 
 #translate(excerpts.alice_in_wonderland)
-translate(excerpts.wizard_of_oz)
+#translate(excerpts.wizard_of_oz)
