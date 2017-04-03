@@ -1,14 +1,12 @@
 # Imports
 # -------
 import collections
+
 import nltk
-# To update NLTK:
-#  from nltk import downloader
-#  nltk.downloader.download()
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageChops
+
 import excerpts
 import lexicon
-
 
 # Constants
 # ---------
@@ -17,9 +15,10 @@ roman_font_path = "/Users/courtney/Library/Fonts/BLISGRID.TTF"
 bliss_font_path = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
 img_path = "/Users/courtney/Documents/creation/programming/\
 personal projects/bliss translator/symbols/full/png/whitebg/"
-font_size = 35
-roman_font = ImageFont.truetype(roman_font_path, font_size)
+default_font_size = 30
+roman_font = ImageFont.truetype(roman_font_path, default_font_size)
 bliss_dict = lexicon.bliss_dict
+punctuation = [".", ",", ";", ":", "?", "!", "'", '"', "`"]
 
 
 # FUNCTIONS
@@ -64,7 +63,7 @@ def getWordsFreqDict(freqs):
     return sorted_freqs
 
 
-def getWordWidth(word):
+def getWordWidth(word, font_size=default_font_size):
     """
     Returns the width of the given string or Image in pixels.
 
@@ -77,33 +76,36 @@ def getWordWidth(word):
         return word.size[0]
 
 
-def getWordImg(word):
+def getWordImg(word, font_size=default_font_size):
     """
     Draws and returns an Image of the given string.
 
     :param word: str
+    :param font_size: int, desired font size of text
     :return: Image, image of input str
     """
-    word_width = getWordWidth(word)
-    img = Image.new('RGBA', (word_width, font_size * 10), (255, 255, 255, 255))
+    word_width = getWordWidth(word, font_size)
+    img = Image.new('RGBA', (word_width, font_size * 5), (255, 255, 255, 255))
     sketch = ImageDraw.Draw(img)
-    sketch.text((0, font_size), word, font=roman_font, fill="black")
+    font = ImageFont.truetype(roman_font_path, font_size)
+    sketch.text((0, font_size), word, font=font, fill="black")
 
     return img
 
 
-def getBlissImg(word, max_width):
+def getBlissImg(word, max_width=default_font_size * 10, max_height=default_font_size * 3):
     """
     Draws and returns a thumbnail Image of the given str's Blissymbol,
-    with a maximum width of max_width.
+    with a maximum width of max_width, and custom height if desired.
 
     :param word: str
     :param max_width: int, maximum width of Blissymbol
+    :param max_height: int, maximum height of Blissymbol
     :return: Image, image of input str's Blissymbol
     """
     bliss_word = Image.open(img_path + bliss_dict[word])  # string -> Bliss image
     img = bliss_word
-    img.thumbnail((max_width, font_size * 3))
+    img.thumbnail((max_width, max_height))
 
     return img
 
@@ -155,6 +157,73 @@ def sortFreqs(phrase):
     return sorted_freqs
 
 
+def trim(img):
+    # From http://stackoverflow.com/questions/10615901/trim-whitespace-using-pil/29192070
+    bg = Image.new(img.mode, img.size, img.getpixel((0,0)))
+    diff = ImageChops.difference(img, bg)
+    diff = ImageChops.add(diff, diff, 2.0, -100)
+    bbox = diff.getbbox()
+    if bbox:
+        return img.crop(bbox)
+
+
+def renderAlphabet(words, columns=20):
+    """
+    Renders an alphabet-style set of definitions for given words,
+    with word definition on top and corresponding Blissymbol on bottom.
+
+    :param words: str, words (separated by spaces) to be rendered
+    :param columns: int, maximum number of columns
+    :return: Image, rendered alphabet of given words
+    """
+    words_list = words.split(" ")
+
+    glyph_bg_wh = 200
+    start = glyph_bg_wh/2
+    space = default_font_size
+
+    bliss_alphabet = []
+
+    for word in words_list:
+        bg = Image.new("RGBA", (glyph_bg_wh, glyph_bg_wh), (255, 255, 255, 255))
+
+        if word in lexicon.bliss_dict.keys():
+            bliss_word = getBlissImg(word, glyph_bg_wh, max_height=default_font_size*3)
+            eng_word = getWordImg(word.upper(), font_size=default_font_size/2)
+
+            bliss_word = trim(bliss_word)
+            eng_word = trim(eng_word)
+
+            start_eng_word_x = start - (eng_word.width/2)
+            start_eng_word_y = glyph_bg_wh - eng_word.height - int(space * 3.3)
+            start_bliss_word_x = start - (getWordWidth(bliss_word)/2)
+
+            bg.paste(eng_word, (start_eng_word_x, start_eng_word_y))
+            bg.paste(bliss_word, (start_bliss_word_x, space))
+
+        bliss_alphabet.append(bg)
+
+    alphabet_bg_width = glyph_bg_wh * min(len(bliss_alphabet), columns)
+    alphabet_bg_height = glyph_bg_wh * (len(bliss_alphabet)/columns + 1)
+    alphabet_bg = Image.new("RGBA", (alphabet_bg_width, alphabet_bg_height), (255, 255, 255, 255))
+    indent = 0
+    line_height = 0
+
+    for defn in bliss_alphabet:
+        if (indent + glyph_bg_wh) > alphabet_bg_width:
+            indent = 0
+            line_height += 1
+
+        if line_height * glyph_bg_wh > alphabet_bg_height:
+            alphabet_bg.show()
+            alphabet_bg = Image.new("RGBA", (alphabet_bg_width, alphabet_bg_height), (255, 255, 255, 255))
+
+        alphabet_bg.paste(defn, (indent, line_height * glyph_bg_wh))
+        indent += glyph_bg_wh
+
+    return trim(alphabet_bg)
+
+
 # Translator
 # ----------
 
@@ -172,8 +241,10 @@ def translate(phrase):
         """
         Renders image of English text and Blissymbols.
         """
-        # TODO: make spacing between punctuation/words pretty (& lern 2 kern)
+        # TODO: make spacing between punctuation/words pretty
+        # TODO: lern 2 kern
         raw_phrase = [word.lower() for word in token_phrase]  # token words in lowercase
+        pages = []
 
         if len(raw_phrase) == 1:
             bg_width = 200
@@ -182,7 +253,8 @@ def translate(phrase):
             bg_width = 2100
             bg_height = bg_width/2
 
-        indent = 0
+        indent = default_font_size
+        #margins = 10  # pixels of space at the top & bottom margins
         line_no = 0
         bg = Image.new("RGBA", (bg_width, bg_height), (255, 255, 255, 255))
 
@@ -193,19 +265,28 @@ def translate(phrase):
         for word in raw_phrase:
             if word in tagged_dict.keys():
                 # if word can be validly translated into Blissymbols...
-                if word not in seen or word in changed:
+                if word in seen or word in changed:
                     # if we've already seen or translated the word before...
                     try:
-                        bliss_dict[word]
+                        getBlissImg(word, bg_width / 2)
                     except KeyError:
+                        idx +=1
+                        continue
+                    except IOError:
+                        idx += 1
                         continue
                     else:
-                        img = getBlissImg(word, bg_width / 2)
+                        if word in changed:
+                            img = getBlissImg(word, bg_width / 2)
+                        else:
+                            # adds subtitles to new words
+                            img = renderAlphabet(word)
+                            changed.add(word)
 
                     try:
                         sorted_freqs[-1]
                     except IndexError:
-                        continue
+                        pass
                     else:
                         if word in sorted_freqs[-1]:
                             # removes word from sorted_freqs
@@ -215,16 +296,6 @@ def translate(phrase):
                                 sorted_freqs[-1].remove(word)
                             else:
                                 sorted_freqs.remove(sorted_freqs[-1])
-
-                    # TODO: modify following code so that supertitles appear above words translated first time
-                    '''
-                    if word not in changed:
-                        super_title = getWordImg(token_phrase[idx])
-                        new = Image.new("RGBA", (max(getWordWidth(img), getWordWidth(super_title)), img.size[1] + super_title.size[1]), (255,255,255,255))
-                        new.paste(super_title, (0, 0))
-                        new.paste(bliss_word, (0, bliss_word.size[1]))
-                        img = new
-                    '''
 
                 else:
                     # if we haven't seen or translated the word before,
@@ -240,30 +311,54 @@ def translate(phrase):
             try:
                 raw_phrase[idx+1]
             except IndexError:
-                continue
+                pass
             else:
-                if raw_phrase[idx+1].isalpha() or not word.isalpha() or word in changed and indent != 0:
-                    space = font_size / 2
+                if raw_phrase[idx] in punctuation or "'" in raw_phrase[idx][:2]:
+                    # TODO: modify for ( and )
+                    space = 0
                 else:
-                    space = font_size / 2
+                    space = int(default_font_size / 1.5)
 
-            if indent + getWordWidth(img) + space > bg_width:
-                indent = 0
-                line_no += 1
+            x_inc = indent + getWordWidth(img) + space
+            y_inc = default_font_size * 3
 
-            if (line_no * 100) + 100 > bg_height:
-                bg.show()
+            try:
+                raw_phrase[idx+1]
+            except IndexError:
+                pass
+            else:
+                if not raw_phrase[idx+1].isalpha():
+                    if (x_inc + getWordWidth(raw_phrase[idx+1])) > bg_width:
+                        # don't let punctuation trail onto next line alone
+                        indent = 0
+                        line_no += 1
+                elif x_inc > bg_width:
+                    indent = 0
+                    line_no += 1
+                elif raw_phrase[idx] == "\n":
+                    # for new paragraphs
+                    indent = int(default_font_size)
+                    line_no += 1
+
+            if y_inc + (line_no * y_inc) > bg_height:
+                pages.insert(0, bg)
                 bg = Image.new("RGBA", (bg_width, bg_height), (255, 255, 255, 255))
                 line_no = 0
 
             # TODO: modify paste to work with vector bliss files
-            bg.paste(img, (indent + space, line_no * (font_size * 3)))
+            bg.paste(img, (indent + space, line_no * y_inc))
             indent += getWordWidth(img) + space
             idx += 1
 
-        bg.show()
+            try:
+                raw_phrase[idx]
+            except IndexError:
+                pages.insert(0, bg)
+
+        for page in pages:
+            page.show()
 
     renderTranslation()
 
-#translate(excerpts.alice_in_wonderland)
+translate(excerpts.alice_in_wonderland)
 #translate(excerpts.wizard_of_oz)

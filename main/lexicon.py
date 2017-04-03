@@ -3869,7 +3869,7 @@ bliss_dict = {
     "debate": "discussion,conversation,debate,chat.png",
     "decade": "decade.png",
     "staff": "crew,staff.png",
-    "ear": "ear,spike,capitulum.png",
+    "ear": "ear.png",
     "knowledge": "knowledge,class_(in_combinations).png",
     "tire": "tire,tyre.png",
     "scorpion": "scorpion.png",
