@@ -1,4 +1,4 @@
-Blisscribe
+<b>Blisscribe</b>
 
 Blisscribe takes input English text and outputs the given text with selected words replaced with Blissymbols.
 
