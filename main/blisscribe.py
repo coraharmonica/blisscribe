@@ -1,11 +1,25 @@
+# Notes
+# -----
+"""
+BLISSCRIBE:
+
+    A Python module for translating input English text into a
+    combination of English and Blissymbols for reading.
+
+    Input English text into translate() for output images.
+
+    Users will eventually be able to choose which parts of
+    speech to translate and how quickly to translate them.
+"""
+
 # Imports
 # -------
 import collections
 
 import nltk
 from PIL import Image, ImageDraw, ImageFont, ImageChops
+from pattern.text.en import singularize, lemma
 
-import excerpts
 import lexicon
 
 # Constants
@@ -18,7 +32,7 @@ personal projects/bliss translator/symbols/full/png/whitebg/"
 default_font_size = 30
 roman_font = ImageFont.truetype(roman_font_path, default_font_size)
 bliss_dict = lexicon.bliss_dict
-punctuation = [".", ",", ";", ":", "?", "!", "'", '"', "`"]
+punctuation = [".", ",", ";", ":", "?", "!", "'", '"', "`", "(", ")"]
 
 
 # FUNCTIONS
@@ -68,6 +82,7 @@ def getWordWidth(word, font_size=default_font_size):
     Returns the width of the given string or Image in pixels.
 
     :param word: str or Image
+    :param font_size: int, font size of given word
     :return: int, word width in pixels
     """
     if type(word) == str:
@@ -124,9 +139,12 @@ def tagsToDict(token_phrase):
     valid_phrases = ["NN", "NNS", "VB", "JJ", "VBD"]   # desirable tags (nouns, verbs, adjectives)
     # TODO: expand valid_phrases as much as possible
     # TODO: translate plural nouns by translating the singular root and adding plural ending
+    # TODO: edit to translate all conjugations of verbs
 
     for tup in tagged_phrase:
-        if tup[1] in valid_phrases and tup[0] in bliss_dict:
+        if tup[1] == "NNS":
+            tup = (singularize(tup[0]), "NN")
+        if tup[0] in bliss_dict and tup[1] in valid_phrases:
             tagged_dict[tup[0]] = tup[1]
 
     return tagged_dict
@@ -144,10 +162,10 @@ def sortFreqs(phrase):
     usage_freqs = getWordsFreqDict(word_freqs)
     sorted_freqs = []
 
-    for k in sorted(usage_freqs):
+    for key in sorted(usage_freqs):
         new_set = set([])
 
-        for word in usage_freqs[k]:
+        for word in usage_freqs[key]:
             if word in bliss_dict.keys():
                 new_set.add(word)
 
@@ -186,9 +204,17 @@ def renderAlphabet(words, columns=20):
 
     for word in words_list:
         bg = Image.new("RGBA", (glyph_bg_wh, glyph_bg_wh), (255, 255, 255, 255))
+        tag = nltk.pos_tag([word])[0]
 
-        if word in lexicon.bliss_dict.keys():
-            bliss_word = getBlissImg(word, glyph_bg_wh, max_height=default_font_size*3)
+        if tag[1] == "NNS":
+            lex = singularize(word)
+        elif tag[1][0:2] == "VB":
+            lex = lemma(tag[0])
+        else:
+            lex = word
+
+        if lex in lexicon.bliss_dict.keys():
+            bliss_word = getBlissImg(lex, glyph_bg_wh, max_height=default_font_size*3)
             eng_word = getWordImg(word.upper(), font_size=default_font_size/2)
 
             bliss_word = trim(bliss_word)
@@ -250,7 +276,7 @@ def translate(phrase):
             bg_width = 200
             bg_height = 200
         else:
-            bg_width = 2100
+            bg_width = 2000
             bg_height = bg_width/2
 
         indent = default_font_size
@@ -263,12 +289,22 @@ def translate(phrase):
         idx = 0
 
         for word in raw_phrase:
-            if word in tagged_dict.keys():
+            tag = nltk.pos_tag([word])[0]
+
+            if tag[1] == "NNS":
+                lex = singularize(word)
+            elif tag[1][0:2] == "VB":
+                lex = tag[0]
+                lex = lemma(lex)
+            else:
+                lex = word
+
+            if lex in tagged_dict.keys():
                 # if word can be validly translated into Blissymbols...
-                if word in seen or word in changed:
+                if word in seen or lex in seen or word in changed or lex in changed:
                     # if we've already seen or translated the word before...
                     try:
-                        getBlissImg(word, bg_width / 2)
+                        getBlissImg(lex, bg_width / 2)
                     except KeyError:
                         idx +=1
                         continue
@@ -276,24 +312,25 @@ def translate(phrase):
                         idx += 1
                         continue
                     else:
-                        if word in changed:
-                            img = getBlissImg(word, bg_width / 2)
+                        if word in changed and lex in changed:
+                            img = getBlissImg(lex, bg_width / 2)
                         else:
                             # adds subtitles to new words
                             img = renderAlphabet(word)
                             changed.add(word)
+                            changed.add(lex)
 
                     try:
                         sorted_freqs[-1]
                     except IndexError:
                         pass
                     else:
-                        if word in sorted_freqs[-1]:
+                        if lex in sorted_freqs[-1]:
                             # removes word from sorted_freqs
-                            changed.add(word)
+                            changed.add(lex)
 
                             if len(sorted_freqs[-1]) > 1:
-                                sorted_freqs[-1].remove(word)
+                                sorted_freqs[-1].remove(lex)
                             else:
                                 sorted_freqs.remove(sorted_freqs[-1])
 
@@ -301,23 +338,24 @@ def translate(phrase):
                     # if we haven't seen or translated the word before,
                     # then render English text
                     img = getWordImg(token_phrase[idx])
-                    seen.add(word)
+                    seen.add(lex)
 
             else:
                 # if word can't be translated to Blissymbols,
                 # then render English text
                 img = getWordImg(token_phrase[idx])
 
-            try:
-                raw_phrase[idx+1]
-            except IndexError:
-                pass
+            #try:
+                # raw_phrase[idx+1] currently unreferenced, try block for future ref
+                #raw_phrase[idx+1]
+            #except IndexError:
+                #pass
+
+            if raw_phrase[idx] in punctuation or "'" in raw_phrase[idx][:2]:
+                # TODO: modify for ( and )
+                space = 0
             else:
-                if raw_phrase[idx] in punctuation or "'" in raw_phrase[idx][:2]:
-                    # TODO: modify for ( and )
-                    space = 0
-                else:
-                    space = int(default_font_size / 1.5)
+                space = int(default_font_size / 1.5)
 
             x_inc = indent + getWordWidth(img) + space
             y_inc = default_font_size * 3
@@ -327,7 +365,7 @@ def translate(phrase):
             except IndexError:
                 pass
             else:
-                if not raw_phrase[idx+1].isalpha():
+                if raw_phrase[idx+1] in punctuation:
                     if (x_inc + getWordWidth(raw_phrase[idx+1])) > bg_width:
                         # don't let punctuation trail onto next line alone
                         indent = 0
@@ -359,6 +397,3 @@ def translate(phrase):
             page.show()
 
     renderTranslation()
-
-translate(excerpts.alice_in_wonderland)
-#translate(excerpts.wizard_of_oz)

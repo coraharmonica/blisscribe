@@ -64,8 +64,8 @@ def printDict(d):
     """
     print("{")
 
-    for k in d:
-        print('    "' + k + '": ' + '"' + str(d[k]) + '",')
+    for key in d:
+        print('    "' + key + '": ' + '"' + str(d[key]) + '",')
 
     print("}")
 
