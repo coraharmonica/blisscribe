@@ -1,2 +1,2 @@
-![Untranslated English Text](https://raw.github.com/chermary/blisscribe/resources/untranslated.png)
-![Translated English Text](https://raw.github.com/chermary/blisscribe/resources/translated.png)
+![Untranslated English Text](https://github.com/chermary/blisscribe/blob/master/resources/translated.png)
+![Translated English Text](https://github.com/chermary/blisscribe/blob/master/resources/translated.png)
