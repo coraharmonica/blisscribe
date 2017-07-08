@@ -19,8 +19,8 @@ import collections
 import nltk
 from PIL import Image, ImageDraw, ImageFont, ImageChops
 from pattern.text.en import singularize, lemma
+from reportlab.pdfgen import canvas  # for turning Images into .pdf
 
-import excerpts
 import lexicon
 
 # Constants
@@ -48,7 +48,9 @@ def getWordFreqDict(phrase):
     word from input phrase.
 
     :param phrase: str, non-empty string of words
-    :return: dict, word frequency dictionary for phrase
+    :return: dict, where...
+        key (str) - word in phrase
+        val (int) - frequency of word occurrences in phrase
     """
     words = nltk.word_tokenize(phrase)
     freqs = collections.defaultdict(int)
@@ -66,8 +68,8 @@ def getWordsFreqDict(freqs):
 
     :param freqs: dict, of words and word frequencies
     :return: dict, where...
-        key (int) frequency > 1
-        val (list) list of words with given frequency
+        key (int) - word frequency (> 1)
+        val (List[str]) - list of words with given frequency
     """
     sorted_freqs = collections.defaultdict(list)
 
@@ -156,12 +158,12 @@ def tagsToDict(token_phrase):
     dictionary of Blissymbols that can be translated into
     said tokens.
 
-    :param token_phrase: list, of word tokens from a phrase
+    :param token_phrase: List[str], list of word tokens from a phrase
     :return: dict, of translatable Blissymbols and their tokens
     """
     tagged_phrase = nltk.pos_tag(token_phrase)  # tokens tagged according to word type
     tagged_dict = {}
-    valid_phrases = ["NN", "NNS", "VB", "JJ", "VBD"]  # desirable tags (nouns, verbs, adjectives)
+    valid_phrases = ["NN", "NNS", "VB", "VBD", "MD", "JJ"]  # desirable tags (nouns, verbs, adjectives)
     # TODO: expand valid_phrases as much as possible
     # TODO: translate plural nouns by translating the singular root and adding plural ending
     # TODO: edit to translate all conjugations of verbs
@@ -181,7 +183,7 @@ def sortFreqs(phrase):
     sorted from lowest to highest frequency.
 
     :param phrase: str, input string of words
-    :return: list, a list of word sets from phrase
+    :return: List[str], a list of word sets from phrase
     """
     word_freqs = getWordFreqDict(phrase)
     usage_freqs = getWordsFreqDict(word_freqs)
@@ -288,6 +290,36 @@ def renderAlphabet(words, columns=20):
 def displayImages(pages):
     for page in pages:
         page.show()
+
+def saveImages(pages):
+    """
+
+
+    :param pages:
+    :return:
+    """
+    page_name = 0
+    for page in pages:
+        page.save(str(page_name))
+        page_name += 1
+
+
+def writePdf(filename, page_names):
+    """
+    Fetches Image filenames from page_names and pastes Images
+    to a page in a .pdf file.
+
+    Images are pasted in exact size.
+
+    :param filename: str, desired name for output .pdf file
+    :param page_names: List[str], a list of image filenames
+    :return: None
+    """
+    for page_name in page_names:
+        c = canvas.Canvas(filename + '.pdf')
+        c.drawImage(page_name, 0, 0)
+        c.showPage()
+        c.save()
 
 
 def translate(phrase):
@@ -429,9 +461,10 @@ def translate(phrase):
         except IndexError:
             pages.insert(0, bg)
 
-    displayImages(pages)
+    #displayImages(pages)
+    #writePdf(phrase[20], pages)
 
-translate(excerpts.alice_in_wonderland)
+#translate(excerpts.alice_in_wonderland)
 #translate(excerpts.texts[0][:500])
 
 # TODO: launch WordNet app so you can derive definitions for any words (even foreign), or look up synonyms to translate to

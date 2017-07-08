@@ -6,7 +6,8 @@ PARSE_LEXICON:
     Forms a Blissymbols dictionary by parsing each line in lexicon.txt,
     then prints the dictionary as if it were code.
 
-    Allows ease of future changes to main Bliss dictionary (@ lexicon.py).
+    Allows ease of future changes to main Bliss dictionary (@ lexicon.py),
+    including adding languages beyond English.
 """
 
 # Imports

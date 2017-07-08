@@ -17,7 +17,7 @@ import blisscribe
 import excerpts
 
 
-class blisscribeTest(unittest.TestCase):
+class testBlisscribe(unittest.TestCase):
     def testGetWordFreqDict(self):
         # empty
         self.assertEqual(blisscribe.getWordFreqDict(""), {})
@@ -31,7 +31,7 @@ class blisscribeTest(unittest.TestCase):
         self.assertEqual(blisscribe.getWordsFreqDict(blisscribe.getWordFreqDict("")), {})
 
         # 4-word phrase
-        self.assertEqual(blisscribe.getWordsFreqDict(blisscribe.getWordFreqDict("hello hello my wife")), {"hello": 2})
+        self.assertEqual(blisscribe.getWordsFreqDict(blisscribe.getWordFreqDict("hello hello my wife")), {2: ["hello"]})
 
 
     def testGetWordWidth(self):
@@ -43,6 +43,14 @@ class blisscribeTest(unittest.TestCase):
 
         # input Image
         self.assertEqual(blisscribe.getWordWidth(Image.open(blisscribe.img_path + "Abraham.png")), 1236)
+
+
+    def testMakeBlankImg(self):
+        # 1x1 blank image
+        self.assertEqual(blisscribe.makeBlankImg(1, 1), Image.new("RGBA", (1, 1), (255, 255, 255, 255)))
+
+        # 10x20 blank image
+        self.assertEqual(blisscribe.makeBlankImg(10, 20), Image.new("RGBA", (10, 20), (255, 255, 255, 255)))
 
 
     def testGetWordImg(self):
@@ -75,17 +83,53 @@ class blisscribeTest(unittest.TestCase):
         self.assertEqual(blisscribe.getBlissImg("accessibility", 100, 30), img)
 
 
+    def testGetWordTag(self):
+        # All relevant parts-of-speech tags are enumerated here:
+        # https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
+
+        # TODO: fix issues w/ comparative & superlative adjectives/adverbs (context?)
+
+        self.assertEqual(blisscribe.getWordTag("and"), ("and", "CC"))
+        self.assertEqual(blisscribe.getWordTag("seven"), ("seven", "CD"))
+        self.assertEqual(blisscribe.getWordTag("42"), ("42", "CD"))
+        self.assertEqual(blisscribe.getWordTag("the"), ("the", "DT"))
+        self.assertEqual(blisscribe.getWordTag("that"), ("that", "IN"))
+        self.assertEqual(blisscribe.getWordTag("happy"), ("happy", "JJ"))
+        #self.assertEqual(blisscribe.getWordTag("greener"), ("greener", "JJR"))
+        #self.assertEqual(blisscribe.getWordTag("greenest"), ("greenest", "JJS"))
+        self.assertEqual(blisscribe.getWordTag("should"), ("should", "MD"))
+        self.assertEqual(blisscribe.getWordTag("cheese"), ("cheese", "NN"))
+        self.assertEqual(blisscribe.getWordTag("dog"), ("dog", "NN"))
+        self.assertEqual(blisscribe.getWordTag("dogs"), ("dogs", "NNS"))
+        self.assertEqual(blisscribe.getWordTag("Friday"), ("Friday", "NNP"))
+        #self.assertEqual(blisscribe.getWordTag("Mondays"), ("Mondays", "NNPS"))
+        #self.assertEqual(blisscribe.getWordTag("Jack's"), ("Jack's", "POS"))
+        self.assertEqual(blisscribe.getWordTag("she"), ("she", "PRP"))
+        self.assertEqual(blisscribe.getWordTag("her"), ("her", "PRP$"))
+        self.assertEqual(blisscribe.getWordTag("quietly"), ("quietly", "RB"))
+        #self.assertEqual(blisscribe.getWordTag("better"), ("better", "RBR"))
+        #self.assertEqual(blisscribe.getWordTag("best"), ("best", "RBS"))
+        self.assertEqual(blisscribe.getWordTag("to"), ("to", "TO"))
+        self.assertEqual(blisscribe.getWordTag("run"), ("run", "VB"))
+        self.assertEqual(blisscribe.getWordTag("walked"), ("walked", "VBD"))
+        self.assertEqual(blisscribe.getWordTag("lying"), ("lying", "VBG"))
+        self.assertEqual(blisscribe.getWordTag("lied"), ("lied", "VBN"))
+
+
     def testTagsToDict(self):
         # all untranslatable words
         self.assertEqual(blisscribe.tagsToDict(["yolo", "meta", "postmodern"]), {})
 
         # singular nouns
+        self.assertEqual(blisscribe.tagsToDict(["boar", "hill"]), {"boar": "NN", "hill": "NN"})
         self.assertEqual(blisscribe.tagsToDict(["boar", "hill", "postmodern"]), {"boar": "NN", "hill": "NN"})
 
         # plural to singular noun
+        self.assertEqual(blisscribe.tagsToDict(["boar", "hills"]), {"boar": "NN", "hill": "NN"})
         self.assertEqual(blisscribe.tagsToDict(["boar", "hills", "postmodern"]), {"boar": "NN", "hill": "NN"})
 
         # adjective and verb
+        self.assertEqual(blisscribe.tagsToDict(["hopeful", "go"]), {"hopeful": "JJ", "go": "VB"})
         self.assertEqual(blisscribe.tagsToDict(["hopeful", "go", "postmodern"]), {"hopeful": "JJ", "go": "VB"})
 
 
@@ -101,7 +145,7 @@ class blisscribeTest(unittest.TestCase):
         # 1 SET
         # set w/ 1 item
         self.assertEqual(blisscribe.sortFreqs("hello hello my wife"), [set(["hello"])])
-        # set 2/ >1 items
+        # set w/ >1 items
         self.assertEqual(blisscribe.sortFreqs("dog dog catch bone bone"), [set(["dog", "bone"])])
         self.assertEqual(blisscribe.sortFreqs("you can run but you can not hide"), [set(["you", "can"])])
         self.assertEqual(blisscribe.sortFreqs("do you know the muffin man the muffin man the muffin man"), [set(["the", "muffin", "man"])])
@@ -112,8 +156,9 @@ class blisscribeTest(unittest.TestCase):
 
 
     def testTranslate(self):
-        # Alice in Wonderland
+        # Images should render, output should be None
         self.assertEqual(type(blisscribe.translate(excerpts.alice_in_wonderland)), type(None))
 
-        # Wizard of Oz
-        self.assertEqual(type(blisscribe.translate(excerpts.wizard_of_oz)), type(None))
+
+if __name__ == '__main__':
+    unittest.main()
