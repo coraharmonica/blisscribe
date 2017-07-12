@@ -36,13 +36,13 @@ class testBlisscribe(unittest.TestCase):
 
     def testGetWordWidth(self):
         # input str, default font size
-        self.assertEqual(blisscribe.getWordWidth("parrot"), len("parrot") * (blisscribe.default_font_size / 2))
+        self.assertEqual(blisscribe.getWordWidth("parrot"), len("parrot") * (blisscribe.DEFAULT_FONT_SIZE / 2))
 
         # input str, custom font size
         self.assertEqual(blisscribe.getWordWidth("parrot", 42), len("parrot") * (42 / 2))
 
         # input Image
-        self.assertEqual(blisscribe.getWordWidth(Image.open(blisscribe.img_path + "Abraham.png")), 1236)
+        self.assertEqual(blisscribe.getWordWidth(Image.open(blisscribe.IMG_PATH + "Abraham.png")), 1236)
 
 
     def testMakeBlankImg(self):
@@ -56,29 +56,29 @@ class testBlisscribe(unittest.TestCase):
     def testGetWordImg(self):
         # default font size
         word_width = blisscribe.getWordWidth("parrot")
-        img = Image.new('RGBA', (word_width, blisscribe.default_font_size * 5), (255, 255, 255, 255))
+        img = Image.new('RGBA', (word_width, blisscribe.DEFAULT_FONT_SIZE * 5), (255, 255, 255, 255))
         sketch = ImageDraw.Draw(img)
-        font = ImageFont.truetype(blisscribe.roman_font_path, blisscribe.default_font_size)
-        sketch.text((0, blisscribe.default_font_size), "parrot", font=font, fill="black")
+        font = ImageFont.truetype(blisscribe.ROMAN_FONT_PATH, blisscribe.DEFAULT_FONT_SIZE)
+        sketch.text((0, blisscribe.DEFAULT_FONT_SIZE), "parrot", font=font, fill="black")
         self.assertEqual(blisscribe.getWordImg("parrot"), img)
 
         # custom font size
         word_width = blisscribe.getWordWidth("parrot", 42)
         img = Image.new('RGBA', (word_width, 42 * 5), (255, 255, 255, 255))
         sketch = ImageDraw.Draw(img)
-        font = ImageFont.truetype(blisscribe.roman_font_path, 42)
+        font = ImageFont.truetype(blisscribe.ROMAN_FONT_PATH, 42)
         sketch.text((0, 42), "parrot", font=font, fill="black")
         self.assertEqual(blisscribe.getWordImg("parrot", 42), img)
 
 
     def testGetBlissImg(self):
         # default width/height
-        img = Image.open(blisscribe.img_path + "accessibility.png")
-        img.thumbnail((blisscribe.default_font_size * 10, blisscribe.default_font_size * 3))
+        img = Image.open(blisscribe.IMG_PATH + "accessibility.png")
+        img.thumbnail((blisscribe.DEFAULT_FONT_SIZE * 10, blisscribe.DEFAULT_FONT_SIZE * 3))
         self.assertEqual(blisscribe.getBlissImg("accessibility"), img)
 
         # custom width/height
-        img = Image.open(blisscribe.img_path + "accessibility.png")
+        img = Image.open(blisscribe.IMG_PATH + "accessibility.png")
         img.thumbnail((100, 30))
         self.assertEqual(blisscribe.getBlissImg("accessibility", 100, 30), img)
 

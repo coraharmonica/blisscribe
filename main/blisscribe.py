@@ -21,19 +21,25 @@ from PIL import Image, ImageDraw, ImageFont, ImageChops
 from pattern.text.en import singularize, lemma
 from reportlab.pdfgen import canvas  # for turning Images into .pdf
 
+import excerpts
 import lexicon
 
 # Constants
 # ---------
-roman_font_path = "/Users/courtney/Library/Fonts/BLISGRID.TTF"
-# Helvetica: "/Library/Fonts/Helvetica.dfont
-bliss_font_path = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
-img_path = "/Users/courtney/Documents/creation/programming/\
+# --> FONTS & IMAGES
+ROMAN_FONT_PATH = "/Users/courtney/Library/Fonts/BLISGRID.TTF"
+HELVETICA = "/Users/courtney/Library/Fonts/Helvetica.dfont"
+BLISS_FONT_PATH = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
+IMG_PATH = "/Users/courtney/Documents/creation/programming/\
 personal projects/bliss translator/symbols/full/png/whitebg/"
-default_font_size = 30
-roman_font = ImageFont.truetype(roman_font_path, default_font_size)
-bliss_dict = lexicon.bliss_dict
-punctuation = [".", ",", ";", ":", "?", "!", "'", '"', "`", "(", ")"]
+DEFAULT_FONT_SIZE = 30
+ROMAN_FONT = ImageFont.truetype(ROMAN_FONT_PATH, DEFAULT_FONT_SIZE)
+# --> LANGUAGE
+BLISS_DICT = lexicon.bliss_dict
+PUNCTUATION = [".", ",", ";", ":", "?", "!", "'", '"', "`", "(", ")"]
+# initializing accumulators for translate() helpers below
+WORDS_SEEN = collections.defaultdict(bool)
+WORDS_CHANGED = collections.defaultdict(bool)
 
 
 # FUNCTIONS
@@ -80,7 +86,7 @@ def getWordsFreqDict(freqs):
     return sorted_freqs
 
 
-def getWordWidth(word, font_size=default_font_size):
+def getWordWidth(word, font_size=DEFAULT_FONT_SIZE):
     """
     Returns the width of the given string or Image in pixels.
 
@@ -108,7 +114,7 @@ def makeBlankImg(x, y):
     return Image.new("RGBA", (x, y), (255, 255, 255, 255))
 
 
-def getWordImg(word, font_size=default_font_size):
+def getWordImg(word, font_size=DEFAULT_FONT_SIZE):
     """
     Draws and returns an Image of the given string.
 
@@ -119,13 +125,13 @@ def getWordImg(word, font_size=default_font_size):
     word_width = getWordWidth(word, font_size)
     img = makeBlankImg(word_width, font_size * 5)
     sketch = ImageDraw.Draw(img)
-    font = ImageFont.truetype(roman_font_path, font_size)
+    font = ImageFont.truetype(ROMAN_FONT_PATH, font_size)
     sketch.text((0, font_size), word, font=font, fill="black")
 
     return img
 
 
-def getBlissImg(word, max_width=default_font_size * 10, max_height=default_font_size * 3):
+def getBlissImg(word, max_width=DEFAULT_FONT_SIZE * 10, max_height=DEFAULT_FONT_SIZE * 3):
     """
     Draws and returns a thumbnail Image of the given str's Blissymbol,
     with a maximum width of max_width, and custom height if desired.
@@ -135,7 +141,7 @@ def getBlissImg(word, max_width=default_font_size * 10, max_height=default_font_
     :param max_height: int, maximum height of Blissymbol
     :return: Image, image of input str's Blissymbol
     """
-    bliss_word = Image.open(img_path + bliss_dict[word])  # string -> Bliss image
+    bliss_word = Image.open(IMG_PATH + BLISS_DICT[word])  # string -> Bliss image
     img = bliss_word
     img.thumbnail((max_width, max_height))
 
@@ -208,7 +214,7 @@ def sortFreqs(phrase):
         new_set = set([])
 
         for word in usage_freqs[key]:
-            if word in bliss_dict.keys():
+            if word in BLISS_DICT.keys():
                 new_set.add(word)
 
         if len(new_set) > 0:
@@ -235,6 +241,125 @@ def trim(img):
         return img.crop(bbox)
 
 
+def getLexeme(word):
+    """
+    Retrieves the given word's lexeme,
+    i.e., the word in dictionary entry form.
+
+    e.g. getLexeme(ran) -> "run"
+         getLexeme(puppies) -> "puppy"
+
+    :param word: str, word to retrieve lexeme of
+    :return: str, lexeme of input word
+    """
+    if isPluralNoun(word):
+        lexeme = singularize(word)
+    elif isVerb(word):
+        lexeme = lemma(word)
+    else:
+        lexeme = word
+
+    return lexeme
+
+
+def isNoun(word):
+    """
+    Returns True if word is a noun, False otherwise.
+
+    :param word: str, word to test whether a noun
+    :return: bool, whether given word is a noun
+    """
+    tag = getWordTag(word)
+    return tag[0:2] == "NN"
+
+
+def isPluralNoun(word):
+    """
+    Returns True if word is a plural noun, False otherwise.
+
+    :param word: str, word to test whether a plural noun
+    :return: bool, whether given word is a plural noun
+    """
+    return getWordTag(word) == "NNS"
+
+
+def isVerb(word):
+    """
+    Returns True if word is a verb, False otherwise.
+
+    :param word: str, word to test whether a verb
+    :return: bool, whether given word is a verb
+    """
+    tag = getWordTag(word)
+    return tag[0:2] == "VB"
+
+
+def isAdj(word):
+    """
+    Returns True if word is an adjective, False otherwise.
+
+    :param word: str, word to test whether an adjective
+    :return: bool, whether given word is an adjective
+    """
+    tag = getWordTag(word)
+    return tag[0:2] == "JJ"
+
+
+def isTranslatable(word):
+    """
+    Returns True if word or word lexeme can be translated to
+    Blissymbols, False otherwise.
+
+    :param word: str, word to test whether translatable
+    :return: bool, whether given word is translatable
+    """
+    return getLexeme(word) in BLISS_DICT
+
+"""
+def isTranslated(word):
+    return word in lexicon.BLISS_DICT.keys()
+"""
+
+def tagTranslatable(word):
+    """
+    Prefixes given Blissymbol-translatable word with @BLISS@.
+
+    :param word: str, word to prefix with @BLISS@
+    :return: str, word prefixed with @BLISS@
+    """
+    return "@BLISS@" + word
+
+
+def tagTranslatables(phrase):
+    """
+    Tags each Blissymbol-translatable word in phrase with
+    @BLISS@.
+
+    :param phrase: List[str], words to be translated
+    :return: List[str], phrase with translatable words tagged
+    """
+    idx = 0
+    new_phrase = phrase
+
+    for word in phrase:
+        if isTranslatable(word):
+            new_phrase[idx] = tagTranslatable(word)
+        idx += 1
+
+    return new_phrase
+
+
+def createTranslation(phrase):
+    # TODO: finish this
+    new_phrase = tagTranslatables(phrase)
+
+    for word in new_phrase:
+        if isTranslatable(word):
+            word_img = getBlissImg(getLexeme(word))
+        else:
+            word_img = getWordImg(word)
+
+
 def renderAlphabet(words, columns=20):
     """
     Renders an alphabet-style set of definitions for given words,
@@ -248,24 +373,17 @@ def renderAlphabet(words, columns=20):
 
     glyph_bg_wh = 200
     start = glyph_bg_wh / 2
-    space = default_font_size
+    space = DEFAULT_FONT_SIZE
 
     bliss_alphabet = []
 
     for word in words_list:
         bg = makeBlankImg(glyph_bg_wh, glyph_bg_wh)
-        tag = nltk.pos_tag([word])[0]
 
-        if tag[1] == "NNS":
-            lexeme = singularize(word)
-        elif tag[1][0:2] == "VB":
-            lexeme = lemma(tag[0])
-        else:
-            lexeme = word
-
-        if lexeme in lexicon.bliss_dict.keys():
-            bliss_word = getBlissImg(lexeme, glyph_bg_wh, max_height=default_font_size * 3)
-            eng_word = getWordImg(word.upper(), font_size=default_font_size / 2)
+        if isTranslatable(word):
+            lexeme = getLexeme(word)
+            bliss_word = getBlissImg(lexeme, glyph_bg_wh, max_height=DEFAULT_FONT_SIZE * 3)
+            eng_word = getWordImg(word.upper(), font_size=DEFAULT_FONT_SIZE / 2)
 
             bliss_word = trim(bliss_word)
             eng_word = trim(eng_word)
@@ -344,6 +462,51 @@ def writePdf(filename, page_names):
         c.save()
 
 
+def isSeen(word):
+    """
+    Returns True if the given word is part of the
+    WORDS_SEEN dict.
+
+    :param word: str, word to check if in WORDS_SEEN
+    :return: bool, whether given word is in WORDS_SEEN
+    """
+    global seen
+
+    return
+
+
+def addSeen(word):
+    """
+    Adds word to WORDS_SEEN dict.
+
+    :param word: str, word to add to WORDS_SEEN
+    :return: None
+    """
+    global seen
+    return False
+
+def isChanged(word):
+    """
+    Returns True if the given word is part of the
+    WORDS_CHANGED dict.
+
+    :param word: str, word to check if in WORDS_CHANGED
+    :return: bool, whether given word is in WORDS_CHANGED
+    """
+    global changed
+    return False
+
+def addChanged(word):
+    """
+    Adds word to WORDS_CHANGED dict.
+
+    :param word: str, word to add to WORDS_CHANGED
+    :return: None
+    """
+    global changed
+    return False
+
+
 def translate(phrase):
     """
     Displays image of input English text partially translated to Blissymbols.
@@ -362,20 +525,19 @@ def translate(phrase):
     bg_height = bg_width/2
     bg = makeBlankImg(bg_width, bg_height)
 
-    indent = default_font_size
+    indent = DEFAULT_FONT_SIZE
     #margins = 10  # pixels of space @ top & bottom margins
     line_no = 0
 
-    seen = set([])
-    changed = set([])
     idx = 0
 
     for word in raw_phrase:
         lexeme = getLexeme(word)
 
-        if lexeme in tagged_dict.keys():
+        if isTranslatable(word): #lexeme in tagged_dict.keys(): #
             # if word can be validly translated into Blissymbols...
-            if word in seen or lexeme in seen or word in changed or lexeme in changed:
+            if lexeme in seen or lexeme in changed:
+                # TODO: make isSeen(lexeme) and isChanged(lexeme) functions that output True once word has been changed/seen
                 # if we've already seen or translated the word before...
                 try:
                     getBlissImg(lexeme, bg_width / 2)
@@ -386,12 +548,11 @@ def translate(phrase):
                     idx += 1
                     continue
                 else:
-                    if word in changed and lexeme in changed:
+                    if lexeme in changed:
                         img = getBlissImg(lexeme, bg_width / 2)
                     else:
                         # adds subtitles to new words
                         img = renderAlphabet(word)
-                        changed.add(word)
                         changed.add(lexeme)
 
                 try:
@@ -434,23 +595,23 @@ def translate(phrase):
             #except IndexError:
             #pass
 
-        if raw_phrase[idx] in punctuation or "'" in raw_phrase[idx][:2]:
+        if raw_phrase[idx] in PUNCTUATION or "'" in raw_phrase[idx][:2]:
             # TODO: modify for ( and )
             space = 0
         else:
-            space = int(default_font_size / 1.5)
+            space = int(DEFAULT_FONT_SIZE / 1.5)
 
         x_inc = indent + getWordWidth(img) + space
-        y_inc = default_font_size * 3
+        y_inc = DEFAULT_FONT_SIZE * 3
 
         try:
             raw_phrase[idx+1]
         except IndexError:
             pass
         else:
-            if raw_phrase[idx+1] in punctuation:
+            if raw_phrase[idx+1] in PUNCTUATION:
                 if (x_inc + getWordWidth(raw_phrase[idx+1])) > bg_width:
-                    # don't let punctuation trail onto next line alone
+                    # don't let PUNCTUATION trail onto next line alone
                     indent = 0
                     line_no += 1
             elif x_inc > bg_width:
@@ -458,7 +619,7 @@ def translate(phrase):
                 line_no += 1
             elif raw_phrase[idx] == "\n":
                 # for new paragraphs
-                indent = int(default_font_size)
+                indent = int(DEFAULT_FONT_SIZE)
                 line_no += 1
 
         if y_inc + (line_no * y_inc) > bg_height:
@@ -476,122 +637,10 @@ def translate(phrase):
         except IndexError:
             pages.insert(0, bg)
 
-    #displayImages(pages)
+    displayImages(pages)
     #writePdf(phrase[20], pages)
 
-#translate(excerpts.alice_in_wonderland)
+translate(excerpts.alice_in_wonderland)
 #translate(excerpts.texts[0][:500])
 
 # TODO: launch WordNet app so you can derive definitions for any words (even foreign), or look up synonyms to translate to
-
-def getLexeme(word):
-    """
-    Retrieves the given word's lexeme,
-    i.e., the word in dictionary entry form.
-
-    e.g. getLexeme(ran) -> "run"
-         getLexeme(puppies) -> "puppy"
-
-    :param word: str, word to retrieve lexeme of
-    :return: str, lexeme of input word
-    """
-    if isPluralNoun(word):
-        lexeme = singularize(word)
-    elif isVerb(word):
-        lexeme = lemma(word)
-    else:
-        lexeme = word
-
-    return lexeme
-
-
-def isNoun(word):
-    """
-    Returns True if word is a noun, False otherwise.
-
-    :param word: str, word to test whether a noun
-    :return: bool, whether given word is a noun
-    """
-    tag = getWordTag(word)
-    return tag[0:2] == "NN"
-
-
-def isPluralNoun(word):
-    """
-    Returns True if word is a plural noun, False otherwise.
-
-    :param word: str, word to test whether a plural noun
-    :return: bool, whether given word is a plural noun
-    """
-    return getWordTag(word) == "NNS"
-
-
-def isVerb(word):
-    """
-    Returns True if word is a verb, False otherwise.
-
-    :param word: str, word to test whether a verb
-    :return: bool, whether given word is a verb
-    """
-    tag = getWordTag(word)
-    return tag[0:2] == "VB"
-
-
-def isAdj(word):
-    """
-    Returns True if word is an adjective, False otherwise.
-
-    :param word: str, word to test whether an adjective
-    :return: bool, whether given word is an adjective
-    """
-    tag = getWordTag(word)
-    return tag[0:2] == "JJ"
-
-
-def isTranslatable(word):
-    """
-    Returns True if word or word lexeme can be translated to
-    Blissymbols, False otherwise.
-
-    :param word: str, word to test whether translatable
-    :return: bool, whether given word is translatable
-    """
-    return getLexeme(word) in bliss_dict
-
-
-def tagTranslatable(word):
-    """
-    Prefixes given Blissymbol-translatable word with @BLISS@.
-
-    :param word: str, word to prefix with @BLISS@
-    :return: str, word prefixed with @BLISS@
-    """
-    return "@BLISS@" + word
-
-
-def tagTranslatables(phrase):
-    """
-    Tags each Blissymbol-translatable word in phrase with
-    @BLISS@.
-
-    :param phrase: List[str], words to be translated
-    :return: List[str], phrase with translatable words tagged
-    """
-    idx = 0
-    new_phrase = phrase
-
-    for word in phrase:
-        if isTranslatable(word):
-            new_phrase[idx] = tagTranslatable(word)
-        idx += 1
-
-    return new_phrase
-
-def createTranslation(phrase):
-    new_phrase = tagTranslatables(phrase)
-
-    for word in new_phrase:
-        if isTranslatable(word):
-            word_img = getBlissImg(getLexeme(word))
-        else:
-            word_img = getWordImg(word)

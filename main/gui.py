@@ -154,7 +154,7 @@ class MainWindow(wx.Frame):
 
     def OnTranslate(self, event):
         pages = blisscribe.translate("Input text")
-        png = wx.Image(pages[-1].save(blisscribe.img_path + "1", format="PNG"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        png = wx.Image(pages[-1].save(blisscribe.IMG_PATH + "1", format="PNG"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         wx.StaticBitmap(self, -1, png, (10, 5), (png.GetWidth(), png.GetHeight()))
         self.InitTranslation()
 
@@ -162,7 +162,7 @@ class MainWindow(wx.Frame):
         idx = 1
 
         for page in pages:
-            png = wx.Image(page.save(blisscribe.img_path + idx), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+            png = wx.Image(page.save(blisscribe.IMG_PATH + idx), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
             wx.StaticBitmap(self, -1, png, (10, 5), (png.GetWidth(), png.GetHeight()))
             idx += 1
         '''
