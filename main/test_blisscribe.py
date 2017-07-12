@@ -89,31 +89,31 @@ class testBlisscribe(unittest.TestCase):
 
         # TODO: fix issues w/ comparative & superlative adjectives/adverbs (context?)
 
-        self.assertEqual(blisscribe.getWordTag("and"), ("and", "CC"))
-        self.assertEqual(blisscribe.getWordTag("seven"), ("seven", "CD"))
-        self.assertEqual(blisscribe.getWordTag("42"), ("42", "CD"))
-        self.assertEqual(blisscribe.getWordTag("the"), ("the", "DT"))
-        self.assertEqual(blisscribe.getWordTag("that"), ("that", "IN"))
-        self.assertEqual(blisscribe.getWordTag("happy"), ("happy", "JJ"))
-        #self.assertEqual(blisscribe.getWordTag("greener"), ("greener", "JJR"))
-        #self.assertEqual(blisscribe.getWordTag("greenest"), ("greenest", "JJS"))
-        self.assertEqual(blisscribe.getWordTag("should"), ("should", "MD"))
-        self.assertEqual(blisscribe.getWordTag("cheese"), ("cheese", "NN"))
-        self.assertEqual(blisscribe.getWordTag("dog"), ("dog", "NN"))
-        self.assertEqual(blisscribe.getWordTag("dogs"), ("dogs", "NNS"))
-        self.assertEqual(blisscribe.getWordTag("Friday"), ("Friday", "NNP"))
-        #self.assertEqual(blisscribe.getWordTag("Mondays"), ("Mondays", "NNPS"))
-        #self.assertEqual(blisscribe.getWordTag("Jack's"), ("Jack's", "POS"))
-        self.assertEqual(blisscribe.getWordTag("she"), ("she", "PRP"))
-        self.assertEqual(blisscribe.getWordTag("her"), ("her", "PRP$"))
-        self.assertEqual(blisscribe.getWordTag("quietly"), ("quietly", "RB"))
-        #self.assertEqual(blisscribe.getWordTag("better"), ("better", "RBR"))
-        #self.assertEqual(blisscribe.getWordTag("best"), ("best", "RBS"))
-        self.assertEqual(blisscribe.getWordTag("to"), ("to", "TO"))
-        self.assertEqual(blisscribe.getWordTag("run"), ("run", "VB"))
-        self.assertEqual(blisscribe.getWordTag("walked"), ("walked", "VBD"))
-        self.assertEqual(blisscribe.getWordTag("lying"), ("lying", "VBG"))
-        self.assertEqual(blisscribe.getWordTag("lied"), ("lied", "VBN"))
+        self.assertEqual(blisscribe.getWordAndTag("and"), ("and", "CC"))
+        self.assertEqual(blisscribe.getWordAndTag("seven"), ("seven", "CD"))
+        self.assertEqual(blisscribe.getWordAndTag("42"), ("42", "CD"))
+        self.assertEqual(blisscribe.getWordAndTag("the"), ("the", "DT"))
+        self.assertEqual(blisscribe.getWordAndTag("that"), ("that", "IN"))
+        self.assertEqual(blisscribe.getWordAndTag("happy"), ("happy", "JJ"))
+        #self.assertEqual(blisscribe.getWordAndTag("greener"), ("greener", "JJR"))
+        #self.assertEqual(blisscribe.getWordAndTag("greenest"), ("greenest", "JJS"))
+        self.assertEqual(blisscribe.getWordAndTag("should"), ("should", "MD"))
+        self.assertEqual(blisscribe.getWordAndTag("cheese"), ("cheese", "NN"))
+        self.assertEqual(blisscribe.getWordAndTag("dog"), ("dog", "NN"))
+        self.assertEqual(blisscribe.getWordAndTag("dogs"), ("dogs", "NNS"))
+        self.assertEqual(blisscribe.getWordAndTag("Friday"), ("Friday", "NNP"))
+        #self.assertEqual(blisscribe.getWordAndTag("Mondays"), ("Mondays", "NNPS"))
+        #self.assertEqual(blisscribe.getWordAndTag("Jack's"), ("Jack's", "POS"))
+        self.assertEqual(blisscribe.getWordAndTag("she"), ("she", "PRP"))
+        self.assertEqual(blisscribe.getWordAndTag("her"), ("her", "PRP$"))
+        self.assertEqual(blisscribe.getWordAndTag("quietly"), ("quietly", "RB"))
+        #self.assertEqual(blisscribe.getWordAndTag("better"), ("better", "RBR"))
+        #self.assertEqual(blisscribe.getWordAndTag("best"), ("best", "RBS"))
+        self.assertEqual(blisscribe.getWordAndTag("to"), ("to", "TO"))
+        self.assertEqual(blisscribe.getWordAndTag("run"), ("run", "VB"))
+        self.assertEqual(blisscribe.getWordAndTag("walked"), ("walked", "VBD"))
+        self.assertEqual(blisscribe.getWordAndTag("lying"), ("lying", "VBG"))
+        self.assertEqual(blisscribe.getWordAndTag("lied"), ("lied", "VBN"))
 
 
     def testTagsToDict(self):
@@ -158,6 +158,13 @@ class testBlisscribe(unittest.TestCase):
     def testTranslate(self):
         # Images should render, output should be None
         self.assertEqual(type(blisscribe.translate(excerpts.alice_in_wonderland)), type(None))
+
+
+    def testGetLexeme(self):
+        self.assertEqual(blisscribe.getLexeme("walked"), "walk")
+        self.assertEqual(blisscribe.getLexeme("puppies"), "puppy")
+        self.assertEqual(blisscribe.getLexeme("puppy"), "puppy")
+        self.assertEqual(blisscribe.getLexeme("hellokitty"), "hellokitty")
 
 
 if __name__ == '__main__':

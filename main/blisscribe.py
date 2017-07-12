@@ -112,7 +112,7 @@ def getWordImg(word, font_size=default_font_size):
     """
     Draws and returns an Image of the given string.
 
-    :param word: str
+    :param word: str, word to render to Image
     :param font_size: int, desired font size of text
     :return: Image, image of input str
     """
@@ -130,7 +130,7 @@ def getBlissImg(word, max_width=default_font_size * 10, max_height=default_font_
     Draws and returns a thumbnail Image of the given str's Blissymbol,
     with a maximum width of max_width, and custom height if desired.
 
-    :param word: str
+    :param word: str, word to render to Image
     :param max_width: int, maximum width of Blissymbol
     :param max_height: int, maximum height of Blissymbol
     :return: Image, image of input str's Blissymbol
@@ -142,14 +142,27 @@ def getBlissImg(word, max_width=default_font_size * 10, max_height=default_font_
     return img
 
 
-def getWordTag(word):
+def getWordAndTag(word):
     """
     Returns a tuple of the given word and its tag.
 
-    :param word: str
-    :return: (str, str) tuple
+    :param word: str, word to tag
+    :return: (str, str) tuple, given word and its tag
     """
     return nltk.pos_tag([word])[0]
+
+
+def getWordTag(word):
+    """
+    Returns the given word's tag.
+
+    Caution: tagging single words outside the context of
+    a sentence results in higher errors.
+
+    :param word: str, word to tag
+    :return: str, given word's tag
+    """
+    return getWordAndTag(word)[1]
 
 
 def tagsToDict(token_phrase):
@@ -163,15 +176,17 @@ def tagsToDict(token_phrase):
     """
     tagged_phrase = nltk.pos_tag(token_phrase)  # tokens tagged according to word type
     tagged_dict = {}
-    valid_phrases = ["NN", "NNS", "VB", "VBD", "MD", "JJ"]  # desirable tags (nouns, verbs, adjectives)
+    valid_phrases = ["NN", "NNS", "POS", "VB", "VBD", "VBG", "VBN",
+                     "RB", "RBR", "RBS", "JJ", "JJR", "JJS"]  # desirable tags (nouns, verbs, adjectives)
     # TODO: expand valid_phrases as much as possible
     # TODO: translate plural nouns by translating the singular root and adding plural ending
     # TODO: edit to translate all conjugations of verbs
 
     for tup in tagged_phrase:
-        if tup[1] == "NNS":
-            tup = (singularize(tup[0]), "NN")
-        if tup[0] in bliss_dict and tup[1] in valid_phrases:
+        if isTranslatable(tup[0]) and tup[1] in valid_phrases:
+            if tup[1] == "NNS":
+                tup = (singularize(tup[0]), "NN")
+
             tagged_dict[tup[0]] = tup[1]
 
     return tagged_dict
@@ -288,15 +303,22 @@ def renderAlphabet(words, columns=20):
 # ----------
 
 def displayImages(pages):
+    """
+    Displays each image in pages.
+
+    :param pages: List[Image], images to display
+    :return: None
+    """
     for page in pages:
         page.show()
 
+
 def saveImages(pages):
     """
+    Saves each page in pages as a separate image file.
 
-
-    :param pages:
-    :return:
+    :param pages: List[Image], images to save to file
+    :return: None
     """
     page_name = 0
     for page in pages:
@@ -312,7 +334,7 @@ def writePdf(filename, page_names):
     Images are pasted in exact size.
 
     :param filename: str, desired name for output .pdf file
-    :param page_names: List[str], a list of image filenames
+    :param page_names: List[str], list of image filenames
     :return: None
     """
     for page_name in page_names:
@@ -349,14 +371,7 @@ def translate(phrase):
     idx = 0
 
     for word in raw_phrase:
-        tag = getWordTag(word)[1]
-
-        if tag == "NNS":
-            lexeme = singularize(word)
-        elif tag[0:2] == "VB":
-            lexeme = lemma(word)
-        else:
-            lexeme = word
+        lexeme = getLexeme(word)
 
         if lexeme in tagged_dict.keys():
             # if word can be validly translated into Blissymbols...
@@ -468,3 +483,115 @@ def translate(phrase):
 #translate(excerpts.texts[0][:500])
 
 # TODO: launch WordNet app so you can derive definitions for any words (even foreign), or look up synonyms to translate to
+
+def getLexeme(word):
+    """
+    Retrieves the given word's lexeme,
+    i.e., the word in dictionary entry form.
+
+    e.g. getLexeme(ran) -> "run"
+         getLexeme(puppies) -> "puppy"
+
+    :param word: str, word to retrieve lexeme of
+    :return: str, lexeme of input word
+    """
+    if isPluralNoun(word):
+        lexeme = singularize(word)
+    elif isVerb(word):
+        lexeme = lemma(word)
+    else:
+        lexeme = word
+
+    return lexeme
+
+
+def isNoun(word):
+    """
+    Returns True if word is a noun, False otherwise.
+
+    :param word: str, word to test whether a noun
+    :return: bool, whether given word is a noun
+    """
+    tag = getWordTag(word)
+    return tag[0:2] == "NN"
+
+
+def isPluralNoun(word):
+    """
+    Returns True if word is a plural noun, False otherwise.
+
+    :param word: str, word to test whether a plural noun
+    :return: bool, whether given word is a plural noun
+    """
+    return getWordTag(word) == "NNS"
+
+
+def isVerb(word):
+    """
+    Returns True if word is a verb, False otherwise.
+
+    :param word: str, word to test whether a verb
+    :return: bool, whether given word is a verb
+    """
+    tag = getWordTag(word)
+    return tag[0:2] == "VB"
+
+
+def isAdj(word):
+    """
+    Returns True if word is an adjective, False otherwise.
+
+    :param word: str, word to test whether an adjective
+    :return: bool, whether given word is an adjective
+    """
+    tag = getWordTag(word)
+    return tag[0:2] == "JJ"
+
+
+def isTranslatable(word):
+    """
+    Returns True if word or word lexeme can be translated to
+    Blissymbols, False otherwise.
+
+    :param word: str, word to test whether translatable
+    :return: bool, whether given word is translatable
+    """
+    return getLexeme(word) in bliss_dict
+
+
+def tagTranslatable(word):
+    """
+    Prefixes given Blissymbol-translatable word with @BLISS@.
+
+    :param word: str, word to prefix with @BLISS@
+    :return: str, word prefixed with @BLISS@
+    """
+    return "@BLISS@" + word
+
+
+def tagTranslatables(phrase):
+    """
+    Tags each Blissymbol-translatable word in phrase with
+    @BLISS@.
+
+    :param phrase: List[str], words to be translated
+    :return: List[str], phrase with translatable words tagged
+    """
+    idx = 0
+    new_phrase = phrase
+
+    for word in phrase:
+        if isTranslatable(word):
+            new_phrase[idx] = tagTranslatable(word)
+        idx += 1
+
+    return new_phrase
+
+def createTranslation(phrase):
+    new_phrase = tagTranslatables(phrase)
+
+    for word in new_phrase:
+        if isTranslatable(word):
+            word_img = getBlissImg(getLexeme(word))
+        else:
+            word_img = getWordImg(word)
