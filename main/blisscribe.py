@@ -19,15 +19,15 @@ import collections
 import nltk
 from PIL import Image, ImageDraw, ImageFont, ImageChops
 from pattern.text.en import singularize, lemma
-from reportlab.pdfgen import canvas  # for turning Images into .pdf
 
 import excerpts
 import lexicon
 
+
 # Constants
 # ---------
 # --> FONTS & IMAGES
-ROMAN_FONT_PATH = "/Users/courtney/Library/Fonts/BLISGRID.TTF"
+ROMAN_FONT_PATH = "/Users/courtney/Library/Fonts/Helvetica.dfont" #"/Users/courtney/Library/Fonts/BLISGRID.TTF"
 HELVETICA = "/Users/courtney/Library/Fonts/Helvetica.dfont"
 BLISS_FONT_PATH = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
 IMG_PATH = "/Users/courtney/Documents/creation/programming/\
@@ -52,6 +52,8 @@ def getWordFreqDict(phrase):
     """
     Returns a dictionary with a frequency count for each
     word from input phrase.
+    Used to determine most frequently used words in a text
+    for translation purposes.
 
     :param phrase: str, non-empty string of words
     :return: dict, where...
@@ -71,6 +73,8 @@ def getWordsFreqDict(freqs):
     """
     Returns a dictionary where each value is a list of
     words occurring at a given frequency (> 1).
+    Used to determine most frequently used words in a text
+    for translation purposes.
 
     :param freqs: dict, of words and word frequencies
     :return: dict, where...
@@ -86,7 +90,7 @@ def getWordsFreqDict(freqs):
     return sorted_freqs
 
 
-def getWordWidth(word, font_size=DEFAULT_FONT_SIZE):
+def getWordWidth(word, font_size = DEFAULT_FONT_SIZE):
     """
     Returns the width of the given string or Image in pixels.
 
@@ -95,7 +99,7 @@ def getWordWidth(word, font_size=DEFAULT_FONT_SIZE):
     :return: int, word width in pixels
     """
     if type(word) == str:
-        return len(word) * (font_size / 2)
+        return trimHorizontal(getWordImg(word)).size[0]
     else:
         try:
             return word.size[0]
@@ -114,7 +118,7 @@ def makeBlankImg(x, y):
     return Image.new("RGBA", (x, y), (255, 255, 255, 255))
 
 
-def getWordImg(word, font_size=DEFAULT_FONT_SIZE):
+def getWordImg(word, font_size = DEFAULT_FONT_SIZE):
     """
     Draws and returns an Image of the given string.
 
@@ -122,16 +126,15 @@ def getWordImg(word, font_size=DEFAULT_FONT_SIZE):
     :param font_size: int, desired font size of text
     :return: Image, image of input str
     """
-    word_width = getWordWidth(word, font_size)
-    img = makeBlankImg(word_width, font_size * 5)
+    img = makeBlankImg(len(word) * font_size, font_size * 5)
     sketch = ImageDraw.Draw(img)
     font = ImageFont.truetype(ROMAN_FONT_PATH, font_size)
     sketch.text((0, font_size), word, font=font, fill="black")
 
-    return img
+    return trimHorizontal(img)
 
 
-def getBlissImg(word, max_width=DEFAULT_FONT_SIZE * 10, max_height=DEFAULT_FONT_SIZE * 3):
+def getBlissImg(word, max_width = DEFAULT_FONT_SIZE*10, max_height = DEFAULT_FONT_SIZE*3):
     """
     Draws and returns a thumbnail Image of the given str's Blissymbol,
     with a maximum width of max_width, and custom height if desired.
@@ -173,27 +176,29 @@ def getWordTag(word):
 
 def tagsToDict(token_phrase):
     """
-    Given a list of word tokens in a phrase, returns a
-    dictionary of Blissymbols that can be translated into
-    said tokens.
+    Given a list of strings composing a phrase, returns a dict of words
+    and word part-of-speech tags, where only words that can be translated
+    into Blissymbols form the dict's keys.
+
+    All relevant parts-of-speech tags are enumerated here:
+    https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
 
     :param token_phrase: List[str], list of word tokens from a phrase
-    :return: dict, of translatable Blissymbols and their tokens
+    :return: dict, where...
+        key (str) - word from phrase translatable into a Blissymbol
+        val (str) - key word part-of-speech tag
     """
-    tagged_phrase = nltk.pos_tag(token_phrase)  # tokens tagged according to word type
-    tagged_dict = {}
-    valid_phrases = ["NN", "NNS", "POS", "VB", "VBD", "VBG", "VBN",
-                     "RB", "RBR", "RBS", "JJ", "JJR", "JJS"]  # desirable tags (nouns, verbs, adjectives)
     # TODO: expand valid_phrases as much as possible
     # TODO: translate plural nouns by translating the singular root and adding plural ending
     # TODO: edit to translate all conjugations of verbs
+    tagged_phrase = nltk.pos_tag(token_phrase)  # tokens tagged according to word type
+    tagged_dict = {}
+    valid_phrases = ["NN", "NNS", "POS", "VB", "VBD", "VBG", "VBN",
+                     "RB", "RBR", "RBS", "JJ", "JJR", "JJS"]         # desirable tags (nouns, verbs, adjectives)
 
     for tup in tagged_phrase:
         if isTranslatable(tup[0]) and tup[1] in valid_phrases:
-            if tup[1] == "NNS":
-                tup = (singularize(tup[0]), "NN")
-
-            tagged_dict[tup[0]] = tup[1]
+            tagged_dict[getLexeme(tup[0])] = tup[1]
 
     return tagged_dict
 
@@ -241,6 +246,26 @@ def trim(img):
         return img.crop(bbox)
 
 
+def trimHorizontal(img):
+    """
+    Trims the input image's whitespace only
+    in the x-dimension.
+
+    :param img: Image, image to be trimmed
+    :return: Image, trimmed image
+
+    Taken from http://stackoverflow.com/questions/10615901/trim-whitespace-using-pil/29192070.
+    """
+    bg = Image.new(img.mode, img.size, img.getpixel((0, 0)))
+    diff = ImageChops.difference(img, bg)
+    diff = ImageChops.add(diff, diff, 2.0, -100)
+    bbox = diff.getbbox()
+    bbox = (bbox[0], 0, bbox[2], img.size[1])
+
+    if bbox:
+        return img.crop(bbox)
+
+
 def getLexeme(word):
     """
     Retrieves the given word's lexeme,
@@ -249,7 +274,10 @@ def getLexeme(word):
     e.g. getLexeme(ran) -> "run"
          getLexeme(puppies) -> "puppy"
 
-    :param word: str, word to retrieve lexeme of
+    Note: if a lexeme for the given word cannot
+    be found, this function returns the input.
+
+    :param word: str, word to convert to lexeme
     :return: str, lexeme of input word
     """
     if isPluralNoun(word):
@@ -315,10 +343,6 @@ def isTranslatable(word):
     """
     return getLexeme(word) in BLISS_DICT
 
-"""
-def isTranslated(word):
-    return word in lexicon.BLISS_DICT.keys()
-"""
 
 def tagTranslatable(word):
     """
@@ -332,8 +356,8 @@ def tagTranslatable(word):
 
 def tagTranslatables(phrase):
     """
-    Tags each Blissymbol-translatable word in phrase with
-    @BLISS@.
+    Tags each Blissymbol-translatable word in phrase with @BLISS@
+    to indicate which words to render as Blissymbol images.
 
     :param phrase: List[str], words to be translated
     :return: List[str], phrase with translatable words tagged
@@ -360,14 +384,14 @@ def createTranslation(phrase):
             word_img = getWordImg(word)
 
 
-def renderAlphabet(words, columns=20):
+def drawAlphabet(words, columns=20):
     """
-    Renders an alphabet-style set of definitions for given words,
-    with word definition on top and corresponding Blissymbol on bottom.
+    Draws an alphabet-style Image with definitions for given words,
+    with word definition on bottom and corresponding Blissymbol on top.
 
     :param words: str, words (separated by spaces) to be rendered
     :param columns: int, maximum number of columns
-    :return: Image, rendered alphabet of given words
+    :return: Image, drawn alphabet of given words
     """
     words_list = words.split(" ")
 
@@ -417,9 +441,6 @@ def renderAlphabet(words, columns=20):
     return trim(alphabet_bg)
 
 
-# Translator
-# ----------
-
 def displayImages(pages):
     """
     Displays each image in pages.
@@ -431,37 +452,6 @@ def displayImages(pages):
         page.show()
 
 
-def saveImages(pages):
-    """
-    Saves each page in pages as a separate image file.
-
-    :param pages: List[Image], images to save to file
-    :return: None
-    """
-    page_name = 0
-    for page in pages:
-        page.save(str(page_name))
-        page_name += 1
-
-
-def writePdf(filename, page_names):
-    """
-    Fetches Image filenames from page_names and pastes Images
-    to a page in a .pdf file.
-
-    Images are pasted in exact size.
-
-    :param filename: str, desired name for output .pdf file
-    :param page_names: List[str], list of image filenames
-    :return: None
-    """
-    for page_name in page_names:
-        c = canvas.Canvas(filename + '.pdf')
-        c.drawImage(page_name, 0, 0)
-        c.showPage()
-        c.save()
-
-
 def isSeen(word):
     """
     Returns True if the given word is part of the
@@ -470,9 +460,8 @@ def isSeen(word):
     :param word: str, word to check if in WORDS_SEEN
     :return: bool, whether given word is in WORDS_SEEN
     """
-    global seen
-
-    return
+    global WORDS_SEEN
+    return word in WORDS_SEEN
 
 
 def addSeen(word):
@@ -482,8 +471,9 @@ def addSeen(word):
     :param word: str, word to add to WORDS_SEEN
     :return: None
     """
-    global seen
-    return False
+    global WORDS_SEEN
+    WORDS_SEEN[word] = True
+
 
 def isChanged(word):
     """
@@ -493,8 +483,9 @@ def isChanged(word):
     :param word: str, word to check if in WORDS_CHANGED
     :return: bool, whether given word is in WORDS_CHANGED
     """
-    global changed
-    return False
+    global WORDS_CHANGED
+    return word in WORDS_CHANGED
+
 
 def addChanged(word):
     """
@@ -503,16 +494,19 @@ def addChanged(word):
     :param word: str, word to add to WORDS_CHANGED
     :return: None
     """
-    global changed
-    return False
+    global WORDS_CHANGED
+    WORDS_CHANGED[word] = True
 
+
+# Translator
+# ----------
 
 def translate(phrase):
     """
     Displays image of input English text partially translated to Blissymbols.
 
     :param phrase: str, non-empty English text
-    :return: list, of Image(s) of text
+    :return: None
     """
     token_phrase = nltk.word_tokenize(phrase)  # phrase split into word tokens
     tagged_dict = tagsToDict(token_phrase)
@@ -534,10 +528,9 @@ def translate(phrase):
     for word in raw_phrase:
         lexeme = getLexeme(word)
 
-        if isTranslatable(word): #lexeme in tagged_dict.keys(): #
+        if isTranslatable(word):
             # if word can be validly translated into Blissymbols...
-            if lexeme in seen or lexeme in changed:
-                # TODO: make isSeen(lexeme) and isChanged(lexeme) functions that output True once word has been changed/seen
+            if isSeen(lexeme) or isChanged(lexeme):
                 # if we've already seen or translated the word before...
                 try:
                     getBlissImg(lexeme, bg_width / 2)
@@ -548,18 +541,18 @@ def translate(phrase):
                     idx += 1
                     continue
                 else:
-                    if lexeme in changed:
+                    if isChanged(lexeme):
                         img = getBlissImg(lexeme, bg_width / 2)
                     else:
                         # adds subtitles to new words
-                        img = renderAlphabet(word)
-                        changed.add(lexeme)
-
+                        img = drawAlphabet(word)
+                        addChanged(lexeme)
+                """
                 try:
                     #sorted_freqs[-1]
                     if lexeme in sorted_freqs[-1]:
                         # removes word from sorted_freqs
-                        changed.add(lexeme)
+                        addChanged(lexeme)
 
                         if len(sorted_freqs[-1]) > 1:
                             sorted_freqs[-1].remove(lexeme)
@@ -567,10 +560,10 @@ def translate(phrase):
                             sorted_freqs.remove(sorted_freqs[-1])
                 except IndexError:
                     pass
-                """else:
+                else:
                     if lexeme in sorted_freqs[-1]:
                         # removes word from sorted_freqs
-                        changed.add(lexeme)
+                        addChanged(lexeme)
 
                         if len(sorted_freqs[-1]) > 1:
                             sorted_freqs[-1].remove(lexeme)
@@ -582,22 +575,17 @@ def translate(phrase):
                 # if we haven't seen or translated the word before,
                 # then render English text
                 img = getWordImg(token_phrase[idx])
-                seen.add(lexeme)
+                addSeen(lexeme)
 
         else:
             # if word can't be translated to Blissymbols,
             # then render English text
             img = getWordImg(token_phrase[idx])
 
-            #try:
-            # raw_phrase[idx+1] currently unreferenced, try block for future ref
-            #raw_phrase[idx+1]
-            #except IndexError:
-            #pass
-
         if raw_phrase[idx] in PUNCTUATION or "'" in raw_phrase[idx][:2]:
             # TODO: modify for ( and )
-            space = 0
+            if raw_phrase[idx] != "(":
+                space = 0
         else:
             space = int(DEFAULT_FONT_SIZE / 1.5)
 
@@ -609,11 +597,13 @@ def translate(phrase):
         except IndexError:
             pass
         else:
-            if raw_phrase[idx+1] in PUNCTUATION:
+            if raw_phrase[idx+1] in PUNCTUATION or raw_phrase[idx-1] in PUNCTUATION:
                 if (x_inc + getWordWidth(raw_phrase[idx+1])) > bg_width:
                     # don't let PUNCTUATION trail onto next line alone
                     indent = 0
                     line_no += 1
+                elif raw_phrase[idx-1] == "(":
+                    space = max(0, space - int(DEFAULT_FONT_SIZE / 1.5))
             elif x_inc > bg_width:
                 indent = 0
                 line_no += 1
@@ -644,3 +634,40 @@ translate(excerpts.alice_in_wonderland)
 #translate(excerpts.texts[0][:500])
 
 # TODO: launch WordNet app so you can derive definitions for any words (even foreign), or look up synonyms to translate to
+
+
+# Experimental
+# ------------
+
+'''
+def saveImages(pages):
+    """
+    Saves each page in pages as a separate image file.
+
+    :param pages: List[Image], images to save to file
+    :return: None
+    """
+    page_name = 0
+    for page in pages:
+        page.save(str(page_name))
+        page_name += 1
+
+
+def writePdf(filename, page_names):
+    """
+    Fetches Image filenames from page_names and pastes Images
+    to a page in a .pdf file.
+
+    Images are pasted in exact size.
+
+    :param filename: str, desired name for output .pdf file
+    :param page_names: List[str], list of image filenames
+    :return: None
+    """
+    # TODO: get working for actual PDFs
+    for page_name in page_names:
+        c = canvas.Canvas(filename + '.pdf')
+        c.drawImage(page_name, 0, 0)
+        c.showPage()
+        c.save()
+'''
