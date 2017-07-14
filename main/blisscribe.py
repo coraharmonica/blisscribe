@@ -27,7 +27,7 @@ import lexicon
 # Constants
 # ---------
 # --> FONTS & IMAGES
-ROMAN_FONT_PATH = "/Users/courtney/Library/Fonts/Helvetica.dfont" #"/Users/courtney/Library/Fonts/BLISGRID.TTF"
+ROMAN_FONT_PATH = "/Users/courtney/Library/Fonts/BLISGRID.TTF"
 HELVETICA = "/Users/courtney/Library/Fonts/Helvetica.dfont"
 BLISS_FONT_PATH = "/Users/courtney/Library/Fonts/CcfSymbolFont-bliss-2012.ttf"
 IMG_PATH = "/Users/courtney/Documents/creation/programming/\
@@ -509,8 +509,8 @@ def translate(phrase):
     :return: None
     """
     token_phrase = nltk.word_tokenize(phrase)  # phrase split into word tokens
-    tagged_dict = tagsToDict(token_phrase)
-    sorted_freqs = sortFreqs(phrase)
+    #tagged_dict = tagsToDict(token_phrase)
+    #sorted_freqs = sortFreqs(phrase)
 
     raw_phrase = [word.lower() for word in token_phrase]  # token words in lowercase
     pages = []
@@ -530,7 +530,7 @@ def translate(phrase):
 
         if isTranslatable(word):
             # if word can be validly translated into Blissymbols...
-            if isSeen(lexeme) or isChanged(lexeme):
+            if True: #isSeen(lexeme) or isChanged(lexeme):
                 # if we've already seen or translated the word before...
                 try:
                     getBlissImg(lexeme, bg_width / 2)
