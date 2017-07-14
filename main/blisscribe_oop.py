@@ -25,6 +25,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageChops
 from pattern.text.en import singularize, lemma
 
 import lexicon
+import excerpts
 
 
 class BlissTranslator:
