@@ -19,8 +19,10 @@ BLISSCRIBE:
 # Imports
 # -------
 import collections
+import string
 
 import nltk
+from nltk.app import wordnet_app
 from PIL import Image, ImageDraw, ImageFont, ImageChops
 from pattern.text.en import singularize, lemma
 
@@ -554,6 +556,214 @@ class BlissTranslator:
         """
         self.words_changed[word] = True
 
+    # --> HTML
+
+    def getWordPage(self, word):
+        """
+        Returns a string representing the WordNet HTML page
+        for the given word.
+
+        :param word: str, the word to look up on WordNet
+        :return: str, the word's HTML page
+        """
+        return wordnet_app.page_from_word(word)[0]
+
+    def parseHTMLTagStart(self, html):
+        """
+        Returns the rest of input html string after the
+        first intro tag (i.e., "<").
+
+        :param html: str, HTML string
+        :return: str, HTML string after first "<"
+        """
+        idx = 0
+        for char in html:
+            if char == "<":
+                try:
+                    html[idx+1]
+                except IndexError:
+                    return ""
+                else:
+                    return html[idx+1]
+            idx += 1
+
+    def parseHTMLTagEnd(self, html):
+        """
+        Returns the first part of input html string up
+        until reaching an HTML tag closure (i.e., ">").
+
+        :param html: str, HTML string after HTML beginning
+        :return: str, input HTML string up to ">"
+        """
+        idx = 0
+        for char in html:
+            if char == ">":
+                return html[:idx]
+            idx += 1
+
+    def parseHTMLStr(self, html):
+        """
+        Parses an HTML string for keywords to identify
+        which parts of WordNet website each part refers to.
+
+        :param html: str, HTML string for WordNet definition
+        :return: str, non-HTML readable string
+        """
+        headers = []
+        defns = {}
+
+        header_now = None
+        defn_now = None
+
+        idx = 0
+
+        for char in html:
+            rest = html[idx:]
+            if rest[:idx+3] == "h3 ":
+                pass  # parse header fxn
+            elif rest[:idx+14] == "a href lookup ":
+                pass  # parse hyperlink fxn
+            elif rest[:idx+2] == "b ":
+                pass
+            elif rest[:idx+2] == "a ":
+                pass
+
+
+    def getStrFromHTML(self, html):
+        """
+        Returns a simplified string representing the given
+        HTML page in a non-HTML readable form.
+
+        :param html: str, a WordNet HTML page
+        :return: str, a readable form of the input HTML page
+        """
+
+        '''
+        if html == "":
+            return ""
+        else:
+            return self.parseHTMLTagEnd(self.parseHTMLTagStart(html)) + getStrFromHTML(html)
+        '''
+
+        new_str = []
+
+        for char in html:
+            try:
+                self.parseHTMLTagEnd(self.parseHTMLTagStart(html))
+            except IndexError:
+                continue
+            else:
+                if html[-1] != " ":
+                    # no more than 1 space between terms
+                    new_str.append(" ")
+
+        new_str = "".join(new_str)
+        return new_str
+
+    def getWordDesc(self, word):
+        """
+        Returns a simplified string representing the given
+        word's WordNet HTML page in a non-HTML readable form.
+
+        :param html: str, the word to look up on WordNet
+        :return: str, a readable form of the input HTML page
+        """
+        return self.getStrFromHTML(self.getWordPage(word))
+
+    # --> HREF
+
+    def getHREFPage(self, href):
+        """
+        Returns a string representing the given hyperlink.
+        Used for synset hyperlinks in HTML strings.
+
+        :param href: str, a hyperlink
+        :return: str, a page representing the given hyperlink
+        """
+        return wordnet_app.page_from_href(href)[0]
+
+    def getHREFStr(self, href):
+        """
+        Returns a simplified string representing the given
+        hyperlink.
+
+        :param href: str, a hyperlink
+        :return: str, a page representing the given hyperlink
+        """
+        href_page = self.getHREFPage(href)
+
+    def getWordSynset(self, word):
+        """
+        Creates a WordNet synset from the given word,
+        beginning with the given word at index 0 and
+        continuing with its synonyms at further indices.
+
+        WordNet lookup link here:
+        http://wordnetweb.princeton.edu/perl/webwn?s=&sub=Search+WordNet
+
+        :param lexeme: str, a word to lookup in WordNet
+        :return: List[str], the word's synset
+        """
+        synset = [word]
+        html_str = self.getStrFromHTML(word)
+        return synset
+
+    def translateSynset(self, synset):
+        """
+        Given a synset consisting of a word and its synonyms,
+        attempts to translate each synonym into Blissymbols.
+        If a synonym is translatable to Blissymbols, return
+        that synonym. Otherwise, return the first word in the
+        synset (the root word).
+
+        :param synset: List[str], a root word and its synonyms
+        :return: str, the first word in given synset that can
+        be translated to Blissymbols
+        """
+        for synonym in synset[1:]:
+            if self.isTranslatable(synonym):
+                return synonym
+        return synset[0]
+
+    def translateUntranslatable(self, word):
+        """
+        Attempts to translate the given word's synonyms to
+        Blissymbols.
+        If a synonym can be translated, this function returns
+        that synonym. Otherwise, this function returns the
+        input word.
+
+        :param word: str, word to translate to Blissymbols
+        :return: str, translatable synonym of given word
+        """
+        return self.translateSynset(self.getWordSynset(word))
+
+    def getWordDefns(self, word, single=False):
+        """
+        Returns a list of possible definitions for the
+        given word.
+        If single is True, then this function will
+        terminate and return at the first definition
+        reached.
+
+        :param word: str, the word to define
+        :param single: bool, whether to return the first
+            definition reached
+        :return: List[str], the word's possible definitions
+        """
+        defns = []
+        html_str = self.getHTMLStrFromWord(word)
+
+    def getWordDefn(self, word):
+        """
+        Returns the first possible definition for the
+        given word.
+
+        :param word: str, the word to define
+        :return: str, the word's first possible definition
+        """
+        return self.getWordDefns(word, single=True)
+
 
     # TRANSLATOR
     # ==========
@@ -583,9 +793,9 @@ class BlissTranslator:
         for word in raw_phrase:
             lexeme = self.getLexeme(word)
 
-            if self.isTranslatable(word): #and tagged_list[idx] in BlissTranslator.VALID_PHRASES:
+            if self.isTranslatable(word):  #and tagged_list[idx] in BlissTranslator.VALID_PHRASES:
                 # if word can be validly translated into Blissymbols...
-                if True: #self.isSeen(lexeme) or self.isChanged(lexeme):
+                if True:  #self.isSeen(lexeme) or self.isChanged(lexeme):
                     # if we've already seen or translated the word before...
                     try:
                         self.getBlissImg(lexeme, bg_width / 2, self.image_heights)
@@ -671,7 +881,7 @@ class BlissTranslator:
             import collections
             import nltk
             from PIL import Image, ImageDraw, ImageFont, ImageChops
-            from pattern.text.en import singularize, lemma
+            from pattern.text.en import singularize, lexeme
 
             import excerpts
             import lexicon
@@ -697,6 +907,8 @@ class BlissTranslator:
 #HelveticaTranslator.chooseOtherPOS(True)
 #HelveticaTranslator.translate(excerpts.alice_in_wonderland, 1000)
 
-#DefaultTranslator = BlissTranslator()
+DefaultTranslator = BlissTranslator()
 #DefaultTranslator.translate(excerpts.alice_in_wonderland)
 #DefaultTranslator.translate(excerpts.kjv[:5000])
+fox_desc = DefaultTranslator.getWordDesc("fox")
+print(fox_desc)

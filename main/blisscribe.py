@@ -271,8 +271,8 @@ def getLexeme(word):
     Retrieves the given word's lexeme,
     i.e., the word in dictionary entry form.
 
-    e.g. getLexeme(ran) -> "run"
-         getLexeme(puppies) -> "puppy"
+    e.g. getLemma(ran) -> "run"
+         getLemma(puppies) -> "puppy"
 
     Note: if a lexeme for the given word cannot
     be found, this function returns the input.
