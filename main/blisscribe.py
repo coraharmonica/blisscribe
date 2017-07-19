@@ -15,13 +15,16 @@ BLISSCRIBE:
 # Imports
 # -------
 import collections
-
+import sys
+sys.path.append("/Users/courtney/Documents/creation/programming/\
+personal projects/bliss translator/blissymbols git/main/lexicon.py")
+sys.path.append("/Users/courtney/Documents/creation/programming/\
+personal projects/bliss translator/blissymbols git/main/excerpts.py")
+import lexicon
+import excerpts
 import nltk
 from PIL import Image, ImageDraw, ImageFont, ImageChops
 from pattern.text.en import singularize, lemma
-
-import excerpts
-import lexicon
 
 
 # Constants
@@ -62,10 +65,8 @@ def getWordFreqDict(phrase):
     """
     words = nltk.word_tokenize(phrase)
     freqs = collections.defaultdict(int)
-
     for word in words:
         freqs[word] += 1
-
     return freqs
 
 
@@ -82,11 +83,9 @@ def getWordsFreqDict(freqs):
         val (List[str]) - list of words with given frequency
     """
     sorted_freqs = collections.defaultdict(list)
-
     for word in freqs:
         if freqs[word] > 1:
             sorted_freqs[freqs[word]].append(word)
-
     return sorted_freqs
 
 
@@ -130,7 +129,6 @@ def getWordImg(word, font_size = DEFAULT_FONT_SIZE):
     sketch = ImageDraw.Draw(img)
     font = ImageFont.truetype(ROMAN_FONT_PATH, font_size)
     sketch.text((0, font_size), word, font=font, fill="black")
-
     return trimHorizontal(img)
 
 
@@ -147,7 +145,6 @@ def getBlissImg(word, max_width = DEFAULT_FONT_SIZE*10, max_height = DEFAULT_FON
     bliss_word = Image.open(IMG_PATH + BLISS_DICT[word])  # string -> Bliss image
     img = bliss_word
     img.thumbnail((max_width, max_height))
-
     return img
 
 
@@ -195,11 +192,9 @@ def tagsToDict(token_phrase):
     tagged_dict = {}
     valid_phrases = ["NN", "NNS", "POS", "VB", "VBD", "VBG", "VBN",
                      "RB", "RBR", "RBS", "JJ", "JJR", "JJS"]         # desirable tags (nouns, verbs, adjectives)
-
     for tup in tagged_phrase:
         if isTranslatable(tup[0]) and tup[1] in valid_phrases:
             tagged_dict[getLexeme(tup[0])] = tup[1]
-
     return tagged_dict
 
 
@@ -217,11 +212,9 @@ def sortFreqs(phrase):
 
     for key in sorted(usage_freqs):
         new_set = set([])
-
         for word in usage_freqs[key]:
             if word in BLISS_DICT.keys():
                 new_set.add(word)
-
         if len(new_set) > 0:
             sorted_freqs.append(new_set)
 
@@ -286,7 +279,6 @@ def getLexeme(word):
         lexeme = lemma(word)
     else:
         lexeme = word
-
     return lexeme
 
 
@@ -388,23 +380,23 @@ def drawAlphabet(words, columns=20):
     """
     Draws an alphabet-style Image with definitions for given words,
     with word definition on bottom and corresponding Blissymbol on top.
+    If a given word has no corresponding Blissymbol, produce no Image.
 
     :param words: str, words (separated by spaces) to be rendered
     :param columns: int, maximum number of columns
     :return: Image, drawn alphabet of given words
     """
     words_list = words.split(" ")
-
     glyph_bg_wh = 200
     start = glyph_bg_wh / 2
     space = DEFAULT_FONT_SIZE
-
     bliss_alphabet = []
 
     for word in words_list:
         bg = makeBlankImg(glyph_bg_wh, glyph_bg_wh)
 
         if isTranslatable(word):
+            # render Blissymbol
             lexeme = getLexeme(word)
             bliss_word = getBlissImg(lexeme, glyph_bg_wh, max_height=DEFAULT_FONT_SIZE * 3)
             eng_word = getWordImg(word.upper(), font_size=DEFAULT_FONT_SIZE / 2)
@@ -630,7 +622,7 @@ def translate(phrase):
     displayImages(pages)
     #writePdf(phrase[20], pages)
 
-translate(excerpts.alice_in_wonderland)
+#translate(excerpts.alice_in_wonderland)
 #translate(excerpts.texts[0][:500])
 
 # TODO: launch WordNet app so you can derive definitions for any words (even foreign), or look up synonyms to translate to

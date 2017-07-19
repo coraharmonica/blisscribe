@@ -20,14 +20,23 @@ BLISSCRIBE:
 # -------
 import collections
 import string
-
+import sys
 import nltk
+from nltk.corpus import wordnet
 from nltk.app import wordnet_app
 from PIL import Image, ImageDraw, ImageFont, ImageChops
 from pattern.text.en import singularize, lemma
 
-import lexicon
-import excerpts
+try:
+    import lexicon
+    import excerpts
+except ImportError:
+    print("Lexicon and excerpts modules could not be imported.\n\
+    Please try locating the local modules lexicon.py and excerpts.py \n\
+    and modifying your sys.path accordingly.")
+else:
+    import lexicon
+    import excerpts
 
 
 class BlissTranslator:
@@ -53,7 +62,7 @@ class BlissTranslator:
     DEFAULT_FONT_SIZE = 30
     # Images
     # ------
-    IMG_PATH = "/Users/courtney/Documents/creation/programming/personal projects/bliss translator/symbols/full/png/whitebg/"
+    IMG_PATH = sys.path[0] + "/symbols/full/png/whitebg/"
     BLISS_DICT = lexicon.bliss_dict
     # Linguistics
     # -----------
@@ -68,7 +77,7 @@ class BlissTranslator:
     # INITIALIZATIONS
     # ===============
 
-    def __init__(self, font_path = ROMAN_FONT_PATH, font_size = DEFAULT_FONT_SIZE):
+    def __init__(self, font_path=ROMAN_FONT_PATH, font_size=DEFAULT_FONT_SIZE):
         # Fonts
         self.font_size = font_size
         self.font_path = font_path
@@ -76,10 +85,13 @@ class BlissTranslator:
         # Images
         self.image_heights = self.font_size * 5
         self.pages = []
+        self.sub_all = False
         # Linguistics
         self.words_seen = dict
         self.words_changed = dict
         self.initSeenChanged()
+        self.seen_choices = {}
+        self.fast_translate = False
         # --> parts of speech
         self.nouns = True
         self.verbs = True
@@ -113,6 +125,32 @@ class BlissTranslator:
         self.words_seen = collections.defaultdict(bool)
         self.words_changed = collections.defaultdict(bool)
 
+    def setSubAll(self, sub_all):
+        """
+        Sets self.sub_all equal to input sub_all value.
+        Setting sub_all to True will produce subtitles under
+        every Blissymbol, not only new Blissymbols.
+
+        :param sub_all: bool, whether to subtitle all words in
+            input English text to this BlissTranslator
+        :return: None
+        """
+        self.sub_all = sub_all
+
+    def setFastTranslate(self, fast_translate):
+        """
+        Set's self.fast_translate to fast_translate.
+        Setting fast_translate to True will cause this
+        BlissTranslator to translate the first instances of
+        every word. Setting fast_translate to False will
+        cause it to only translate a word after having seen
+        it once.
+
+        :param fast_translate: bool, whether to translate
+            words to Blissymbols immediately
+        :return: None
+        """
+        self.fast_translate = fast_translate
 
     # IMAGES
     # ======
@@ -159,17 +197,64 @@ class BlissTranslator:
                     fill="black")
         return self.trimHorizontal(img)
 
-    def getBlissImg(self, word, max_width, max_height):
+    def chooseDefn(self, word):
         """
-        Draws and returns a thumbnail Image of the given str's Blissymbol,
-        with width not exceeding max_width.
+        Allows user to choose which definition to translate a word
+        by.  Returns an integer representing the user's selection
+        as an index in the given word's list of definitions.
+        If the list of definitions contains only 1 item, returns 0.
+
+        :param word: str, a word to choose a definition for
+        :return: int, the index of the given word's proper definition
+        """
+        if word not in self.seen_choices.keys():
+            defns = BlissTranslator.BLISS_DICT[word]
+            assert type(defns) == list
+            idx = 1
+            print("The word '" + word + "' has multiple definitions:\n")
+
+            for defn in defns:
+                print("Definition " + str(idx) + ": " + defn[:-4] + "\n")
+                idx += 1
+
+            choice = input("Which of these definitions is most appropriate? ")
+            print("\n")
+
+            try:
+                defns[choice]
+            except IndexError:
+                choice = 0
+            else:
+                choice -= 1  # subtract 1 from choice for 0-based indexing
+                self.seen_choices[word] = choice
+            return choice
+        else:
+            return self.seen_choices[word]
+
+    def getBlissImg(self, word, max_width, max_height, choosing=False):
+        """
+        Draws and returns a thumbnail Image of the given word's
+        Blissymbol, with width not exceeding max_width.
+        If a word has multiple meanings, then return the Blissymbol
+        corresponding to the first meaning listed in BLISS_DICT.
 
         :param word: str, word to render to Image
-        :param max_width: int, maximum width of Image
+        :param max_width: int, maximum width of Image (in pixels)
+        :param max_height: int, maximum height of Image (in pixels)
+        :param choosing: bool, whether user can choose definitions for
+            ambiguous words
         :return: Image, image of input str's Blissymbol
         """
-        bliss_word = Image.open(BlissTranslator.IMG_PATH +
-                                BlissTranslator.BLISS_DICT[word])
+        if type(BlissTranslator.BLISS_DICT[word]) == list:
+            if choosing:
+                choice = self.chooseDefn(word)
+            else:
+                choice = 0
+            bliss_word = Image.open(BlissTranslator.IMG_PATH +
+                                    BlissTranslator.BLISS_DICT[word][choice])
+        else:
+            bliss_word = Image.open(BlissTranslator.IMG_PATH +
+                                    BlissTranslator.BLISS_DICT[word])
         img = bliss_word
         img.thumbnail((max_width, max_height))
         return img
@@ -556,6 +641,7 @@ class BlissTranslator:
         """
         self.words_changed[word] = True
 
+    '''
     # --> HTML
 
     def getWordPage(self, word):
@@ -570,8 +656,9 @@ class BlissTranslator:
 
     def parseHTMLTagStart(self, html):
         """
-        Returns the rest of input html string after the
-        first intro tag (i.e., "<").
+        Returns the rest of input html string after
+        reaching the first intro tag (i.e., "<").
+        If no intro tag is reached, return empty string.
 
         :param html: str, HTML string
         :return: str, HTML string after first "<"
@@ -586,6 +673,7 @@ class BlissTranslator:
                 else:
                     return html[idx+1]
             idx += 1
+        return ""
 
     def parseHTMLTagEnd(self, html):
         """
@@ -628,7 +716,6 @@ class BlissTranslator:
             elif rest[:idx+2] == "a ":
                 pass
 
-
     def getStrFromHTML(self, html):
         """
         Returns a simplified string representing the given
@@ -637,13 +724,6 @@ class BlissTranslator:
         :param html: str, a WordNet HTML page
         :return: str, a readable form of the input HTML page
         """
-
-        '''
-        if html == "":
-            return ""
-        else:
-            return self.parseHTMLTagEnd(self.parseHTMLTagStart(html)) + getStrFromHTML(html)
-        '''
 
         new_str = []
 
@@ -659,6 +739,13 @@ class BlissTranslator:
 
         new_str = "".join(new_str)
         return new_str
+
+        if html == "":
+            return ""
+        else:
+            new_html = self.parseHTMLTagEnd(self.parseHTMLTagStart(html))
+            return new_html + self.getStrFromHTML(new_html)
+
 
     def getWordDesc(self, word):
         """
@@ -691,8 +778,9 @@ class BlissTranslator:
         :return: str, a page representing the given hyperlink
         """
         href_page = self.getHREFPage(href)
+        '''
 
-    def getWordSynset(self, word):
+    def getWordSynsets(self, word):
         """
         Creates a WordNet synset from the given word,
         beginning with the given word at index 0 and
@@ -702,28 +790,50 @@ class BlissTranslator:
         http://wordnetweb.princeton.edu/perl/webwn?s=&sub=Search+WordNet
 
         :param lexeme: str, a word to lookup in WordNet
-        :return: List[str], the word's synset
+        :return: List[Synset], the word's synsets
         """
-        synset = [word]
-        html_str = self.getStrFromHTML(word)
-        return synset
+        pos = self.getWordPOS(word)
+        synsets = wordnet.synsets(word, pos)
+        return synsets
 
-    def translateSynset(self, synset):
+    def getWordPOS(self, word):
         """
-        Given a synset consisting of a word and its synonyms,
-        attempts to translate each synonym into Blissymbols.
+        Returns the given word's part of speech, abbreviated as a
+        single letter.
+        WordNet POS constants:
+            ADJ, ADJ_SAT, ADV, NOUN, VERB = 'a', 's', 'r', 'n', 'v'
+
+        :param word: str, word to determine pos
+        :return: str, letter representing input word's pos
+        """
+        if self.isNoun(word):
+            return "n"
+        elif self.isVerb(word):
+            return "v"
+        elif self.isAdj(word):
+            return "a"
+        elif self.getWordTag(word)[0:2] == "RB":
+            return "r"
+        elif self.getWordTag(word) == "JJS":
+            return "s"
+
+    def translateSynsets(self, synsets):
+        """
+        Given a list of synsets, attempts to translate each
+        synset into Blissymbols.
         If a synonym is translatable to Blissymbols, return
         that synonym. Otherwise, return the first word in the
-        synset (the root word).
+        synset.
 
-        :param synset: List[str], a root word and its synonyms
+        :param synsets: List[Synset], a root word and its synonyms
         :return: str, the first word in given synset that can
         be translated to Blissymbols
         """
-        for synonym in synset[1:]:
-            if self.isTranslatable(synonym):
-                return synonym
-        return synset[0]
+        for synset in synsets:
+            name = synset.name()
+            if self.isTranslatable(name):
+                return name
+        return synsets[0]
 
     def translateUntranslatable(self, word):
         """
@@ -736,15 +846,23 @@ class BlissTranslator:
         :param word: str, word to translate to Blissymbols
         :return: str, translatable synonym of given word
         """
-        return self.translateSynset(self.getWordSynset(word))
+        return self.translateSynsets(self.getWordSynsets(word))
+
+    def getSynsetDefn(self, synset):
+        """
+        Returns this Synset's definition.
+
+        :param synset: Synset, a WordNet synset
+        :return: str, the given synset's definition
+        """
+        return synset.definition()
 
     def getWordDefns(self, word, single=False):
         """
         Returns a list of possible definitions for the
         given word.
         If single is True, then this function will
-        terminate and return at the first definition
-        reached.
+        return the first definition reached.
 
         :param word: str, the word to define
         :param single: bool, whether to return the first
@@ -752,7 +870,14 @@ class BlissTranslator:
         :return: List[str], the word's possible definitions
         """
         defns = []
-        html_str = self.getHTMLStrFromWord(word)
+        synsets = self.getWordSynsets(word)
+
+        for synset in synsets:
+            defns.append(self.getSynsetDefn(synset))
+            if single:
+                return defns
+
+        return defns
 
     def getWordDefn(self, word):
         """
@@ -762,13 +887,13 @@ class BlissTranslator:
         :param word: str, the word to define
         :return: str, the word's first possible definition
         """
-        return self.getWordDefns(word, single=True)
+        return self.getSynsetDefn(self.getWordSynsets(word)[0])
 
 
     # TRANSLATOR
     # ==========
 
-    def translate(self, phrase, bg_width = 2000):
+    def translate(self, phrase, bg_width=2000):
         """
         Displays image of input English text partially translated to Blissymbols.
 
@@ -793,9 +918,9 @@ class BlissTranslator:
         for word in raw_phrase:
             lexeme = self.getLexeme(word)
 
-            if self.isTranslatable(word):  #and tagged_list[idx] in BlissTranslator.VALID_PHRASES:
+            if self.isTranslatable(word) and tagged_list[idx] in BlissTranslator.VALID_PHRASES:
                 # if word can be validly translated into Blissymbols...
-                if True:  #self.isSeen(lexeme) or self.isChanged(lexeme):
+                if self.fast_translate or self.isSeen(lexeme) or self.isChanged(lexeme):
                     # if we've already seen or translated the word before...
                     try:
                         self.getBlissImg(lexeme, bg_width / 2, self.image_heights)
@@ -806,7 +931,7 @@ class BlissTranslator:
                         idx += 1
                         continue
                     else:
-                        if self.isChanged(lexeme):
+                        if not self.sub_all and self.isChanged(lexeme):
                             img = self.getBlissImg(lexeme, bg_width / 2, self.image_heights / 2)
                         else:
                             # adds subtitles to new words
@@ -903,12 +1028,24 @@ class BlissTranslator:
 # Testing
 # -------
 
-#HelveticaTranslator = BlissTranslator(BlissTranslator.HELVETICA, 20)
-#HelveticaTranslator.chooseOtherPOS(True)
-#HelveticaTranslator.translate(excerpts.alice_in_wonderland, 1000)
+HelveticaTranslator = BlissTranslator(BlissTranslator.HELVETICA)
+HelveticaTranslator.setSubAll(True)
+HelveticaTranslator.chooseOtherPOS(True)
+HelveticaTranslator.setFastTranslate(True)
+HelveticaTranslator.translate(excerpts.alice_in_wonderland)
 
-DefaultTranslator = BlissTranslator()
+#DefaultTranslator = BlissTranslator()
+#DefaultTranslator.setSubAll(True)
+#DefaultTranslator.chooseOtherPOS(True)
+#DefaultTranslator.setFastTranslate(True)
 #DefaultTranslator.translate(excerpts.alice_in_wonderland)
 #DefaultTranslator.translate(excerpts.kjv[:5000])
-fox_desc = DefaultTranslator.getWordDesc("fox")
-print(fox_desc)
+#fox_desc = DefaultTranslator.getWordDesc("fox")
+#print(fox_desc)
+
+'''
+def printHypernyms(synsets):
+    for synset in synsets:
+        print(synset.hypernyms())
+'''
+#printHypernyms(DefaultTranslator.getWordSynsets("heaven"))
