@@ -14,11 +14,16 @@ EXCERPTS:
 """
 
 import nltk
+import string
 
-file_ids = nltk.corpus.gutenberg.fileids()
+file_ids = [file_id for file_id in nltk.corpus.gutenberg.fileids()]
+titles = [file_id[:-4].replace("-", " ") for file_id in file_ids]
+print(titles)
 texts = [" ".join(nltk.corpus.gutenberg.words(file_id)) for file_id in file_ids]
+books = dict.fromkeys(titles, texts)
 
 kjv = texts[3]
+leaves_of_grass = texts[-1]
 wizard_of_oz = """
 Dorothy lived in the midst of the great Kansas prairies, with Uncle Henry, who was a farmer, and Aunt Em, who \
 was the farmer's wife. Their house was small, for the lumber to build it had to be carried by wagon many miles. \

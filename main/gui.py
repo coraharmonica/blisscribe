@@ -1,3 +1,5 @@
+# TODO: develop a GUI for Blisscribe
+
 import blisscribe
 
 try:

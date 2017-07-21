@@ -15,10 +15,12 @@ PARSE_LEXICON:
 import sys
 from PIL import Image
 
+
 # Constants
 # ---------
 img_path = sys.path[0] + "/symbols/full/png/whitebg/"
 file_path = sys.path[0] + "/"
+
 
 # Functions
 # ---------
@@ -58,7 +60,8 @@ def parseLexicon(filename):
                 except IOError:
                     continue
                 else:
-                    word = parseAlphabetic(word)
+                    if word[:9] != "indicator":
+                        word = parseAlphabetic(word)
                     if word in bliss_dict:
                         if type(bliss_dict[word]) != list:
                             bliss_dict[word] = [bliss_dict[word]]
@@ -67,6 +70,7 @@ def parseLexicon(filename):
                         bliss_dict[word] = item + ".png"
 
     return bliss_dict
+
 
 def parseAlphabetic(word):
     """
@@ -86,6 +90,7 @@ def parseAlphabetic(word):
         else:
             break
     return trimEndSpace(new_word)
+
 
 def trimEndSpace(word):
     """
@@ -111,6 +116,7 @@ def trimEndSpace(word):
         idx += 1
     return "".join(new_word)
 
+
 def printDict(d):
     """
     Prints the given dictionary as if it were written in code.
@@ -124,4 +130,4 @@ def printDict(d):
     print("}")
 
 
-#printDict(parseLexicon("lexicon.txt"))
+#printDict(parseLexicon("lexicon_edited.txt"))
