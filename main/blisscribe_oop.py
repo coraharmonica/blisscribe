@@ -1016,21 +1016,3 @@ class BlissTranslator:
 
         self.makePdf(new_title, self.saveImages(pages[::-1]), margins=50, page_nums=page_nums)
         self.initSeenChanged()
-
-# Testing
-# -------
-
-#HelveticaTranslator = BlissTranslator(BlissTranslator.HELVETICA_FONT)
-#HelveticaTranslator.setSubAll(True)
-#HelveticaTranslator.chooseOtherPOS(True)
-#HelveticaTranslator.setFastTranslate(True)
-#HelveticaTranslator.translate(excerpts.alice_in_wonderland[:1000])
-
-DefaultTranslator = BlissTranslator(font_path=BlissTranslator.SANS_FONT)
-DefaultTranslator.setSubAll(True)
-DefaultTranslator.chooseOtherPOS(True)
-DefaultTranslator.setFastTranslate(True)
-DefaultTranslator.translate(excerpts.alice_in_wonderland, title="Alice in Wonderland", page_nums=True)
-#DefaultTranslator.translate(excerpts.DFW, title="Infinite Jest", page_nums=True)
-#DefaultTranslator.translate(excerpts.kjv[:5000], title="The King James Bible")
-#DefaultTranslator.translate(excerpts.leaves_of_grass, title="Leaves of Grass")
