@@ -15,16 +15,13 @@ PARSE_LEXICON:
 import sys
 from PIL import Image
 
-
 # Constants
 # ---------
-img_path = sys.path[0] + "/symbols/full/png/whitebg/"
-file_path = sys.path[0] + "/"
-
+IMG_PATH = sys.path[0] + "/symbols/full/png/whitebg/"
+FILE_PATH = sys.path[0] + "/"
 
 # Functions
 # ---------
-
 def parseLexicon(filename):
     """
     Parses lexicon file with given filename and returns a dictionary of words
@@ -41,7 +38,7 @@ def parseLexicon(filename):
     """
     bliss_dict = {}  # holds words & filenames
 
-    with open(file_path + filename, "rb") as lex:
+    with open(FILE_PATH + filename, "rb") as lex:
         for item in lex:
             item = item[:-1]  # cuts off \n character
             words = []        # allows multiple definitions
@@ -56,7 +53,7 @@ def parseLexicon(filename):
 
             for word in words:
                 try:
-                    Image.open(img_path + item + ".png")
+                    Image.open(IMG_PATH + item + ".png")
                 except IOError:
                     continue
                 else:

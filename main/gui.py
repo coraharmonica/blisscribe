@@ -1,4 +1,12 @@
-# TODO: develop a GUI for Blisscribe
+# Notes
+# -----
+"""
+GUI:
+
+    App module for Blisscribe.
+    Users will be able to input text to the app and
+    choose the file location for their output PDF.
+"""
 
 import blisscribe
 
@@ -8,7 +16,8 @@ except ImportError:
     raise(ImportError, "You need to download the wxPython module to run this program.")
 
 
-class blissApp(wx.Frame):
+class BlissApp(wx.Frame):
+    # TODO: develop a GUI for Blisscribe using wx
     def __init__(self, parent, id, title):
         wx.Frame.__init__(self, parent, id, title)
         self.parent = parent
@@ -53,7 +62,8 @@ class blissApp(wx.Frame):
         screen.Clear()
 
         # TODO: replace dummy input text with fetched user input
-        pages = blisscribe.translate("user's input text")
+        bt = blisscribe.BlissTranslator()
+        pages = bt.translate("user's input text")
         bmps = []
         idx = 1
 
@@ -74,7 +84,7 @@ class blissApp(wx.Frame):
 
 if __name__ == "__main__":
     app = wx.App()
-    frame = blissApp(None, -1, 'Blisscribe')
+    frame = BlissApp(None, -1, 'Blisscribe')
     app.MainLoop()
 
 """

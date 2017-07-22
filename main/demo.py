@@ -4,20 +4,23 @@
 DEMO:
 
     Used to demonstrate translation capabilities of
-    blisscribe_oop.py BlissTranslator.translate().
+    blisscribe.py BlissTranslator.translate().
 
     Translates several pages of Alice in Wonderland
     by default.
 """
-import blisscribe_oop
+
+import blisscribe
 import excerpts
 
-DefaultTranslator = blisscribe_oop.BlissTranslator(font_path=blisscribe_oop.BlissTranslator.SANS_FONT)
-DefaultTranslator.setSubAll(True)
-DefaultTranslator.chooseOtherPOS(True)
-DefaultTranslator.setFastTranslate(True)
-DefaultTranslator.translate(excerpts.alice_in_wonderland, title="Alice in Wonderland", page_nums=True)
 
+DefaultTranslator = blisscribe.BlissTranslator(font_path=blisscribe.BlissTranslator.SANS_FONT)
+#DefaultTranslator.setSubAll(True)
+#DefaultTranslator.chooseOtherPOS(True)
+DefaultTranslator.setFastTranslate(True)
+DefaultTranslator.translate(excerpts.alice_in_wonderland[:5000], title="Alice in Wonderland")
+
+#DefaultTranslator.translate(excerpts.hesse_siddhartha[:5000], title="Siddhartha")
 #DefaultTranslator.translate(excerpts.DFW, title="Infinite Jest", page_nums=True)
 #DefaultTranslator.translate(excerpts.kjv[:5000], title="The King James Bible")
 #DefaultTranslator.translate(excerpts.leaves_of_grass, title="Leaves of Grass")
