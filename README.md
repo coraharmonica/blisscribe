@@ -1,6 +1,6 @@
 <b>Blisscribe</b>
 
-Blisscribe takes input English text and outputs the given text with selected words replaced with Blissymbols.
+Blisscribe takes input English text and outputs the given text in a PDF with selected words replaced with Blissymbols.
 
 Input:
 
