@@ -15,10 +15,13 @@ import excerpts
 
 
 DefaultTranslator = blisscribe.BlissTranslator(font_path=blisscribe.BlissTranslator.SANS_FONT)
-#DefaultTranslator.setSubAll(True)
-#DefaultTranslator.chooseOtherPOS(True)
+DefaultTranslator.setSubAll(True)
+DefaultTranslator.chooseOtherPOS(True)
 DefaultTranslator.setFastTranslate(True)
-DefaultTranslator.translate(excerpts.alice_in_wonderland[:5000], title="Alice in Wonderland")
+#DefaultTranslator.translate(excerpts.alice_in_wonderland, title="Alice in Wonderland")
+DefaultTranslator.translateFile("/sample texts/salinger-catcher_test.txt", title="Catcher in the Rye")
+#DefaultTranslator.setLanguage("Dutch")
+#DefaultTranslator.translate(excerpts.bible_dutch, title="Het Boek")
 
 #DefaultTranslator.translate(excerpts.hesse_siddhartha[:5000], title="Siddhartha")
 #DefaultTranslator.translate(excerpts.DFW, title="Infinite Jest", page_nums=True)

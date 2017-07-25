@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill-rule="evenodd" height="4.541666666666667in" preserveAspectRatio="none" stroke-linecap="round" viewBox="0 0 344 328" width="4.770833333333333in">
+<style type="text/css">
+.brush0 { fill: rgb(255,255,255); }
+.pen0 { stroke: rgb(0,0,0); stroke-width: 1; stroke-linejoin: round; }
+.font0 { font-size: 11px; font-family: "MS Sans Serif"; }
+.pen1 { stroke: rgb(0,0,0); stroke-width: 7; stroke-linejoin: round; }
+.brush1 { fill: none; }
+.font1 { font-weight: bold; font-size: 16px; font-family: System, sans-serif; }
+</style>
+<g>
+<ellipse class="pen1 brush1" cx="12" cy="260" rx="1" ry="1"/>
+<ellipse class="pen1 brush1" cx="76" cy="260" rx="1" ry="1"/>
+<ellipse class="pen1 brush1" cx="76" cy="196" rx="1" ry="1"/>
+<path class="pen1" d="M 172.0,196.0 A 64.0,64.0 0 0 0 108.0,260.0" fill="none"/>
+<path class="pen1" d="M 236.0,196.0 A 64.0,64.0 0 0 0 172.0,260.0" fill="none"/>
+<line class="pen1" fill="none" x1="300" x2="268" y1="132" y2="164"/>
+<line class="pen1" fill="none" x1="300" x2="332" y1="132" y2="164"/>
+<line class="pen1" fill="none" x1="300" x2="300" y1="132" y2="260"/>
+</g>
+</svg>

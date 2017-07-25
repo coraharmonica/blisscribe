@@ -20,7 +20,7 @@ BLISSCRIBE:
            immediately or gradually
            --> setFastTranslate()
         3) selecting font & font size for output PDF translations
-           --> initFont()
+           --> setFont()
         4) selecting whether to subtitle all Blissymbols or only
            new Blissymbols
            --> setSubAll()
@@ -42,15 +42,17 @@ from pattern.text.en import singularize, lemma
 from fpdf import FPDF
 
 try:
-    import lexicon
+    import parse_lexica
     import excerpts
 except ImportError:
     print("Lexicon and excerpts modules could not be imported.\n\
     Please try locating the local modules lexicon.py and excerpts.py \n\
     and placing them in the same directory as this program.")
 else:
-    import lexicon
+    import parse_lexica
     import excerpts
+
+FILE_PATH = sys.path[0] + "/"
 
 
 # BlissTranslator
@@ -77,8 +79,7 @@ class BlissTranslator:
     HELVETICA_FONT = "/Library/Fonts/Helvetica.dfont"
     DEFAULT_FONT_SIZE = 30
     # Images
-    IMG_PATH = sys.path[0] + "/symbols/full/png/whitebg/"
-    BLISS_DICT = lexicon.bliss_dict
+    IMG_PATH = FILE_PATH + "symbols/full/png/whitebg/"
     IMAGES_SAVED = 0
     # Language
     FULL_STOPS = set([".", ",", ";", ":", "?", "!"])
@@ -89,17 +90,20 @@ class BlissTranslator:
                            "RB", "RBR", "RBS", "RP", "TO", "UH", "VB", "VBD", "VBG",
                            "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"])
 
-    def __init__(self, font_path=ROMAN_FONT, font_size=DEFAULT_FONT_SIZE):
+    def __init__(self, language="English", font_path=ROMAN_FONT, font_size=DEFAULT_FONT_SIZE):
         # Fonts
         self.font_size = font_size
         self.font_path = font_path
-        self.font = self.initFont(self.font_path, self.font_size)
+        self.font = self.setFont(self.font_path, self.font_size)
         # Images
         self.image_heights = self.font_size * 5
         self.pages = []
         self.sub_all = False
         self.page_nums = True
         # Language
+        self.language = str
+        self.setLanguage(language)
+        self.bliss_dict = parse_lexica.getDefnImgDict(parse_lexica.LEX_PATH, self.language)
         self.fast_translate = False
         self.words_seen = dict
         self.words_changed = dict
@@ -113,7 +117,7 @@ class BlissTranslator:
 
     # GETTERS/SETTERS
     # ===============
-    def initFont(self, font_path, font_size):
+    def setFont(self, font_path, font_size):
         """
         Returns an ImageFont with given font_path and font_size.
         ~
@@ -131,6 +135,24 @@ class BlissTranslator:
             return ImageFont.truetype(self.ROMAN_FONT, font_size)
         else:
             return ImageFont.truetype(font_path, font_size)
+
+    def setLanguage(self, language):
+        """
+        Sets this BlissTranslator's native language
+        to the input language.
+        ~
+        If given language is invalid, set this 
+        BlissTranslator's default language to English.
+
+        :param language: str, language to set to default
+        :return: None
+        """
+        try:
+            parse_lexica.getDefns(parse_lexica.LEX_PATH, language)
+        except IOError:
+            self.language = "English"
+        else:
+            self.language = language
 
     def initSeenChanged(self):
         """
@@ -368,7 +390,7 @@ class BlissTranslator:
         Blissymbol, with width not exceeding max_width.
         ~
         If a word has multiple meanings, then return the Blissymbol
-        corresponding to the first meaning listed in BLISS_DICT.
+        corresponding to the first meaning listed in bliss_dict.
 
         :param word: str, word to render to Image
         :param max_width: int, maximum width of Image (in pixels)
@@ -377,16 +399,16 @@ class BlissTranslator:
             ambiguous words
         :return: Image, image of input str's Blissymbol
         """
-        if type(BlissTranslator.BLISS_DICT[word]) == list:
+        if type(self.bliss_dict[word]) == list:
             if choosing:
                 choice = self.chooseDefn(word)
             else:
                 choice = 0
             bliss_word = Image.open(BlissTranslator.IMG_PATH +
-                                    BlissTranslator.BLISS_DICT[word][choice])
+                                    self.bliss_dict[word][choice])
         else:
             bliss_word = Image.open(BlissTranslator.IMG_PATH +
-                                    BlissTranslator.BLISS_DICT[word])
+                                    self.bliss_dict[word])
         img = bliss_word
         img.thumbnail((max_width, max_height))
         return img
@@ -775,7 +797,7 @@ class BlissTranslator:
         :param word: str, word to test whether translatable
         :return: bool, whether given word is translatable
         """
-        return self.getLexeme(word) in BlissTranslator.BLISS_DICT
+        return self.getLexeme(word) in self.bliss_dict
 
     def chooseDefn(self, word):
         """
@@ -789,7 +811,7 @@ class BlissTranslator:
         :return: int, the index of the given word's proper definition
         """
         if word not in self.defns_chosen.keys():
-            defns = BlissTranslator.BLISS_DICT[word]
+            defns = self.bliss_dict[word]
             assert type(defns) == list
             idx = 1
             print("The word '" + word + "' has multiple definitions:\n")
@@ -941,9 +963,11 @@ class BlissTranslator:
         :param img_h: int, desired height of PDF images (in pixels)
         :return: None
         """
-        token_phrase = nltk.word_tokenize(phrase)             # phrase split into word tokens
+        # TODO: modify tokenizing to work with non-English languages
+        # TODO: modify token_phrase to only tokenize error-free words
+        token_phrase = [word for word in nltk.word_tokenize(phrase)]  # phrase split into word tokens
         tagged_list = self.tagsToList(token_phrase)
-        raw_phrase = [word.lower() for word in token_phrase]  # token words to lowercase
+        raw_phrase = [word.lower() for word in token_phrase]          # token words to lowercase
 
         pages = []
         new_title = self.getTitle(title, phrase)
@@ -1031,7 +1055,7 @@ class BlissTranslator:
                 bg = self.makeBlankImg(img_w, img_h)
                 line_no = 0
 
-            # TODO: modify paste to work with vector bliss files (for resizing aesthetics)
+            # TODO: modify paste to work with vector bliss files (for aesthetic resizing)
             bg.paste(img, (indent + space, self.incLine(line_no, y_inc)))
             indent += self.getWordWidth(img) + space
             idx += 1

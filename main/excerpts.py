@@ -13,7 +13,8 @@ import sys
 
 FILE_PATH = sys.path[0]
 
-def initBlissDict(titles, texts):
+
+def pairTitlesTexts(titles, texts):
     """
     Initializes a dict with titles providing keys and
     texts providing values.
@@ -31,6 +32,7 @@ def initBlissDict(titles, texts):
         idx += 1
     return books
 
+
 def parsePlaintext(filename):
     """
     Parses plaintext file with given filename and returns a string representing
@@ -46,6 +48,7 @@ def parsePlaintext(filename):
             contents.append(line)
 
     return "".join(contents)
+
 
 def parseExcerpts(filenames):
     """
@@ -69,6 +72,7 @@ def parseExcerpts(filenames):
 
     return books
 
+
 sample_texts = ["/sample texts/adams-hitchhiker's_guide.txt",
                 "/sample texts/baum-wizard_of_oz.txt",
                 "/sample texts/conrad-heart_of_darkness.txt",
@@ -90,8 +94,9 @@ file_ids = [file_id for file_id in nltk.corpus.gutenberg.fileids()]
 titles = [file_id[:-4].replace("-", " ") for file_id in file_ids]
 texts = [" ".join(nltk.corpus.gutenberg.words(file_id)) for file_id in file_ids]
 books = {}
-books.update(initBlissDict(titles, texts))
+books.update(pairTitlesTexts(titles, texts))
 books.update(parseExcerpts(sample_texts))
+
 
 # Fiction
 alice_in_wonderland = books["carroll alice"]
@@ -108,3 +113,24 @@ kjv = books["bible kjv"]
 hamlet = books["shakespeare hamlet"]
 julius_caesar = books["shakespeare caesar"]
 macbeth = books["shakespeare macbeth"]
+bible_dutch = "1 In den beginne schiep God den hemel en de aarde. " \
+              "2 De aarde nu was woest en ledig, en duisternis was op den afgrond; " \
+              "en de Geest Gods zweefde op de wateren. " \
+              "3 En God zeide: Daar zij licht! en daar werd licht. " \
+              "4 En God zag het licht, dat het goed was; en God maakte scheiding tussen " \
+              "het licht en tussen de duisternis. " \
+              "5 En God noemde het licht dag, en de duisternis noemde Hij nacht. " \
+              "Toen was het avond geweest, en het was morgen geweest, de eerste dag. " \
+              "6 En God zeide: Daar zij een uitspansel in het midden der wateren; " \
+              "en dat make scheiding tussen wateren en wateren! "
+"""
+alice_in_wonderland_polish = 'Alicja mia\xc5\x82a ju\xc5\xbc do\xc5\x9b\xc4\x87 siedzenia na ' \
+                             '\xc5\x82awce obok siostry i pr\xc3\xb3\xc5\xbcnowania. Raz czy dwa ' \
+                             'razy zerkn\xc4\x99\xc5\x82a do ksi\xc4\x85\xc5\xbcki, kt\xc3\xb3r\xc4\x85 ' \
+                             'czyta\xc5\x82a siostra. Niestety, w ksi\xc4\x85\xc5\xbcce nie by\xc5\x82o ' \
+                             'obrazk\xc3\xb3w ani rozm\xc3\xb3w. \xe2\x80\x9eA c\xc3\xb3\xc5\xbc jest warta ' \
+                             'ksi\xc4\x85\xc5\xbcka - pomy\xc5\x9bla\xc5\x82a Alicja - w kt\xc3\xb3rej nie ma ' \
+                             'rozm\xc3\xb3w ani obrazk\xc3\xb3w?\xe2\x80\x9d'
+lines = alice_in_wonderland[:1000].split("\n")
+print(lines)
+"""
