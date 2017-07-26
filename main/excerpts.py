@@ -7,6 +7,8 @@ EXCERPTS:
     and reading.
 """
 
+# -*- coding: utf-8 -*-
+
 import nltk
 import string
 import sys
@@ -123,7 +125,14 @@ bible_dutch = "1 In den beginne schiep God den hemel en de aarde. " \
               "Toen was het avond geweest, en het was morgen geweest, de eerste dag. " \
               "6 En God zeide: Daar zij een uitspansel in het midden der wateren; " \
               "en dat make scheiding tussen wateren en wateren! "
-"""
+maupassant = "C'\xc3\xa9tait une de ces jolies et charmantes filles," \
+             "n\xc3\xa9es, comme par une erreur du destin, dans une famille d'employ\xc3\xa9s." \
+             "Elle n'avait pas de dot, pas d'esp\xc3\xa9rances, aucun moyen d'\xc3\xaatre connue," \
+             "comprise, aim\xc3\xa9e, \xc3\xa9pous\xc3\xa9e par un homme riche et distingu\xc3\xa9;" \
+             "et elle se laissa marier avec un petit commis du minist\xc3\xa8re de l'Instruction" \
+             "publique."
+
+
 alice_in_wonderland_polish = 'Alicja mia\xc5\x82a ju\xc5\xbc do\xc5\x9b\xc4\x87 siedzenia na ' \
                              '\xc5\x82awce obok siostry i pr\xc3\xb3\xc5\xbcnowania. Raz czy dwa ' \
                              'razy zerkn\xc4\x99\xc5\x82a do ksi\xc4\x85\xc5\xbcki, kt\xc3\xb3r\xc4\x85 ' \
@@ -131,6 +140,5 @@ alice_in_wonderland_polish = 'Alicja mia\xc5\x82a ju\xc5\xbc do\xc5\x9b\xc4\x87 
                              'obrazk\xc3\xb3w ani rozm\xc3\xb3w. \xe2\x80\x9eA c\xc3\xb3\xc5\xbc jest warta ' \
                              'ksi\xc4\x85\xc5\xbcka - pomy\xc5\x9bla\xc5\x82a Alicja - w kt\xc3\xb3rej nie ma ' \
                              'rozm\xc3\xb3w ani obrazk\xc3\xb3w?\xe2\x80\x9d'
-lines = alice_in_wonderland[:1000].split("\n")
-print(lines)
-"""
+#lines = alice_in_wonderland[:1000].split("\n")
+#print(lines)

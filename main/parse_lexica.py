@@ -1,7 +1,7 @@
 # Notes
 # -----
 """
-PARSE_LEXICON:
+PARSE_LEXICA:
 
     Contains functions for parsing a language-to-Blissymbols
     dictionary from plaintext (.txt) and Excel (.xls) files.
@@ -69,36 +69,16 @@ languages = ["English", "Swedish", "Norwegian", "Hungarian", "German",
 
 # Functions
 # ---------
-def trimEndSpace(word):
+def trimWhitespace(word):
     """
     Trims empty space(s) from start and end of given word.
-    ~
-    Assumes >2 spaces denotes end of a word.
 
-    e.g. trimEndSpace(" full moon  ") -> "full moon"
+    e.g. trimWhitespace(" full moon  ") -> "full moon"
 
-    :param word: str, word to trim space(s) from
-    :return: str, word with space(s) trimmed
+    :param word: str, word to trim whitespace(s) from
+    :return: str, word with whitespace(s) trimmed
     """
-    if word[0] == " ":
-        # trim start space
-        word = word[1:]
-
-    new_word = []
-    idx = 0
-    for char in word:
-        # trim end space
-        try:
-            word[idx+1]
-        except IndexError:
-            if char != " " and char != "-":
-                new_word.append(char)
-                break
-        else:
-            new_word.append(char)
-        idx += 1
-
-    return "".join(new_word)
+    return word.strip(" ")
 
 
 def parseAlphabetic(word):
@@ -107,11 +87,6 @@ def parseAlphabetic(word):
     alphabetic-only version of the word.
     ~
     String cuts off at end of the first predicted lexeme.
-    ~
-    Any non-ASCII characters are replaced with ASCII
-    substitutions.
-    ~
-    Encoding: UTF-8
 
     e.g. parseAlphabetic("English (language)") -> "English"
 
@@ -121,8 +96,6 @@ def parseAlphabetic(word):
     new_word = []
     remove = False
 
-    # TODO: better ASCII substitutions
-    # unicodedata.normalize('NFKD', title).encode('ascii', 'ignore')
     for char in word:
         if remove == False and char != "(":
             new_word.append(char)
@@ -130,7 +103,8 @@ def parseAlphabetic(word):
             remove = True
         elif char == ")":
             remove = False
-    return trimEndSpace(new_word)
+
+    return trimWhitespace("".join(new_word))
 
 
 def getImgFilenames(filename):
@@ -271,7 +245,7 @@ def parseLexicon(filename):
     """
     bliss_dict = {}  # holds words & filenames
 
-    with open(FILE_PATH + filename, "rb") as lex:
+    with open(FILE_PATH + filename, "rb", encoding="utf-8") as lex:
         for item in lex:
             item = item[:-1]  # cuts off \n character
             words = []        # allows multiple definitions

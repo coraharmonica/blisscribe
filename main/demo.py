@@ -5,21 +5,19 @@ DEMO:
 
     Used to demonstrate translation capabilities of
     blisscribe.py BlissTranslator.translate().
-
-    Translates several pages of Alice in Wonderland
-    by default.
 """
 
 import blisscribe
 import excerpts
 
 
-DefaultTranslator = blisscribe.BlissTranslator(font_path=blisscribe.BlissTranslator.SANS_FONT)
+DefaultTranslator = blisscribe.BlissTranslator(font_path=blisscribe.BlissTranslator.ROMAN_FONT, language="French")
 DefaultTranslator.setSubAll(True)
 DefaultTranslator.chooseOtherPOS(True)
 DefaultTranslator.setFastTranslate(True)
 #DefaultTranslator.translate(excerpts.alice_in_wonderland, title="Alice in Wonderland")
-DefaultTranslator.translateFile("/sample texts/salinger-catcher_test.txt", title="Catcher in the Rye")
+#DefaultTranslator.translateFile("/sample texts/salinger-catcher_test.txt", title="Catcher in the Rye")
+DefaultTranslator.translate(excerpts.maupassant, title="La parure")
 #DefaultTranslator.setLanguage("Dutch")
 #DefaultTranslator.translate(excerpts.bible_dutch, title="Het Boek")
 
@@ -28,7 +26,7 @@ DefaultTranslator.translateFile("/sample texts/salinger-catcher_test.txt", title
 #DefaultTranslator.translate(excerpts.kjv[:5000], title="The King James Bible")
 #DefaultTranslator.translate(excerpts.leaves_of_grass, title="Leaves of Grass")
 
-#HelveticaTranslator = BlissTranslator(BlissTranslator.HELVETICA_FONT)
+#HelveticaTranslator = BlissTranslator(BlissTranslator.HIP_FONT)
 #HelveticaTranslator.setSubAll(True)
 #HelveticaTranslator.chooseOtherPOS(True)
 #HelveticaTranslator.setFastTranslate(True)

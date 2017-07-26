@@ -30,13 +30,13 @@ BLISSCRIBE:
     https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
 """
 
+# -*- coding: utf-8 -*-
+
 import sys
 import os
 import collections
-import string
 import nltk
 from nltk.corpus import wordnet
-#from nltk.app import wordnet_app
 from PIL import Image, ImageDraw, ImageFont, ImageChops
 from pattern.text.en import singularize, lemma
 from fpdf import FPDF
@@ -74,9 +74,8 @@ class BlissTranslator:
     """
     # Fonts
     ROMAN_FONT = "/Library/Fonts/Times New Roman.ttf"
-    BLISS_FONT = "/Library/Fonts/BLISGRID.TTF"
     SANS_FONT = "/Library/Fonts/Arial.ttf"
-    HELVETICA_FONT = "/Library/Fonts/Helvetica.dfont"
+    HIP_FONT = "/Library/Fonts/Helvetica.dfont"
     DEFAULT_FONT_SIZE = 30
     # Images
     IMG_PATH = FILE_PATH + "symbols/full/png/whitebg/"
@@ -101,9 +100,9 @@ class BlissTranslator:
         self.sub_all = False
         self.page_nums = True
         # Language
+        self.bliss_dict = dict
         self.language = str
         self.setLanguage(language)
-        self.bliss_dict = parse_lexica.getDefnImgDict(parse_lexica.LEX_PATH, self.language)
         self.fast_translate = False
         self.words_seen = dict
         self.words_changed = dict
@@ -141,8 +140,8 @@ class BlissTranslator:
         Sets this BlissTranslator's native language
         to the input language.
         ~
-        If given language is invalid, set this 
-        BlissTranslator's default language to English.
+        If given language is invalid, do not change this
+        BlissTranslator's default language.
 
         :param language: str, language to set to default
         :return: None
@@ -150,9 +149,21 @@ class BlissTranslator:
         try:
             parse_lexica.getDefns(parse_lexica.LEX_PATH, language)
         except IOError:
-            self.language = "English"
+            return None
         else:
             self.language = language
+            self.bliss_dict = self.initBlissDict()
+
+    def initBlissDict(self):
+        """
+        Returns a Bliss dictionary in this BlissTranslator's
+        set language.
+
+        :return: dict, where...
+            keys (str) - words in desired language
+            vals (str) - corresponding Blissymbol image filenames
+        """
+        return parse_lexica.getDefnImgDict(parse_lexica.LEX_PATH, self.language)
 
     def initSeenChanged(self):
         """
@@ -375,6 +386,8 @@ class BlissTranslator:
         :param font_size: int, desired font size for string
         :return: Image, image of input str
         """
+        if not isinstance(word, unicode):
+            word = word.decode("utf-8")
         img = self.makeBlankImg(len(word) * font_size,
                                 self.image_heights)
         sketch = ImageDraw.Draw(img)
@@ -399,13 +412,16 @@ class BlissTranslator:
             ambiguous words
         :return: Image, image of input str's Blissymbol
         """
-        if type(self.bliss_dict[word]) == list:
+        if word == "indicator (plural)":
+            bliss_word = Image.open(BlissTranslator.IMG_PATH +
+                                    "indicator_(plural).png")
+        elif type(self.bliss_dict[word]) == list:
             if choosing:
                 choice = self.chooseDefn(word)
             else:
                 choice = 0
             bliss_word = Image.open(BlissTranslator.IMG_PATH +
-                                    self.bliss_dict[word][choice])
+                                   self.bliss_dict[word][choice])
         else:
             bliss_word = Image.open(BlissTranslator.IMG_PATH +
                                     self.bliss_dict[word])
@@ -963,8 +979,9 @@ class BlissTranslator:
         :param img_h: int, desired height of PDF images (in pixels)
         :return: None
         """
-        # TODO: modify tokenizing to work with non-English languages
-        # TODO: modify token_phrase to only tokenize error-free words
+        # TODO: modify spacing around special characters e.g. . , ( )
+        if not isinstance(phrase, unicode):
+            phrase = phrase.decode("utf-8")
         token_phrase = [word for word in nltk.word_tokenize(phrase)]  # phrase split into word tokens
         tagged_list = self.tagsToList(token_phrase)
         raw_phrase = [word.lower() for word in token_phrase]          # token words to lowercase
@@ -1026,7 +1043,7 @@ class BlissTranslator:
             except IndexError:
                 pass
             else:
-                if raw_phrase[idx] in BlissTranslator.PUNCTUATION or "'" in raw_phrase[idx][:2]:
+                if raw_phrase[idx+1] in BlissTranslator.PUNCTUATION or raw_phrase[idx] == "n't":
                     if raw_phrase[idx] != "(":
                         space = self.getMinSpace()
                 elif x_inc > img_w:
@@ -1036,7 +1053,7 @@ class BlissTranslator:
                     # for new paragraphs
                     indent = int(self.font_size)
                     line_no += 1
-                elif raw_phrase[idx+1] in BlissTranslator.PUNCTUATION or raw_phrase[idx-1] in BlissTranslator.PUNCTUATION:
+                elif raw_phrase[idx+1] in BlissTranslator.PUNCTUATION: # or raw_phrase[idx-1] in BlissTranslator.PUNCTUATION:
                     if (x_inc + self.getWordWidth(raw_phrase[idx+1])) > img_w:
                         # don't let punctuation trail onto next line alone
                         indent = 0
