@@ -104,6 +104,7 @@ books.update(parseExcerpts(sample_texts))
 
 # Fiction
 alice_in_wonderland = books["carroll alice"]
+hitchhikers_guide = books["adams hitchhiker's_guide"]
 moby_dick = books["melville moby_dick"]
 petit_prince = books["exupery petit_prince"]
 wizard_of_oz = books["baum wizard_of_oz"]

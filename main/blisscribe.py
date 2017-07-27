@@ -117,7 +117,8 @@ class BlissTranslator:
         self.lang_code = str
         self.setLanguage(language)
         self.reader = WordNetCorpusReader
-        self.initReader()
+        if self.language != "English":
+            self.initReader()
         self.fast_translate = False
         self.words_seen = dict
         self.initSeen()
@@ -168,13 +169,15 @@ class BlissTranslator:
         else:
             self.language = language
             self.bliss_dict = self.initBlissDict()
+            if self.language != "English":
+                self.initReader()
         finally:
-            self.lang_code = BlissTranslator.LANG_CODES[self.language]
+            self.lang_code = BlissTranslator.LANG_CODES[language]
 
     def initReader(self):
         """
         Initializes this BlissTranslator's multilingual corpus reader
-        with the given language.
+        in its set language.
 
         :return: None
         """
@@ -495,7 +498,7 @@ class BlissTranslator:
         diff = ImageChops.difference(img, bg)
         diff = ImageChops.add(diff, diff, 2.0, -100)
         bbox = diff.getbbox()
-        bbox = (bbox[0], 0, bbox[2], img.size[1])
+        bbox = (bbox[0], 0, bbox[2], img.size[1]+self.getMinSpace())
 
         if bbox:
             return img.crop(bbox)
@@ -554,6 +557,8 @@ class BlissTranslator:
         :param columns: int, maximum number of columns
         :return: Image, drawn alphabet of given words
         """
+        # TODO: standardize image sizes in BlissTranslator to simplify rendering
+        # TODO: fix rendering of "THIS", "ANYTHING", etc. in English (small Blissymbols)
         words_list = words.split(" ")
 
         glyph_bg_wh = self.image_heights
@@ -565,18 +570,24 @@ class BlissTranslator:
             bg = self.makeBlankImg(glyph_bg_wh, glyph_bg_wh)
 
             if self.isTranslatable(word):
-                lexeme = self.getLexeme(word)
-                bliss_word = self.getBlissImg(lexeme, glyph_bg_wh, glyph_bg_wh/2)
+                try:
+                    self.getBlissImg(word, glyph_bg_wh, glyph_bg_wh/2)
+                except KeyError:
+                    lexeme = self.getLexeme(word)
+                    bliss_word = self.getBlissImg(lexeme, glyph_bg_wh, glyph_bg_wh/2)
+                else:
+                    bliss_word = self.getBlissImg(word, glyph_bg_wh, glyph_bg_wh/2)
+
                 orig_word = self.getWordImg(word.upper(), font_size=self.getSubtitleSize())
 
                 bliss_word = self.trim(bliss_word)
                 orig_word = self.trim(orig_word)
 
-                bliss_diff_y = (self.font_size*2) - bliss_word.size[1] - orig_word.size[1]
+                bliss_diff_y = (glyph_bg_wh/2) - bliss_word.size[1] - orig_word.size[1]
 
-                start_bliss_word_x = start - (self.getWordWidth(bliss_word) / 2)
+                start_bliss_word_x = start - (self.getWordWidth(bliss_word)/2)
                 start_bliss_word_y = bliss_diff_y
-                start_orig_word_x = start - (orig_word.width / 2)
+                start_orig_word_x = start - (orig_word.width/2)
                 start_orig_word_y = start_bliss_word_y + bliss_word.size[1] + orig_word.height
                 bg.paste(orig_word, (start_orig_word_x, start_orig_word_y))
                 bg.paste(bliss_word, (start_bliss_word_x, start_bliss_word_y))
@@ -717,7 +728,7 @@ class BlissTranslator:
         :param word: str, word to tag
         :return: (str, str) tuple, given word and its tag
         """
-        return nltk.pos_tag([word])[0]
+        return nltk.pos_tag([word], lang=self.lang_code)[0]
 
     def getWordTag(self, word):
         """
@@ -739,7 +750,7 @@ class BlissTranslator:
         :param token_phrase: List[str], list of word tokens from a phrase
         :return: List[str], list of word part-to-speech tags
         """
-        tagged_phrase = nltk.pos_tag(token_phrase)  # tokens tagged according to word type
+        tagged_phrase = nltk.pos_tag(token_phrase, lang=self.lang_code)  # tokens tagged according to word type
         tagged_list = []
         for tup in tagged_phrase:
             tagged_list.append(tup[1])
@@ -947,7 +958,8 @@ class BlissTranslator:
         :param word: str, word to test whether translatable
         :return: bool, whether given word is translatable
         """
-        return self.getLexeme(word) in self.bliss_dict
+        return self.getLexeme(word) in self.bliss_dict or \
+               word in self.bliss_dict
 
     def chooseDefn(self, word):
         """
@@ -1208,7 +1220,7 @@ class BlissTranslator:
                 indent = 0
                 line_no += 1
             elif self.isEndingPunct(next_word2) or self.isStartingPunct(next_word1):
-                if (x_inc + self.getWordWidth(next_word1) + space + self.getWordWidth(next_word2)) > img_w:
+                if (x_inc + self.getWordWidth(next_word1) + space*2 + self.getWordWidth(next_word2)) > img_w:
                     # don't let punctuation trail onto next line alone
                     indent = 0
                     line_no += 1
