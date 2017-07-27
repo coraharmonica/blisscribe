@@ -11,14 +11,16 @@ import blisscribe
 import excerpts
 
 
-DefaultTranslator = blisscribe.BlissTranslator(font_path=blisscribe.BlissTranslator.ROMAN_FONT, language="French")
+DefaultTranslator = blisscribe.BlissTranslator(font_path=blisscribe.BlissTranslator.SANS_FONT, language="French")
 DefaultTranslator.setSubAll(True)
 DefaultTranslator.chooseOtherPOS(True)
 DefaultTranslator.setFastTranslate(True)
-DefaultTranslator.translate(excerpts.petit_prince, title="Le petit prince")
+#DefaultTranslator.translate(excerpts.petit_prince, title="Le petit prince")
 #DefaultTranslator.translate(excerpts.alice_in_wonderland, title="Alice in Wonderland")
 #DefaultTranslator.translateFile("/sample texts/salinger-catcher_test.txt", title="Catcher in the Rye")
 #DefaultTranslator.translate(excerpts.alice_in_wonderland_polish, title="Alice in Wonderland")
+lemma = DefaultTranslator.getLemma("allez")
+print(lemma)
 #DefaultTranslator.setLanguage("Dutch")
 #DefaultTranslator.translate(excerpts.bible_dutch, title="Het Boek")
 

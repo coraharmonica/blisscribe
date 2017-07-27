@@ -36,9 +36,11 @@ import sys
 import os
 import collections
 import nltk
+from nltk.corpus import wordnet
+from nltk.corpus.reader.wordnet import WordNetCorpusReader
+from nltk.stem import WordNetLemmatizer
 import pattern.text
 from pattern.text import en, es, fr, de, it, nl
-from nltk.corpus import wordnet
 from PIL import Image, ImageDraw, ImageFont, ImageChops
 from fpdf import FPDF
 
@@ -54,7 +56,6 @@ else:
     import excerpts
 
 FILE_PATH = sys.path[0] + "/"
-
 
 # BlissTranslator
 # ---------------
@@ -91,6 +92,14 @@ class BlissTranslator:
                            "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"])
     DEFAULT_POS = set(["NN", "NNS", "VB", "VBD", "VBG", "VBN", "JJ", "JJR", "JJS"])
     CHOSEN_POS = DEFAULT_POS
+    LEMMATIZER = WordNetLemmatizer()
+    LANG_CODES = {"Bulgarian": 'bul', "Catalan": 'cat', "Danish": 'dan', "Greek": 'ell',
+                 "English": 'eng', "Basque": 'eus', "Persian": 'fas', "Finnish": 'fin',
+                 "French": 'fra', "Galician": 'glg', "Hebrew": 'heb', "Croatian": 'hrv',
+                 "Indonesian": 'ind', "Italian": 'ita', "Japanese": 'jpn',
+                 "Norwegian Nyorsk": 'nno', "Norwegian Bokmal": 'nob', "Polish": 'pol',
+                 "Portuguese": 'por', "Slovenian": 'slv', "Spanish": 'spa',
+                 "Swedish": 'swe', "Thai": 'tha', "Malay": 'zsm'}
 
     def __init__(self, language="English", font_path=ROMAN_FONT, font_size=DEFAULT_FONT_SIZE):
         # Fonts
@@ -105,7 +114,10 @@ class BlissTranslator:
         # Language
         self.bliss_dict = dict
         self.language = str
+        self.lang_code = str
         self.setLanguage(language)
+        self.reader = WordNetCorpusReader
+        self.initReader()
         self.fast_translate = False
         self.words_seen = dict
         self.initSeen()
@@ -150,11 +162,24 @@ class BlissTranslator:
         """
         try:
             parse_lexica.getDefns(parse_lexica.LEX_PATH, language)
-        except IOError:
-            return None
+            BlissTranslator.LANG_CODES[language]
+        except IOError or KeyError:
+            self.language = "English"
         else:
             self.language = language
             self.bliss_dict = self.initBlissDict()
+        finally:
+            self.lang_code = BlissTranslator.LANG_CODES[self.language]
+
+    def initReader(self):
+        """
+        Initializes this BlissTranslator's multilingual corpus reader
+        with the given language.
+
+        :return: None
+        """
+        self.reader = WordNetCorpusReader(nltk.data.find("corpora/wordnet"),
+                                          nltk.data.find("corpora/omw/" + self.lang_code))
 
     def initBlissDict(self):
         """
@@ -166,6 +191,16 @@ class BlissTranslator:
             vals (str) - corresponding Blissymbol image filenames
         """
         return parse_lexica.getDefnImgDict(parse_lexica.LEX_PATH, self.language)
+
+    def getBlissDict(self):
+        """
+        Returns this BlissTranslator's bliss_dict in set language.
+
+        :return: dict, where...
+            keys (str) - words in desired language
+            vals (str) - corresponding Blissymbol image filenames
+        """
+        return self.bliss_dict
 
     def initSeen(self):
         """
@@ -532,18 +567,18 @@ class BlissTranslator:
             if self.isTranslatable(word):
                 lexeme = self.getLexeme(word)
                 bliss_word = self.getBlissImg(lexeme, glyph_bg_wh, glyph_bg_wh/2)
-                eng_word = self.getWordImg(word.upper(), font_size=self.getSubtitleSize())
+                orig_word = self.getWordImg(word.upper(), font_size=self.getSubtitleSize())
 
                 bliss_word = self.trim(bliss_word)
-                eng_word = self.trim(eng_word)
+                orig_word = self.trim(orig_word)
 
-                bliss_diff_y = (self.font_size*2) - bliss_word.size[1] - eng_word.size[1]
+                bliss_diff_y = (self.font_size*2) - bliss_word.size[1] - orig_word.size[1]
 
                 start_bliss_word_x = start - (self.getWordWidth(bliss_word) / 2)
                 start_bliss_word_y = bliss_diff_y
-                start_eng_word_x = start - (eng_word.width / 2)
-                start_eng_word_y = start_bliss_word_y + bliss_word.size[1] + eng_word.height
-                bg.paste(eng_word, (start_eng_word_x, start_eng_word_y))
+                start_orig_word_x = start - (orig_word.width / 2)
+                start_orig_word_y = start_bliss_word_y + bliss_word.size[1] + orig_word.height
+                bg.paste(orig_word, (start_orig_word_x, start_orig_word_y))
                 bg.paste(bliss_word, (start_bliss_word_x, start_bliss_word_y))
 
             bliss_alphabet.append(bg)
@@ -813,8 +848,10 @@ class BlissTranslator:
             return "a"
         elif self.getWordTag(word)[0:2] == "RB":
             return "r"
-        elif self.getWordTag(word) == "JJS":
-            return "s"
+        else:
+            return "n"
+        #elif self.getWordTag(word) == "JJS":
+        #    return "s"
 
     def isChosenPOS(self, pos):
         """
@@ -877,6 +914,10 @@ class BlissTranslator:
             return pattern.text.nl.lemma(word)
         else:
             return word
+            #pos = self.getWordPOS(word)
+            #return self.reader.morphy(word, pos)
+            #return wordnet.synsets(word)[0].lemma_names(self.lang_code)
+            #return self.reader.lemma(word, self.lang_code)
 
     def getLexeme(self, word):
         """
@@ -1091,6 +1132,7 @@ class BlissTranslator:
         :param img_h: int, desired height of PDF images (in pixels)
         :return: None
         """
+        # TODO: fix translating easy foreign words (like French "dans")
         if not isinstance(phrase, unicode):
             # ensures phrase in unicode (for parsing)
             phrase = phrase.decode("utf-8")

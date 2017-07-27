@@ -67,6 +67,7 @@ languages = ["English", "Swedish", "Norwegian", "Hungarian", "German",
              "Dutch", "Afrikaans", "Russian", "Latvian", "Polish",
              "French", "Spanish", "Portuguese", "Italian", "Danish"]
 
+
 # Functions
 # ---------
 def trimWhitespace(word):
