@@ -15,9 +15,10 @@ DefaultTranslator = blisscribe.BlissTranslator(font_path=blisscribe.BlissTransla
 DefaultTranslator.setSubAll(True)
 DefaultTranslator.chooseOtherPOS(True)
 DefaultTranslator.setFastTranslate(True)
+DefaultTranslator.translate(excerpts.petit_prince, title="Le petit prince")
 #DefaultTranslator.translate(excerpts.alice_in_wonderland, title="Alice in Wonderland")
 #DefaultTranslator.translateFile("/sample texts/salinger-catcher_test.txt", title="Catcher in the Rye")
-DefaultTranslator.translate(excerpts.maupassant, title="La parure")
+#DefaultTranslator.translate(excerpts.alice_in_wonderland_polish, title="Alice in Wonderland")
 #DefaultTranslator.setLanguage("Dutch")
 #DefaultTranslator.translate(excerpts.bible_dutch, title="Het Boek")
 

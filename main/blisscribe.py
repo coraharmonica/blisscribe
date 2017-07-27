@@ -36,9 +36,10 @@ import sys
 import os
 import collections
 import nltk
+import pattern.text
+from pattern.text import en, es, fr, de, it, nl
 from nltk.corpus import wordnet
 from PIL import Image, ImageDraw, ImageFont, ImageChops
-from pattern.text.en import singularize, lemma
 from fpdf import FPDF
 
 try:
@@ -69,7 +70,7 @@ class BlissTranslator:
     verbs, adjectives, and/or other parts of speech.
     ~
     By default, a BlissTranslator will translate all parts of
-    speech in VALID_PHRASES, i.e., nouns, verbs, and adjectives.
+    speech in CHOSEN_POS, i.e., nouns, verbs, and adjectives.
     To translate all other parts of speech, set self.other to True.
     """
     # Fonts
@@ -81,13 +82,15 @@ class BlissTranslator:
     IMG_PATH = FILE_PATH + "symbols/full/png/whitebg/"
     IMAGES_SAVED = 0
     # Language
-    FULL_STOPS = set([".", ",", ";", ":", "?", "!"])
-    PUNCTUATION = set([".", ",", ";", ":", "?", "!", "'", '"', "`", "(", ")"])
-    VALID_PHRASES = set(["NN", "NNS", "VB", "VBD", "VBG", "VBN", "JJ", "JJR", "JJS"])
+    STARTING_PUNCT = set(["(", "'", '"', "-", "\xe2\x80\x9c", "\xe2\x80\x98", "\xe2\x80\x9e"])  # spaces BEFORE
+    ENDING_PUNCT = set([".", ",", ";", ":", "?", "!", ")", "'", '"', "-", "\xe2\x80\x9d", "\xe2\x80\x99", u"\u201d"]) # spaces AFTER
+    PUNCTUATION = STARTING_PUNCT.union(ENDING_PUNCT)
     PARTS_OF_SPEECH = set(["CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
                            "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$",
                            "RB", "RBR", "RBS", "RP", "TO", "UH", "VB", "VBD", "VBG",
                            "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"])
+    DEFAULT_POS = set(["NN", "NNS", "VB", "VBD", "VBG", "VBN", "JJ", "JJR", "JJS"])
+    CHOSEN_POS = DEFAULT_POS
 
     def __init__(self, language="English", font_path=ROMAN_FONT, font_size=DEFAULT_FONT_SIZE):
         # Fonts
@@ -105,8 +108,7 @@ class BlissTranslator:
         self.setLanguage(language)
         self.fast_translate = False
         self.words_seen = dict
-        self.words_changed = dict
-        self.initSeenChanged()
+        self.initSeen()
         self.defns_chosen = {}  # holds user choices for correct word definitions
         # --> parts of speech
         self.nouns = True
@@ -165,15 +167,14 @@ class BlissTranslator:
         """
         return parse_lexica.getDefnImgDict(parse_lexica.LEX_PATH, self.language)
 
-    def initSeenChanged(self):
+    def initSeen(self):
         """
-        Initializes this BlissTranslator's words_seen and
-        words_changed as a default dict.
+        Initializes this BlissTranslator's words_seen
+        as a default dict.
 
         :return: None
         """
         self.words_seen = collections.defaultdict(bool)
-        self.words_changed = collections.defaultdict(bool)
 
     def setSubAll(self, sub_all):
         """
@@ -230,28 +231,29 @@ class BlissTranslator:
 
     def setTranslatables(self):
         """
-        Resets VALID_PHRASES according to this BlissTranslator's translatables
+        Resets CHOSEN_POS according to this BlissTranslator's translatables
         (i.e., nouns, verbs, adjs, and other).
 
         :return: None
         """
-        BlissTranslator.VALID_PHRASES = set()
+        BlissTranslator.CHOSEN_POS = set()
 
         if self.nouns:
-            BlissTranslator.VALID_PHRASES.add("NN")
-            BlissTranslator.VALID_PHRASES.add("NNS")
+            BlissTranslator.CHOSEN_POS.add("NN")
+            BlissTranslator.CHOSEN_POS.add("NNS")
         if self.verbs:
-            BlissTranslator.VALID_PHRASES.add("VB")
-            BlissTranslator.VALID_PHRASES.add("VBD")
-            BlissTranslator.VALID_PHRASES.add("VBG")
-            BlissTranslator.VALID_PHRASES.add("VBN")
+            BlissTranslator.CHOSEN_POS.add("VB")
+            BlissTranslator.CHOSEN_POS.add("VBD")
+            BlissTranslator.CHOSEN_POS.add("VBG")
+            BlissTranslator.CHOSEN_POS.add("VBN")
         if self.adjs:
-            BlissTranslator.VALID_PHRASES.add("JJ")
-            BlissTranslator.VALID_PHRASES.add("JJR")
-            BlissTranslator.VALID_PHRASES.add("JJS")
+            BlissTranslator.CHOSEN_POS.add("JJ")
+            BlissTranslator.CHOSEN_POS.add("JJR")
+            BlissTranslator.CHOSEN_POS.add("JJS")
         if self.other:
-            for pos in BlissTranslator.PARTS_OF_SPEECH:
-                BlissTranslator.VALID_PHRASES.add(pos)
+            for pos in BlissTranslator.PARTS_OF_SPEECH.difference(BlissTranslator.DEFAULT_POS):
+                # adds all non-default parts of speech
+                BlissTranslator.CHOSEN_POS.add(pos)
 
     def chooseNouns(self, nouns):
         """
@@ -331,25 +333,6 @@ class BlissTranslator:
         :return: None
         """
         self.words_seen[word] = True
-
-    def isChanged(self, word):
-        """
-        Returns True if the given word is part of the
-        words_changed dict.
-
-        :param word: str, word to check if in words_changed
-        :return: bool, whether given word is in words_changed
-        """
-        return word in self.words_changed
-
-    def addChanged(self, word):
-        """
-        Adds word to words_changed dict.
-
-        :param word: str, word to add to words_changed
-        :return: None
-        """
-        self.words_changed[word] = True
 
     # IMAGES
     # ======
@@ -484,7 +467,7 @@ class BlissTranslator:
         else:
             return img
 
-    def incLine(self, line_no, inc=DEFAULT_FONT_SIZE * 3):
+    def incLine(self, line_no, inc=DEFAULT_FONT_SIZE*3):
         """
         Returns current line_no multiplied by inc to get the
         y-coordinate for this line in pixels.
@@ -583,7 +566,12 @@ class BlissTranslator:
             alphabet_bg.paste(defn, (indent, self.incLine(line_height, glyph_bg_wh)))
             indent += glyph_bg_wh
 
-        return self.trimHorizontal(alphabet_bg)
+        try:
+            self.trimHorizontal(alphabet_bg)
+        except TypeError:
+            return alphabet_bg
+        else:
+            return self.trimHorizontal(alphabet_bg)
 
     def displayImages(self, pages):
         """
@@ -708,7 +696,7 @@ class BlissTranslator:
         """
         return self.getWordAndTag(word)[1]
 
-    def tagsToList(self, token_phrase):
+    def tokensToTags(self, token_phrase):
         """
         Given a list of strings composing a phrase, returns a list of words'
         part-of-speech tags in that order.
@@ -721,6 +709,15 @@ class BlissTranslator:
         for tup in tagged_phrase:
             tagged_list.append(tup[1])
         return tagged_list
+
+    def getTokenPhrase(self, phrase):
+        """
+        Returns a list of word tokens in phrase.
+
+        :param phrase: str, text with >=1 words
+        :return: List[str], list of word tokens
+        """
+        return [word for word in nltk.word_tokenize(phrase, language=self.language)]
 
     def isNoun(self, word):
         """
@@ -761,6 +758,42 @@ class BlissTranslator:
         tag = self.getWordTag(word)
         return tag[0:2] == "JJ"
 
+    def isPunctuation(self, word):
+        """
+        Returns True if the input is a punctuation mark.
+
+        :param word: str, word to see if punctuation
+        :return: bool, whether word is punctuation
+        """
+        return word in BlissTranslator.PUNCTUATION
+
+    def isStartingPunct(self, word):
+        """
+        Returns True if the input is starting punctuation.
+
+        :param word: str, word to see if starting punctuation
+        :return: bool, whether word is starting punctuation
+        """
+        return word in BlissTranslator.STARTING_PUNCT
+
+    def isEndingPunct(self, word):
+        """
+        Returns True if the input is ending punctuation.
+
+        :param word: str, word to see if ending punctuation
+        :return: bool, whether word is ending punctuation
+        """
+        return word in BlissTranslator.ENDING_PUNCT
+
+    def isNewline(self, word):
+        """
+        Returns True if the input is a newline.
+
+        :param word: str, word to see if newline
+        :return: bool, whether word is newline
+        """
+        return word == "\n"
+
     def getWordPOS(self, word):
         """
         Returns the given word's part of speech, abbreviated as a
@@ -783,6 +816,68 @@ class BlissTranslator:
         elif self.getWordTag(word) == "JJS":
             return "s"
 
+    def isChosenPOS(self, pos):
+        """
+        Returns True if words with the given part of
+        speech should be translated, False otherwise.
+
+        :param pos: str, part-of-speech tag
+        :return: bool, whether to translate pos
+        """
+        return pos in BlissTranslator.CHOSEN_POS
+
+    def getSingular(self, word):
+        """
+        Returns the singular form of the given word
+        in this BlissTranslator's set language.
+        ~
+        If word cannot be singularized for this
+        language, this method returns the input.
+
+        :param word: str, word to singularize
+        :return: str, singularized input
+        """
+        if self.language == "English":
+            return pattern.text.en.singularize(word)
+        elif self.language == "Spanish":
+            return pattern.text.es.singularize(word)
+        elif self.language == "German":
+            return pattern.text.de.singularize(word)
+        elif self.language == "French":
+            return pattern.text.fr.singularize(word)
+        elif self.language == "Italian":
+            return pattern.text.it.singularize(word)
+        elif self.language == "Dutch":
+            return pattern.text.nl.singularize(word)
+        else:
+            return word
+
+    def getLemma(self, word):
+        """
+        Returns the lemmaof the given word in this
+        BlissTranslator's set language.
+        ~
+        If word has no lemma for this
+        language, this method returns the input.
+
+        :param word: str, word to get lemma of
+        :return: str, lemma of word
+        """
+        if self.language == "English":
+            return pattern.text.en.lemma(word)
+        elif self.language == "Spanish":
+            return pattern.text.es.lemma(word)
+        elif self.language == "German":
+            return pattern.text.de.lemma(word)
+        elif self.language == "French":
+            return pattern.text.fr.lemma(word)
+        elif self.language == "Italian":
+            return pattern.text.it.lemma(word)
+        elif self.language == "Dutch":
+            return pattern.text.nl.lemma(word)
+        else:
+            return word
+
     def getLexeme(self, word):
         """
         Retrieves the given word's lexeme,
@@ -798,12 +893,10 @@ class BlissTranslator:
         :return: str, lexeme of input word
         """
         if self.isPluralNoun(word):
-            lexeme = singularize(word)
-        elif self.isVerb(word):
-            lexeme = lemma(word)
+            lexeme = self.getSingular(word)
         else:
             lexeme = word
-        return lexeme
+        return self.getLemma(lexeme)
 
     def isTranslatable(self, word):
         """
@@ -941,6 +1034,25 @@ class BlissTranslator:
 
         return defns
 
+    def getWordAtIndex(self, token_phrase, idx):
+        """
+        A try-catch block for returning the word
+        token in token_phrase at specified idx.
+        ~
+        If index cannot be reached, this method returns
+        the empty string.
+
+        :param token_phrase: List[str], word tokens
+        :param idx: int, index to access in token_phrase
+        :return: str, word token at specified idx
+        """
+        try:
+            token_phrase[idx]
+        except IndexError:
+            return ""
+        else:
+            return token_phrase[idx]
+
     def getTitle(self, title, phrase):
         """
         Returns a valid title for the given phrase.
@@ -979,12 +1091,12 @@ class BlissTranslator:
         :param img_h: int, desired height of PDF images (in pixels)
         :return: None
         """
-        # TODO: modify spacing around special characters e.g. . , ( )
         if not isinstance(phrase, unicode):
+            # ensures phrase in unicode (for parsing)
             phrase = phrase.decode("utf-8")
-        token_phrase = [word for word in nltk.word_tokenize(phrase)]  # phrase split into word tokens
-        tagged_list = self.tagsToList(token_phrase)
-        raw_phrase = [word.lower() for word in token_phrase]          # token words to lowercase
+        token_phrase = self.getTokenPhrase(phrase)
+        tagged_list = self.tokensToTags(token_phrase)
+        raw_phrase = [word.lower() for word in token_phrase]
 
         pages = []
         new_title = self.getTitle(title, phrase)
@@ -994,15 +1106,18 @@ class BlissTranslator:
         bg = self.makeBlankImg(img_w, img_h)
         indent = self.font_size
         line_no = 0
+
         idx = 0
 
         for word in raw_phrase:
             lexeme = self.getLexeme(word)
 
-            if self.isTranslatable(word) and tagged_list[idx] in BlissTranslator.VALID_PHRASES:
-                # if word can be validly translated into Blissymbols...
-                if self.fast_translate or self.isSeen(lexeme) or self.isChanged(lexeme):
-                    # if we've already seen or translated the word before...
+            if self.isTranslatable(word) and self.isChosenPOS(tagged_list[idx]):
+                # checks if word can be validly translated into Blissymbols
+                # and it suits our part-of-speech selections
+                if self.fast_translate or self.isSeen(lexeme):
+                    # checks if we've already seen/translated the word before
+                    # or if we want to translate words immediately
                     try:
                         self.getBlissImg(lexeme, img_w/2, self.image_heights/2)
                     except KeyError:
@@ -1012,58 +1127,52 @@ class BlissTranslator:
                         idx += 1
                         continue
                     else:
-                        if not self.sub_all and self.isChanged(lexeme):
+                        if self.isSeen(lexeme) and not self.sub_all:
                             img = self.getBlissImg(lexeme, img_w/2, self.image_heights/2)
                         else:
                             # adds subtitles to new words
-                            if word != "i":
-                                img = self.drawAlphabet(word)
-                            else:
-                                img = self.drawAlphabet("I")
-                            self.addChanged(lexeme)
-                        # if word is a plural noun, add plural Blissymbol
+                            img = self.drawAlphabet(word)
+                        # affixes plural Blissymbol to plural nouns
                         if self.isPluralNoun(word):
                             img = self.getPluralImg(img, img_w/2)
                 else:
-                    # if we haven't seen or translated the word before,
-                    # then render English text
+                    # if we haven't seen/translated the word before,
+                    # then render text
                     img = self.getWordImg(token_phrase[idx], self.font_size)
                     self.addSeen(lexeme)
             else:
                 # if word can't be translated to Blissymbols,
-                # then render English text
+                # then render text
                 img = self.getWordImg(token_phrase[idx], self.font_size)
 
             space = self.getSpaceSize()
-            x_inc = indent + self.getWordWidth(img) + space
+            x_inc = indent + self.getWordWidth(img)
             y_inc = self.font_size * 3
 
-            try:
-                raw_phrase[idx+1]
-            except IndexError:
-                pass
-            else:
-                if raw_phrase[idx+1] in BlissTranslator.PUNCTUATION or raw_phrase[idx] == "n't":
-                    if raw_phrase[idx] != "(":
-                        space = self.getMinSpace()
-                elif x_inc > img_w:
+            this_word = raw_phrase[idx]
+            next_word1 = self.getWordAtIndex(raw_phrase, idx+1)
+            next_word2 = self.getWordAtIndex(raw_phrase, idx+2)
+
+            if next_word1 == "n't":
+                space = self.getMinSpace()
+            elif self.isEndingPunct(this_word) and self.isEndingPunct(next_word1):
+                space = self.getMinSpace()
+            elif self.isStartingPunct(next_word1) or self.isEndingPunct(this_word):
+                space = self.getSpaceSize()
+            elif self.isEndingPunct(next_word1) or self.isStartingPunct(this_word):
+                space = self.getMinSpace()
+
+            if x_inc > img_w:
+                indent = 0
+                line_no += 1
+            elif self.isEndingPunct(next_word2) or self.isStartingPunct(next_word1):
+                if (x_inc + self.getWordWidth(next_word1) + space + self.getWordWidth(next_word2)) > img_w:
+                    # don't let punctuation trail onto next line alone
                     indent = 0
                     line_no += 1
-                elif raw_phrase[idx] == "\n":
-                    # for new paragraphs
-                    indent = int(self.font_size)
-                    line_no += 1
-                elif raw_phrase[idx+1] in BlissTranslator.PUNCTUATION: # or raw_phrase[idx-1] in BlissTranslator.PUNCTUATION:
-                    if (x_inc + self.getWordWidth(raw_phrase[idx+1])) > img_w:
-                        # don't let punctuation trail onto next line alone
-                        indent = 0
-                        line_no += 1
-                    elif raw_phrase[idx-1] == "(":
-                        space = self.getMinSpace()
-                    elif raw_phrase[idx-1] in BlissTranslator.FULL_STOPS:
-                        space = self.getSpaceSize()
-                else:
-                    space = self.getSpaceSize()
+            elif this_word == "\n":
+                indent = 0
+                line_no += 1
 
             if (line_no + 1) * y_inc > img_h:
                 # if the next line would go beyond the image,
@@ -1073,14 +1182,14 @@ class BlissTranslator:
                 line_no = 0
 
             # TODO: modify paste to work with vector bliss files (for aesthetic resizing)
-            bg.paste(img, (indent + space, self.incLine(line_no, y_inc)))
+            bg.paste(img, (indent, self.incLine(line_no, y_inc)))
             indent += self.getWordWidth(img) + space
             idx += 1
 
         pages.insert(0, bg)
 
         self.makePdf(new_title, self.saveImages(pages[::-1]), margins=50)
-        self.initSeenChanged()
+        self.initSeen()
 
     def translateFile(self, filename, title=None, img_w=816, img_h=1056):
         """

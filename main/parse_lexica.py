@@ -196,6 +196,8 @@ def pairLists(defns, imgs):
             continue
         else:
             for word in words:
+                if imgs[idx][-11:] == "ercase).png":
+                    continue
                 if word[:9] != "indicator":
                     word = parseAlphabetic(word)
                 if word in lang_bliss_dict:
@@ -226,55 +228,6 @@ def getDefnImgDict(filename, language="English"):
         vals (str) - corresponding image filenames
     """
     return pairLists(getDefns(filename, language), getImgFilenames(filename))
-
-
-def parseLexicon(filename):
-    """
-    Parses plaintext file with given filename and returns a dict of words
-    with corresponding image file links.
-    ~
-    If a line in the file contains multiple words, this function splits the line
-    and adds each word to the dict as separate entries linking to the same Blissymbol.
-    If a word in the file has no corresponding Blissymbol, the {key,val} pair
-    is not added to the output dict.
-
-    :param filename: str, filename of .txt file for lexicon (each word sep. by \n)
-    :return: dict, where...
-        keys (str) - word in filename
-        vals (str/List[str]) - word's corresponding Blissymbol image file link(s)
-    """
-    bliss_dict = {}  # holds words & filenames
-
-    with open(FILE_PATH + filename, "rb", encoding="utf-8") as lex:
-        for item in lex:
-            item = item[:-1]  # cuts off \n character
-            words = []        # allows multiple definitions
-
-            if item[-5:] != "(OLD)":
-                for i in item.split(","):
-                    if "_" in i:
-                        i = i.replace("_", " ")
-                    if "-" in i:
-                        i = i.replace("-", " ")
-                    if len(i) > 0:
-                        words.append(i)
-
-            for word in words:
-                try:
-                    Image.open(IMG_PATH + item + ".png")
-                except IOError:
-                    continue
-                else:
-                    if word[:9] != "indicator":
-                        word = parseAlphabetic(word)
-                    if word in bliss_dict:
-                        if type(bliss_dict[word]) != list:
-                            bliss_dict[word] = [bliss_dict[word]]
-                        bliss_dict[word].append(item + ".png")
-                    else:
-                        bliss_dict[word] = item + ".png"
-
-    return bliss_dict
 
 
 def printDict(d):
