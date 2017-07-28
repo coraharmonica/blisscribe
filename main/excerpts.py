@@ -76,27 +76,19 @@ def parseExcerpts(filenames):
     return books
 
 
-sample_texts = ["/sample texts/adams-hitchhiker's_guide.txt",
-                "/sample texts/baum-wizard_of_oz.txt",
-                "/sample texts/conrad-heart_of_darkness.txt",
-                "/sample texts/dfw-infinite_jest.txt",
-                "/sample texts/dick-electric_sheep.txt",
-                "/sample texts/exupery-little_prince.txt",
-                "/sample texts/exupery-petit_prince.txt",
-                "/sample texts/fitzgerald-gatsby.txt",
-                "/sample texts/gaiman-coraline.txt",
-                "/sample texts/hesse-siddhartha.txt",
-                "/sample texts/kafka-metamorphosis.txt",
-                "/sample texts/machiavelli-prince.txt",
-                "/sample texts/nabokov-lolita.txt",
-                "/sample texts/pessoa-disquiet.txt",
-                "/sample texts/pynchon-gravity's_rainbow.txt",
-                "/sample texts/sagan-pale_blue_dot.txt",
-                "/sample texts/salinger-catcher.txt",
-                "/sample texts/vatsyayana-kama_sutra.txt"]
+sample_texts = ["/sample texts/adams-hitchhiker's_guide_test.txt",
+                "/sample texts/baum-wizard_of_oz_test.txt",
+                "/sample texts/conrad-heart_of_darkness_test.txt",
+                "/sample texts/dfw-infinite_jest_test.txt",
+                "/sample texts/exupery-little_prince_test.txt",
+                "/sample texts/exupery-petit_prince_test.txt",
+                "/sample texts/kafka-metamorphosis_test.txt",
+                "/sample texts/nabokov-lolita_test.txt",
+                "/sample texts/pynchon-gravity's_rainbow_test.txt",
+                "/sample texts/salinger-catcher_test.txt"]
 file_ids = [file_id for file_id in nltk.corpus.gutenberg.fileids()]
 titles = [file_id[:-4].replace("-", " ") for file_id in file_ids]
-texts = [" ".join(nltk.corpus.gutenberg.words(file_id)) for file_id in file_ids]
+texts = [" ".join(nltk.corpus.gutenberg.words(file_id)).split("]", 1)[1] for file_id in file_ids]
 books = {}
 books.update(pairTitlesTexts(titles, texts))
 books.update(parseExcerpts(sample_texts))
@@ -104,10 +96,10 @@ books.update(parseExcerpts(sample_texts))
 
 # Fiction
 alice_in_wonderland = books["carroll alice"]
-hitchhikers_guide = books["adams hitchhiker's_guide"]
+hitchhikers_guide = books["adams hitchhiker's_guide_test"]
 moby_dick = books["melville moby_dick"]
-petit_prince = books["exupery petit_prince"]
-wizard_of_oz = books["baum wizard_of_oz"]
+petit_prince = books["exupery petit_prince_test"]
+wizard_of_oz = books["baum wizard_of_oz_test"]
 # Poetry
 blake_songs = books["blake poems"]
 leaves_of_grass = books["whitman leaves"]
