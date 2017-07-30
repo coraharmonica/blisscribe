@@ -32,17 +32,17 @@ BLISSCRIBE:
 
 # -*- coding: utf-8 -*-
 
-import sys
-import os
 import collections
+import os
+import sys
+
 import nltk
-from nltk.corpus import wordnet
-from nltk.corpus.reader.wordnet import WordNetCorpusReader
-from nltk.stem import WordNetLemmatizer
 import pattern.text
-from pattern.text import en, es, fr, de, it, nl
 from PIL import Image, ImageDraw, ImageFont, ImageChops
 from fpdf import FPDF
+from nltk.corpus import wordnet
+from nltk.stem import WordNetLemmatizer
+from pattern.text import en, es, fr, de, it, nl
 
 try:
     import parse_lexica
@@ -117,9 +117,6 @@ class BlissTranslator:
         self.language = str
         self.lang_code = str
         self.setLanguage(language)
-        self.reader = WordNetCorpusReader
-        if self.language != "English":
-            self.initReader()
         self.fast_translate = False
         self.words_seen = dict
         self.initSeen()
@@ -164,26 +161,19 @@ class BlissTranslator:
         """
         try:
             parse_lexica.getDefns(parse_lexica.LEX_PATH, language)
-            BlissTranslator.LANG_CODES[language]
-        except IOError or KeyError:
+        except IOError:
             self.language = "English"
         else:
             self.language = language
-            self.bliss_dict = self.initBlissDict()
         finally:
+            self.bliss_dict = self.initBlissDict()
+
+        try:
+            BlissTranslator.LANG_CODES[language]
+        except KeyError:
+            self.language = "English"
+        else:
             self.lang_code = BlissTranslator.LANG_CODES[self.language]
-            if self.language != "English":
-                self.initReader()
-
-    def initReader(self):
-        """
-        Initializes this BlissTranslator's multilingual corpus reader
-        in its set language.
-
-        :return: None
-        """
-        self.reader = WordNetCorpusReader(nltk.data.find("corpora/wordnet"),
-                                          nltk.data.find("corpora/omw/" + self.lang_code))
 
     def initBlissDict(self):
         """
@@ -785,7 +775,7 @@ class BlissTranslator:
         :param phrase: str, text with >=1 words
         :return: List[str], list of word tokens
         """
-        return [word for word in nltk.word_tokenize(phrase, language=self.language)]
+        return [word for word in nltk.word_tokenize(phrase, language=self.language.lower())]
 
     def isNoun(self, word):
         """
@@ -922,35 +912,64 @@ class BlissTranslator:
         else:
             return word
 
-    def getLemma(self, word):
+    def getLemma(self, verb):
         """
-        Returns the lemmaof the given word in this
+        Returns the lemma of the given verb in this
         BlissTranslator's set language.
         ~
-        If word has no lemma for this
-        language, this method returns the input.
+        If no lemma can be found in set language,
+        this method returns the input.
 
-        :param word: str, word to get lemma of
-        :return: str, lemma of word
+        :param verb: str, verb
+        :return: str, lemma of verb
         """
         if self.language == "English":
-            return pattern.text.en.lemma(word)
+            return pattern.text.en.lemma(verb)
         elif self.language == "Spanish":
-            return pattern.text.es.lemma(word)
+            return pattern.text.es.lemma(verb)
         elif self.language == "German":
-            return pattern.text.de.lemma(word)
+            return pattern.text.de.lemma(verb)
         elif self.language == "French":
-            return pattern.text.fr.lemma(word)
+            return pattern.text.fr.lemma(verb)
         elif self.language == "Italian":
-            return pattern.text.it.lemma(word)
+            return pattern.text.it.lemma(verb)
         elif self.language == "Dutch":
-            return pattern.text.nl.lemma(word)
+            return pattern.text.nl.lemma(verb)
         else:
-            return word
+            return verb
             #pos = self.getWordPOS(word)
             #return self.reader.morphy(word, pos)
             #return wordnet.synsets(word)[0].lemma_names(self.lang_code)
             #return self.reader.lemma(word, self.lang_code)
+
+    def getPredicative(self, adj):
+        """
+        Returns the base form of the given adjective
+        in this BlissTranslator's set language.
+        ~
+        If no base form can be found in set language,
+        this method returns the input.
+
+        e.g. well   -> good
+             belles -> beau
+
+        :param adj: str, adjective
+        :return: str, base form of input adj
+        """
+        if self.language == "English":
+            return pattern.text.en.predicative(adj)
+        elif self.language == "Spanish":
+            return pattern.text.es.predicative(adj)
+        elif self.language == "German":
+            return pattern.text.de.predicative(adj)
+        elif self.language == "French":
+            return pattern.text.fr.predicative(adj)
+        elif self.language == "Italian":
+            return pattern.text.it.predicative(adj)
+        elif self.language == "Dutch":
+            return pattern.text.nl.predicative(adj)
+        else:
+            return adj
 
     def getLexeme(self, word):
         """
@@ -969,13 +988,12 @@ class BlissTranslator:
         if word in self.bliss_dict:
             return word
         else:
-            if self.isPluralNoun(word):
-                lexeme = self.getSingular(word)
-            else:
-                lexeme = self.getLemma(word)
-
-            if lexeme in self.bliss_dict:
-                return lexeme
+            if self.getSingular(word) in self.bliss_dict:
+                return self.getSingular(word)
+            elif self.getLemma(word) in self.bliss_dict:
+                return self.getLemma(word)
+            elif self.getPredicative(word) in self.bliss_dict:
+                return self.getPredicative(word)
             else:
                 return word
 
@@ -1047,9 +1065,7 @@ class BlissTranslator:
 
     def getWordSynsets(self, word):
         """
-        Creates a WordNet synset from the given word,
-        beginning with the given word at index 0 and
-        continuing with its synonyms at further indices.
+        Returns a list of WordNet synsets for the given word.
 
         WordNet lookup link here:
         http://wordnetweb.princeton.edu/perl/webwn?s=&sub=Search+WordNet
@@ -1071,6 +1087,29 @@ class BlissTranslator:
         :return: List[str], WordNet lemma names
         """
         return synset.lemma_names(lang=self.lang_code)
+
+    def getSynsetsLemmas(self, synsets):
+        """
+        Given a list of WordNet synsets, returns a list
+        of all of their lemma names.
+
+        :param synsets: List[Synset], synsets
+        :return: List[str], lemmas for all synsets
+        """
+        lemmas = []
+        for synset in synsets:
+            lemmas.extend(self.getSynsetLemmas(synset))
+        return lemmas
+
+    def getWordSynsetsLemmas(self, word):
+        """
+        Returns all lemma names in all synsets
+        associated with given word.
+
+        :param word: str, a word to lookup in WordNet
+        :return: List[str], all this word's synsets' lemmas
+        """
+        return self.getSynsetsLemmas(self.getWordSynsets(word))
 
     def translateSynsets(self, synsets):
         """
