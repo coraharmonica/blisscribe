@@ -96,6 +96,7 @@ books.update(parseExcerpts(sample_texts))
 
 # Fiction
 alice_in_wonderland = books["carroll alice"]
+alice_in_wonderland_polish = parsePlaintext("/sample texts/alice_in_wonderland_polish.txt")
 hitchhikers_guide = books["adams hitchhiker's_guide_test"]
 moby_dick = books["melville moby_dick"]
 petit_prince = books["exupery petit_prince_test"]
@@ -110,11 +111,3 @@ kjv = books["bible kjv"]
 hamlet = books["shakespeare hamlet"]
 julius_caesar = books["shakespeare caesar"]
 macbeth = books["shakespeare macbeth"]
-
-alice_in_wonderland_polish = 'Alicja mia\xc5\x82a ju\xc5\xbc do\xc5\x9b\xc4\x87 siedzenia na ' \
-                             '\xc5\x82awce obok siostry i pr\xc3\xb3\xc5\xbcnowania. Raz czy dwa ' \
-                             'razy zerkn\xc4\x99\xc5\x82a do ksi\xc4\x85\xc5\xbcki, kt\xc3\xb3r\xc4\x85 ' \
-                             'czyta\xc5\x82a siostra. Niestety, w ksi\xc4\x85\xc5\xbcce nie by\xc5\x82o ' \
-                             'obrazk\xc3\xb3w ani rozm\xc3\xb3w. \xe2\x80\x9eA c\xc3\xb3\xc5\xbc jest warta ' \
-                             'ksi\xc4\x85\xc5\xbcka - pomy\xc5\x9bla\xc5\x82a Alicja - w kt\xc3\xb3rej nie ma ' \
-                             'rozm\xc3\xb3w ani obrazk\xc3\xb3w?\xe2\x80\x9d'

@@ -50,6 +50,7 @@ PARSE_LEXICA:
     35.	    WP$	    Possessive wh-pronoun
     36.	    WRB	    Wh-adverb
 """
+# -*- coding: utf-8 -*-
 
 # Imports
 # -------
@@ -60,26 +61,51 @@ from PIL import Image, ImageDraw, ImageFont
 # Constants
 # ---------
 FILE_PATH = sys.path[0] + "/"
-IMG_PATH = FILE_PATH + "symbols/full/png/whitebg/"
-LEX_PATH = FILE_PATH + "resources/universal bliss lexicon.xls"
+IMG_PATH = FILE_PATH + "symbols/png/whitebg/"
+LEX_PATH = FILE_PATH + "resources/lexica/universal bliss lexicon.xls"
 
-languages = ["English", "Swedish", "Norwegian", "Hungarian", "German",
+LANGUAGES = ["English", "Swedish", "Norwegian", "Hungarian", "German",
              "Dutch", "Afrikaans", "Russian", "Latvian", "Polish",
              "French", "Spanish", "Portuguese", "Italian", "Danish"]
 
 
 # Functions
 # ---------
-def trimWhitespace(word):
+def parseLexicon(filename):
     """
-    Trims empty space(s) from start and end of given word.
+    Parses plaintext file with given filename.
+    Returns a dict with all words in lexicon
+    as keys and corresponding lemma forms as values.
+    ~
+    Each new lexical entry should be separated by "\n",
+    while inflected forms should be separated by ",".
+    ~
+    Assumes first word on every line is the lemma form
+    of all subsequent words on the same line.
+    ~
+    N.B. The same lemma value will often belong to multiple keys.
 
-    e.g. trimWhitespace(" full moon  ") -> "full moon"
+    e.g. "kota, kocie, kot" -> {"kota":"kota", "kocie":"kota", "kot":"kota"}
 
-    :param word: str, word to trim whitespace(s) from
-    :return: str, word with whitespace(s) trimmed
+    :param filename: str, filename of .txt file for lexicon
+    :return: dict, where...
+        keys (str) - inflected form of a word
+        vals (str) - lemma form of inflected word
     """
-    return word.strip(" ")
+    lemma_dict = {}
+
+    with open(FILE_PATH + filename, "rb") as lexicon:
+        for entry in lexicon:
+            entry = entry.decode("utf-8")
+            entry = entry.strip("\n")
+            entry = entry.strip("\r")
+            inflexions = entry.split(",")
+            lemma = inflexions[0]
+
+            for inflexion in inflexions:
+                lemma_dict[inflexion.strip()] = lemma
+
+    return lemma_dict
 
 
 def parseAlphabetic(word):
@@ -105,7 +131,7 @@ def parseAlphabetic(word):
         elif char == ")":
             remove = False
 
-    return trimWhitespace("".join(new_word))
+    return ("".join(new_word)).strip()
 
 
 def getImgFilenames(filename):

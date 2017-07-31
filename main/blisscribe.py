@@ -29,19 +29,16 @@ BLISSCRIBE:
     their meanings are enumerated here:
     https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
 """
-
 # -*- coding: utf-8 -*-
 
 import collections
 import os
 import sys
-
 import nltk
 import pattern.text
 from PIL import Image, ImageDraw, ImageFont, ImageChops
 from fpdf import FPDF
 from nltk.corpus import wordnet
-from nltk.stem import WordNetLemmatizer
 from pattern.text import en, es, fr, de, it, nl
 
 try:
@@ -80,7 +77,7 @@ class BlissTranslator:
     HIP_FONT = "/Library/Fonts/Helvetica.dfont"
     DEFAULT_FONT_SIZE = 30
     # Images
-    IMG_PATH = FILE_PATH + "symbols/full/png/whitebg/"
+    IMG_PATH = FILE_PATH + "symbols/png/whitebg/"
     IMAGES_SAVED = 0
     # Language
     STARTING_PUNCT = set(["(", '"', "-", "\xe2\x80\x9c", "\xe2\x80\x98", "\xe2\x80\x9e"])  # spaces BEFORE
@@ -93,7 +90,6 @@ class BlissTranslator:
                            "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"])
     DEFAULT_POS = set(["NN", "NNS", "VB", "VBD", "VBG", "VBN", "JJ", "JJR", "JJS"])
     CHOSEN_POS = DEFAULT_POS
-    LEMMATIZER = WordNetLemmatizer()
     LANG_CODES = {"Arabic": "arb", "Bulgarian": 'bul', "Catalan": 'cat', "Danish": 'dan',
                   "Greek": 'ell', "English": 'eng', "Basque": 'eus', "Persian": 'fas',
                   "Finnish": 'fin', "French": 'fra', "Galician": 'glg', "Hebrew": 'heb',
@@ -114,12 +110,14 @@ class BlissTranslator:
         self.page_nums = True
         # Language
         self.bliss_dict = dict
+        self.polish_lexicon = dict
         self.language = str
         self.lang_code = str
         self.setLanguage(language)
         self.fast_translate = False
         self.words_seen = dict
-        self.initSeen()
+        self.words_changed = dict
+        self.initSeenChanged()
         self.defns_chosen = {}  # holds user choices for correct word definitions
         # --> parts of speech
         self.nouns = True
@@ -175,6 +173,9 @@ class BlissTranslator:
         else:
             self.lang_code = BlissTranslator.LANG_CODES[self.language]
 
+        if self.language == "Polish":
+            self.polish_lexicon = parse_lexica.parseLexicon("resources/lexica/polish.txt")
+
     def initBlissDict(self):
         """
         Returns a Bliss dictionary in this BlissTranslator's
@@ -186,7 +187,7 @@ class BlissTranslator:
         """
         return parse_lexica.getDefnImgDict(parse_lexica.LEX_PATH, self.language)
 
-    def initSeen(self):
+    def initSeenChanged(self):
         """
         Initializes this BlissTranslator's words_seen
         as a default dict.
@@ -194,6 +195,7 @@ class BlissTranslator:
         :return: None
         """
         self.words_seen = collections.defaultdict(bool)
+        self.words_changed = collections.defaultdict(bool)
 
     def setSubAll(self, sub_all):
         """
@@ -353,6 +355,25 @@ class BlissTranslator:
         """
         self.words_seen[word] = True
 
+    def isChanged(self, word):
+        """
+        Returns True if the given word is part of the
+        words_changed dict.
+
+        :param word: str, word to check if in words_changed
+        :return: bool, whether given word is in words_changed
+        """
+        return word in self.words_changed
+
+    def addChanged(self, word):
+        """
+        Adds word to words_changed dict.
+
+        :param word: str, word to add to words_changed
+        :return: None
+         """
+        self.words_changed[word] = True
+
     # IMAGES
     # ======
     def getWordWidth(self, word):
@@ -422,11 +443,11 @@ class BlissTranslator:
                 choice = self.chooseDefn(word)
             else:
                 choice = 0
-            bliss_word = Image.open(BlissTranslator.IMG_PATH +
-                                   self.bliss_dict[word][choice])
+            bliss_word = Image.open(str(BlissTranslator.IMG_PATH +
+                                   self.bliss_dict[word][choice]))
         else:
-            bliss_word = Image.open(BlissTranslator.IMG_PATH +
-                                    self.bliss_dict[word])
+            bliss_word = Image.open(str(BlissTranslator.IMG_PATH +
+                                    self.bliss_dict[word]))
         img = bliss_word
         img.thumbnail((max_width, max_height))
         return img
@@ -912,12 +933,12 @@ class BlissTranslator:
         else:
             return word
 
-    def getLemma(self, verb):
+    def getInfinitive(self, verb):
         """
-        Returns the lemma of the given verb in this
-        BlissTranslator's set language.
+        Returns the infinitive of the given verb
+        in this BlissTranslator's set language.
         ~
-        If no lemma can be found in set language,
+        If no infinitive can be found in set language,
         this method returns the input.
 
         :param verb: str, verb
@@ -937,10 +958,6 @@ class BlissTranslator:
             return pattern.text.nl.lemma(verb)
         else:
             return verb
-            #pos = self.getWordPOS(word)
-            #return self.reader.morphy(word, pos)
-            #return wordnet.synsets(word)[0].lemma_names(self.lang_code)
-            #return self.reader.lemma(word, self.lang_code)
 
     def getPredicative(self, adj):
         """
@@ -987,11 +1004,18 @@ class BlissTranslator:
         """
         if word in self.bliss_dict:
             return word
+        elif self.language == "Polish":
+            try:
+                self.polish_lexicon[word]
+            except KeyError:
+                return word
+            else:
+                return self.polish_lexicon[word]
         else:
             if self.getSingular(word) in self.bliss_dict:
                 return self.getSingular(word)
-            elif self.getLemma(word) in self.bliss_dict:
-                return self.getLemma(word)
+            elif self.getInfinitive(word) in self.bliss_dict:
+                return self.getInfinitive(word)
             elif self.getPredicative(word) in self.bliss_dict:
                 return self.getPredicative(word)
             else:
@@ -1217,8 +1241,6 @@ class BlissTranslator:
         """
         if title is None:
             title = phrase[:20]
-        else:
-            title = title
         final = ''.join([c for c in title if ord(c) < 128])
         return final
 
@@ -1244,16 +1266,17 @@ class BlissTranslator:
         # TODO: refactor translate() & drawAlphabet() for less repetition
         # TODO: change tokenizing to allow translating compound words & hyphenates
         phrase = phrase.replace("-", " - ")
+        if not isinstance(title, unicode):
+            title = title.decode("utf-8")
         if not isinstance(phrase, unicode):
-            # ensures phrase in unicode (for parsing)
+            # ensures phrase in unicode for parsing
             phrase = phrase.decode("utf-8")
         token_phrase = self.getTokenPhrase(phrase)
         tagged_list = self.tokensToTags(token_phrase)
         raw_phrase = [word.lower() for word in token_phrase]
 
         pages = []
-        new_title = self.getTitle(title, phrase)
-        title_page = self.makeTitlePage(new_title, img_w, img_h)
+        title_page = self.makeTitlePage(title, img_w, img_h)
         pages.append(title_page)
 
         bg = self.makeBlankImg(img_w, img_h)
@@ -1281,16 +1304,17 @@ class BlissTranslator:
                     except KeyError or IOError:
                         img = self.getWordImg(token_phrase[idx], self.font_size)
                     else:
-                        if self.isSeen(lexeme) and not self.sub_all:
+                        if self.isChanged(lexeme) and not self.sub_all:
                             img = self.getBlissImg(new_lexeme, img_w/2, self.image_heights/2)
                         else:
                             # adds subtitles to new words
                             img = self.drawAlphabet(word)
+                            self.addChanged(lexeme)
                         # affixes plural Blissymbol to plural nouns
                         if self.isPluralNoun(word):
                             img = self.getPluralImg(img, img_w/2)
                 else:
-                    # if we haven't seen/translated the word before,
+                    # if we haven't seen the word before,
                     # then render text
                     img = self.getWordImg(token_phrase[idx], self.font_size)
                     self.addSeen(lexeme)
@@ -1341,9 +1365,8 @@ class BlissTranslator:
             idx += 1
 
         pages.insert(0, bg)
-
-        self.makePdf(new_title, self.saveImages(pages[::-1]), margins=50)
-        self.initSeen()
+        self.makePdf(title, self.saveImages(pages[::-1]), margins=50)
+        self.initSeenChanged()
 
     def translateFile(self, filename, title=None, img_w=816, img_h=1056):
         """
