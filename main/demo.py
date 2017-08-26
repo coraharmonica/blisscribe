@@ -13,11 +13,11 @@ DEMO:
     A selection of sample texts from Project Gutenberg
     can be found in the excerpts module.  Additional
     texts are located as plaintext files in this
-    directory under the sampletexts folder.
+    directory under the sample texts folder.
 
     If the user wishes to supply their own texts, it is
     recommended to place them in this directory or in the
-    sampletexts subfolder, then call excerpts.parsePlaintext()
+    sample texts folder, then call excerpts.parsePlaintext()
     on the filepath relative to the main folder.
 """
 
@@ -33,9 +33,9 @@ CustomTranslator = blisscribe.BlissTranslator(language="Polish", font_path=bliss
 CustomTranslator.setSubAll(True)         # add Polish subtitles below all Blissymbols
 CustomTranslator.chooseOtherPOS(True)    # translate all parts of speech possible to Blissymbols
 CustomTranslator.setFastTranslate(True)  # translate Polish to Blissymbols immediately
-#CustomTranslator.translate(excerpts.alice_in_wonderland_polish, title='Alicja w Kranie Czar\xc3\xb3w')
+#CustomTranslator.translate(excerpts.alice_in_wonderland_polish[:5000], title='Alicja w Kranie Czar\xc3\xb3w')
 
 # French translation
-CustomTranslator.setLanguage(language="French")
-CustomTranslator.chooseOtherPOS(False)
+#CustomTranslator.setLanguage(language="French")
+#CustomTranslator.chooseOtherPOS(False)
 #CustomTranslator.translate(excerpts.petit_prince, title="Le petit prince")

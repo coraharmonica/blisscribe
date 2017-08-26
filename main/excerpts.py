@@ -84,8 +84,7 @@ sample_texts = ["/sample texts/adams-hitchhiker's_guide_test.txt",
                 "/sample texts/exupery-petit_prince_test.txt",
                 "/sample texts/kafka-metamorphosis_test.txt",
                 "/sample texts/nabokov-lolita_test.txt",
-                "/sample texts/pynchon-gravity's_rainbow_test.txt",
-                "/sample texts/salinger-catcher_test.txt"]
+                "/sample texts/pynchon-gravity's_rainbow_test.txt"]
 file_ids = [file_id for file_id in nltk.corpus.gutenberg.fileids()]
 titles = [file_id[:-4].replace("-", " ") for file_id in file_ids]
 texts = [" ".join(nltk.corpus.gutenberg.words(file_id)).split("]", 1)[1] for file_id in file_ids]
