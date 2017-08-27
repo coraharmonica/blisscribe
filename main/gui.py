@@ -6,7 +6,6 @@ GUI:
     Users will be able to input text to the app and
     choose the file location for their output PDF.
 """
-
 import blisscribe
 
 try:

@@ -5,7 +5,6 @@ TEST_BLISSCRIBE:
     Python testing suite for blisscribe.py.
     Tests methods in BlissTranslator class.
 """
-
 import unittest
 from PIL import Image, ImageDraw, ImageFont
 import blisscribe

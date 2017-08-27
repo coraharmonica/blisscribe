@@ -49,26 +49,18 @@ PARSE_LEXICA:
     35.	    WP$	    Possessive wh-pronoun
     36.	    WRB	    Wh-adverb
 """
-
-# Imports
-# -------
 import sys
 import xlrd
 from PIL import Image, ImageDraw, ImageFont
 
-# Constants
-# ---------
 FILE_PATH = sys.path[0] + "/"
 IMG_PATH = FILE_PATH + "symbols/png/whitebg/"
 LEX_PATH = FILE_PATH + "resources/lexica/universal bliss lexicon.xls"
-
 LANGUAGES = ["English", "Swedish", "Norwegian", "Hungarian", "German",
              "Dutch", "Afrikaans", "Russian", "Latvian", "Polish",
              "French", "Spanish", "Portuguese", "Italian", "Danish"]
 
 
-# Functions
-# ---------
 def parseLexicon(filename):
     """
     Parses plaintext file with given filename.

@@ -19,9 +19,9 @@ DEMO:
     sample texts folder, then call excerpts.parsePlaintext()
     on the filepath relative to the main folder.
 """
-
 import blisscribe
 import excerpts
+
 
 DefaultTranslator = blisscribe.BlissTranslator()  # defaults to English, Times New Roman, size 30
 #DefaultTranslator.translate(excerpts.alice_in_wonderland[:3000], title="Alice in Wonderland")

@@ -28,7 +28,6 @@ BLISSCRIBE:
     their meanings are enumerated here:
     https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
 """
-
 import collections
 import os
 import sys
@@ -52,8 +51,7 @@ else:
 
 FILE_PATH = sys.path[0] + "/"
 
-# BlissTranslator
-# ---------------
+
 class BlissTranslator:
     """
     A class for translating English text to Images with a

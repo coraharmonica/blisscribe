@@ -5,8 +5,6 @@ EXCERPTS:
     Holds sample English texts used for testing
     and reading.
 """
-
-
 import nltk
 import string
 import sys
