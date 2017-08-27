@@ -1,5 +1,4 @@
-# Notes
-# -----
+# -*- coding: utf-8 -*-
 """
 TEST_BLISSCRIBE:
 

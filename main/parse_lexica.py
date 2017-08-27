@@ -1,5 +1,4 @@
-# Notes
-# -----
+# -*- coding: utf-8 -*-
 """
 PARSE_LEXICA:
 
@@ -50,7 +49,6 @@ PARSE_LEXICA:
     35.	    WP$	    Possessive wh-pronoun
     36.	    WRB	    Wh-adverb
 """
-# -*- coding: utf-8 -*-
 
 # Imports
 # -------

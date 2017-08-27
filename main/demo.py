@@ -1,5 +1,4 @@
-# Notes
-# -----
+# -*- coding: utf-8 -*-
 """
 DEMO:
 
@@ -33,7 +32,8 @@ CustomTranslator = blisscribe.BlissTranslator(language="Polish", font_path=bliss
 CustomTranslator.setSubAll(True)         # add Polish subtitles below all Blissymbols
 CustomTranslator.chooseOtherPOS(True)    # translate all parts of speech possible to Blissymbols
 CustomTranslator.setFastTranslate(True)  # translate Polish to Blissymbols immediately
-#CustomTranslator.translate(excerpts.alice_in_wonderland_polish[:5000], title='Alicja w Kranie Czar\xc3\xb3w')
+CustomTranslator.translate(excerpts.alice_in_wonderland_polish[:5000], title='Alicja w Krainie Czar\xc3\xb3w')
+#CustomTranslator.translate('Ksi\xc4\x85\xc5\xbcka', title="Alice")
 
 # French translation
 #CustomTranslator.setLanguage(language="French")

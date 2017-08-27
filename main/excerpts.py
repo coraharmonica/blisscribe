@@ -1,5 +1,4 @@
-# Notes
-# -----
+# -*- coding: utf-8 -*-
 """
 EXCERPTS:
 
@@ -7,7 +6,6 @@ EXCERPTS:
     and reading.
 """
 
-# -*- coding: utf-8 -*-
 
 import nltk
 import string
