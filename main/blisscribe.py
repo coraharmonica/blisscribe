@@ -1,5 +1,4 @@
-# Readme
-# -----
+# -*- coding: utf-8 -*-
 """
 BLISSCRIBE:
 
@@ -29,8 +28,6 @@ BLISSCRIBE:
     their meanings are enumerated here:
     https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
 """
-# -*- coding: utf-8 -*-
-
 import collections
 import os
 import sys
@@ -45,17 +42,16 @@ try:
     import parse_lexica
     import excerpts
 except ImportError:
-    print("Lexicon and excerpts modules could not be imported.\n\
-    Please try locating the local modules lexicon.py and excerpts.py \n\
-    and placing them in the same directory as this program.")
+    print("Parse_lexica and excerpts modules could not be imported.\n\
+    Please find the local modules parse_lexica.py and excerpts.py \n\
+    and relocate them in the same directory as blisscribe.py.")
 else:
     import parse_lexica
     import excerpts
 
 FILE_PATH = sys.path[0] + "/"
 
-# BlissTranslator
-# ---------------
+
 class BlissTranslator:
     """
     A class for translating English text to Images with a
@@ -383,7 +379,9 @@ class BlissTranslator:
         :param word: str or Image
         :return: int, word width in pixels
         """
-        if type(word) == str:
+        if word == "\n":
+            return 0
+        elif type(word) == str:
             return self.trimHorizontal(self.getWordImg(word, self.font_size)).size[0]
         else:
             try:
@@ -409,16 +407,18 @@ class BlissTranslator:
         :param font_size: int, desired font size for string
         :return: Image, image of input str
         """
-        if not isinstance(word, unicode):
-            word = word.decode("utf-8")
         img = self.makeBlankImg(len(word) * font_size,
                                 self.image_heights)
-        sketch = ImageDraw.Draw(img)
-        sketch.text((0, font_size),
-                    word,
-                    font=ImageFont.truetype(font=self.font_path, size=font_size),
-                    fill="black")
-        return self.trimHorizontal(img)
+        if word != "\n":
+            word = self.unicodize(word)
+            sketch = ImageDraw.Draw(img)
+            sketch.text((0, font_size),
+                        word,
+                        font=ImageFont.truetype(font=self.font_path, size=font_size),
+                        fill="black")
+            return self.trimHorizontal(img)
+        else:
+            return img
 
     def getBlissImg(self, word, max_width, max_height, choosing=False):
         """
@@ -754,6 +754,19 @@ class BlissTranslator:
 
     # LANGUAGE PROCESSING
     # ===================
+    def unicodize(self, text):
+        """
+        Returns the given text in unicode.
+        ~
+        Ensures all text is in unicode for parsing.
+
+        :param text: str, text to return in unicode
+        :return: str, text in unicode
+        """
+        if not isinstance(text, unicode):
+            text = text.decode("utf-8")
+        return text
+
     def getWordAndTag(self, word):
         """
         Returns a tuple of the given word and its tag.
@@ -797,6 +810,21 @@ class BlissTranslator:
         :return: List[str], list of word tokens
         """
         return [word for word in nltk.word_tokenize(phrase, language=self.language.lower())]
+
+    def getTokenPhrases(self, phrases):
+        """
+        Returns a list of word tokens in phrases,
+        with a newline in between each phrase.
+
+        :param phrases: List[str], phrases to tokenize
+        :return: List[str], list of word tokens
+        """
+        token_phrases = []
+        for phrase in phrases:
+            token_phrases.extend(self.getTokenPhrase(phrase))
+            token_phrases.append("\n")
+        return token_phrases
+
 
     def isNoun(self, word):
         """
@@ -1241,8 +1269,9 @@ class BlissTranslator:
         """
         if title is None:
             title = phrase[:20]
-        final = ''.join([c for c in title if ord(c) < 128])
-        return final
+        return title
+        #final = ''.join([c for c in title if ord(c) < 128])
+        #return final
 
     # TRANSLATOR
     # ==========
@@ -1265,13 +1294,11 @@ class BlissTranslator:
         """
         # TODO: refactor translate() & drawAlphabet() for less repetition
         # TODO: change tokenizing to allow translating compound words & hyphenates
+        title = self.unicodize(title)
+        phrase = self.unicodize(phrase)
         phrase = phrase.replace("-", " - ")
-        if not isinstance(title, unicode):
-            title = title.decode("utf-8")
-        if not isinstance(phrase, unicode):
-            # ensures phrase in unicode for parsing
-            phrase = phrase.decode("utf-8")
-        token_phrase = self.getTokenPhrase(phrase)
+        phrases = phrase.split("\n")  # split input by newlines
+        token_phrase = self.getTokenPhrases(phrases)
         tagged_list = self.tokensToTags(token_phrase)
         raw_phrase = [word.lower() for word in token_phrase]
 
@@ -1349,7 +1376,7 @@ class BlissTranslator:
                     indent = 0
                     line_no += 1
             elif this_word == "\n":
-                indent = 0
+                indent = self.font_size
                 line_no += 1
 
             if (line_no + 1) * y_inc > img_h:

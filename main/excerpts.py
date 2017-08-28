@@ -1,14 +1,10 @@
-# Notes
-# -----
+# -*- coding: utf-8 -*-
 """
 EXCERPTS:
 
     Holds sample English texts used for testing
     and reading.
 """
-
-# -*- coding: utf-8 -*-
-
 import nltk
 import string
 import sys
