@@ -31,24 +31,6 @@ def pairTitlesTexts(titles, texts):
     return books
 
 
-def parsePlaintext(filename):
-    """
-    Parses plaintext file with given filename and returns a string representing
-    its contents.
-
-    :param filename: str, filename of text file
-    :return: str, text file's contents
-    """
-    contents = []
-    slash = "/" if filename[0] != "/" else ""
-
-    with open(FILE_PATH + slash + filename, "rb") as text:
-        for line in text:
-            contents.append(line)
-
-    return "".join(contents)
-
-
 def parseExcerpts(filenames):
     """
         Parses plaintext files with given filenames and returns a dictionary of words

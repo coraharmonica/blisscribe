@@ -2,27 +2,7 @@
 """
 BLISSCRIBE:
 
-    A Python module for translating input English text into a
-    combination of English and Blissymbols for reading.
-
-    Initialize a BlissTranslator and input English text into
-    its translate() method for an output PDF of the given text.
-
-    BlissTranslator class also contains methods for:
-        1) selecting which parts of speech to translate
-           --> chooseTranslatables()
-           --> chooseNouns()
-           --> chooseVerbs()
-           --> chooseAdjs()
-           --> chooseOtherPOS()
-        2) selecting whether to translate English to Blissymbols
-           immediately or gradually
-           --> setFastTranslate()
-        3) selecting font & font size for output PDF translations
-           --> setFont()
-        4) selecting whether to subtitle all Blissymbols or only
-           new Blissymbols
-           --> setSubAll()
+    A Python module for translating text to Blissymbols.
 
     All relevant parts-of-speech tags (used throughout) and
     their meanings are enumerated here:
@@ -40,25 +20,32 @@ from pattern.text import en, es, fr, de, it, nl
 
 try:
     import parse_lexica
-    import excerpts
 except ImportError:
-    print("Parse_lexica and excerpts modules could not be imported.\n\
-    Please find the local modules parse_lexica.py and excerpts.py \n\
-    and relocate them in the same directory as blisscribe.py.")
+    print("Parse_lexica module could not be imported.\n\
+    Please find the local module parse_lexica.py \n\
+    and relocate it to the same directory as blisscribe.py.")
 else:
     import parse_lexica
-    import excerpts
 
 FILE_PATH = sys.path[0] + "/"
 
 
 class BlissTranslator:
     """
-    A class for translating English text to Images with a
-    combination of English text and Blissymbols.
+    A class for translating text in select languages to Blissymbols.
     ~
-    Input a string with English text to translate() to render
-    English text partially replaced with Blissymbols.
+    Currently supported languages:
+        - English (default)
+        - Spanish
+        - German
+        - French
+        - Italian
+        - Dutch
+        - Polish
+    ~
+    Begin by initializing a BlissTranslator with a supported language.
+    Pass a string in your chosen language to translate() for an output
+    PDF of the given text with Blissymbols.
     ~
     Use chooseTranslatables() to set whether to translate nouns,
     verbs, adjectives, and/or other parts of speech.
@@ -66,6 +53,22 @@ class BlissTranslator:
     By default, a BlissTranslator will translate all parts of
     speech in CHOSEN_POS, i.e., nouns, verbs, and adjectives.
     To translate all other parts of speech, set self.other to True.
+    ~
+    Contains methods for:
+        1) selecting which parts of speech to translate
+           --> chooseTranslatables()
+           --> chooseNouns()
+           --> chooseVerbs()
+           --> chooseAdjs()
+           --> chooseOtherPOS()
+        2) selecting whether to translate text to Blissymbols
+           immediately or gradually
+           --> setFastTranslate()
+        3) selecting font & font size for output PDF translations
+           --> setFont()
+        4) selecting whether to subtitle all Blissymbols or only
+           new Blissymbols
+           --> setSubAll()
     """
     # Fonts
     ROMAN_FONT = "/Library/Fonts/Times New Roman.ttf"
@@ -98,7 +101,8 @@ class BlissTranslator:
         # Fonts
         self.font_size = font_size
         self.font_path = font_path
-        self.font = self.setFont(self.font_path, self.font_size)
+        self.font = ImageFont
+        self.setFont(self.font_path, self.font_size)
         # Images
         self.image_heights = self.font_size * 5
         self.pages = []
@@ -123,7 +127,7 @@ class BlissTranslator:
 
     # GETTERS/SETTERS
     # ===============
-    def setFont(self, font_path, font_size):
+    def getFont(self, font_path, font_size):
         """
         Returns an ImageFont with given font_path and font_size.
         ~
@@ -142,6 +146,19 @@ class BlissTranslator:
         else:
             return ImageFont.truetype(font_path, font_size)
 
+    def setFont(self, font_path, font_size):
+        """
+        Sets this BlissTranslator's default font to an ImageFont
+        with given font_path and font_size.
+        ~
+        If font_path is invalid, uses BlissTranslator's ROMAN_FONT.
+
+        :param font_path: str, path to font file
+        :param font_size: int, desired font size
+        :return: None
+        """
+        self.font = self.getFont(font_path, font_size)
+
     def setLanguage(self, language):
         """
         Sets this BlissTranslator's native language
@@ -154,23 +171,24 @@ class BlissTranslator:
         :return: None
         """
         try:
+            BlissTranslator.LANG_CODES[self.language]
             parse_lexica.getDefns(parse_lexica.LEX_PATH, language)
-        except IOError:
+        except KeyError, IOError:
             self.language = "English"
         else:
             self.language = language
         finally:
-            self.bliss_dict = self.initBlissDict()
+            self.setLangCode()
+            self.setBlissDict()
 
-        try:
-            BlissTranslator.LANG_CODES[language]
-        except KeyError:
-            self.language = "English"
-        else:
-            self.lang_code = BlissTranslator.LANG_CODES[self.language]
+    def setLangCode(self):
+        """
+        Sets this BlissTranslator's lang_code to
+        this BlissTranslator's native language code.
 
-        if self.language == "Polish":
-            self.polish_lexicon = parse_lexica.parseLexicon("resources/lexica/polish.txt")
+        :return: None
+        """
+        self.lang_code = BlissTranslator.LANG_CODES[self.language]
 
     def initBlissDict(self):
         """
@@ -182,6 +200,18 @@ class BlissTranslator:
             vals (str) - corresponding Blissymbol image filenames
         """
         return parse_lexica.getDefnImgDict(parse_lexica.LEX_PATH, self.language)
+
+    def setBlissDict(self):
+        """
+        Initializes this BlissTranslator's bliss_dict in
+        its native language.
+
+        :return: None
+        """
+        self.bliss_dict = self.initBlissDict()
+
+        if self.language == "Polish":
+            self.polish_lexicon = parse_lexica.parseLexicon("resources/lexica/polish.txt")
 
     def initSeenChanged(self):
         """
@@ -205,8 +235,7 @@ class BlissTranslator:
         Sets subtitle settings for this BlissTranslator's
         translate() method.
 
-        :param sub_all: bool, whether to subtitle all words in
-            input English text to this BlissTranslator
+        :param sub_all: bool, whether to subtitle all words
         :return: None
         """
         self.sub_all = sub_all
@@ -409,7 +438,9 @@ class BlissTranslator:
         """
         img = self.makeBlankImg(len(word) * font_size,
                                 self.image_heights)
-        if word != "\n":
+        if word == "\n":
+            return img
+        else:
             word = self.unicodize(word)
             sketch = ImageDraw.Draw(img)
             sketch.text((0, font_size),
@@ -417,8 +448,6 @@ class BlissTranslator:
                         font=ImageFont.truetype(font=self.font_path, size=font_size),
                         fill="black")
             return self.trimHorizontal(img)
-        else:
-            return img
 
     def getBlissImg(self, word, max_width, max_height, choosing=False):
         """
@@ -824,7 +853,6 @@ class BlissTranslator:
             token_phrases.extend(self.getTokenPhrase(phrase))
             token_phrases.append("\n")
         return token_phrases
-
 
     def isNoun(self, word):
         """
@@ -1270,46 +1298,59 @@ class BlissTranslator:
         if title is None:
             title = phrase[:20]
         return title
-        #final = ''.join([c for c in title if ord(c) < 128])
-        #return final
+
+    def parsePlaintext(self, filename):
+        """
+        Parses plaintext file with given filename and returns a string representing
+        its contents.
+
+        :param filename: str, filename of text file
+        :return: str, text file's contents
+        """
+        contents = []
+        slash = "/" if filename[0] != "/" else ""
+
+        with open(FILE_PATH + slash + filename, "rb") as text:
+            for line in text:
+                contents.append(line)
+
+        return "".join(contents)
 
     # TRANSLATOR
     # ==========
     def translate(self, phrase, title=None, img_w=816, img_h=1056):
         """
-        Translates this input English phrase to Blissymbols
-        according to this BlissTranslator's POS preferences.
+        Translates input phrase to Blissymbols according to this
+        BlissTranslator's POS and language preferences.
         ~
-        Saves translation to a PDF file in this directory
-        with the given title, or otherwise titled after
-        the given phrase's first 20 alphabetic characters.
+        Saves translation to a PDF file in this directory's
+        bliss pdfs folder with the given title, or otherwise
+        titled after the given phrase's first 20 characters.
         ~
         Default image size is 816x1056px (standard PDF page).
 
-        :param phrase: str, non-empty English text
+        :param phrase: str, text in BlissTranslator's native language
         :param title: None or str, desired title for output PDF
         :param img_w: int, desired width of PDF images (in pixels)
         :param img_h: int, desired height of PDF images (in pixels)
-        :return: None
+        :return: None, saves PDF with translation to bliss pdfs folder
         """
         # TODO: refactor translate() & drawAlphabet() for less repetition
-        # TODO: change tokenizing to allow translating compound words & hyphenates
-        title = self.unicodize(title)
-        phrase = self.unicodize(phrase)
+        # TODO: refactor tokenizing to allow translating compound words & hyphenates
+        title, phrase = self.unicodize(title), self.unicodize(phrase)
         phrase = phrase.replace("-", " - ")
         phrases = phrase.split("\n")  # split input by newlines
         token_phrase = self.getTokenPhrases(phrases)
         tagged_list = self.tokensToTags(token_phrase)
         raw_phrase = [word.lower() for word in token_phrase]
 
-        pages = []
+        pages = []  # translated images to convert to PDF
         title_page = self.makeTitlePage(title, img_w, img_h)
         pages.append(title_page)
 
         bg = self.makeBlankImg(img_w, img_h)
         indent = self.font_size
         line_no = 0
-
         idx = 0
 
         for word in raw_phrase:
@@ -1358,6 +1399,7 @@ class BlissTranslator:
             next_word1 = self.getWordAtIndex(raw_phrase, idx+1)
             next_word2 = self.getWordAtIndex(raw_phrase, idx+2)
 
+            # TODO: design a method to handle spacing between irregular characters
             if next_word1 == "n't":
                 space = self.getMinSpace()
             elif self.isEndingPunct(this_word) and self.isEndingPunct(next_word1):
@@ -1367,6 +1409,7 @@ class BlissTranslator:
             elif self.isEndingPunct(next_word1) or self.isStartingPunct(this_word):
                 space = self.getMinSpace()
 
+            # TODO: design a method to handle indentation/linenumbers
             if x_inc > img_w:
                 indent = 0
                 line_no += 1
@@ -1406,5 +1449,5 @@ class BlissTranslator:
         :param img_h: int, desired height of PDF images (in pixels)
         :return: None
         """
-        phrase = excerpts.parsePlaintext(filename)
+        phrase = self.parsePlaintext(filename)
         self.translate(phrase, title, img_w, img_h)
