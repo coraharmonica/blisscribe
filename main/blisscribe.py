@@ -17,7 +17,6 @@ from main.resources.lib.nltk.corpus import wordnet
 from main.resources.lib.pattern.text import en, es, fr, de, it, nl
 from main.resources.lib.PIL import Image, ImageDraw, ImageFont, ImageChops
 from main.resources.lib.fpdf import FPDF
-
 try:
     import main.parse_lexica
 except ImportError:
@@ -26,7 +25,6 @@ except ImportError:
     and relocate it to the same directory as blisscribe.py.")
 else:
     import main.parse_lexica
-
 FILE_PATH = sys.path[0] + "/"
 
 
@@ -1488,3 +1486,4 @@ class BlissTranslator:
         """
         phrase = self.parsePlaintext(filename)
         self.translate(phrase, title, img_w, img_h)
+

@@ -39,3 +39,4 @@ CustomTranslator.translate(excerpts.alice_in_wonderland_polish[:5000], title='Al
 #CustomTranslator.setLanguage(language="French")
 #CustomTranslator.chooseOtherPOS(False)
 #CustomTranslator.translate(excerpts.petit_prince, title="Le petit prince")
+

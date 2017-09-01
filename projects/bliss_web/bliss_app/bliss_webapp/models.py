@@ -8,3 +8,4 @@ from django import forms
 class TranslationModel(models.Model):
     model = None
 
+

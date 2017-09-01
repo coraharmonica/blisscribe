@@ -23,3 +23,4 @@ class TranslationForm(forms.ModelForm):
         required=False,
         widget=forms.Select,
         choices=translator.SUPPORTED_LANGS)
+
