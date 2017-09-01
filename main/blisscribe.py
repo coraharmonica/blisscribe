@@ -11,21 +11,21 @@ BLISSCRIBE:
 import collections
 import os
 import sys
-import nltk
-import pattern.text
-from PIL import Image, ImageDraw, ImageFont, ImageChops
-from fpdf import FPDF
-from nltk.corpus import wordnet
-from pattern.text import en, es, fr, de, it, nl
+from main.resources.lib.nltk.tokenize import word_tokenize
+from main.resources.lib.nltk.tag import pos_tag
+from main.resources.lib.nltk.corpus import wordnet
+from main.resources.lib.pattern.text import en, es, fr, de, it, nl
+from main.resources.lib.PIL import Image, ImageDraw, ImageFont, ImageChops
+from main.resources.lib.fpdf import FPDF
 
 try:
-    import parse_lexica
+    import main.parse_lexica
 except ImportError:
     print("Parse_lexica module could not be imported.\n\
     Please find the local module parse_lexica.py \n\
     and relocate it to the same directory as blisscribe.py.")
 else:
-    import parse_lexica
+    import main.parse_lexica
 
 FILE_PATH = sys.path[0] + "/"
 
@@ -88,6 +88,42 @@ class BlissTranslator:
                            "RB", "RBR", "RBS", "RP", "TO", "UH", "VB", "VBD", "VBG",
                            "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"])
     DEFAULT_POS = set(["NN", "NNS", "VB", "VBD", "VBG", "VBN", "JJ", "JJR", "JJS"])
+    POS_KEY = {"CC": "Coordinating conjunction",
+               "CD": "Cardinal number",
+               "DT": "Determiner",
+               "EX": "Existential there",
+               "FW": "Foreign word",
+               "IN": "Preposition or subordinating conjunction",
+               "JJ": "Adjective",
+               "JJR": "Adjective, comparative",
+               "JJS": "Adjective, superlative",
+               "LS": "List item marker",
+               "MD": "Modal",
+               "NN": "Noun, singular or mass",
+               "NNS": "Noun, plural",
+               "NNP": "Proper noun, singular",
+               "NNPS": "Proper noun, plural",
+               "PDT": "Predeterminer",
+               "POS": "Possessive ending",
+               "PRP": "Personal pronoun",
+               "PRP$": "Possessive pronoun",
+               "RB": "Adverb",
+               "RBR": "Adverb, comparative",
+               "RBS": "Adverb, superlative",
+               "RP": "Particle",
+               "SYM": "Symbol",
+               "TO": "to",
+               "UH": "Interjection",
+               "VB": "Verb, base form",
+               "VBD": "Verb, past tense",
+               "VBG": "Verb, gerund or present participle",
+               "VBN": "Verb, past participle",
+               "VBP": "Verb, non-3rd person singular present",
+               "VBZ": "Verb, 3rd person singular present",
+               "WDT": "Wh-determiner",
+               "WP": "Wh-pronoun",
+               "WP$": "Possessive wh-pronoun",
+               "WRB": "Wh-adverb"}
     CHOSEN_POS = DEFAULT_POS
     LANG_CODES = {"Arabic": "arb", "Bulgarian": 'bul', "Catalan": 'cat', "Danish": 'dan',
                   "Greek": 'ell', "English": 'eng', "Basque": 'eus', "Persian": 'fas',
@@ -96,6 +132,7 @@ class BlissTranslator:
                   "Norwegian Nyorsk": 'nno', "Norwegian Bokmal": 'nob', "Polish": 'pol',
                   "Portuguese": 'por', "Chinese": "qcn", "Slovenian": 'slv', "Spanish": 'spa',
                   "Swedish": 'swe', "Thai": 'tha', "Malay": 'zsm'}
+    SUPPORTED_LANGS = ["English", "Spanish", "German", "French", "Italian", "Dutch", "Polish"]
 
     def __init__(self, language="English", font_path=ROMAN_FONT, font_size=DEFAULT_FONT_SIZE):
         # Fonts
@@ -171,8 +208,8 @@ class BlissTranslator:
         :return: None
         """
         try:
-            BlissTranslator.LANG_CODES[self.language]
-            parse_lexica.getDefns(parse_lexica.LEX_PATH, language)
+            BlissTranslator.LANG_CODES[language]
+            main.parse_lexica.getDefns(main.parse_lexica.LEX_PATH, language)
         except KeyError, IOError:
             self.language = "English"
         else:
@@ -199,7 +236,7 @@ class BlissTranslator:
             keys (str) - words in desired language
             vals (str) - corresponding Blissymbol image filenames
         """
-        return parse_lexica.getDefnImgDict(parse_lexica.LEX_PATH, self.language)
+        return main.parse_lexica.getDefnImgDict(main.parse_lexica.LEX_PATH, self.language)
 
     def setBlissDict(self):
         """
@@ -211,7 +248,7 @@ class BlissTranslator:
         self.bliss_dict = self.initBlissDict()
 
         if self.language == "Polish":
-            self.polish_lexicon = parse_lexica.parseLexicon("resources/lexica/polish.txt")
+            self.polish_lexicon = main.parse_lexica.parseLexicon("resources/lexica/polish.txt")
 
     def initSeenChanged(self):
         """
@@ -803,7 +840,7 @@ class BlissTranslator:
         :param word: str, word to tag
         :return: (str, str) tuple, given word and its tag
         """
-        return nltk.pos_tag([word], lang=self.lang_code)[0]
+        return pos_tag([word], lang=self.lang_code)[0]
 
     def getWordTag(self, word):
         """
@@ -825,7 +862,7 @@ class BlissTranslator:
         :param token_phrase: List[str], list of word tokens from a phrase
         :return: List[str], list of word part-to-speech tags
         """
-        tagged_phrase = nltk.pos_tag(token_phrase, lang=self.lang_code)  # tokens tagged according to word type
+        tagged_phrase = pos_tag(token_phrase, lang=self.lang_code)  # tokens tagged according to word type
         tagged_list = []
         for tup in tagged_phrase:
             tagged_list.append(tup[1])
@@ -838,7 +875,7 @@ class BlissTranslator:
         :param phrase: str, text with >=1 words
         :return: List[str], list of word tokens
         """
-        return [word for word in nltk.word_tokenize(phrase, language=self.language.lower())]
+        return [word for word in word_tokenize(phrase, language=self.language.lower())]
 
     def getTokenPhrases(self, phrases):
         """
@@ -975,17 +1012,17 @@ class BlissTranslator:
         :return: str, singularized input
         """
         if self.language == "English":
-            return pattern.text.en.singularize(word)
+            return en.singularize(word)
         elif self.language == "Spanish":
-            return pattern.text.es.singularize(word)
+            return es.singularize(word)
         elif self.language == "German":
-            return pattern.text.de.singularize(word)
+            return de.singularize(word)
         elif self.language == "French":
-            return pattern.text.fr.singularize(word)
+            return fr.singularize(word)
         elif self.language == "Italian":
-            return pattern.text.it.singularize(word)
+            return it.singularize(word)
         elif self.language == "Dutch":
-            return pattern.text.nl.singularize(word)
+            return nl.singularize(word)
         else:
             return word
 
@@ -1001,17 +1038,17 @@ class BlissTranslator:
         :return: str, lemma of verb
         """
         if self.language == "English":
-            return pattern.text.en.lemma(verb)
+            return en.lemma(verb)
         elif self.language == "Spanish":
-            return pattern.text.es.lemma(verb)
+            return es.lemma(verb)
         elif self.language == "German":
-            return pattern.text.de.lemma(verb)
+            return de.lemma(verb)
         elif self.language == "French":
-            return pattern.text.fr.lemma(verb)
+            return fr.lemma(verb)
         elif self.language == "Italian":
-            return pattern.text.it.lemma(verb)
+            return it.lemma(verb)
         elif self.language == "Dutch":
-            return pattern.text.nl.lemma(verb)
+            return nl.lemma(verb)
         else:
             return verb
 
@@ -1030,17 +1067,17 @@ class BlissTranslator:
         :return: str, base form of input adj
         """
         if self.language == "English":
-            return pattern.text.en.predicative(adj)
+            return en.predicative(adj)
         elif self.language == "Spanish":
-            return pattern.text.es.predicative(adj)
+            return es.predicative(adj)
         elif self.language == "German":
-            return pattern.text.de.predicative(adj)
+            return de.predicative(adj)
         elif self.language == "French":
-            return pattern.text.fr.predicative(adj)
+            return fr.predicative(adj)
         elif self.language == "Italian":
-            return pattern.text.it.predicative(adj)
+            return it.predicative(adj)
         elif self.language == "Dutch":
-            return pattern.text.nl.predicative(adj)
+            return nl.predicative(adj)
         else:
             return adj
 

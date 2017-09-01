@@ -6,9 +6,9 @@ TEST_BLISSCRIBE:
     Tests methods in BlissTranslator class.
 """
 import unittest
-from PIL import Image, ImageDraw, ImageFont
-import blisscribe
-import excerpts
+from main.resources.lib.PIL import Image, ImageDraw, ImageFont
+from main import blisscribe
+from main import excerpts
 
 
 class TestBlisscribe(unittest.TestCase):

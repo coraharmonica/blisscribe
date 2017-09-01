@@ -50,8 +50,8 @@ PARSE_LEXICA:
     36.	    WRB	    Wh-adverb
 """
 import sys
-import xlrd
-from PIL import Image, ImageDraw, ImageFont
+from main.resources.lib.xlrd import open_workbook
+from main.resources.lib.PIL import Image
 
 FILE_PATH = sys.path[0] + "/"
 IMG_PATH = FILE_PATH + "symbols/png/whitebg/"
@@ -132,7 +132,7 @@ def getImgFilenames(filename):
     :param filename: str, name of XLS file
     :return: List[str], image filenames
     """
-    book = xlrd.open_workbook(filename)
+    book = open_workbook(filename)
     sheets = book.sheets()
     sheet = sheets[0]
 
@@ -152,7 +152,7 @@ def getDefns(filename, language):
     :param language: str, output list's desired language
     :return: List[str], given language's Bliss words
     """
-    book = xlrd.open_workbook(filename)
+    book = open_workbook(filename)
     sheets = book.sheets()
     sheet = sheets[0]
     header = sheet.row_values(0)
