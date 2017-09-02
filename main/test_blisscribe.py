@@ -6,9 +6,8 @@ TEST_BLISSCRIBE:
     Tests methods in BlissTranslator class.
 """
 import unittest
-from main.resources.lib.PIL import Image, ImageDraw, ImageFont
-from main import blisscribe
-from main import excerpts
+from main.blisscribe import *
+from main.excerpts import *
 
 
 class TestBlisscribe(unittest.TestCase):
@@ -16,7 +15,7 @@ class TestBlisscribe(unittest.TestCase):
     A class for testing methods from blisscribe.py's BlissTranslator class.
     """
     def testGetWordWidth(self):
-        translator = blisscribe.BlissTranslator()
+        translator = BlissTranslator()
         # input str, default font size
         self.assertEqual(translator.getWordWidth("parrot"), len("parrot") * (translator.DEFAULT_FONT_SIZE / 2))
         # input str, custom font size
@@ -25,14 +24,14 @@ class TestBlisscribe(unittest.TestCase):
         self.assertEqual(translator.getWordWidth(Image.open(translator.IMG_PATH + "Abraham.png")), 1236)
 
     def testMakeBlankImg(self):
-        translator = blisscribe.BlissTranslator()
+        translator = BlissTranslator()
         # 1x1 blank image
         self.assertEqual(translator.makeBlankImg(1, 1), Image.new("RGBA", (1, 1), (255, 255, 255, 255)))
         # 10x20 blank image
         self.assertEqual(translator.makeBlankImg(10, 20), Image.new("RGBA", (10, 20), (255, 255, 255, 255)))
 
     def testGetWordImg(self):
-        translator = blisscribe.BlissTranslator()
+        translator = BlissTranslator()
         # default font size
         word_width = translator.getWordWidth("parrot")
         img = Image.new('RGBA', (word_width, translator.DEFAULT_FONT_SIZE * 5), (255, 255, 255, 255))
@@ -49,7 +48,7 @@ class TestBlisscribe(unittest.TestCase):
         self.assertEqual(translator.getWordImg("parrot", translator.font_size), img)
 
     def testGetBlissImg(self):
-        translator = blisscribe.BlissTranslator()
+        translator = BlissTranslator()
         # default width/height
         img = Image.open(translator.IMG_PATH + "accessibility.png")
         width, height = (translator.DEFAULT_FONT_SIZE * 10, translator.DEFAULT_FONT_SIZE * 3)
@@ -62,7 +61,7 @@ class TestBlisscribe(unittest.TestCase):
 
     def testGetWordTag(self):
         # TODO: fix issues w/ comparative & superlative adjectives/adverbs (context?)
-        translator = blisscribe.BlissTranslator()
+        translator = BlissTranslator()
         
         self.assertEqual(translator.getWordTag("and"), "CC")
         self.assertEqual(translator.getWordTag("cheese"), "NN")
@@ -97,12 +96,12 @@ class TestBlisscribe(unittest.TestCase):
         self.assertEqual(translator.getWordAndTag("lied"), ("lied", "VBN"))
 
     def testTranslate(self):
-        translator = blisscribe.BlissTranslator()
+        translator = BlissTranslator()
         # PDF with name "Alice in Wonderland" should appear, output should be None
-        self.assertEqual(type(translator.translate(excerpts.alice_in_wonderland)), type(None))
+        self.assertEqual(type(translator.translate(alice_in_wonderland)), type(None))
 
     def testGetLexeme(self):
-        translator = blisscribe.BlissTranslator()
+        translator = BlissTranslator()
         self.assertEqual(translator.getLexeme("walked"), "walk")
         self.assertEqual(translator.getLexeme("puppies"), "puppy")
         self.assertEqual(translator.getLexeme("puppy"), "puppy")

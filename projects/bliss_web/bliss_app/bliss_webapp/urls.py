@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.HomePageView.as_view()),
-    url(r'^about/$', views.AboutPageView.as_view()), # Add this /about/ route
+    url(r'^info/$', views.InfoPageView.as_view()),
+    url(r'^translate/$', views.TranslatePageView.as_view()),
+    url(r'^translated/$', views.TranslatedPageView.as_view()),
 ]
 

@@ -10,7 +10,6 @@ BLISSCRIBE:
 """
 import collections
 import os
-import sys
 from main.resources.lib.nltk.tokenize import word_tokenize
 from main.resources.lib.nltk.tag import pos_tag
 from main.resources.lib.nltk.corpus import wordnet
@@ -18,14 +17,13 @@ from main.resources.lib.pattern.text import en, es, fr, de, it, nl
 from main.resources.lib.PIL import Image, ImageDraw, ImageFont, ImageChops
 from main.resources.lib.fpdf import FPDF
 try:
-    import main.parse_lexica
+    from main.parse_lexica import LexiconParser
 except ImportError:
     print("Parse_lexica module could not be imported.\n\
     Please find the local module parse_lexica.py \n\
     and relocate it to the same directory as blisscribe.py.")
 else:
-    import main.parse_lexica
-FILE_PATH = sys.path[0] + "/"
+    from main.parse_lexica import LexiconParser
 
 
 class BlissTranslator:
@@ -68,24 +66,29 @@ class BlissTranslator:
            new Blissymbols
            --> setSubAll()
     """
+    FILE_PATH = os.path.dirname(os.path.realpath(__file__)) + "/"
     # Fonts
     ROMAN_FONT = "/Library/Fonts/Times New Roman.ttf"
     SANS_FONT = "/Library/Fonts/Arial.ttf"
     HIP_FONT = "/Library/Fonts/Helvetica.dfont"
+    FONT_FAMS = {"Times New Roman": ROMAN_FONT,
+                 "Arial": SANS_FONT,
+                 "Helvetica": HIP_FONT}
     DEFAULT_FONT_SIZE = 30
     # Images
     IMG_PATH = FILE_PATH + "symbols/png/whitebg/"
     IMAGES_SAVED = 0
     # Language
-    STARTING_PUNCT = set(["(", '"', "-", "\xe2\x80\x9c", "\xe2\x80\x98", "\xe2\x80\x9e"])  # spaces BEFORE
-    ENDING_PUNCT = set([".", ",", ";", ":", "?", "!", ")", '"', "-", "\xe2\x80\x9d", "\xe2\x80\x99", u"\u201d"]) # spaces AFTER
+    STARTING_PUNCT = set(["(", '"', "-",
+                          "\xe2\x80\x9c", "\xe2\x80\x98", "\xe2\x80\x9e"])  # spaces BEFORE
+    ENDING_PUNCT = set([".", ",", ";", ":", "?", "!", ")", '"', "-",
+                        "\xe2\x80\x9d", "\xe2\x80\x99", u"\u201d"])         # spaces AFTER
     PUNCTUATION = STARTING_PUNCT.union(ENDING_PUNCT)
     PUNCTUATION.add("'")
     PARTS_OF_SPEECH = set(["CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
                            "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$",
                            "RB", "RBR", "RBS", "RP", "TO", "UH", "VB", "VBD", "VBG",
                            "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"])
-    DEFAULT_POS = set(["NN", "NNS", "VB", "VBD", "VBG", "VBN", "JJ", "JJR", "JJS"])
     POS_KEY = {"CC": "Coordinating conjunction",
                "CD": "Cardinal number",
                "DT": "Determiner",
@@ -122,6 +125,7 @@ class BlissTranslator:
                "WP": "Wh-pronoun",
                "WP$": "Possessive wh-pronoun",
                "WRB": "Wh-adverb"}
+    DEFAULT_POS = set(["NN", "NNS", "VB", "VBD", "VBG", "VBN", "JJ", "JJR", "JJS"])
     CHOSEN_POS = DEFAULT_POS
     LANG_CODES = {"Arabic": "arb", "Bulgarian": 'bul', "Catalan": 'cat', "Danish": 'dan',
                   "Greek": 'ell', "English": 'eng', "Basque": 'eus', "Persian": 'fas',
@@ -131,6 +135,8 @@ class BlissTranslator:
                   "Portuguese": 'por', "Chinese": "qcn", "Slovenian": 'slv', "Spanish": 'spa',
                   "Swedish": 'swe', "Thai": 'tha', "Malay": 'zsm'}
     SUPPORTED_LANGS = ["English", "Spanish", "German", "French", "Italian", "Dutch", "Polish"]
+    DEFAULT_LANG = SUPPORTED_LANGS[0]
+    LEX_PARSER = LexiconParser()
 
     def __init__(self, language="English", font_path=ROMAN_FONT, font_size=DEFAULT_FONT_SIZE):
         # Fonts
@@ -147,7 +153,6 @@ class BlissTranslator:
         self.bliss_dict = dict
         self.polish_lexicon = dict
         self.language = str
-        self.lang_code = str
         self.setLanguage(language)
         self.fast_translate = False
         self.words_seen = dict
@@ -206,24 +211,13 @@ class BlissTranslator:
         :return: None
         """
         try:
-            BlissTranslator.LANG_CODES[language]
-            main.parse_lexica.getDefns(main.parse_lexica.LEX_PATH, language)
+            self.LEX_PARSER.getDefns(self.LEX_PARSER.LEX_PATH, language)
         except KeyError, IOError:
             self.language = "English"
         else:
             self.language = language
         finally:
-            self.setLangCode()
             self.setBlissDict()
-
-    def setLangCode(self):
-        """
-        Sets this BlissTranslator's lang_code to
-        this BlissTranslator's native language code.
-
-        :return: None
-        """
-        self.lang_code = BlissTranslator.LANG_CODES[self.language]
 
     def initBlissDict(self):
         """
@@ -234,7 +228,7 @@ class BlissTranslator:
             keys (str) - words in desired language
             vals (str) - corresponding Blissymbol image filenames
         """
-        return main.parse_lexica.getDefnImgDict(main.parse_lexica.LEX_PATH, self.language)
+        return self.LEX_PARSER.getDefnImgDict(self.LEX_PARSER.LEX_PATH, self.language)
 
     def setBlissDict(self):
         """
@@ -246,7 +240,7 @@ class BlissTranslator:
         self.bliss_dict = self.initBlissDict()
 
         if self.language == "Polish":
-            self.polish_lexicon = main.parse_lexica.parseLexicon("resources/lexica/polish.txt")
+            self.polish_lexicon = self.LEX_PARSER.parseLexicon("resources/lexica/polish.txt")
 
     def initSeenChanged(self):
         """
@@ -317,24 +311,24 @@ class BlissTranslator:
 
         :return: None
         """
-        BlissTranslator.CHOSEN_POS = set()
+        self.CHOSEN_POS = set()
 
         if self.nouns:
-            BlissTranslator.CHOSEN_POS.add("NN")
-            BlissTranslator.CHOSEN_POS.add("NNS")
+            self.CHOSEN_POS.add("NN")
+            self.CHOSEN_POS.add("NNS")
         if self.verbs:
-            BlissTranslator.CHOSEN_POS.add("VB")
-            BlissTranslator.CHOSEN_POS.add("VBD")
-            BlissTranslator.CHOSEN_POS.add("VBG")
-            BlissTranslator.CHOSEN_POS.add("VBN")
+            self.CHOSEN_POS.add("VB")
+            self.CHOSEN_POS.add("VBD")
+            self.CHOSEN_POS.add("VBG")
+            self.CHOSEN_POS.add("VBN")
         if self.adjs:
-            BlissTranslator.CHOSEN_POS.add("JJ")
-            BlissTranslator.CHOSEN_POS.add("JJR")
-            BlissTranslator.CHOSEN_POS.add("JJS")
+            self.CHOSEN_POS.add("JJ")
+            self.CHOSEN_POS.add("JJR")
+            self.CHOSEN_POS.add("JJS")
         if self.other:
-            for pos in BlissTranslator.PARTS_OF_SPEECH.difference(BlissTranslator.DEFAULT_POS):
+            for pos in self.PARTS_OF_SPEECH.difference(self.DEFAULT_POS):
                 # adds all non-default parts of speech
-                BlissTranslator.CHOSEN_POS.add(pos)
+                self.CHOSEN_POS.add(pos)
 
     def chooseNouns(self, nouns):
         """
@@ -500,17 +494,17 @@ class BlissTranslator:
         :return: Image, image of input str's Blissymbol
         """
         if word == "indicator (plural)":
-            bliss_word = Image.open(BlissTranslator.IMG_PATH +
+            bliss_word = Image.open(self.IMG_PATH +
                                     "indicator_(plural).png")
         elif type(self.bliss_dict[word]) == list:
             if choosing:
                 choice = self.chooseDefn(word)
             else:
                 choice = 0
-            bliss_word = Image.open(str(BlissTranslator.IMG_PATH +
+            bliss_word = Image.open(str(self.IMG_PATH +
                                    self.bliss_dict[word][choice]))
         else:
-            bliss_word = Image.open(str(BlissTranslator.IMG_PATH +
+            bliss_word = Image.open(str(self.IMG_PATH +
                                     self.bliss_dict[word]))
         img = bliss_word
         img.thumbnail((max_width, max_height))
@@ -742,7 +736,7 @@ class BlissTranslator:
         :return: None
         """
         filenames = []
-        start = BlissTranslator.IMAGES_SAVED
+        start = self.IMAGES_SAVED
 
         for page in pages:
             filename = "bliss_img" + str(start) + ".png"
@@ -750,7 +744,7 @@ class BlissTranslator:
             filenames.append(filename)
             start += 1
 
-        BlissTranslator.IMAGES_SAVED = start
+        self.IMAGES_SAVED = start
         return filenames
 
     def makeTitlePage(self, title, x, y):
@@ -838,7 +832,7 @@ class BlissTranslator:
         :param word: str, word to tag
         :return: (str, str) tuple, given word and its tag
         """
-        return pos_tag([word], lang=self.lang_code)[0]
+        return pos_tag([word], lang=self.LANG_CODES[self.language])[0]
 
     def getWordTag(self, word):
         """
@@ -860,7 +854,7 @@ class BlissTranslator:
         :param token_phrase: List[str], list of word tokens from a phrase
         :return: List[str], list of word part-to-speech tags
         """
-        tagged_phrase = pos_tag(token_phrase, lang=self.lang_code)  # tokens tagged according to word type
+        tagged_phrase = pos_tag(token_phrase, lang=self.LANG_CODES[self.language])  # tokens tagged according to word type
         tagged_list = []
         for tup in tagged_phrase:
             tagged_list.append(tup[1])
@@ -935,7 +929,7 @@ class BlissTranslator:
         :param word: str, word to see if punctuation
         :return: bool, whether word is punctuation
         """
-        return word in BlissTranslator.PUNCTUATION
+        return word in self.PUNCTUATION
 
     def isStartingPunct(self, word):
         """
@@ -944,7 +938,7 @@ class BlissTranslator:
         :param word: str, word to see if starting punctuation
         :return: bool, whether word is starting punctuation
         """
-        return word in BlissTranslator.STARTING_PUNCT
+        return word in self.STARTING_PUNCT
 
     def isEndingPunct(self, word):
         """
@@ -953,7 +947,7 @@ class BlissTranslator:
         :param word: str, word to see if ending punctuation
         :return: bool, whether word is ending punctuation
         """
-        return word in BlissTranslator.ENDING_PUNCT
+        return word in self.ENDING_PUNCT
 
     def isNewline(self, word):
         """
@@ -996,7 +990,7 @@ class BlissTranslator:
         :param pos: str, part-of-speech tag
         :return: bool, whether to translate pos
         """
-        return pos in BlissTranslator.CHOSEN_POS
+        return pos in self.CHOSEN_POS
 
     def getSingular(self, word):
         """
@@ -1189,9 +1183,9 @@ class BlissTranslator:
         :return: List[Synset], the word's synsets
         """
         pos = self.getWordPOS(word)
-        synsets = wordnet.synsets(word, pos, lang=self.lang_code)
+        synsets = wordnet.synsets(word, pos, lang=self.LANG_CODES[self.language])
         if len(synsets) == 0:
-            synsets = wordnet.synsets(word, lang=self.lang_code)
+            synsets = wordnet.synsets(word, lang=self.LANG_CODES[self.language])
         return synsets
 
     def getSynsetLemmas(self, synset):
@@ -1201,7 +1195,7 @@ class BlissTranslator:
         :param synset: Synset, WordNet synset
         :return: List[str], WordNet lemma names
         """
-        return synset.lemma_names(lang=self.lang_code)
+        return synset.lemma_names(lang=self.LANG_CODES[self.language])
 
     def getSynsetsLemmas(self, synsets):
         """
@@ -1345,7 +1339,7 @@ class BlissTranslator:
         contents = []
         slash = "/" if filename[0] != "/" else ""
 
-        with open(FILE_PATH + slash + filename, "rb") as text:
+        with open(self.FILE_PATH + slash + filename, "rb") as text:
             for line in text:
                 contents.append(line)
 

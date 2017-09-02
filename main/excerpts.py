@@ -6,7 +6,7 @@ EXCERPTS:
     and reading.
 """
 import sys
-from main.blisscribe import BlissTranslator
+from main.blisscribe import *
 from main.resources.lib.nltk.corpus import gutenberg
 
 FILE_PATH = sys.path[0]

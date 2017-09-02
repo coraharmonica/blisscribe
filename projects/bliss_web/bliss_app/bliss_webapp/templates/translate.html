@@ -1,0 +1,31 @@
+<!-- bliss_webapp/templates/translate.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blisscribe</title>
+</head>
+<body>
+<h1>Translate</h1>
+<form action="/translated/" method="post">
+    {% csrf_token %}
+    <ul class="TranslationForm">
+        <p>{{ form.phrase.label}}</p>
+        <p id="phrase" class="str">{{ form.phrase }}</p>
+        <p id="title" class="str">{{ form.title.label }} {{ form.title }}</p>
+        <p id="lang" class="str">{{ form.lang.label }} {{ form.lang }}</p>
+        <p id="font_fam" class="str">{{ form.font_fam.label }} {{ form.font_fam }}</p>
+        <p id="font_size" class="int">{{ form.font_size.label }} {{ form.font_size }}</p>
+        <p id="nouns" class="bool">{{ form.nouns.label }} {{ form.nouns }}</p>
+        <p id="verbs" class="bool">{{ form.verbs.label }} {{ form.verbs }}</p>
+        <p id="adjs" class="bool">{{ form.adjs.label }} {{ form.adjs }}</p>
+        <p id="other_pos" class="bool">{{ form.other_pos.label }} {{ form.other_pos }}</p>
+        <p id="fast_translate" class="bool">{{ form.fast_translate.label }} {{ form.fast_translate }}</p>
+        <p id="sub_all" class="bool">{{ form.sub_all.label }} {{ form.sub_all }}</p>
+        <p id="page_nums" class="bool">{{ form.page_nums.label }} {{ form.page_nums }}</p>
+    </ul>
+    <input type="submit" value="Submit"/>
+</form>
+<a href="/">home</a>
+</body>
+</html>
