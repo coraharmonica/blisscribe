@@ -1,7 +1,9 @@
 <application>
   <component name="FileTypeManager" version="17">
     <extensionMap>
+      <mapping pattern=".hello_world.cc" type="C++" />
       <mapping ext="java" type="C++" />
+      <mapping pattern=".hello_world.cc.swp" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
