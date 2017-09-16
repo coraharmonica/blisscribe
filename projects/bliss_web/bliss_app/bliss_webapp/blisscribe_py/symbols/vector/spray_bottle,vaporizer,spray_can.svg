@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill-rule="evenodd" height="4.541666666666667in" preserveAspectRatio="none" stroke-linecap="round" viewBox="0 0 344 328" width="4.770833333333333in">
+<style type="text/css">
+.brush0 { fill: rgb(255,255,255); }
+.pen0 { stroke: rgb(0,0,0); stroke-width: 1; stroke-linejoin: round; }
+.font0 { font-size: 11px; font-family: "MS Sans Serif"; }
+.pen1 { stroke: rgb(0,0,0); stroke-width: 7; stroke-linejoin: round; }
+.brush1 { fill: none; }
+.font1 { font-weight: bold; font-size: 16px; font-family: System, sans-serif; }
+</style>
+<g>
+<path class="pen1" d="M 173.2825294592593,194.8555890978917 A 45.5,45.0 0 0 0 106.19599593641188,194.33917086209348" fill="none"/>
+<path class="pen1" d="M 171.8332155216319,196.1720792237131 A 45.5,45.5 0 0 0 235.67335854398792,195.67335854398792" fill="none"/>
+<ellipse class="pen1 brush1" cx="204" cy="228" rx="1" ry="1"/>
+<ellipse class="pen1 brush1" cx="268" cy="164" rx="1" ry="1"/>
+<ellipse class="pen1 brush1" cx="268" cy="228" rx="1" ry="1"/>
+<ellipse class="pen1 brush1" cx="204" cy="164" rx="1" ry="1"/>
+<ellipse class="pen1 brush1" cx="332" cy="132" rx="1" ry="1"/>
+<ellipse class="pen1 brush1" cx="332" cy="196" rx="1" ry="1"/>
+<ellipse class="pen1 brush1" cx="332" cy="260" rx="1" ry="1"/>
+<circle class="pen1" cx="44.0" cy="228.0" fill="none" r="32.0"/>
+<line class="pen1" fill="none" x1="44" x2="44" y1="132" y2="196"/>
+</g>
+</svg>
