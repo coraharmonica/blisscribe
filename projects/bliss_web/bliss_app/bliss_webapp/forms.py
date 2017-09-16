@@ -95,10 +95,8 @@ class TranslationForm(forms.ModelForm):
         required=False,
         widget=forms.CheckboxInput
     )
-
     def clean_field(self, field):
         assert field in self.fields
         if not self[field].html_name in self.data:
-            #print("\n\n\n" + len(self.data) + "\n\n\n")
             return self.fields[field].initial
         return self.cleaned_data[field]

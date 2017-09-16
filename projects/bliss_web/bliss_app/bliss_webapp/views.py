@@ -31,7 +31,7 @@ class TranslatePageView(FormView):
         return getTranslationText(request)
 
     def post(self, request, *args, **kwargs):
-        return getTranslationText(request)  # render(request, 'translated.html', {'form': TranslationForm(data=request)})
+        return getTranslationText(request)
 
 
 class TranslatedPageView(FormView):
@@ -94,7 +94,6 @@ def getTranslationText(request):
     # POST b/c we need to PROCESS input to translate
     if request.method == 'POST':
         # populate form w/ user input
-        #form = TranslationForm(data=request.POST)
         return render(request, 'translated.html')
 
     # if a GET (or any other method) we'll create a blank form

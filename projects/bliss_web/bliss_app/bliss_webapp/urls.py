@@ -9,4 +9,3 @@ urlpatterns = [
     url(r'^translation.pdf/$', views.downloadPdf),
     #url(r'^translated/translation.pdf/$', views.downloadPdf)
 ]
-
