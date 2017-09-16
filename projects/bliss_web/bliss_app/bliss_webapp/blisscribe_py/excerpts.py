@@ -6,12 +6,11 @@ EXCERPTS:
     and reading.
 """
 import os
-from main import blisscribe
+from blisscribe import BlissTranslator
 from nltk.corpus import gutenberg
 
+TRANSLATOR = BlissTranslator()
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
-TRANSLATOR = blisscribe.BlissTranslator()
-
 
 def pairTitlesTexts(titles, texts):
     """
@@ -74,7 +73,7 @@ books.update(parseExcerpts(sample_texts))
 
 # Fiction
 alice_in_wonderland = books["carroll alice"]
-alice_in_wonderland_polish = TRANSLATOR.parsePlaintext("/sample texts/alice_in_wonderland_polish.txt")
+alice_in_wonderland_polish = TRANSLATOR.parsePlaintext("sample texts/alice_in_wonderland_polish.txt")
 hitchhikers_guide = books["adams hitchhiker's_guide_test"]
 moby_dick = books["melville moby_dick"]
 petit_prince = books["exupery petit_prince_test"]
