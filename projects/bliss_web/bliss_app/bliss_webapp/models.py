@@ -11,11 +11,12 @@ class TranslationModel(models.Model):
 
     phrase = models.TextField()
     title = models.CharField(max_length=50)
+    title_page = models.BooleanField(default=False)
+
     lang = models.CharField(
         max_length=30,
         choices=chosen.SUPPORTED_LANGS,
         default=True)
-
     font_fam = models.CharField(
         max_length=50,
         choices=chosen.FONT_FAMS,

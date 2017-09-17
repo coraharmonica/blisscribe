@@ -10,87 +10,90 @@ import blisscribe_py
 class TranslationForm(forms.ModelForm):
     class Meta:
         model = models.TranslationModel
-        fields = ['phrase', 'title', 'lang',
-                  'font_fam', 'font_size',
+        fields = ['phrase', 'title', 'title_page',
+                  'lang', 'font_fam', 'font_size',
                   'nouns', 'verbs', 'adjs', 'other',
                   'fast_translate', 'sub_all', 'page_nums']
 
     phrase = forms.CharField(
-        label="Text to translate: ",
-        initial="write text here",
+        label="text to translate: ",
+        initial="write up to 10000 characters of text here...",
         required=False,
         max_length=10000,
         widget=forms.Textarea(attrs={'rows': '10', 'cols': '100'})
     )
     title = forms.CharField(
-        label="Title:  ",
+        label="title:  ",
         initial="my title",
         max_length=50,
         required=False,
         widget=forms.TextInput()
     )
+    title_page = forms.BooleanField(
+        label="create title page:  ",
+        initial=False,
+        required=False,
+        widget=forms.CheckboxInput
+    )
     lang = forms.ChoiceField(
-        label="Language:  ",
+        label="input language:  ",
         initial=chosen.SUPPORTED_LANGS[0][0],
         required=False,
         widget=forms.Select,
         choices=chosen.SUPPORTED_LANGS
     )
-
     font_fam = forms.ChoiceField(
-        label="Font family:  ",
+        label="font family:  ",
         initial=chosen.FONT_FAMS[2],
         required=False,
         choices=chosen.FONT_FAMS,
         widget=forms.Select
     )
     font_size = forms.ChoiceField(
-        label="Font size:  ",
+        label="font size:  ",
         initial="10",
         required=False,
         choices=chosen.FONT_SIZES,
         widget=forms.Select
     )
-
     nouns = forms.BooleanField(
-        label="Translate nouns:  ",
+        label="translate nouns:  ",
         initial=True,
         required=False,
         widget=forms.CheckboxInput
     )
     verbs = forms.BooleanField(
-        label="Translate verbs:  ",
+        label="translate verbs:  ",
         initial=True,
         required=False,
         widget=forms.CheckboxInput
     )
     adjs = forms.BooleanField(
-        label="Translate adjectives/adverbs:  ",
+        label="translate adjectives/adverbs:  ",
         initial=True,
         required=False,
         widget=forms.CheckboxInput
     )
     other = forms.BooleanField(
-        label="Translate all other parts of speech:  ",
-        initial=False,
+        label="translate all other parts of speech:  ",
+        initial=True,
         required=False,
         widget=forms.CheckboxInput
     )
-
     fast_translate = forms.BooleanField(
-        label="Translate all words to Blissymbols (vs only common words):  ",
-        initial=False,
+        label="translate uncommon words to Blissymbols:  ",
+        initial=True,
         required=False,
         widget=forms.CheckboxInput
     )
     sub_all = forms.BooleanField(
-        label="Subtitle all Blissymbols (vs only new Blissymbols):  ",
+        label="subtitle all Blissymbols:  ",
         initial=True,
         required=False,
         widget=forms.CheckboxInput
     )
     page_nums = forms.BooleanField(
-        label="Include page numbers:  ",
+        label="include page numbers:  ",
         initial=False,
         required=False,
         widget=forms.CheckboxInput

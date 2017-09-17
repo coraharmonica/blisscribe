@@ -10,12 +10,14 @@ from blisscribe_py import blisscribe
 class FormTranslator:
     FILE_PATH = blisscribe.BlissTranslator.FILE_PATH + '/bliss pdfs'
     
-    def __init__(self, lang, phrase, title, font_fam, font_size,
+    def __init__(self, phrase, title, title_page,
+                 lang, font_fam, font_size,
                  nouns, verbs, adjs, other,
                  sub_all, page_nums, fast_translate):
-        self.lang = smart_str(lang)
         self.phrase = smart_str(phrase)
         self.title = smart_str(title)
+        self.title_page = bool(title_page)
+        self.lang = smart_str(lang)
         self.font_fam = smart_str(font_fam)
         self.font_size = int(font_size)
         self.translator = blisscribe.BlissTranslator(language=self.lang,
@@ -37,11 +39,14 @@ class FormTranslator:
         self.translator.setSubAll(self.sub_all)
         self.translator.setPageNums(self.page_nums)
 
-    def translate(self, phrase, title):
-        self.translator.translate(phrase, title)
+    def translate(self):
+        self.translator.translate(self.phrase, self.title, title_page=self.title_page)
         
     def savePdf(self):
-        self.translator.translate(self.phrase, self.title)
+        self.translator.translate(self.phrase, self.title, title_page=self.title_page)
 
     def getTitle(self):
         return self.title
+
+    def deleteTranslation(self, filename):
+        self.translator.deletePdf(filename)

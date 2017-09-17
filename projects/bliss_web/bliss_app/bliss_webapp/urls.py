@@ -7,5 +7,4 @@ urlpatterns = [
     url(r'^translate/$', views.TranslatePageView.as_view()),
     url(r'^translated/$', views.TranslatedPageView.as_view()),
     url(r'^translation.pdf/$', views.downloadPdf),
-    #url(r'^translated/translation.pdf/$', views.downloadPdf)
 ]

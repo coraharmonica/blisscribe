@@ -51,9 +51,10 @@ def downloadPdf(request):
     form = TranslationForm(data=request.POST)
 
     if form.is_valid():
-        lang = smart_str(form.clean_field('lang'))
         phrase = smart_str(form.clean_field('phrase'))
         title = smart_str(form.clean_field('title'))
+        title_page = bool(form.clean_field('title_page'))
+        lang = smart_str(form.clean_field('lang'))
         font_fam = smart_str(form.clean_field('font_fam'))
         font_size = int(smart_str(form.clean_field('font_size')))
         nouns = bool(form.clean_field('nouns'))
@@ -63,9 +64,10 @@ def downloadPdf(request):
         sub_all = bool(form.clean_field('sub_all'))
         page_nums = bool(form.clean_field('page_nums'))
         fast_translate = bool(form.clean_field('fast_translate'))
-        translator = helpers.FormTranslator(lang=lang,
-                                            phrase=phrase,
-                                            title=title,
+        translator = helpers.FormTranslator(phrase=phrase,
+                                            title='translation',
+                                            title_page=title_page,
+                                            lang=lang,
                                             font_fam=font_fam,
                                             font_size=font_size,
                                             nouns=nouns,
@@ -75,10 +77,11 @@ def downloadPdf(request):
                                             sub_all=sub_all,
                                             page_nums=page_nums,
                                             fast_translate=fast_translate)
-        translator.savePdf()
+        translator.translate()
         f = open(path + "translation.pdf", str("r+"))  # FPDF.open(pdf)
         response = HttpResponse(FileWrapper(f), content_type='application/pdf')
         f.close()
+        translator.deleteTranslation(filename='translation.pdf')
         title = translator.getTitle()
         title = title.decode('utf-8')
         # response['Content-Length'] = os.path.getsize(fn)

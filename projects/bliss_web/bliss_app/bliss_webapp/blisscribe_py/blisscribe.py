@@ -215,7 +215,7 @@ class BlissTranslator:
         """
         try:
             self.LEX_PARSER.getDefns(self.LEX_PARSER.LEX_PATH, language)
-        except KeyError, IOError:
+        except KeyError or IOError:
             self.language = "English"
         else:
             self.language = language
@@ -785,7 +785,6 @@ class BlissTranslator:
         :return: None
         """
         pdf = self.getPdf(filename, pages, margins)
-        filename = 'translation'  # for testing
         pdf.output(self.FILE_PATH + "/bliss pdfs/" + filename + ".pdf", "F")
 
     def getPdf(self, filename, pages, margins=0):
@@ -823,6 +822,15 @@ class BlissTranslator:
             os.remove(page)
             idx += 1
         return pdf
+
+    def deletePdf(self, filename):
+        """
+        Deletes PDF with given filename from bliss pdfs folder.
+
+        :param filename: str, filename with .pdf extension
+        :return: None
+        """
+        os.remove(self.FILE_PATH + "/bliss pdfs/" + filename)
 
     # LANGUAGE PROCESSING
     # ===================
@@ -1362,7 +1370,7 @@ class BlissTranslator:
 
     # TRANSLATOR
     # ==========
-    def translate(self, phrase, title=None, img_w=816, img_h=1056):
+    def translate(self, phrase, title=None, title_page=False, img_w=816, img_h=1056):
         """
         Translates input phrase to Blissymbols according to this
         BlissTranslator's POS and language preferences.
@@ -1377,6 +1385,7 @@ class BlissTranslator:
         :param title: None or str, desired title for output PDF
         :param img_w: int, desired width of PDF images (in pixels)
         :param img_h: int, desired height of PDF images (in pixels)
+        :param title_page: bool, whether to create title page
         :return: None, saves PDF with translation to bliss pdfs folder
         """
         # TODO: refactor translate() & drawAlphabet() for less repetition
@@ -1389,8 +1398,9 @@ class BlissTranslator:
         raw_phrase = [word.lower() for word in token_phrase]
 
         pages = []  # translated images to convert to PDF
-        title_page = self.makeTitlePage(title, img_w, img_h)
-        pages.append(title_page)
+        if title_page:
+            title_pg = self.makeTitlePage(title, img_w, img_h)
+            pages.append(title_pg)
 
         bg = self.makeBlankImg(img_w, img_h)
         indent = self.font_size
