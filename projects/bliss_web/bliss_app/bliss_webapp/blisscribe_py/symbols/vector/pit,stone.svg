@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill-rule="evenodd" height="4.541666666666667in" preserveAspectRatio="none" stroke-linecap="round" viewBox="0 0 72 328" width="1.0in">
+<style type="text/css">
+.brush0 { fill: rgb(255,255,255); }
+.pen0 { stroke: rgb(0,0,0); stroke-width: 1; stroke-linejoin: round; }
+.font0 { font-size: 11px; font-family: "MS Sans Serif"; }
+.pen1 { stroke: rgb(0,0,0); stroke-width: 7; stroke-linejoin: round; }
+.brush1 { fill: none; }
+.font1 { font-weight: bold; font-size: 16px; font-family: System, sans-serif; }
+</style>
+<g>
+<path class="pen1" d="M 27.491666657328036,227.47578124036954 A 22.0,22.5 0 0 0 27.47589682610452,195.50823994635866" fill="none"/>
+<path class="pen1" d="M 27.59009742330268,195.59009742330267 A 22.5,22.5 0 0 0 28.09480211255891,227.89908162211472" fill="none"/>
+</g>
+</svg>

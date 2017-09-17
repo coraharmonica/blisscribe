@@ -5,11 +5,12 @@ EXCERPTS:
     Holds sample English texts used for testing
     and reading.
 """
-import nltk
-import string
-import sys
+import os
+from main import blisscribe
+from nltk.corpus import gutenberg
 
-FILE_PATH = sys.path[0]
+FILE_PATH = os.path.dirname(os.path.realpath(__file__))
+TRANSLATOR = blisscribe.BlissTranslator()
 
 
 def pairTitlesTexts(titles, texts):
@@ -49,7 +50,7 @@ def parseExcerpts(filenames):
 
     for filename in filenames:
         title = filename[14:-4].replace("-", " ")
-        books[title] = parsePlaintext(filename)
+        books[title] = TRANSLATOR.parsePlaintext(filename)
 
     return books
 
@@ -63,9 +64,9 @@ sample_texts = ["/sample texts/adams-hitchhiker's_guide_test.txt",
                 "/sample texts/kafka-metamorphosis_test.txt",
                 "/sample texts/nabokov-lolita_test.txt",
                 "/sample texts/pynchon-gravity's_rainbow_test.txt"]
-file_ids = [file_id for file_id in nltk.corpus.gutenberg.fileids()]
+file_ids = [file_id for file_id in gutenberg.fileids()]
 titles = [file_id[:-4].replace("-", " ") for file_id in file_ids]
-texts = [" ".join(nltk.corpus.gutenberg.words(file_id)).split("]", 1)[1] for file_id in file_ids]
+texts = [" ".join(gutenberg.words(file_id)).split("]", 1)[1] for file_id in file_ids]
 books = {}
 books.update(pairTitlesTexts(titles, texts))
 books.update(parseExcerpts(sample_texts))
@@ -73,7 +74,7 @@ books.update(parseExcerpts(sample_texts))
 
 # Fiction
 alice_in_wonderland = books["carroll alice"]
-alice_in_wonderland_polish = parsePlaintext("/sample texts/alice_in_wonderland_polish.txt")
+alice_in_wonderland_polish = TRANSLATOR.parsePlaintext("/sample texts/alice_in_wonderland_polish.txt")
 hitchhikers_guide = books["adams hitchhiker's_guide_test"]
 moby_dick = books["melville moby_dick"]
 petit_prince = books["exupery petit_prince_test"]
@@ -88,3 +89,4 @@ kjv = books["bible kjv"]
 hamlet = books["shakespeare hamlet"]
 julius_caesar = books["shakespeare caesar"]
 macbeth = books["shakespeare macbeth"]
+
