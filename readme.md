@@ -11,6 +11,9 @@ Blisscribe currently supports the following languages:
 - Italian
 - Dutch
 - Polish
+- Swedish
+- Portuguese
+- Danish
 
 Blisscribe integrates images with text to visually supplement written language in either a native or foreign tongue.
 Blisscribe also provides options for users to select which parts of speech to translate, allowing users to choose
