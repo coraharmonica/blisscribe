@@ -67,9 +67,7 @@ class BlissTranslator:
            new Blissymbols
            --> setSubAll()
     """
-    FILE_PATH = "/Users/courtney/Documents/creation/programming/blisscribe/" \
-                "projects/bliss_web/bliss_app/bliss_webapp/blisscribe_py"
-    # relative: os.path.dirname(os.path.realpath(__file__))
+    FILE_PATH = os.path.dirname(os.path.realpath(__file__))
     # Fonts
     ROMAN_FONT = "/Library/Fonts/Times New Roman.ttf"
     SANS_FONT = "/Library/Fonts/Arial.ttf"
