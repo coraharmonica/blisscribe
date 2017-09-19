@@ -12,7 +12,7 @@
                 background-size: 100px 100px;
                 font-family: helvetica;
                 font-size: 1em;
-                padding: 0px 30% 0px 30%;
+                padding: 0px 0 0px 0;
                 }
             * {
                 font-weight: normal;
@@ -20,6 +20,9 @@
             textarea {
                 width: 99%;
                 height: 200px;
+                }
+            body.translate {
+                padding: 0px 30% 0px 30%;
                 }
             ul {
                 line-height: 200%;
@@ -40,7 +43,7 @@
                 text-align: center;
                 font-size: 1em;
                 line-height: 150%;
-                padding: 0 0 50px 0;
+                padding: 0 0 0 0;
                 }
             h2 {
                 font-family: Arial Rounded MT Bold;
@@ -53,10 +56,10 @@
         </style>
     </head>
 
-    <div align="center">
+    <div class="header" id="header" align="center">
         <img src="https://raw.githubusercontent.com/coraharmonica/blisscribe/master/projects/bliss_web/bliss_app/bliss_webapp/templates/images/blisscribe_icon.jpg"
              alt="Blisscribe"
-             style="align:middle; padding:20px 0px 20px 0px; width:200px; height:200px;">
+             style="padding:20px 0px 20px 0px; width:200px; height:200px;">
         <h1>
             <font size="100">Blisscribe</font>
             <br>
@@ -64,10 +67,10 @@
             &nbsp;&middot;&nbsp;
             <a href="/translate/">translate</a>
         </h1>
-        <br>
     </div>
+    <br>
 
-    <body>
+    <body class="translate">
         <div id='translate' style="font-family:arial;background:#ffffff;border:1px solid #f7f7f7;">
             <form action="/translated/" method="post">
                 {% csrf_token %}

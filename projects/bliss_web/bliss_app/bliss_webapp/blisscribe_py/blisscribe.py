@@ -130,16 +130,37 @@ class BlissTranslator:
                "WRB": "Wh-adverb"}
     DEFAULT_POS = set(["NN", "NNS", "VB", "VBD", "VBG", "VBN", "JJ", "JJR", "JJS"])
     CHOSEN_POS = DEFAULT_POS
-    LANG_CODES = {"Arabic": "arb", "Bulgarian": 'bul', "Catalan": 'cat', "Danish": 'dan',
-                  "Greek": 'ell', "English": 'eng', "Basque": 'eus', "Persian": 'fas',
-                  "Finnish": 'fin', "French": 'fra', "Galician": 'glg', "Hebrew": 'heb',
-                  "Croatian": 'hrv', "Indonesian": 'ind', "Italian": 'ita', "Japanese": 'jpn',
-                  "Norwegian Nyorsk": 'nno', "Norwegian Bokmal": 'nob', "Polish": 'pol',
-                  "Portuguese": 'por', "Chinese": "qcn", "Slovenian": 'slv', "Spanish": 'spa',
-                  "Swedish": 'swe', "Thai": 'tha', "Malay": 'zsm'}
-    SUPPORTED_LANGS = ["English", "Spanish", "German", "French", "Italian", "Dutch", "Polish"]
-    DEFAULT_LANG = SUPPORTED_LANGS[0]
+    LANG_CODES = {"Arabic": "arb",
+                  "Bulgarian": 'bul',
+                  "Catalan": 'cat',
+                  "Danish": 'dan',
+                  'German': 'deu',
+                  "Greek": 'ell',
+                  "English": 'eng',
+                  "Basque": 'eus',
+                  "Persian": 'fas',
+                  "Finnish": 'fin',
+                  "French": 'fra',
+                  "Galician": 'glg',
+                  "Hebrew": 'heb',
+                  "Croatian": 'hrv',
+                  "Indonesian": 'ind',
+                  "Italian": 'ita',
+                  "Japanese": 'jpn',
+                  "Norwegian Nyorsk": 'nno',
+                  "Norwegian Bokmal": 'nob',
+                  "Polish": 'pol',
+                  "Portuguese": 'por',
+                  "Chinese": "qcn",
+                  "Slovenian": 'slv',
+                  "Spanish": 'spa',
+                  "Swedish": 'swe',
+                  "Thai": 'tha',
+                  "Malay": 'zsm'}
+    WORDNET_LANGS = set(LANG_CODES.keys())
+    DEFAULT_LANG = "English"
     LEX_PARSER = LexiconParser()
+    SUPPORTED_LANGS = WORDNET_LANGS.intersection(LEX_PARSER.LANGUAGES)
 
     def __init__(self, language="English", font_path=SANS_FONT, font_size=DEFAULT_FONT_SIZE):
         # Fonts
@@ -156,6 +177,7 @@ class BlissTranslator:
         self.bliss_dict = dict
         self.polish_lexicon = dict
         self.language = str
+        self.lang_code = str
         self.setLanguage(language)
         self.fast_translate = False
         self.words_seen = dict
@@ -220,7 +242,31 @@ class BlissTranslator:
         else:
             self.language = language
         finally:
+            self.lang_code = self.LANG_CODES[self.language]
+            if self.lang_code not in wordnet.langs():
+                self.getMultiLingualLemmas()
             self.setBlissDict()
+
+    def getMultiLingualLemmas(self):
+        """
+        Assumes this BlissTranslator's language isn't part of
+        default WordNet, and tries to load a custom tab file
+        in the given language to WordNet instead.
+        ~
+        If no such file can be loaded, raises an Exception.
+        ~
+        Used to add non-default OMWs to WordNet.
+
+        :return: None
+        """
+        assert self.lang_code not in wordnet.langs()
+
+        tab_file = self.LEX_PARSER.getTabFile(self.lang_code)
+
+        if tab_file is not None:
+            wordnet.custom_lemmas(tab_file, self.lang_code)
+        else:
+            raise Exception("Blisscribe doesn't support this language yet... oops!")
 
     def initBlissDict(self):
         """
@@ -854,7 +900,7 @@ class BlissTranslator:
         :param word: str, word to tag
         :return: (str, str) tuple, given word and its tag
         """
-        return pos_tag([word], lang=self.LANG_CODES[self.language])[0]
+        return pos_tag([word], lang=self.lang_code)[0]
 
     def getWordTag(self, word):
         """
@@ -877,7 +923,7 @@ class BlissTranslator:
         :return: List[str], list of word part-to-speech tags
         """
         tagged_phrase = pos_tag(token_phrase,
-                                lang=self.LANG_CODES[self.language])  # tokens tagged according to word type
+                                lang=self.lang_code)  # tokens tagged according to word type
         tagged_list = []
         for tup in tagged_phrase:
             tagged_list.append(tup[1])
@@ -1206,9 +1252,12 @@ class BlissTranslator:
         :return: List[Synset], the word's synsets
         """
         pos = self.getWordPOS(word)
-        synsets = wordnet.synsets(word, pos, lang=self.LANG_CODES[self.language])
+
+        synsets = wordnet.synsets(word, pos, lang=self.lang_code)
+
         if len(synsets) == 0:
-            synsets = wordnet.synsets(word, lang=self.LANG_CODES[self.language])
+            synsets = wordnet.synsets(word, lang=self.lang_code)
+
         return synsets
 
     def getSynsetLemmas(self, synset):
@@ -1218,7 +1267,7 @@ class BlissTranslator:
         :param synset: Synset, WordNet synset
         :return: List[str], WordNet lemma names
         """
-        return synset.lemma_names(lang=self.LANG_CODES[self.language])
+        return synset.lemma_names(lang=self.lang_code)
 
     def getSynsetsLemmas(self, synsets):
         """

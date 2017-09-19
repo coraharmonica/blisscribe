@@ -50,6 +50,7 @@ PARSE_LEXICA:
     36.	    WRB	    Wh-adverb
 """
 import os
+from resources import omw_tabs
 from xlrd import open_workbook
 from PIL import Image
 
@@ -58,9 +59,21 @@ class LexiconParser:
     FILE_PATH = os.path.dirname(os.path.realpath(__file__))
     IMG_PATH = FILE_PATH + "/symbols/png/whitebg/"
     LEX_PATH = FILE_PATH + "/resources/lexica/universal bliss lexicon.xls"
-    LANGUAGES = ["English", "Swedish", "Norwegian", "Hungarian", "German",
-                 "Dutch", "Afrikaans", "Russian", "Latvian", "Polish",
-                 "French", "Spanish", "Portuguese", "Italian", "Danish"]
+    LANGUAGES = set(["English",
+                     "Swedish",
+                     "Norwegian",
+                     "Hungarian",
+                     "German",
+                     "Dutch",
+                     "Afrikaans",
+                     "Russian",
+                     "Latvian",
+                     "Polish",
+                     "French",
+                     "Spanish",
+                     "Portuguese",
+                     "Italian",
+                     "Danish"])
 
     def parseLexicon(self, filename):
         """
@@ -122,6 +135,23 @@ class LexiconParser:
                 remove = False
 
         return ("".join(new_word)).strip()
+
+    def getTabFile(self, lang_code):
+        """
+        Retrieves a multilingual WordNet tab file for the
+        given language.
+        ~
+        If no such tab file exists, returns None.
+
+        :param lang_code: str, 3-character ISO language code
+        :return: tab file, WordNet file for given language
+        """
+        try:
+            return open(self.FILE_PATH + "/resources/omw_tabs/" +
+                        "wn-cldr-" + lang_code + ".tab")
+        except Exception:
+            return None
+
 
     def getImgFilenames(self, filename):
         """
