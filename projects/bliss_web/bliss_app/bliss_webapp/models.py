@@ -19,12 +19,10 @@ class TranslationModel(models.Model):
         default=True)
     font_fam = models.CharField(
         max_length=50,
-        choices=chosen.FONT_FAMS,
-        default=chosen.FONT_FAMS[1])
+        choices=chosen.FONT_FAMS)
     font_size = models.CharField(
         max_length=2,
-        choices=chosen.FONT_SIZES,
-        default=chosen.FONT_SIZES[2])
+        choices=chosen.FONT_SIZES)
 
     nouns = models.BooleanField(default=False)
     verbs = models.BooleanField(default=False)

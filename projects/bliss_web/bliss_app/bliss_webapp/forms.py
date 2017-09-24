@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from django import forms
 import models
 import chosen
-import blisscribe_py
 
 
 class TranslationForm(forms.ModelForm):
@@ -37,7 +36,7 @@ class TranslationForm(forms.ModelForm):
     )
     lang = forms.ChoiceField(
         label="input language:  ",
-        initial=chosen.SUPPORTED_LANGS[0][0],
+        initial="English",
         required=False,
         widget=forms.Select,
         choices=chosen.SUPPORTED_LANGS
@@ -51,7 +50,7 @@ class TranslationForm(forms.ModelForm):
     )
     font_size = forms.ChoiceField(
         label="font size:  ",
-        initial="10",
+        initial="30",
         required=False,
         choices=chosen.FONT_SIZES,
         widget=forms.Select
