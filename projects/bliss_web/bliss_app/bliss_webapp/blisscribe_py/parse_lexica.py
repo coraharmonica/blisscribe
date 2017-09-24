@@ -57,7 +57,7 @@ from PIL import Image
 
 class LexiconParser:
     FILE_PATH = os.path.dirname(os.path.realpath(__file__))
-    IMG_PATH = FILE_PATH + "/symbols/png/whitebg/"
+    IMG_PATH = FILE_PATH + "/symbols/png/full/"
     LEX_PATH = FILE_PATH + "/resources/lexica/universal bliss lexicon.xls"
     LANGUAGES = set(["English",
                      "Swedish",
@@ -111,6 +111,51 @@ class LexiconParser:
 
         return lemma_dict
 
+    def getBlissEncodings(self, filename):
+        """
+        Reads list of Blissymbol names from plaintext file with given
+        filename and returns a dict linking hex values to Blissymbol names.
+        ~
+        Output conforms to encoding suggested here:
+        http://std.dkuug.dk/JTC1/SC2/WG2/docs/n1866.pdf
+        ~
+        N.B. Each dict key follows the regex:
+            x[0-3]-([A-F]|[0-9]){2}
+            e.g. x0-00
+                 x3-FF
+                 x1-E6
+
+        :param filename: str, .txt file with Blissymbol names
+        :return: dict, where...
+            keys (str) - hexadecimal value for Blissymbol
+            vals (str) - Blissymbol name
+        """
+        encodings = {}
+
+        with open(self.FILE_PATH + filename, "rb") as bliss_names:
+            dec = 0
+            row = 0
+            prefix = 32
+
+            for name in bliss_names:
+                hx = (hex(dec)[-2:]).upper()     # fetch last 2 hex digits
+                hx = hx.replace("X", "0")
+                idx = "x" + str(row) + "-" + hx  # make hex encoding key
+                uni = "U+" + str(prefix) + hx    # make unicode key
+                encodings[name[11:-1].lower()] = (idx, uni)
+
+                if dec < (16**2)-1:
+                    # stay below 2 hex digits
+                    dec += 1
+                else:
+                    # above 2 hex digits,
+                    # reset hex & inc row
+                    dec = 0
+                    row += 1
+                    prefix += 1
+
+        return encodings
+
     def parseAlphabetic(self, word):
         """
         Parses the given non-alphabetic word into an
@@ -151,7 +196,6 @@ class LexiconParser:
                         "wn-cldr-" + lang_code + ".tab")
         except Exception:
             return None
-
 
     def getImgFilenames(self, filename):
         """
@@ -220,12 +264,13 @@ class LexiconParser:
             keys (str) - words in chosen language
             vals (str) - corresponding image filenames
         """
+        # TODO: parse parenthetical endings more gracefully
         lang_bliss_dict = {}
 
         idx = 0
 
         for defn in defns:
-            words = []  # allows for multiple words
+            words = []  # allows for synonyms
 
             if defn[-5:] != "(OLD)":
                 for word in defn.split(","):
@@ -233,6 +278,8 @@ class LexiconParser:
                         word = word.replace("_", " ")
                     if "-" in word:
                         word = word.replace("-", " ")
+                    if "!" in word:
+                        word = word.replace("!", "")
                     if len(word) > 0:
                         words.append(word)
 
@@ -243,9 +290,11 @@ class LexiconParser:
             else:
                 for word in words:
                     if imgs[idx][-11:] == "ercase).png":
+                        # don't translate pure alphabet characters
                         continue
                     if word[:9] != "indicator":
                         word = self.parseAlphabetic(word)
+
                     if word in lang_bliss_dict:
                         if type(lang_bliss_dict[word]) != list:
                             lang_bliss_dict[word] = [lang_bliss_dict[word]]
@@ -278,9 +327,9 @@ class LexiconParser:
     def printDict(self, d):
         """
         Prints the given dictionary as if it were written in code.
-        Used for pasting parseLexicon()'s output into other Blisscribe modules.
+        Used for visualizing dict contents.
 
-        :param d: dict, input dictionary
+        :param d: dict, input dictionary to print
         :return: None
         """
         print("{")
