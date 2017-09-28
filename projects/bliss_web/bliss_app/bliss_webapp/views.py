@@ -65,7 +65,7 @@ def downloadPdf(request):
         page_nums = bool(form.clean_field('page_nums'))
         fast_translate = bool(form.clean_field('fast_translate'))
         translator = helpers.FormTranslator(phrase=phrase,
-                                            title='translation',
+                                            title=title,
                                             title_page=title_page,
                                             lang=lang,
                                             font_fam=font_fam,
@@ -78,14 +78,13 @@ def downloadPdf(request):
                                             page_nums=page_nums,
                                             fast_translate=fast_translate)
         translator.translate()
-        f = open(path + "translation.pdf", str("r+"))  # FPDF.open(pdf)
+        title = title.decode('utf-8')
+        filename = title + ".pdf"
+        f = open(path + filename, str("r+"))
         response = HttpResponse(FileWrapper(f), content_type='application/pdf')
         f.close()
-        translator.deleteTranslation(filename='translation.pdf')
-        title = translator.getTitle()
-        title = title.decode('utf-8')
-        # response['Content-Length'] = os.path.getsize(fn)
-        response['Content-Disposition'] = 'attachment; filename='+title.encode('ascii', errors='replace')+'.pdf'
+        translator.deleteTranslation(filename=filename)
+        response['Content-Disposition'] = 'attachment; filename='+filename
         response['X-Sendfile'] = smart_str(path)
         return response
     else:

@@ -38,7 +38,7 @@ CustomTranslator.translate("ich habe kein lust mehr, unser wir uns", title='titl
 
 # Polish translation
 CustomTranslator = blisscribe.BlissTranslator(language="Polish", font_path=excerpts.BlissTranslator.SANS_FONT)
-CustomTranslator.setSubAll(True)         # add Polish subtitles below all Blissymbols
+#CustomTranslator.setSubAll(True)         # add Polish subtitles below all Blissymbols
 CustomTranslator.chooseOtherPOS(True)    # translate all parts of speech possible to Blissymbols
 CustomTranslator.setFastTranslate(True)  # translate Polish to Blissymbols immediately
 CustomTranslator.translate(excerpts.alice_in_wonderland_polish[:200], title='Alicja w Krainie Czar\xc3\xb3w')

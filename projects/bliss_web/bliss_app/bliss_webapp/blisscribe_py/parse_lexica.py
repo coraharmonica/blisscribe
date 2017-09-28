@@ -53,12 +53,13 @@ import os
 from resources import omw_tabs
 from xlrd import open_workbook
 from PIL import Image
-
+import re
 
 class LexiconParser:
     FILE_PATH = os.path.dirname(os.path.realpath(__file__))
     IMG_PATH = FILE_PATH + "/symbols/png/full/"
-    LEX_PATH = FILE_PATH + "/resources/lexica/universal bliss lexicon.xls"
+    LEXICA_PATH = FILE_PATH + "/resources/lexica/"
+    LEX_PATH = LEXICA_PATH + "universal bliss lexicon.xls"
     LANGUAGES = set(["English",
                      "Swedish",
                      "Norwegian",
@@ -74,6 +75,11 @@ class LexiconParser:
                      "Portuguese",
                      "Italian",
                      "Danish"])
+
+    def __init__(self):
+        """
+        Initializes this LexiconParser.
+        """
 
     def parseLexicon(self, filename):
         """
@@ -110,6 +116,67 @@ class LexiconParser:
                     lemma_dict[inflexion.strip()] = lemma
 
         return lemma_dict
+
+    def cleanDefn(self, defn):
+        """
+        Cleans the input ILI definition line.
+
+        :param defn: str, line in ILI
+        :return: List[WordEntry], list of word concepts
+        """
+        word_entries = []
+        idx = re.search(pattern="i[0-9]{1,8}", string=defn).group(0)
+        code = re.search(pattern="[0-9]{8}-[a|n|r|s|v]", string=defn).group(0)
+        word = re.search(pattern="#\s.+", string=defn).group(0)
+        word = str(word[2:])
+        words = word.split(",")
+        for word in words:
+            word = word.strip()
+            entry = WordEntry(int(idx[1:]), str(code), word)
+            word_entries.append(entry)
+        return word_entries
+
+    def cleanWordEntry(self, entry):
+        """
+        Returns string representation of given WordEntry.
+
+        :param entry: WordEntry, word entry to turn to string
+        :return: str, string representation of given WordEntry
+        """
+        return "index: " + str(entry.idx) + "\t" + \
+               "address: " + str(entry.address) + "\t" + \
+               "word: " + str(entry.word) + "\n"
+
+    def readILIMapping(self):
+        """
+        Reads plaintext file with mapping from Princeton WordNet
+        to ILI (Interlingual Language Index), a conceptual dictionary.
+        ~
+        Used for cross-lingual translation.
+
+        :return: None
+        """
+        with open(self.LEXICA_PATH + "ili-wn-mapping.txt", "r") as ili:
+            cili = ili.readlines()[10:]
+            for defn in cili:
+                self.writeILIMapping(self.cleanDefn(defn))
+
+    def writeILIMapping(self, clean_defns):
+        """
+        Writes to plaintext file with mapping from Princeton WordNet
+        to ILI (Interlingual Language Index), a conceptual dictionary.
+        ~
+        Used for cross-lingual translation.
+
+        :param clean_defns: List[WordEntry], list of word entries to write
+        :return: None
+        """
+        out = self.LEXICA_PATH + "ili-wn-mapping-cleaned.txt"
+        #open(out, 'w').close()  # wipe file before writing
+
+        with open(out, "a") as ili:
+            for defn in clean_defns:
+                ili.write(self.cleanWordEntry(defn))
 
     def getBlissEncodings(self, filename):
         """
@@ -336,3 +403,46 @@ class LexiconParser:
         for key in d:
             print('    "' + key + '": ' + '"' + str(d[key]) + '",')
         print("}")
+
+
+class WordEntry:
+    """
+    A class to representing word entries in the Interlingual Language Index (ILI).
+    In ILI, each entry is a unique cross-lingual concept.
+    """
+    PARTS_OF_SPEECH = set(["a", "n", "r", "s", "v"])
+    LEX_PARSER = LexiconParser()
+    BLISS_DICT = LEX_PARSER.getDefnImgDict(LEX_PARSER.LEX_PATH, "English")
+
+    def __init__(self, idx, address, word):
+        """
+        Represents a word entry in ILI.
+        ~
+        Each WordEntry has an index tying it to Princeton WordNet (PWN),
+        a PWN address, and a corresponding PWN English word.
+
+        :param idx: int, index of synset definition from 0 to 117,659
+        :param address: str, PWN address of form [0-9]{8}-[a|n|r|s|v]
+        :param word: str, English PWN name for ILI concept
+        :param bliss_word: str, Bliss filename
+        """
+        self.idx = idx
+        self.address = address
+        self.word = word
+        self.pos = self.address[-1]
+        self.bliss_defn = str
+        self.setBlissDefn()
+
+    def setBlissDefn(self):
+        """
+        Sets this ILI concept's bliss_defn to the lookup value in
+        given bliss_dict.
+
+        :return: None
+        """
+        try:
+            self.BLISS_DICT[self.word]
+        except KeyError:
+            self.bliss_defn = None
+        else:
+            self.bliss_defn = self.BLISS_DICT[self.word]
