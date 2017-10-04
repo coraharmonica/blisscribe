@@ -43,7 +43,7 @@ class TranslationForm(forms.ModelForm):
     )
     font_fam = forms.ChoiceField(
         label="font family:  ",
-        initial=chosen.FONT_FAMS[2],
+        initial="Arial",
         required=False,
         choices=chosen.FONT_FAMS,
         widget=forms.Select
@@ -99,6 +99,12 @@ class TranslationForm(forms.ModelForm):
     )
     def clean_field(self, field):
         assert field in self.fields
+        return self.cleaned_data[field]
+        """
+        initial = self.fields[field].initial
+
         if not self[field].html_name in self.data:
             return self.fields[field].initial
-        return self.cleaned_data[field]
+        else:
+            return self.cleaned_data[field]
+        """

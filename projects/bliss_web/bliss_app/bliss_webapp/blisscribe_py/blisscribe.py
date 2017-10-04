@@ -89,6 +89,7 @@ class BlissTranslator:
                         "\xe2\x80\x9d", "\xe2\x80\x99", u"\u201d"])  # spaces AFTER
     PUNCTUATION = STARTING_PUNCT.union(ENDING_PUNCT)
     PUNCTUATION.add("'")
+    WHITESPACE = set(["\n", '', ' '])
     PARTS_OF_SPEECH = set(["CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
                            "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$",
                            "RB", "RBR", "RBS", "RP", "TO", "UH", "VB", "VBD", "VBG",
@@ -1626,7 +1627,7 @@ class BlissTranslator:
         idx = 0
 
         for word in raw_phrase:
-            if word == "\n":
+            if word in self.WHITESPACE:
                 img = self.makeBlankImg(0, 0)
             else:
                 lexeme = self.getLexeme(word)
@@ -1637,11 +1638,13 @@ class BlissTranslator:
                     # if word can't be translated to Blissymbols,
                     # then render text
                     img = self.getWordImg(word_token, self.font_size)
+
                 elif not self.translateNow(lexeme):
                     # if we don't want to translate this word yet,
                     # then render text
                     img = self.getWordImg(word_token, self.font_size)
                     self.addSeen(lexeme)
+
                 else:
                     if self.isTranslatable(lexeme):
                         new_lexeme = lexeme
@@ -1650,14 +1653,14 @@ class BlissTranslator:
 
                     try:
                         self.getSubbedBlissImg(new_lexeme, img_w/2, self.image_heights)
-                    except Exception:
+                    except SystemError:
                         img = self.getWordImg(word_token, self.font_size)
                     else:
                         if self.isChanged(lexeme) and not self.sub_all:
                             img = self.getSubbedBlissImg(new_lexeme, img_w/2, self.image_heights, subs=False)
                         else:
                             # adds subtitles to new words
-                            img = self.getSubbedBlissImg(word, img_w/2, self.image_heights)
+                            img = self.getSubbedBlissImg(word, img_w/2, self.image_heights, subs=True)
                             self.addChanged(lexeme)
 
                         if self.isPluralNoun(word):
