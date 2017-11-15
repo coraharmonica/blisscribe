@@ -1,5 +1,0 @@
-<keymap version="1" name="Mac OS X copy" parent="Mac OS X">
-  <action id="PyConvertPackageToModuleAction">
-    <keyboard-shortcut first-keystroke="ctrl meta m" />
-  </action>
-</keymap>
