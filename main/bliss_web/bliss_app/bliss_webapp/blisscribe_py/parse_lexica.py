@@ -62,6 +62,7 @@ from PIL import Image
 import re
 import blissymbols
 from blissymbols import Blissymbol, BLISS_TO_UNICODE, UNICODE_TO_BLISS, NEW_BLISSYMBOLS
+from resources.lexica import bliss_lexicon
 
 LAST_BLISS_ENCODING = blissymbols.LAST_BLISS_ENCODING
 
@@ -389,7 +390,7 @@ class LexiconParser:
         open(out, 'w').close()  # wipe file before writing
 
         with open(out, "a") as wordnet:
-            wordnet.write(self.dictToStr(blissnet))
+            wordnet.write(self.encodingDictToStr(blissnet))
 
     def blissDictToWordnet(self, bliss_dict):
         """
@@ -495,18 +496,22 @@ class LexiconParser:
         pos_col = self.LEXICON_COLS[2]
         deriv_col = self.LEXICON_COLS[3]
         unicode = blissymbol.getUnicode() #[0]
+        unicode = unicode[2:]
 
         for col in self.LEXICON_COLS:
             if col == bci_col:
-                row.append("C+" + unicode[2:])
-                continue
+                row.append("C+" + unicode)
             elif col == pos_col:
                 row.append(blissymbol.getPosCode())
             elif col == deriv_col:
                 row.append(blissymbol.getDerivation())
             else:
                 translations = blissymbol.getTranslation(col)
-                #translations = ",".join(translations)
+                #print(col, translations)
+                #translations = [self.translator.deUnicodize(translation)
+                #                for translation in translations]
+                translations = u",".join(translations)
+                translations = self.translator.deUnicodize(translations)
                 row.append(translations)
 
         return row
@@ -524,6 +529,7 @@ class LexiconParser:
         if not blissymbol:
             blissymbol = self.makeBlissymbol()
 
+        print("making new Blissymbol entry for " + str(blissymbol))
         bliss_entry = self.makeBlissXLXSEntry(blissymbol)
 
         book = load_workbook(self.LEXICON_PATH)
@@ -553,19 +559,32 @@ class LexiconParser:
                 synonym = synonym.strip()
                 if synonym == blissymbol.getBlissName():
                     print("found English Blissymbol synonym: ", eng_word)
+                    #title = synonym[0].isupper()
                     translations = blissymbol.getTranslations()
                     for language in translations:
                         defns = translations[language]
                         if len(defns) != 0:
                             lang_idx = self.LEXICON_COLS.index(language)
                             edit = sheet.cell(row=row_idx, column=lang_idx+1)
-                            if type(edit.value) != str:
-                                edit.value = str(edit.value)
+
+                            if edit.value is None:
+                                edit.value = ""
+                            else:
+                                edit.value = self.translator.unicodize(edit.value)
+                            values = []
                             for defn in defns:
-                                if defn not in edit.value.split(","):
-                                    edit.value += ","
-                                    edit.value += defn
-                            print("edited ", language)
+                                values = edit.value.split(u",")
+                                #defn = defn if not title else defn.title()
+                                if defn not in values:
+                                    #if len(edit.value) != 0:
+                                    #    edit.value += u","
+                                    #edit.value += defn
+                                    values.append(defn)
+                                #elif title and language != "English":
+                                #    values = [value.title() for value in values]
+                            values = self.translator.removeDuplicates(values)
+                            edit.value = ",".join(values)
+                            print(u"edited " + language + u" to be " + edit.value)
                     break
 
         book.save(self.LEXICON_PATH)
@@ -678,6 +697,7 @@ class LexiconParser:
         """
         return img_fn[-11:] == "ercase).png"
 
+    '''
     def getBlissDict(self, language):
         """
         Creates 2 dicts with words in chosen language and English
@@ -759,6 +779,7 @@ class LexiconParser:
             idx += 1
 
         return (lang_bliss_dict, eng_bliss_dict)
+    '''
 
     def getMultilingualBlissDict(self):
         """
@@ -769,9 +790,9 @@ class LexiconParser:
         ~
         If a definition contains multiple words, this function
         splits the definition and adds each word to the dict as
-        separate entries linking to the same Blissymbol.
+        separate entries linking to the same Blissymbols.
         ~
-        If a word in the file has no corresponding Blissymbol,
+        If a word in the file has no corresponding Blissymbols,
         the {key,val} pair is not added to the output dict.
         ~
         Used to achieve the most accurate synset estimations by
@@ -817,7 +838,7 @@ class LexiconParser:
                     lang_words = self.getDefnWords(lang_defn)
                     translations[lang] = lang_words
 
-                print translations
+                #print translations
 
                 bliss_word = Blissymbol(img_filename=imgs[idx],
                                         pos=parts_of_speech[idx],
@@ -828,17 +849,126 @@ class LexiconParser:
 
                 translations = bliss_word.getTranslations()
 
-                for lang in translations:
-                    for translation in translations[lang]:
-                        lang_bliss_dict.setdefault(translation, [])
-                        lang_bliss_dict[translation].append(bliss_word)
-                        if lang == "English":
-                            bliss_word.addBlissAndUnicode(translation)
+                #for lang in translations:
+                for translation in translations["English"]:
+                    lang_bliss_dict.setdefault(translation, [])
+                    lang_bliss_dict[translation].append(bliss_word)
+                    #if lang == "English":
+                    #bliss_word.addBlissAndUnicode(translation)
 
-            print("\n")
+            #print("\n")
             idx += 1
-        raw_input("Press enter to continue.\n")
+        #input("Press enter to continue.\n")
         return lang_bliss_dict
+
+    def initMultilingualBlissLexicon(self, translator=None):
+        """
+        Initializes the multilingual Blissymbols lexicon dict with
+        the given translator and returns that dict.
+
+        :param translator: BlissTranslator, a Blissymbols translator
+        :return: dict, where...
+            key (str) - words in English
+            val (List[Blissymbol]) - corresponding Blissymbols with
+                translations in all languages
+        """
+        if translator is None:
+            translator = self.translator
+
+        bliss_dict = {}
+        for key in bliss_lexicon.BLISS_LEXICON:
+            bliss_dict.setdefault(key, [])
+            for val in bliss_lexicon.BLISS_LEXICON[key]:
+                blissymbol = Blissymbol(val[0]+u".png", val[1], val[2], val[3], translator)
+                bliss_dict[key].append(blissymbol)
+        return bliss_dict
+
+    def initBlissLexicon(self, translator=None, language=None):
+        """
+        Initializes the multilingual Blissymbols lexicon with
+        the given translator.
+
+        :param translator: BlissTranslator, a Blissymbols translator
+        :param language: str, desired Blissymbol lexicon language
+        :return: dict, where...
+            key (str) - words in given language
+            val (List[Blissymbol]) - corresponding Blissymbols with
+                translations in given language and English
+        """
+        if translator is None:
+            translator = self.translator
+        lexicon = bliss_lexicon.BLISS_LEXICON
+        bliss_dict = {}
+        #eng = "English"
+        #if language != eng:
+        if language is None:
+            language = translator.getLanguage()
+        #else:
+        #    lang = None
+
+        for key in lexicon:
+            bliss_words = lexicon[key]
+            for bliss_word in bliss_words:
+                #bliss_dict.setdefault(eng_word, [])
+                blissymbol = Blissymbol(bliss_word[0]+u".png", bliss_word[1], bliss_word[2], bliss_word[3], translator)
+                #if lang is not None:
+                lang_words = blissymbol.getTranslation(language)
+                for lang_word in lang_words:
+                    bliss_dict.setdefault(lang_word, [])
+                    bliss_dict[lang_word].append(blissymbol)
+                    #bliss_dict[eng_word].append(blissymbol)
+                #else:
+                    #lang_word = None
+                    #eng_words = bliss_word.getTranslation(eng)
+                    #for eng_word in eng_words:
+                    #    bliss_dict.setdefault(eng_word, [])
+                    #    bliss_dict[eng_word].append(blissymbol)
+        return bliss_dict
+
+    def initBlissLexica(self, translator=None, language=None):
+        """
+        Initializes the multilingual Blissymbols lexicon with
+        the given translator.
+
+        :param translator: BlissTranslator, a Blissymbols translator
+        :param language: str, desired Blissymbol lexicon language
+        :return: dict, where...
+            key (str) - words in given language
+            val (List[Blissymbol]) - corresponding Blissymbols with
+                translations in given language and English
+        """
+        eng_dict = self.initMultilingualBlissLexicon(translator)
+        if language is None:
+            other_dict = eng_dict
+        else:
+            other_dict = self.initBlissLexicon(translator, language)
+        print(other_dict)
+        print(eng_dict)
+        return (other_dict, eng_dict)
+
+    def writeBlissLexicon(self, bliss_dict=None):
+        """
+        Writes a bliss dictionary to bliss_lexicon.py for
+        easier access.
+        ~
+        If no bliss_dict is provided, this method derives a new
+        multilingual bliss_dict from universal bliss lexicon.xlsx.
+
+        :param bliss_dict: (optional) dict, where...
+            key (str) - words in English
+            val (List[Blissymbol]) - corresponding Blissymbols with
+                translations in all languages
+        :return: None
+        """
+        path = self.LEXICA_PATH + "bliss_lexicon.txt"
+        if bliss_dict is None:  #self.translator.bliss_dict
+            bliss_dict = self.getMultilingualBlissDict()
+        #print(bliss_dict)
+
+        with open(path, "a") as out:
+            out.write(self.translator.deUnicodize(self.blissDictToStr(bliss_dict)))
+            out.close()
+
 
     # HELPERS
     # =======
@@ -906,7 +1036,7 @@ class LexiconParser:
         :param d: dict, input dictionary to print
         :return: None
         """
-        print self.dictToStr(d)
+        print(self.encodingDictToStr(d))
 
     def dictToStr(self, d):
         """
@@ -914,11 +1044,58 @@ class LexiconParser:
         written as in Python.
 
         :param d: dict, input dictionary to turn to string
-        :return: str, input dictionary turned to string
+        :return: (unicode) str, input dictionary turned to string
         """
         res = ["{"]
         for key in sorted(d.keys()):
             val = d[key]
+            #if type(val) == list:
+            res.append('"' + str(key) + '": ' + str(val) + ",")
+            #else:
+            #    res.append(u'\t"' + self.translator.unicodize(key) + u'": ' +
+            #               self.translator.unicodize(d[key]) + u',\n')
+        res.append("}")
+        return self.translator.unicodize("".join(res))
+
+    def blissDictToStr(self, bliss_dict):
+        """
+        Returns the given dictionary as the string it would be
+        written as in Python.
+
+        :param bliss_dict: dict, input dictionary to turn to string
+        :return: (unicode) str, input dictionary turned to string
+        """
+        res = [u"BLISS_LEXICON = {\n"]
+        for key in sorted(bliss_dict.keys()):
+            val = bliss_dict[key]
+            #if type(val) == list:
+            if len(val) != 0:
+                items = [self.translator.unicodize('("' +
+                                                   item.getBlissName() + '", "' +
+                                                   item.getPos() + '", "' +
+                                                   item.getDerivation() + '", ' +
+                                                   self.dictToStr(item.getTranslations()) +
+                                                   ')') for item in val]
+                res.append(u'\t"' + self.translator.unicodize(key) +
+                           u'": [' + u',\n\t\t'.join(items) + u'],\n')
+            #res.append(u"\n")
+            #else:
+            #    res.append(u'\t"' + self.translator.unicodize(key) + u'": ' +
+            #               self.translator.unicodize(bliss_dict[key]) + u',\n')
+        res.append(u"}")
+        return u"".join(res)
+
+    def encodingDictToStr(self, encoding):
+        """
+        Returns the given dictionary as the string it would be
+        written as in Python.
+
+        :param encoding: dict, input dictionary to turn to string
+        :return: str, input dictionary turned to string
+        """
+        res = ["{"]
+        for key in sorted(encoding.keys()):
+            val = encoding[key]
             if type(val) == list:
                 if len(val) != 0:
                     items = [str(item) for item in val]
@@ -928,6 +1105,6 @@ class LexiconParser:
                     res.append('\t"' + str(key) + '":\t[' + ",\n\t\t\t\t".join(items) + '],\n')
                     res.append("\n")
             else:
-                res.append('\t"' + str(key) + '": ' + str(d[key]) + ',\n')
+                res.append('\t"' + str(key) + '": ' + str(encoding[key]) + ',\n')
         res.append("}")
         return "".join(res)

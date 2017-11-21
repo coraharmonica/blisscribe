@@ -20,14 +20,15 @@ DEMO:
     on the filepath relative to the main folder.
 """
 import blisscribe
-import excerpts
+#import excerpts
 
-#bt = blisscribe.BlissTranslator()
+#bt = blisscribe.BlissTranslator(language="Polish")
 #lp = blisscribe.LexiconParser(bt)
+#lp.writeBlissLexicon()
 #multi_dict = lp.getMultilingualBlissDict()
 #lp.writeBlissWordnet(lp.blissDictToWordnet(multi_dict))
 
-
+'''
 DefaultTranslator = blisscribe.BlissTranslator()  # defaults to English, Times New Roman, size 30
 DefaultTranslator.setSubAll(True)         # add Polish subtitles below all Blissymbols
 DefaultTranslator.chooseOtherPOS(True)    # translate all parts of speech possible to Blissymbols
@@ -36,22 +37,27 @@ DefaultTranslator.setTranslateAll(True)
 #DefaultTranslator.translate(excerpts.kjv[:500], title="The Bible", title_page=False)
 #DefaultTranslator.translate(excerpts.leaves_of_grass[:500], title="Leaves of Grass", title_page=False)
 DefaultTranslator.translate(excerpts.hitchhikers_guide[:300], title="The Hitchhiker's Guide to the Galaxy")
+'''
+
+CustomTranslator = blisscribe.BlissTranslator(language="German", font_path=blisscribe.BlissTranslator.SANS_FONT)
+CustomTranslator.setSubAll(True)
+CustomTranslator.chooseOtherPOS(True)
+CustomTranslator.setFastTranslate(True)
+CustomTranslator.setTranslateAll(True)
+CustomTranslator.chooseOtherPOS(True)
+CustomTranslator.setSafeTranslate(False)
+CustomTranslator.translate("ich habe kein lust mehr, unser wir uns")
 
 '''
-CustomTranslator = blisscribe_py.BlissTranslator(language="German", font_path=excerpts.BlissTranslator.SANS_FONT)
-CustomTranslator.setSubAll(True)         # add Polish subtitles below all Blissymbols
-CustomTranslator.chooseOtherPOS(True)    # translate all parts of speech possible to Blissymbols
-CustomTranslator.setFastTranslate(True)  # translate Polish to Blissymbols immediately
-CustomTranslator.translate("ich habe kein lust mehr, unser wir uns", title='title')
-'''
-'''
 # Polish translation
-CustomTranslator = blisscribe.BlissTranslator(language="Polish", font_path=excerpts.BlissTranslator.SANS_FONT)
+CustomTranslator = blisscribe.BlissTranslator(language="Polish", font_path=blisscribe.BlissTranslator.SANS_FONT)
 CustomTranslator.setSubAll(True)         # add Polish subtitles below all Blissymbols
 CustomTranslator.chooseOtherPOS(True)    # translate all parts of speech possible to Blissymbols
 CustomTranslator.setFastTranslate(True)  # translate Polish to Blissymbols immediately
 CustomTranslator.setTranslateAll(True)
-CustomTranslator.translate(excerpts.alice_in_wonderland_polish[:500], title='Alicja w Krainie Czar\xc3\xb3w')
+CustomTranslator.translate("Alicja", title='Alicja w Krainie Czar\xc3\xb3w')
+#CustomTranslator.translate(excerpts.alice_in_wonderland_polish[:50], title='Alicja w Krainie Czar\xc3\xb3w')
+
 
 # French translation
 CustomTranslator = blisscribe.BlissTranslator(language="French", font_path=blisscribe.BlissTranslator.SANS_FONT)
@@ -62,6 +68,7 @@ CustomTranslator.setTranslateAll(True)
 CustomTranslator.setSafeTranslate(False)
 CustomTranslator.chooseOtherPOS(True)
 CustomTranslator.translate(excerpts.petit_prince[100:200], title="Le petit prince")
+CustomTranslator.translate("ballon")
 
 CustomTranslator = blisscribe.BlissTranslator(language="English")
 CustomTranslator.chooseOtherPOS(True)

@@ -9,7 +9,7 @@ BLISSYMBOLS:
 import os
 from PIL import Image
 from resources.lexica.bliss_encoding import BLISS_TO_UNICODE, UNICODE_TO_BLISS
-import bliss_exceptions
+#import bliss_exceptions
 
 BLISS_TO_UNICODE = BLISS_TO_UNICODE
 UNICODE_TO_BLISS = UNICODE_TO_BLISS
@@ -64,6 +64,7 @@ class Blissymbol:
                                  ]}
 
     def __init__(self, img_filename=None, pos=None, derivation="", translations=None, translator=None):  # language="English"
+        self.translator = translator
         self.img_filename = img_filename
         self.pos_code = pos
         self.initPosCode(pos)
@@ -83,8 +84,7 @@ class Blissymbol:
         self.deriv_unicode = []
         self.initUnicode()
         self.initDerivUnicode()
-        self.translator = translator
-        self.synsets = self.findBlissymbolSynsets()
+        self.synsets = self.initBlissymbolSynsets()
         #print("\nHi!  I'm the Blissymbol " + self.bliss_name + ", with the " +
         #      "synsets: ")
         #print(self.synsets)
@@ -121,7 +121,7 @@ class Blissymbol:
             derivs = self.derivations
             self.makeNewBlissymbol(derivs, self.img_filename)
 
-    def makeNewBlissymbol(self, derivations, filename=None):
+    def makeNewBlissymbol(self, derivations, filename=None, pos=False):
         """
         Given a list of derivations for a Blissymbol,
         combines derivations in order to make a new Bliss image.
@@ -130,6 +130,8 @@ class Blissymbol:
         this Blissymbol's img_filename.
 
         :param derivations: List[str], derivative Blissymbol(s)
+        :param filename: str, filename to save Blissymbol under
+        :param pos: bool, whether to automatically include POS Blissymbol
         :return: None
         """
         if filename is None:
@@ -143,7 +145,7 @@ class Blissymbol:
         idx = 0
 
         for derivation in derivations:
-            print(derivation)
+            #print(derivation)
             derivation = derivation.replace(" ", "_")
 
             try:
@@ -184,9 +186,16 @@ class Blissymbol:
 
             idx += 1
 
+        if pos:
+            indicator = self.getPosIndicator()
+            if indicator is not None:
+                indicator = self.translator.getIndicatorBlissImg(indicator)
+                width += space + indicator.size[0]
+                bliss_words.append(indicator)
+
         bs = Image.new("RGBA", (width, height))
 
-        curr_width = 0
+        curr_width = space
 
         for bliss_word in bliss_words:
             bs.paste(bliss_word, (curr_width, 0))
@@ -195,7 +204,7 @@ class Blissymbol:
         filename = filename.encode('utf-8')
         img_path = str(IMG_PATH + filename)
         bs.save(img_path)
-        print("made new blissymbol: " + filename)
+        print("made new Blissymbol: " + filename)
         NEW_BLISSYMBOLS.append(img_path)
 
     def addTranslation(self, language, translation):
@@ -215,8 +224,8 @@ class Blissymbol:
         :return: None
         """
         self.translations.setdefault(language, [])
-        if translation not in self.translations[language]:
-            self.translations[language].append(translation)
+        self.translations[language].append(translation)
+        self.translations[language] = self.translator.removeDuplicates(self.translations[language])
 
     def addTranslations(self, language, translations):
         """
@@ -388,7 +397,7 @@ class Blissymbol:
         :return: List[str], cleaned translations
         """
         translation = [self.removeParens(self.cleanDefn(t)) for t in translation]
-        return translation
+        return self.translator.removeDuplicates(translation)
 
     def cleanTranslations(self, translations):
         """
@@ -876,12 +885,36 @@ class Blissymbol:
         :return: str, unicode representation of part of speech
         """
         if not self.is_atom:
-            if self.getPos() == "NN":
-                return BLISS_TO_UNICODE["indicator thing"]
-            elif self.getPos() == "JJ" or self.getPos() == "RB":
-                return BLISS_TO_UNICODE["indicator description"]
-            elif self.getPos() == "VB":
-                return BLISS_TO_UNICODE["indicator action"]
+            try:
+                indicator = BLISS_TO_UNICODE[self.getPosIndicator()]
+            except KeyError:
+                return ""
+            else:
+                return indicator
+
+    def getPosIndicator(self):
+        """
+        If this Blissymbol is not atomic, returns unicode name
+        for this Blissymbol's part of speech.
+
+        :return: str, Blissymbol indicator name for pos
+        """
+        #if not self.is_atom:
+        if self.getPos() == "NN":
+            return "indicator thing"
+        elif self.getPos() == "JJ" or self.getPos() == "RB":
+            return "indicator description"
+        elif self.getPos() == "VB":
+            return "indicator action"
+
+    def hasUnicode(self):
+        """
+        Returns True if this Blissymbol has a corresponding
+        unicode value, False otherwise.
+
+        :return: bool, whether this Blissymbol has a unicode
+        """
+        return self.unicode is not None
 
     def initUnicode(self):
         """
@@ -899,7 +932,8 @@ class Blissymbol:
             for translation in translations:
                 self.addBlissAndUnicode(bliss=translation, unicode=self.unicode)
         else:
-            print "could not find unicode defn for " + self.bliss_name
+            print("could not find unicode defn for " + self.bliss_name)
+            self.unicode = None
 
     def initDerivUnicode(self):
         """
@@ -913,12 +947,43 @@ class Blissymbol:
     def getSynsets(self):
         return self.synsets
 
+    def addSynset(self, synset):
+        """
+        Appends the given synset to this Blissymbol's synsets.
+
+        :param synset: Synset, synset to add to synsets
+        :return: None
+        """
+        self.synsets.add(synset)
+
+    def addSynsets(self, synsets):
+        """
+        Adds the given synsets to this Blissymbol's synsets.
+
+        :param synsets: List[Synset], synsets to add to synsets
+        :return: None
+        """
+        self.synsets.union(synsets)
+
+    def initBlissymbolSynsets(self):
+        """
+        Returns a list of English Wordnet synsets corresponding
+        to this Blissymbol.
+
+        :return: Set[Synset], this Blissymbol's Wordnet synsets
+        """
+        synsets = set(self.translator.lookupBlissymbolSynsets(self))
+        if len(synsets) == 0:
+            synsets = self.findBlissymbolSynsets()
+        #print self.getBlissName(), synsets
+        return synsets
+
     def findBlissymbolSynsets(self):
         """
         Returns a list of English Wordnet synsets corresponding
         to this Blissymbol.
 
-        :return: List[Synset], this Blissymbol's Wordnet synsets
+        :return: Set[Synset], this Blissymbol's Wordnet synsets
         """
         synsets = set([])
         translations = self.getTranslations()
@@ -938,7 +1003,7 @@ class Blissymbol:
                 #self.removeDuplicates()
                 word_synsets.update(word_synset)
 
-            print(word_synsets)
+            #print(word_synsets)
 
             for lang in translations:
                 if lang != "English":
@@ -957,14 +1022,14 @@ class Blissymbol:
                         continue
 
                     if len(lang_synset) != 0:
-                        print "synset in " + lang[:7] + ":\t", lang_synset
+                        #print "synset in " + lang[:7] + ":\t", lang_synset
                         if len(lang_synsets) != 0:
                             lang_synsets.intersection_update(lang_synset)
                         else:
                             lang_synsets.update(lang_synset)
 
 
-            print "intersecting multilingual synsets:\t", lang_synsets
+            #print("intersecting multilingual synsets:\t", lang_synsets)
             synset = lang_synsets.intersection(word_synsets)
 
             if len(synsets) == 0:
@@ -976,11 +1041,11 @@ class Blissymbol:
                 synsets.update(word_synsets.union(lang_synsets))
         else:
             word_synset = set(self.translator.lookupWordSynsets(word, pos))
-            print word, pos
+            #print word, pos
             synsets = word_synset
 
-        synsets = list(synsets)
-        print synsets
+        #synsets = list(synsets)
+        #print synsets
 
         if len(synsets) != 0:
             pos = (synsets[0]).pos()
@@ -997,7 +1062,7 @@ class Blissymbol:
                     best_sim = sim
             print "best guess: ", best_guess.lemma_names()
             '''
-
+        #print("\n")
         return synsets
 
     def setUnicode(self, unicode):

@@ -21,13 +21,15 @@ from pattern.text import en, es, fr, de, it, nl
 from PIL import Image, ImageDraw, ImageFont, ImageChops
 from fpdf import FPDF
 #import bliss_exceptions
+import blissnet
+from blissnet import BLISSNET
 
 try:
     from parse_lexica import LexiconParser, Blissymbol, \
         BLISS_TO_UNICODE, UNICODE_TO_BLISS, \
         NEW_BLISSYMBOLS, BLISS_SUPPORTED_LANGUAGES
 except ImportError:
-    print("parse_lexica module could not be imported.\n\
+    raise ImportError("parse_lexica module could not be imported.\n\
     Please find the local module parse_lexica.py \n\
     and relocate it to the same directory as blisscribe.py.")
 else:
@@ -37,18 +39,20 @@ else:
     from parse_lexica import BLISS_SUPPORTED_LANGUAGES as BLISS_LANGS
 
 try:
-    from blisslearn import BlissymbolClassifier
+    import blisslearn
+    from blisslearn import BlissLearner
 except ImportError:
-    print("blisslearn module could not be imported.\n\
+    raise ImportError("blisslearn module could not be imported.\n\
     Please find the local module blisslearn.py \n\
     and relocate it to the same directory as blisscribe.py.")
 else:
-    from blisslearn import BlissymbolClassifier
+    import blisslearn
+    from blisslearn import BlissLearner
 
 try:
     from translation_word import TranslationWord
 except ImportError:
-    print("translation_word module could not be imported.\n\
+    raise ImportError("translation_word module could not be imported.\n\
     Please find the local module translation_word.py \n\
     and relocate it to the same directory as blisscribe.py.")
 else:
@@ -255,7 +259,7 @@ class BlissTranslator:
         self.other = False
 
         self.all_lemma_names = set(wordnet.all_lemma_names(lang=self.lang_code))
-        self.classifier = BlissymbolClassifier(self)
+        self.classifier = BlissLearner(self)
 
     # GETTERS/SETTERS
     # ===============
@@ -315,10 +319,18 @@ class BlissTranslator:
         else:
             self.language = language
         finally:
-            self.lang_code = self.LANG_CODES[self.language]
+            self.lang_code = self.findLangCode(self.language)
             if self.lang_code not in wordnet.langs():
                 self.loadMultiLingualLemmas(self.language)
             self.setBlissDict()
+
+    def getLanguage(self):
+        """
+        Returns this BlissTranslator's native language.
+
+        :return: str, BlissTranslator's language
+        """
+        return self.language
 
     def loadMultiLingualLemmas(self, lang):
         """
@@ -339,7 +351,7 @@ class BlissTranslator:
 
         if tab_file is not None:
             wordnet.custom_lemmas(tab_file, lang_code)
-            self.WORDNET_LANGS.update(wordnet.langs())
+            self.WORDNET_LANGS = wordnet.langs()
         else:
             raise Exception("Blisscribe doesn't support this language yet... oops!")
 
@@ -353,7 +365,7 @@ class BlissTranslator:
             key (str) - word in specified language
             val (List[Blissymbol]) - corresponding Blissymbols
         """
-        return self.lex_parser.getBlissDict(language)
+        return self.lex_parser.initBlissLexica(self, language) #self.lex_parser.getBlissDict(language)
 
     def setBlissDict(self):
         """
@@ -682,7 +694,32 @@ class BlissTranslator:
                         fill="black")
             return self.trimHorizontal(img)
 
-    def getBlissImg(self, trans_word, max_width, max_height):
+    def getBlissImg(self, img_filename, max_width, max_height): #trans_word, max_width, max_height):
+        """
+        Draws and returns a thumbnail Image of the given word's
+        Blissymbol, with width not exceeding max_width.
+        ~
+        If a word has multiple meanings, then return the Blissymbol
+        corresponding to the best meaning in bliss_dict.
+
+        :param img_filename: str, Blissymbol image filename
+        :param max_width: int, maximum width of Image (in pixels)
+        :param max_height: int, maximum height of Image (in pixels)
+        :return: Image, image of input str's Blissymbol
+        """
+        '''
+        if trans_word == "indicator plural":
+            img_filename = "indicator_(plural).png"
+        else:
+            img_filename = trans_word.getFilename()
+            if img_filename is None:
+                raise IOError("Word cannot be translated to Blissymbols...")
+        '''
+        img = Image.open(self.IMG_PATH + img_filename + ".png")
+        img.thumbnail((max_width, max_height))
+        return img
+
+    def getTransBlissImg(self, trans_word, max_width, max_height):
         """
         Draws and returns a thumbnail Image of the given word's
         Blissymbol, with width not exceeding max_width.
@@ -695,17 +732,20 @@ class BlissTranslator:
         :param max_height: int, maximum height of Image (in pixels)
         :return: Image, image of input str's Blissymbol
         """
-        if trans_word == "indicator plural":
-            img_filename = "indicator_(plural).png"
-        else:
-            img_filename = trans_word.getFilename()
-            if img_filename is None:
-                raise IOError("Word cannot be translated to Blissymbols...")
+        #if trans_word == "indicator plural":
+        #    img_filename = "indicator_(plural).png"
+        #else:
+        img_filename = trans_word.getFilename()
 
-        bliss_word = Image.open(self.IMG_PATH + img_filename)
-        img = bliss_word
-        img.thumbnail((max_width, max_height))
-        return img
+        if img_filename is None:
+            raise IOError("Word cannot be translated to Blissymbols...")
+        else:
+            return self.getBlissImg(img_filename, max_width, max_height)
+
+        #bliss_word = Image.open(self.IMG_PATH + img_filename)
+        #img = bliss_word
+        #img.thumbnail((max_width, max_height))
+        #return img
 
     def getSubbedBlissImg(self, trans_word, max_width, max_height, subs=True):
         """
@@ -723,21 +763,22 @@ class BlissTranslator:
         """
         bg = self.makeBlankImg(max_width, max_height)
         word = trans_word.getWord()
+        word = self.unicodize(word)
 
         try:
-            self.getBlissImg(trans_word, max_width, max_height)
+            # bliss_word = ...
+            self.getTransBlissImg(trans_word, max_width, max_height)
         except IOError:
             raise IOError
         else:
-            bliss_word = self.getBlissImg(trans_word, max_width, max_height)
+            bliss_word = self.getTransBlissImg(trans_word, max_width, max_height)
 
         start_x = max_width / 2
         start_y = int(max_height * 0.75)
         sub_size = self.getSubtitleSize()
-        space = self.getMinSpace()*2
+        space = self.getMinSpace() * 2
 
         text_word = self.getWordImg(word.upper(), font_size=sub_size)
-        word = self.unicodize(word)
         text_word = self.trimHorizontal(text_word)
 
         text_width = text_word.size[0]
@@ -760,6 +801,18 @@ class BlissTranslator:
 
         return self.trimHorizontal(bg)
 
+    def getIndicatorBlissImg(self, indicator, max_width, max_height):
+        """
+        Returns the Blissymbol image corresponding to the
+        given Blissymbol indicator string.
+
+        :param indicator: str, Blissymbol indicator to get image of
+        :return: Image, input indicator Blissymbol image
+        """
+        indicator = indicator.replace(" ", "_(")
+        indicator += ")"
+        return self.getBlissImg(indicator, max_width, max_height)
+
     def getPluralImg(self, img):
         """
         Returns the given Blissymbol image with the plural
@@ -768,7 +821,8 @@ class BlissTranslator:
         :param img: Image, Blissymbol image to pluralize
         :return: Image, input image pluralized
         """
-        plural = self.getBlissImg("indicator plural", img.size[0], img.size[1])
+        #plural = self.getBlissImg("indicator plural", img.size[0], img.size[1])
+        plural = self.getIndicatorBlissImg("indicator plural", img.size[0], img.size[1])
         max_width = img.size[0] + plural.size[0]
         max_height = self.image_heights
 
@@ -1429,6 +1483,9 @@ class BlissTranslator:
             # check if word in official Blissymbols dict
             return word
 
+        elif self.inBlissDict(word.title()):
+            return word.title()
+
         elif self.language == "Polish":
             # check if word in Polish inflectional dict
             try:
@@ -1514,10 +1571,16 @@ class BlissTranslator:
         :param trans_word: TranslationWord, word whether to translate
         :return: bool, whether this word should be translated
         """
-        return trans_word.hasBlissymbol() or \
-               not self.isPunctuation(trans_word) and \
-               self.isChosenPOS(trans_word.getPos()) and \
-               self.isTranslatable(trans_word)
+        if trans_word.hasBlissymbol():
+            return True
+        elif self.isChosenPOS(trans_word.getPos()):
+            return self.isTranslatable(trans_word)
+        else:
+            return False
+        #return trans_word.hasBlissymbol() or \
+        #       self.isChosenPOS(trans_word.getPos()) and \
+        #       self.isTranslatable(trans_word)
+        #       #and not self.isPunctuation(trans_word)
 
     def translateNow(self, trans_word):
         """
@@ -1633,8 +1696,36 @@ class BlissTranslator:
                 synsets = wordnet.synsets(word, lang=lang_code)
             return synsets
 
+    def lookupBlissymbolSynsets(self, blissymbol):
+        """
+        Returns a list of Wordnet Synsets corresponding to the
+        given word, part-of-speech (pos), and language (lang).
+        ~
+        If lookup fails with given pos, this method returns
+        given word's Wordnet synsets for all parts of speech.
 
+        :param blissymbol: Blissymbol, blissymbol to lookup synset for
+        :return: List[Synset], synsets corresponding to given blissymbol
+        """
+        if blissymbol.hasUnicode():
+            uni = blissymbol.getUnicode()
+            try:
+                synsets = blissnet[uni]
+            except KeyError:
+                #word = blissymbol.get
+                return []
+            else:
+                return synsets
 
+    def findLangCode(self, language):
+        """
+        Returns the abbreviated 3-character language code for
+        the given langauge.
+
+        :param language: str, language name
+        :return: str, 3-character language code
+        """
+        return self.LANG_CODES[language]
 
     def lookupTWordSynsets(self, trans_word, use_pos=True, eng=False):
         """
@@ -1801,13 +1892,15 @@ class BlissTranslator:
     def makeBlissymbol(self, img_filename, pos, derivation, translations=None):
         """
         Returns a new Blissymbol with...
-            given img_filename as its img_filename (ending in .png)
-            given pos as its pos
-            given derivation as its derivation
+            given img_filename as its English image filename (ending in .png)
+            given pos as its part-of-speech
+            given derivation as its list of Blissymbol derivations
 
         :param img_filename: str, the image filename for this Blissymbol
         :param pos: str, the given word token's (Penn Treebank) part-of-speech
-        :param derivation: str, this Blissymbol's derivation
+        :param derivation: str, this Blissymbol's derivation, of the form:
+            (d(1) + d(2) + ... + d(n))
+            where d(1) to d(n) are derivative bliss names
         :param translations: dict, where...
             key (str) - language of Blissymbol translation
             val (List[str]) - Blissymbol's translations in language
@@ -1818,7 +1911,8 @@ class BlissTranslator:
         else:
             translations = {}
         translations.setdefault(self.language, [])
-        translations[self.language].append(img_filename[:-4])
+        translations.setdefault("English", [])
+        translations["English"].append(img_filename[:-4])
         return Blissymbol(img_filename=img_filename,
                           pos=pos,
                           derivation=derivation,
@@ -1850,6 +1944,7 @@ class BlissTranslator:
                         self.eng_bliss_dict[defn] = [blissymbol]
                 else:
                     if self.inBlissDict(defn):
+                        #in_bliss_dict = True
                         self.bliss_dict[defn].append(blissymbol)
                     else:
                         self.bliss_dict[defn] = [blissymbol]
@@ -1887,6 +1982,18 @@ class BlissTranslator:
             return ""
         else:
             return token_phrase[idx]
+
+    def removeDuplicates(self, strings):
+        """
+        Deletes all duplicate items from input list of strings.
+        Returns refreshed list.
+
+        :param unicodes: List[str], list to delete duplicates from
+        :return: List[str], list without duplicates
+        """
+        seen = set()
+        seen_add = seen.add
+        return [string for string in strings if not (string in seen or seen_add(string))]
 
     # TRANSLATOR
     # ==========
@@ -1937,7 +2044,7 @@ class BlissTranslator:
                                                       pos=word_tag,
                                                       debug=self.translate_all,
                                                       language=self.language)
-                trans_word.initBlissymbol()
+                #trans_word.initBlissymbol()
                 lexeme = trans_word.getLexeme()
                 print(trans_word)
 
