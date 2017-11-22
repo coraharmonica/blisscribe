@@ -19,9 +19,11 @@ BLISSLEARN:
 """
 import os
 from sklearn import tree
+#import blissnet
+#from blissnet import BLISSNET as blissnet
 
 
-class BlissymbolClassifier:
+class BlissLearner:
     """
     A machine learning classifier for Blissymbols.
     """
@@ -45,9 +47,9 @@ class BlissymbolClassifier:
         """
         samples = self.wordnet_indices
         new_samples = []
-        features = []
+        answers = []
 
-        pos_features = []
+        questions = []
 
         for wn_num in samples:  # iterate thru dict
             # convert human-readable data to machine-readable numbers
@@ -57,25 +59,43 @@ class BlissymbolClassifier:
                 name = defn[0]
                 pos = defn[1]
                 pos_unabbrev = self.translator.unabbreviateTag(pos)
+                '''                
+                unis = self.translator.getBlissToUnicode()
+                try:
+                    uni = unis[name]
+                except KeyError:
+                    continue
+                else:
+                    if uni in blissnet:
+                        word_features = [int(wn_num), pos_code]
+                        questions.append(word_features)
+                        answers.append(uni)     
+                '''
                 trans_word = self.translator.makeTranslationWord(name, pos_unabbrev, debug=False, language="English")
-                #print(trans_word)
 
                 if trans_word.hasBlissymbol():
                     blissymbol = trans_word.getBlissymbol()
                     new_samples.append(samples[wn_num])
                     unicodes = blissymbol.getDerivUnicode()
-                    #print(blissymbol, unicodes)
                     unicode = " ".join([uni[2:] for uni in unicodes])
-                    features.append(unicode)
+                    answers.append(unicode)
                     pos_code = self.translator.POS_FEATURE_DICT[pos]
-                    pos_feature = [int(wn_num), pos_code]
-                    pos_features.append(pos_feature)
-                    #bliss_words = [" ".join(UNICODE_TO_BLISS[uni]) for uni in unicodes]
-                    #print(name + ": ")
-                    #print("\t" + " + ".join(bliss_words))
-                    #print("\n")
-        self.questions = pos_features
-        self.answers = features
+                    word_features = [int(wn_num), pos_code]
+                    questions.append(word_features)
+
+        self.questions = questions
+        self.answers = answers
+        self.classifier.fit(self.questions, self.answers)
+
+    def refitClassifier(self):
+        """
+        Refits this BlissLearner's classifier according to
+        its current questions and answers fields.
+        ~
+        Allows updated learning with more examples.
+
+        :return: None
+        """
         self.classifier.fit(self.questions, self.answers)
 
     def fitWordToClassifier(self, word_id, pos_code, derivations):
@@ -273,7 +293,8 @@ class BlissymbolClassifier:
         :param trans_word: TranslationWord, word to get derivations of
         :return: List[str], derivations for given trans_word
         """
-        trans_word.initEngLexeme(debug=True)
+        if trans_word.getEngLexeme() is None:
+            trans_word.initEngLexeme(debug=True)
         trans_word.setSynsetId(trans_word.findSynsetId())
         lexeme = trans_word.getEngLexeme()
         pos = trans_word.getPos()
@@ -310,8 +331,8 @@ class BlissymbolClassifier:
                 else:
                     return []
 
-            if pos_abbrev is None:
-                return blissymbols
+            #if pos_abbrev is None:
+            #    return blissymbols
         else:
             #word_ids = self.wordnet_entries[(lexeme, pos_abbrev)][0]
             word_id = trans_word.getSynsetId()
