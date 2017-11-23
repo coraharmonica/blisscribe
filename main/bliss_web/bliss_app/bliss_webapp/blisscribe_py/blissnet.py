@@ -46,8 +46,7 @@ BLISSNET = {
 	"U+320e":   [wn.synset("ice.n.01")],
 
 	# pool, snooker
-	"U+320f":   [wn.synset("pond.n.01"),
-				wn.synset("pool.n.09"),
+	"U+320f":   [wn.synset("pool.n.09"),
 				wn.synset("consortium.n.01"),
 				wn.synset("pool.n.05"),
 				wn.synset("pool.n.07"),
@@ -15650,7 +15649,6 @@ BLISSNET = {
 				wn.synset("escape.n.05"),
 				wn.synset("escape.n.02"),
 				wn.synset("escape.n.01"),
-				wn.synset("safety_valve.n.01"),
 				wn.synset("evasion.n.03")],
 
 	# espionage, spying

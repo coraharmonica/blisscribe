@@ -18,9 +18,11 @@ BLISSLEARN:
         - official Blissymbol derived vocabulary
 """
 import os
-from sklearn import tree
-#import blissnet
-#from blissnet import BLISSNET as blissnet
+from sklearn.tree import DecisionTreeClassifier
+#from nltk.classify import accuracy, DecisionTreeClassifier
+#from sklearn.metrics import accuracy_score
+import blissnet
+from blissnet import BLISSNET
 
 
 class BlissLearner:
@@ -31,9 +33,11 @@ class BlissLearner:
 
     def __init__(self, bliss_translator):
         self.translator = bliss_translator
-        self.classifier = tree.DecisionTreeClassifier()
+        self.bliss_lexicon = self.translator.getBlissLexicon()
+        self.classifier = DecisionTreeClassifier() #(label="")
         self.questions = []
         self.answers = []
+        self.qa_pairs = []   # List[2-tuple]
         self.wordnet_indices = self.getWordnetIndices()  # dict
         self.wordnet_entries = self.getWordnetEntries()  # dict
         self.wordnet_descriptions = self.getWordnetDescriptions()  # dict
@@ -46,12 +50,39 @@ class BlissLearner:
         :return: None
         """
         samples = self.wordnet_indices
-        new_samples = []
-        answers = []
-
         questions = []
+        answers = []
+        #qa_pairs = []
+        print("initializing Bliss classifier")
 
-        for wn_num in samples:  # iterate thru dict
+        #unis = self.translator.getUnicodeToBliss()
+        #print BLISSNET
+
+        '''
+        for uni in BLISSNET:
+            synsets = BLISSNET[uni]
+            if len(synsets) == 1:
+                uni_key = str(uni)
+                uni_key = uni_key[2:]  # skip U+ beginning
+                #uni_key = int(uni_key, base=16)
+                for synset in synsets:
+                    print uni_key
+                    wn_num = synset.offset()
+                    wn_num = self.translator.findSynsetId(synset)
+                    print wn_num
+                    pos = synset.pos()
+                    pos_code = self.translator.POS_FEATURE_DICT[pos]
+                    word_features = {"id": int(wn_num),
+                                    "pos": pos_code}
+                    print word_features
+                    print
+                    #questions.append(word_features)
+                    #answers.append(uni)
+                    pair = (word_features, uni_key)
+                    qa_pairs.append(pair)
+        '''
+
+        for wn_num in samples:  # iterate thru (unordered) dict
             # convert human-readable data to machine-readable numbers
             defns = samples[wn_num]
 
@@ -59,33 +90,56 @@ class BlissLearner:
                 name = defn[0]
                 pos = defn[1]
                 pos_unabbrev = self.translator.unabbreviateTag(pos)
-                '''                
-                unis = self.translator.getBlissToUnicode()
-                try:
-                    uni = unis[name]
-                except KeyError:
-                    continue
-                else:
-                    if uni in blissnet:
-                        word_features = [int(wn_num), pos_code]
-                        questions.append(word_features)
-                        answers.append(uni)     
-                '''
+                        
                 trans_word = self.translator.makeTranslationWord(name, pos_unabbrev, debug=False, language="English")
 
                 if trans_word.hasBlissymbol():
+                    trans_word.getBlissName() + " has a blissymbol"
                     blissymbol = trans_word.getBlissymbol()
-                    new_samples.append(samples[wn_num])
+                    #new_samples.append(samples[wn_num])
                     unicodes = blissymbol.getDerivUnicode()
-                    unicode = " ".join([uni[2:] for uni in unicodes])
-                    answers.append(unicode)
-                    pos_code = self.translator.POS_FEATURE_DICT[pos]
-                    word_features = [int(wn_num), pos_code]
-                    questions.append(word_features)
+                    if 0 < len(unicodes) < 5:
+                        #print(self.translator.getUnicodeToBliss(u))
+                        uni = " ".join([u[2:] for u in unicodes])
+                        answers.append(uni)
+                        pos_code = self.translator.POS_FEATURE_DICT[pos]
+                        wn_int = int(wn_num)
+                        word_features = [wn_int, pos_code]
+                        #word_features_dict = {wn_int: pos_code}
+                        questions.append(word_features)
+                        #qa_pairs.append((word_features_dict, unicode))
 
         self.questions = questions
         self.answers = answers
-        self.classifier.fit(self.questions, self.answers)
+        train_questions, train_answers = self.questions[:500], self.answers[:500]
+        test_questions, test_answers = self.questions[500:1000], self.answers[500:1000]
+        #test_qas = [(question, answer) for question, answer in self.questions, self.answers]
+
+        #self.qa_pairs = qa_pairs
+        print("\ntraining classifier...\n")
+        #print(len(qa_pairs))
+        #self.classifier.train(train_pairs)
+        self.classifier.fit(train_questions, train_answers)
+        print("training complete.")
+        print(train_questions)
+        print(train_answers)
+        print(test_questions)
+        print(test_answers)
+
+        errors = []
+        for (q, ans) in zip(test_questions, test_answers):
+            print
+            print(q)
+            print(ans)
+            print
+            guess = self.classifier.predict([q])
+            if guess != ans:
+                errors.append((ans, guess, q))
+
+        for (ans, guess, q) in sorted(errors):
+            print('answer={:<20} guess={:<20s} question={:<30}'.format(ans, guess, q))
+
+        #print("\ninitial accuracy score: " + str(accuracy(self.classifier, test_pairs)))
 
     def refitClassifier(self):
         """
@@ -97,6 +151,17 @@ class BlissLearner:
         :return: None
         """
         self.classifier.fit(self.questions, self.answers)
+
+    def retrainClassifier(self):
+        """
+        Refits this BlissLearner's classifier according to
+        its current questions and answers fields.
+        ~
+        Allows updated learning with more examples.
+
+        :return: None
+        """
+        self.classifier.train(self.qa_pairs)
 
     def fitWordToClassifier(self, word_id, pos_code, derivations):
         """
@@ -113,6 +178,8 @@ class BlissLearner:
         sample = [int(word_id), pos_code]
         self.questions.append(sample)
         self.answers.append(derivations)
+        #self.qa_pairs.append((sample, derivations))
+        #self.classifier.train(self.qa_pairs)
         self.classifier.fit(self.questions, self.answers)
 
     def getWordnetIndices(self):
@@ -214,8 +281,8 @@ class BlissLearner:
         :param defn: str, word definition to clean
         :return: str, cleaned word definition
         """
-        new_defn = self.translator.LEX_PARSER.parseAlphabetic(defn)
-        new_defn = self.translator.LEX_PARSER.stripParens(new_defn)
+        new_defn = self.translator.lex_parser.parseAlphabetic(defn)
+        new_defn = self.translator.lex_parser.stripParens(new_defn)
         return new_defn
 
     def getNewDerivations(self, trans_word):
@@ -223,10 +290,10 @@ class BlissLearner:
         Prompts user for a list of Blissymbol derivations approximating
         the meaning of the given trans_word.
         ~
-        Returns the result as a list of strings.
+        Returns the result as a set of strings.
 
         :param trans_word: TranslationWord, word to enter derivations for
-        :return: List[str], list of entered derivations
+        :return: Set(str), set of entered derivations
         """
         keep_going = True
         derivations = []
@@ -262,7 +329,8 @@ class BlissLearner:
                               "Please try using a different synonym.\n")
                         continue
 
-        derivations = [(trans_word.eng_bliss_dict[derivation][0]).getBlissName() for derivation in derivations]
+        derivations = set([(next(iter(trans_word.eng_bliss_dict[derivation]))).getBlissName()
+                           for derivation in derivations])
         return derivations
 
     def lookupWNEntry(self, lexeme, pos):
@@ -295,12 +363,12 @@ class BlissLearner:
         """
         if trans_word.getEngLexeme() is None:
             trans_word.initEngLexeme(debug=True)
-        trans_word.setSynsetId(trans_word.findSynsetId())
+        trans_word.setSynsetId(trans_word.initSynsetId())
         lexeme = trans_word.getEngLexeme()
         pos = trans_word.getPos()
         pos_abbrev = self.translator.abbreviateTag(pos)
         pos_code = self.translator.POS_FEATURE_DICT[pos_abbrev]
-        blissymbols = []
+        blissymbols = set([])
 
         pair = self.lookupWNEntry(lexeme, pos_abbrev)
 
@@ -351,12 +419,13 @@ class BlissLearner:
         for uni in unicodes:
             symbols = self.getUnicodeToBliss()[uni]
             try:
-                blissymbol = trans_word.eng_bliss_dict[symbols[0]][0]
+                bs = trans_word.eng_bliss_dict[symbols[0]]
             except KeyError:
                 symbols = symbols[1:]
             else:
+                blissymbol = next(iter(bs))
                 blissymbol = blissymbol.getBlissName()
-                blissymbols.append(blissymbol)
+                blissymbols.add(blissymbol)
                 continue
 
             for symbol in symbols:
@@ -381,8 +450,8 @@ class BlissLearner:
                         else:
                             blissymbols.append(blissymbol)
                     break
-                else:
-                    print trans_word.eng_bliss_dict
+                #else:
+                #    print trans_word.eng_bliss_dict
 
         if debug:
             print("I'm about to translate the word " + lexeme +
@@ -401,7 +470,7 @@ class BlissLearner:
                         else:
                             unicodes.append(unicode[2:])
                             break
-                print unicodes
+                #print unicodes
                 prediction = " ".join(unicodes)
             print("synset: ", pair)
             print("prediction: ", prediction)
