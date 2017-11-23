@@ -243,6 +243,8 @@ class BlissTranslator:
         # Language
         self.bliss_dict = dict
         self.eng_bliss_dict = dict
+        self.uni_to_bliss = UNICODE_TO_BLISS
+        self.bliss_to_uni = BLISS_TO_UNICODE
         self.polish_lexicon = dict
         self.french_lexicon = dict
         self.language = str #self.DEFAULT_LANG
@@ -418,7 +420,7 @@ class BlissTranslator:
             key (str) - Blissymbol name
             val (List[str]) - unicode Blissymbol codes (in hexadecimal)
         """
-        return BLISS_TO_UNICODE
+        return self.bliss_to_uni
 
     def getUnicodeToBliss(self):
         """
@@ -429,7 +431,37 @@ class BlissTranslator:
             key (str) - unicode Blissymbol code (in hexadecimal)
             val (List[str]) - list of Blissymbol names
         """
-        return UNICODE_TO_BLISS
+        return self.uni_to_bliss
+
+    def addBlissToUnicode(self, bliss, uni):
+        """
+        Adds the given blissymbol-unicode pair to this
+        BlissTranslator's Blissymbols-to-unicode
+        encoding dictionary.
+
+        :param bliss: str, name of blissymbol to add
+        :param uni: str, unicode name for given bliss
+        :return: None
+        """
+        if bliss not in self.bliss_to_uni:
+            self.bliss_to_uni[bliss] = []
+        if uni not in self.bliss_to_uni[bliss]:
+            self.bliss_to_uni[bliss].append(uni)
+
+    def addUnicodeToBliss(self, uni, bliss):
+        """
+        Adds the given unicode-blissymbol pair to this
+        BlissTranslator's unicode-to-Blissymbols
+        encoding dictionary.
+
+        :param uni: str, unicode name to add
+        :param bliss: str, blissymbol name for given unicode
+        :return: None
+        """
+        if uni not in self.uni_to_bliss:
+            self.uni_to_bliss[uni] = []
+        if bliss not in self.uni_to_bliss[uni]:
+            self.uni_to_bliss[uni].append(bliss)
 
     def setSubAll(self, sub_all):
         """

@@ -761,37 +761,29 @@ class Blissymbol:
         #seen_add = seen.add
         #return [uni for uni in unicodes if not (uni in seen or seen_add(uni))]
 
-    def addUnicodeToBliss(self, unicode, bliss):
+    def addUnicodeToBliss(self, uni, bliss):
         """
-        Adds the given unicode key to UNICODE_TO_BLISS dict,
+        Adds the given unicode key to this Blissymbol's
+        BlissTranslator's unicode-to-Blissymbol dict,
         with blissymbol name bliss as its value.
-        ~
-        Adds unicode to Blissymbol's self.unicode.
 
-        :param unicode: str, unicode name to add
+        :param uni: str, unicode name to add
         :param bliss: str, name of blissymbol for given unicode
         :return: None
         """
-        if unicode not in UNICODE_TO_BLISS:
-            UNICODE_TO_BLISS[unicode] = []
-        if bliss not in UNICODE_TO_BLISS[unicode]:
-            UNICODE_TO_BLISS[unicode].append(bliss)
+        self.translator.addUnicodeToBliss(uni, bliss)
 
-    def addBlissToUnicode(self, bliss, unicode):
+    def addBlissToUnicode(self, bliss, uni):
         """
-        Adds the given blissymbol key bliss to BLISS_TO_UNICODE dict,
+        Adds the given blissymbol key bliss to this Blissymbol's
+        BlissTranslator's Blissymbol-to-unicode dict,
         with unicode as its value.
-        ~
-        Adds unicode to Blissymbol's self.unicode.
 
         :param bliss: str, name of blissymbol to add
         :param unicode: str, unicode name for given bliss
         :return: None
         """
-        if bliss not in BLISS_TO_UNICODE:
-            BLISS_TO_UNICODE[bliss] = []
-        if unicode not in BLISS_TO_UNICODE[bliss]:
-            BLISS_TO_UNICODE[bliss].append(unicode)
+        self.translator.addBlissToUnicode(bliss, uni)
 
     def addBlissAndUnicode(self, bliss="", unicode=""):
         """
@@ -846,6 +838,8 @@ class Blissymbol:
         with open(path, "a") as encoding:
             encoding.write(bliss_line)
             encoding.write(uni_line)
+            self.addBlissToUnicode(bliss, unicode)
+            self.addUnicodeToBliss(unicode, bliss)
             encoding.close()
 
     def findUnicode(self, defn, lang="en"):

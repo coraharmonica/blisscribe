@@ -375,10 +375,9 @@ class TranslationWord:
 
             classifier = self.translator.classifier
             bliss_words = classifier.predictWord(self)
-            lang_code = self.translator.findLangCode(self.language)
+            #lang_code = self.translator.findLangCode(self.language)
             lexeme = self.lexeme.replace(" ", "_")
             eng_lexeme = self.eng_lexeme.replace(" ", "_")
-            #eng_lexeme = eng_lexeme.replace(" ", "_")
             print(eng_lexeme)
 
             if len(bliss_words) == 1:
