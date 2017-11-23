@@ -126,7 +126,7 @@ class LexiconParser:
 
     def __init__(self, translator):
         self.translator = translator
-        self.bliss_lexicon = bliss_lexicon
+        self.bliss_lexicon = bliss_lexicon.BLISS_LEXICON
 
     def parseLexicon(self, filename):
         """
@@ -601,10 +601,11 @@ class LexiconParser:
         path = self.LEXICA_PATH + "bliss_lexicon.py"
         with open(path, "a") as lexicon:
             for eng_word in blissymbol.getTranslation("English"):
-                if eng_word not in bliss_lexicon.BLISS_LEXICON:
+                if eng_word not in self.bliss_lexicon:
                     line = "\nBLISS_LEXICON['" + eng_word + "'] = [" + self.blissymbolToStr(blissymbol) + "]"
                     line = self.translator.deUnicodize(line)
                     lexicon.write(line)
+                    self.bliss_lexicon[eng_word] = self.blissymbolToStr(blissymbol)
             lexicon.close()
 
     def addBlissEntry(self, blissymbol):
@@ -618,11 +619,17 @@ class LexiconParser:
         """
         path = self.LEXICA_PATH + "bliss_lexicon.py"
         with open(path, "a") as lexicon:
+            lexicon.write("\n")
             for eng_word in blissymbol.getTranslation("English"):
-                if eng_word in bliss_lexicon.BLISS_LEXICON:
-                    line = "\nBLISS_LEXICON['" + eng_word + "'] = [" + self.blissymbolToStr(blissymbol) + "]"
+                if eng_word in self.bliss_lexicon:
+                    # update bliss lexicon if old and new definitions are different
+                    if self.bliss_lexicon[eng_word] != self.blissymbolToStr(blissymbol):
+                        line = "BLISS_LEXICON['" + eng_word + "'] = [" + self.blissymbolToStr(blissymbol) + "]\n"
+                    # otherwise don't do anything since they're the same
+                    else:
+                        line = ""
                 else:
-                    line = "\nBLISS_LEXICON['" + eng_word + "'] = BLISS_LEXICON[" + eng_word + "].append(" + self.blissymbolToStr(blissymbol) + ")"
+                    line = "BLISS_LEXICON['" + eng_word + "'] = [" + self.blissymbolToStr(blissymbol) + "]\n"
                 line = self.translator.deUnicodize(line)
                 lexicon.write(line)
             lexicon.close()

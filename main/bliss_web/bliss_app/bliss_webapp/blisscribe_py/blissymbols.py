@@ -84,6 +84,7 @@ class Blissymbol:
         self.deriv_unicode = []
         self.initUnicode()
         self.initDerivUnicode()
+        self.changed = False  # whether this Blissymbol's translations, etc. have changed at all
         self.synset = None
         self.synsets = self.initBlissymbolSynsets()
         #print("\nHi!  I'm the Blissymbol " + self.bliss_name + ", with the " +
@@ -823,13 +824,13 @@ class Blissymbol:
         """
         path = self.translator.lex_parser.LEXICA_PATH + "bliss_encoding.py"
 
-        if bliss not in BLISS_TO_UNICODE:
+        if bliss not in self.translator.getBlissToUnicode():
             bliss_line = '\nBLISS_TO_UNICODE["' + bliss + '"] = ["' + unicode + '"]'
         else:
             bliss_line = '\nBLISS_TO_UNICODE["' + bliss + '"].append("' + unicode + '")'
         bliss_line = self.translator.deUnicodize(bliss_line)
 
-        if unicode not in UNICODE_TO_BLISS:
+        if unicode not in self.translator.getUnicodeToBliss():
             uni_line = '\nUNICODE_TO_BLISS["' + unicode + '"] = ["' + bliss + '"]'
         else:
             uni_line = '\nUNICODE_TO_BLISS["' + unicode + '"].append("' + bliss + '")'
@@ -838,9 +839,10 @@ class Blissymbol:
         with open(path, "a") as encoding:
             encoding.write(bliss_line)
             encoding.write(uni_line)
-            self.addBlissToUnicode(bliss, unicode)
-            self.addUnicodeToBliss(unicode, bliss)
             encoding.close()
+
+        self.addBlissToUnicode(bliss, unicode)
+        self.addUnicodeToBliss(unicode, bliss)
 
     def findUnicode(self, defn, lang="en"):
         """
@@ -1025,7 +1027,7 @@ class Blissymbol:
             synsets = self.findBlissymbolSynsets()
         else:
             self.synset = synsets[0]
-        return synsets
+        return set(synsets)
 
     def findBlissymbolSynsets(self):
         """

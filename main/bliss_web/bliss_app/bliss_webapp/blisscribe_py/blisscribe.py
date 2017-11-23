@@ -433,6 +433,36 @@ class BlissTranslator:
         """
         return self.uni_to_bliss
 
+    def lookupBlissToUnicode(self, bliss):
+        """
+        Returns the global Blissymbols-to-unicode
+        encoding dictionary.
+
+        :param bliss: str, name of blissymbol to lookup
+        :return: List[str], unicode names for given bliss
+        """
+        try:
+            defns = self.bliss_to_uni[bliss]
+        except KeyError:
+            return []
+        else:
+            return defns
+
+    def lookupUnicodeToBliss(self, uni):
+        """
+        Returns the global unicode-to-Blissymbols
+        encoding dictionary.
+
+        :param uni: str, unicode name to lookup
+        :return: List[str], blissymbol names for given unicode
+        """
+        try:
+            defns = self.uni_to_bliss[uni]
+        except KeyError:
+            return []
+        else:
+            return defns
+
     def addBlissToUnicode(self, bliss, uni):
         """
         Adds the given blissymbol-unicode pair to this
@@ -972,16 +1002,13 @@ class BlissTranslator:
         """
         Saves the input Image, img, as a .png file.
         ~
-        Names each image beginning at this BlissTranslator's
+        Names image beginning at this BlissTranslator's
         IMAGES_SAVED variable and incrementing by 1.
         ~
-        After loop terminates, sets IMAGES_SAVED to the
-        final accumulated value.
-        ~
-        Returns a list of the image filenames created.
+        Returns the filename for the given image.
 
-        :param pages: List[Image], images to save to file
-        :return: None
+        :param pages: Image, image to save to file
+        :return: str, image's filename
         """
         filename = "bliss_img" + str(self.IMAGES_SAVED) + ".png"
         img.save(filename)
@@ -1018,6 +1045,7 @@ class BlissTranslator:
         :param filename: str, image filename to delete
         :return: None
         """
+        #filename = self.lex_parser.IMG_PATH + filename
         os.remove(filename)
 
     def deleteImages(self, imgs):
@@ -2204,3 +2232,4 @@ class BlissTranslator:
         self.initSeenChanged()
         self.deleteImages(NEW_BLISSYMBOLS)
         del NEW_BLISSYMBOLS[:]
+

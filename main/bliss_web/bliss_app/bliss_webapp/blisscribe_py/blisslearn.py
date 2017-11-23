@@ -128,16 +128,24 @@ class BlissLearner:
 
         errors = []
         for (q, ans) in zip(test_questions, test_answers):
-            print
-            print(q)
-            print(ans)
-            print
-            guess = self.classifier.predict([q])
+            guess = self.classifier.predict([q])[0]
             if guess != ans:
                 errors.append((ans, guess, q))
 
+        print("number on-target: " + str(len(errors)) + " out of " + str(len(test_questions)))
+        print("percent on-target: " + str(float(len(errors))/len(test_questions) * 100) + "%")
+        print()
+
         for (ans, guess, q) in sorted(errors):
-            print('answer={:<20} guess={:<20s} question={:<30}'.format(ans, guess, q))
+            ans = (self.translator.lookupUnicodeToBliss("U+" + uni) for uni in ans.split(" "))
+            ans = "   ".join([" ".join(bliss) for bliss in ans])
+            guess = guess[0]
+            guess = (self.translator.lookupUnicodeToBliss("U+" + uni) for uni in guess.split(" "))
+            guess = "   ".join([" ".join(bliss) for bliss in guess])
+            q = self.wordnet_indices[str(q[0])]
+            q = q[0][0]
+            print('question: {:<30} guess: {:<40s} answer: {:<40}'.format(q, guess, ans))
+            print()
 
         #print("\ninitial accuracy score: " + str(accuracy(self.classifier, test_pairs)))
 
@@ -180,7 +188,7 @@ class BlissLearner:
         self.answers.append(derivations)
         #self.qa_pairs.append((sample, derivations))
         #self.classifier.train(self.qa_pairs)
-        self.classifier.fit(self.questions, self.answers)
+        self.classifier.fit(self.questions[-500:], self.answers[-500:])
 
     def getWordnetIndices(self):
         """
