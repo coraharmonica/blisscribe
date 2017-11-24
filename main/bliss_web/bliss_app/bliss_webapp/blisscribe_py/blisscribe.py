@@ -22,7 +22,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageChops
 from fpdf import FPDF
 #import bliss_exceptions
 import blissnet
-from blissnet import BLISSNET
+from blissnet import BLISSNET as blissnet
 
 try:
     from parse_lexica import LexiconParser, Blissymbol, \
@@ -37,17 +37,21 @@ else:
         BLISS_TO_UNICODE, UNICODE_TO_BLISS, \
         NEW_BLISSYMBOLS
     from parse_lexica import BLISS_SUPPORTED_LANGUAGES as BLISS_LANGS
-
+'''
 try:
     import blisslearn
     from blisslearn import BlissLearner
 except ImportError:
-    raise ImportError("blisslearn module could not be imported.\n\
+    raise ImportError
+    print("blisslearn module could not be imported.\n\
     Please find the local module blisslearn.py \n\
     and relocate it to the same directory as blisscribe.py.")
 else:
     import blisslearn
     from blisslearn import BlissLearner
+'''
+import blisslearn
+from blisslearn import BlissLearner
 
 try:
     from translation_word import TranslationWord
@@ -239,9 +243,11 @@ class BlissTranslator:
         # Language
         self.bliss_dict = dict
         self.eng_bliss_dict = dict
+        self.uni_to_bliss = UNICODE_TO_BLISS
+        self.bliss_to_uni = BLISS_TO_UNICODE
         self.polish_lexicon = dict
         self.french_lexicon = dict
-        self.language = self.DEFAULT_LANG
+        self.language = str #self.DEFAULT_LANG
         self.lang_code = str
         self.setLanguage(language)
         self.fast_translate = False
@@ -263,6 +269,7 @@ class BlissTranslator:
 
     # GETTERS/SETTERS
     # ===============
+    @property
     def getLexParser(self):
         return self.lex_parser
 
@@ -312,17 +319,17 @@ class BlissTranslator:
         :param language: str, language to set to default
         :return: None
         """
-        try:
-            self.lex_parser.getDefns(language)
-        except KeyError or IOError:
-            self.language = "English"
-        else:
+        if language in BLISS_LANGS:
             self.language = language
-        finally:
-            self.lang_code = self.findLangCode(self.language)
-            if self.lang_code not in wordnet.langs():
-                self.loadMultiLingualLemmas(self.language)
-            self.setBlissDict()
+        else:
+            self.language = "English"
+
+        self.lang_code = self.findLangCode(self.language)
+
+        if self.lang_code not in self.WORDNET_LANGS:
+            self.loadMultiLingualLemmas(self.language)
+
+        self.setBlissDict()
 
     def getLanguage(self):
         """
@@ -391,6 +398,9 @@ class BlissTranslator:
     def getEngBlissDict(self):
         return self.eng_bliss_dict
 
+    def getBlissLexicon(self):
+        return self.lex_parser.bliss_lexicon
+
     def initSeenChanged(self):
         """
         Initializes this BlissTranslator's words_seen
@@ -410,7 +420,7 @@ class BlissTranslator:
             key (str) - Blissymbol name
             val (List[str]) - unicode Blissymbol codes (in hexadecimal)
         """
-        return BLISS_TO_UNICODE
+        return self.bliss_to_uni
 
     def getUnicodeToBliss(self):
         """
@@ -421,7 +431,67 @@ class BlissTranslator:
             key (str) - unicode Blissymbol code (in hexadecimal)
             val (List[str]) - list of Blissymbol names
         """
-        return UNICODE_TO_BLISS
+        return self.uni_to_bliss
+
+    def lookupBlissToUnicode(self, bliss):
+        """
+        Returns the global Blissymbols-to-unicode
+        encoding dictionary.
+
+        :param bliss: str, name of blissymbol to lookup
+        :return: List[str], unicode names for given bliss
+        """
+        try:
+            defns = self.bliss_to_uni[bliss]
+        except KeyError:
+            return []
+        else:
+            return defns
+
+    def lookupUnicodeToBliss(self, uni):
+        """
+        Returns the global unicode-to-Blissymbols
+        encoding dictionary.
+
+        :param uni: str, unicode name to lookup
+        :return: List[str], blissymbol names for given unicode
+        """
+        try:
+            defns = self.uni_to_bliss[uni]
+        except KeyError:
+            return []
+        else:
+            return defns
+
+    def addBlissToUnicode(self, bliss, uni):
+        """
+        Adds the given blissymbol-unicode pair to this
+        BlissTranslator's Blissymbols-to-unicode
+        encoding dictionary.
+
+        :param bliss: str, name of blissymbol to add
+        :param uni: str, unicode name for given bliss
+        :return: None
+        """
+        if bliss not in self.bliss_to_uni:
+            self.bliss_to_uni[bliss] = []
+        if uni not in self.bliss_to_uni[bliss]:
+            self.bliss_to_uni[bliss].append(uni)
+
+    def addUnicodeToBliss(self, uni, bliss):
+        """
+        Adds the given unicode-blissymbol pair to this
+        BlissTranslator's unicode-to-Blissymbols
+        encoding dictionary.
+
+        :param uni: str, unicode name to add
+        :param bliss: str, blissymbol name for given unicode
+        :return: None
+        """
+        if uni not in self.uni_to_bliss:
+            self.uni_to_bliss[uni] = []
+        if bliss not in self.uni_to_bliss[uni]:
+            self.uni_to_bliss[uni].append(bliss)
 
     def setSubAll(self, sub_all):
         """
@@ -735,7 +805,7 @@ class BlissTranslator:
         #if trans_word == "indicator plural":
         #    img_filename = "indicator_(plural).png"
         #else:
-        img_filename = trans_word.getFilename()
+        img_filename = trans_word.getBlissName()
 
         if img_filename is None:
             raise IOError("Word cannot be translated to Blissymbols...")
@@ -932,16 +1002,13 @@ class BlissTranslator:
         """
         Saves the input Image, img, as a .png file.
         ~
-        Names each image beginning at this BlissTranslator's
+        Names image beginning at this BlissTranslator's
         IMAGES_SAVED variable and incrementing by 1.
         ~
-        After loop terminates, sets IMAGES_SAVED to the
-        final accumulated value.
-        ~
-        Returns a list of the image filenames created.
+        Returns the filename for the given image.
 
-        :param pages: List[Image], images to save to file
-        :return: None
+        :param pages: Image, image to save to file
+        :return: str, image's filename
         """
         filename = "bliss_img" + str(self.IMAGES_SAVED) + ".png"
         img.save(filename)
@@ -978,6 +1045,7 @@ class BlissTranslator:
         :param filename: str, image filename to delete
         :return: None
         """
+        #filename = self.lex_parser.IMG_PATH + filename
         os.remove(filename)
 
     def deleteImages(self, imgs):
@@ -1465,6 +1533,16 @@ class BlissTranslator:
         """
         return word in self.all_lemma_names
 
+    def isValidWord(self, word):
+        """
+        Returns True if word is a valid word in this
+        BlissTranslator's native language, False otherwise.
+
+        :param word: str, word to check if valid
+        :return: bool, whether word is valid
+        """
+        return self.inBlissDict(word) or self.inWordNet(word)
+
     def getLexeme(self, word, pos=None):
         """
         Retrieves the given word's lexeme,
@@ -1513,20 +1591,21 @@ class BlissTranslator:
                     return self.getSingular(word)
                 elif short_pos == "VB":
                     return self.getInfinitive(word)
-                elif short_pos == "NN" and self.inWordNet(self.getInfinitive(word)):
+                elif short_pos == "NN" and self.isValidWord(self.getInfinitive(word)):
                     return self.getInfinitive(word)
                 elif short_pos == "JJ" or short_pos == "RB":
                     return self.getPredicative(word)
                 else:
                     return word
             else:
-                if self.inWordNet(self.getSingular(word)):
+                if self.isValidWord(self.getSingular(word)):
                     return self.getSingular(word)
-                elif self.inWordNet(self.getInfinitive(word)):
+                elif self.isValidWord(self.getInfinitive(word)):
                     return self.getInfinitive(word)
-                elif self.inWordNet(self.getPredicative(word)):
+                elif self.isValidWord(self.getPredicative(word)):
                     return self.getPredicative(word)
                 else:
+                    #print(self.all_lemma_names)
                     return word
 
     def isTranslatable(self, trans_word):
@@ -1593,6 +1672,7 @@ class BlissTranslator:
         """
         return self.fast_translate or self.isSeen(trans_word.getLexeme())
 
+    '''
     def bestWordChoice(self, word, pos=None):
         """
         Determines best guess for correct Bliss translation of given word.
@@ -1618,6 +1698,7 @@ class BlissTranslator:
                     return word_idx
 
         return word_idx
+    '''
 
     def synsetsSimilarity(self, synsets):
         """
@@ -1653,7 +1734,7 @@ class BlissTranslator:
         sim = wordnet.path_similarity(synset1, synset2)
         word1 = synset1.lemma_names()[0]
         word2 = synset2.lemma_names()[0]
-        print "\t" + word1 + " vs " + word2 + ":\t" + str(sim)
+        #print "\t" + word1 + " vs " + word2 + ":\t" + str(sim)
         return sim
 
     def lookupWordSynsets(self, word, pos, lang="English"):
@@ -1859,6 +1940,21 @@ class BlissTranslator:
                     lemmas.append(lemma)
         return lemmas
 
+    def findSynsetId(self, synset):
+        """
+        Finds a synset ID for this synset.
+
+        :return: str, a 9-digit Wordnet Synset ID
+        """
+        try:
+            wn_num = synset.offset()
+        except AttributeError:
+            return
+        else:
+            pos_code = self.POS_FEATURE_DICT[synset.pos()]
+            full_synset = str(pos_code) + str(wn_num).zfill(8)
+            return full_synset
+
     def translateUntranslatable(self, trans_word):
         """
         Attempts to translate the given word's synonyms to
@@ -1934,26 +2030,47 @@ class BlissTranslator:
 
         for language in languages:
             defns = translations[language]
-            defns = [defn.replace(" ", "_") for defn in defns]
+            #defns = [defn.replace(" ", "_") for defn in defns]
             for defn in defns:
                 if idx == 0:  # English
                     if self.inEngBlissDict(defn):
                         in_bliss_dict = True
-                        self.eng_bliss_dict[defn].append(blissymbol)
+                        self.eng_bliss_dict[defn].add(blissymbol)
                     else:
-                        self.eng_bliss_dict[defn] = [blissymbol]
+                        self.eng_bliss_dict[defn] = set([blissymbol])
                 else:
                     if self.inBlissDict(defn):
                         #in_bliss_dict = True
-                        self.bliss_dict[defn].append(blissymbol)
+                        self.bliss_dict[defn].add(blissymbol)
                     else:
-                        self.bliss_dict[defn] = [blissymbol]
+                        self.bliss_dict[defn] = set([blissymbol])
             idx += 1
 
-        if in_bliss_dict:
-            self.lex_parser.extendBlissEntry(blissymbol)
-        else:
-            self.lex_parser.addBlissEntry(blissymbol)
+        self.lex_parser.addBlissEntry(blissymbol)
+        #if in_bliss_dict:
+        #    self.extendBlissEntry(blissymbol)
+        #else:
+        #    self.appendBlissEntry(blissymbol)
+
+    def extendBlissEntry(self, blissymbol):
+        """
+        Refreshes BLISS_LEXICON to reflect this BlissTranslator's
+        current eng_bliss_dict.
+
+        :param blissymbol: Blissymbol, blissymbol to extend
+        :return: None
+        """
+        return self.lex_parser.extendBlissEntry(blissymbol)
+
+    def appendBlissEntry(self, blissymbol):
+        """
+        Modifies BLISS_LEXICON directly by appending
+        the given Blissymbol.
+
+        :param blissymbol: Blissymbol, blissymbol to append
+        :return: None
+        """
+        return self.lex_parser.appendBlissEntry(blissymbol)
 
     def getSynsetDefn(self, synset):
         """
@@ -2115,3 +2232,4 @@ class BlissTranslator:
         self.initSeenChanged()
         self.deleteImages(NEW_BLISSYMBOLS)
         del NEW_BLISSYMBOLS[:]
+

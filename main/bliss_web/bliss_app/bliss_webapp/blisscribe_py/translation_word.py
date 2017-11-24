@@ -39,8 +39,8 @@ class TranslationWord:
         self.synsets_lemmas = []
         self.synsets = self.findSynsets()
         self.synset_idx = 0
-        self.synset_id = self.findSynsetId()
         self.synset = self.findSynset()
+        self.synset_id = self.initSynsetId()
         self.eng_lexeme = self.findEngLexeme(debug)
         self.initBlissymbols()
         self.initBlissymbol()
@@ -138,7 +138,7 @@ class TranslationWord:
         """
         return self.blissymbol
 
-    def getBlissymbolName(self):
+    def getBlissName(self):
         """
         Returns this TranslationWord's blissymbol's name.
 
@@ -149,15 +149,28 @@ class TranslationWord:
         else:
             return ""
 
-    def setBlissymbol(self, blissymbol):
+    def resetBlissymbol(self, blissymbol):
         """
-        Sets this TranslationWord's blissymbol to
+        Resets this TranslationWord's blissymbol to
         given blissymbol.
 
         :param blissymbol: Blissymbol, TW's Bliss translation
         :return: None
         """
         self.blissymbol = blissymbol
+
+    def setBlissymbol(self, blissymbol):
+        """
+        Sets this TranslationWord's blissymbol to
+        given blissymbol if it meets certain criteria.
+
+        :param blissymbol: Blissymbol, TW's Bliss translation
+        :return: None
+        """
+        if self.blissymbol is None:
+            if self.pos in blissymbol.getPartsOfSpeech():
+                #if blissymbol.isNeutral():
+                self.blissymbol = blissymbol
 
     def setBlissymbols(self, blissymbols):
         """
@@ -167,7 +180,12 @@ class TranslationWord:
         :param blissymbols: List[Blissymbol], TW's Bliss translation
         :return: None
         """
-        self.blissymbols = blissymbols
+        neutrals = [bs for bs in blissymbols if bs.isNeutral()]
+
+        if len(neutrals) != 0:
+            self.blissymbols = neutrals
+        else:
+            self.blissymbols = blissymbols
 
     def capsInBlissDict(self, word):
         """
@@ -230,15 +248,15 @@ class TranslationWord:
                     lexeme = ""
 
         if len(lexeme) != 0 and lexeme in bliss_dict:
-            self.blissymbols = bliss_dict[lexeme]
+            self.setBlissymbols(bliss_dict[lexeme])
 
             for blissymbol in self.blissymbols:
                 translations = [self.translator.unicodize(translation)
                                 for translation in blissymbol.getTranslation("English")]  #self.language?
                 self.synonyms += translations
-                if self.blissymbol is None:
-                    self.blissymbol = blissymbol
+                self.setBlissymbol(blissymbol)
 
+        '''
         if self.blissymbol is None and self.blissymbols is not None:
             print(lexeme)
             print("This word appears to have no Blissymbol.")
@@ -247,6 +265,7 @@ class TranslationWord:
             ans = str(raw_input(""))
             if ans == "y":
                 self.blissymbol = self.blissymbols[0]
+        '''
 
     def findSynonyms(self):
         """
@@ -266,19 +285,21 @@ class TranslationWord:
         """
         for synset in self.synsets_lemmas:
             if self.inBlissDict(synset):
-                self.blissymbols = self.bliss_dict[synset]
+                self.setBlissymbols(self.bliss_dict[synset])
                 for blissymbol in self.blissymbols:
                     if self.pos in blissymbol.getPartsOfSpeech():
                         self.synonyms += blissymbol.getTranslation(self.language)  #self.language?
+                        self.resetBlissymbol(blissymbol)
+                break
+
+        if self.blissymbol is None:
+            for synset in self.synsets_lemmas:
+                if self.inBlissDict(synset):
+                    self.setBlissymbols(self.bliss_dict[synset])
+                    for blissymbol in self.blissymbols:
                         if self.blissymbol is None:
                             self.blissymbol = blissymbol
-
-        for synset in self.synsets_lemmas:
-            if self.inBlissDict(synset):
-                self.blissymbols = self.bliss_dict[synset]
-                for blissymbol in self.blissymbols:
-                    if self.blissymbol is None:
-                        self.blissymbol = blissymbol
+                    break
 
     def initBlissymbol(self):
         """
@@ -301,14 +322,20 @@ class TranslationWord:
         if self.blissymbol is not None:
             self.blissymbol = self.blissymbol
         elif self.blissymbols is not None:
-            self.blissymbol = self.blissymbols[0]
+            self.blissymbol = next(iter(self.blissymbols))
         elif self.translator.translate_all:
             self.blissymbol = self.findBlissymbol()
 
-        if self.blissymbol is not None and self.debug: #and self.getBlissymbolName() not in self.translator.getBlissToUnicode():
-            self.blissymbol.addTranslation(self.language, self.lexeme)
-            self.blissymbol.addTranslation("English", self.eng_lexeme)
-            self.translator.addBlissEntry(self.blissymbol)
+        '''
+        if self.blissymbol is not None:
+            bliss_name = self.getBlissName()
+            bliss_names = bliss_name.split(",")
+            untranslated = any(bn not in self.eng_bliss_dict for bn in bliss_names)
+            if untranslated:
+                self.blissymbol.addTranslation(self.language, self.lexeme)
+                self.blissymbol.addTranslation("English", self.eng_lexeme)
+                self.translator.addBlissEntry(self.blissymbol)
+        '''
 
     def findBlissymbol(self):
         """
@@ -337,7 +364,7 @@ class TranslationWord:
                 print("Success: " + self.eng_lexeme + " in English bliss dict!")
                 blissymbols = self.eng_bliss_dict[self.eng_lexeme]
                 self.blissymbol = blissymbols[0]
-                self.translator.addBlissEntry(self.blissymbol)
+                self.translator.lex_parser.addBlissEntry(self.blissymbol)
                 return self.blissymbol
             elif self.lexeme in self.bliss_dict:
                 blissymbols = self.bliss_dict[self.lexeme]
@@ -348,10 +375,9 @@ class TranslationWord:
 
             classifier = self.translator.classifier
             bliss_words = classifier.predictWord(self)
-            lang_code = self.translator.findLangCode(self.language)
+            #lang_code = self.translator.findLangCode(self.language)
             lexeme = self.lexeme.replace(" ", "_")
             eng_lexeme = self.eng_lexeme.replace(" ", "_")
-            #eng_lexeme = eng_lexeme.replace(" ", "_")
             print(eng_lexeme)
 
             if len(bliss_words) == 1:
@@ -391,10 +417,11 @@ class TranslationWord:
                                                             pos=self.getPos(),
                                                             derivation=derivation,
                                                             translations=translations)
-                print blissymbol
-                self.setBlissymbol(blissymbol)
-                blissymbol.addSynset(self.synsets)
-                self.translator.addBlissEntry(blissymbol)
+                #print blissymbol
+                blissymbol.addSynsets(self.synsets)
+                self.resetBlissymbol(blissymbol)
+                self.translator.addBlissEntry(self.blissymbol)
+                return self.blissymbol
 
     def getFilename(self):
         """
@@ -503,11 +530,11 @@ class TranslationWord:
 
         elif self.lexeme in self.bliss_dict:
             blissymbols = self.bliss_dict[self.lexeme]
-            blissymbol = blissymbols[0]
+            blissymbol = next(iter(blissymbols))  #blissymbols[0]
             if debug:
-                for blissymbol in blissymbols:
-                    if blissymbol.getPos() == self.getPos():
-                        blissymbol = blissymbol
+                for bs in blissymbols:
+                    if bs.getPos() == self.pos[:2] and bs.isNeutral():
+                        blissymbol = bs
                         break
             translations = blissymbol.getTranslation("English")
             eng_lexeme = translations[0]
@@ -682,7 +709,7 @@ class TranslationWord:
         """
         return self.synset_id
 
-    def findSynsetId(self):
+    def initSynsetId(self):
         """
         Finds a synset ID for this TranslationWord based on its synset.
         ~
@@ -691,14 +718,18 @@ class TranslationWord:
 
         :return: str, a 9-digit Wordnet Synset ID
         """
-        try:
-            (self.getSynset()).offset()
-        except AttributeError:
-            return
-        else:
-            pos_code = self.translator.POS_FEATURE_DICT[self.pos_abbrev]
-            full_synset = str(pos_code) + str(self.synset.offset()).zfill(8)
-            return full_synset
+        return self.findSynsetId(self.synset)
+
+    def findSynsetId(self, synset):
+        """
+        Finds a synset ID for this TranslationWord based on its synset.
+        ~
+        N.B. TranslationWord's synset_id corresponds to Synset.offset()
+        in NLTK's Wordnet module, i.e., a 9-digit numerical identifier.
+
+        :return: str, a 9-digit Wordnet Synset ID
+        """
+        return self.translator.findSynsetId(synset)
 
     def setSynsetId(self, id):
         """
@@ -758,7 +789,7 @@ class TranslationWord:
         return "word:\t\t" + (self.word).encode('ascii', 'replace') + "\n" + \
                "pos:\t\t" + self.pos + "\n" + \
                "lexeme:\t\t" + (self.lexeme).encode('ascii', 'replace') + "\n" + \
-               "bliss:\t\t" + (self.getBlissymbolName()).encode('ascii', 'replace') + "\n" + \
+               "bliss:\t\t" + (self.getBlissName()).encode('ascii', 'replace') + "\n" + \
                "synonyms:\t" + (str(self.synsets_lemmas)).encode('ascii', 'replace')
 
     __repr__ = __str__

@@ -84,6 +84,8 @@ class Blissymbol:
         self.deriv_unicode = []
         self.initUnicode()
         self.initDerivUnicode()
+        self.changed = False  # whether this Blissymbol's translations, etc. have changed at all
+        self.synset = None
         self.synsets = self.initBlissymbolSynsets()
         #print("\nHi!  I'm the Blissymbol " + self.bliss_name + ", with the " +
         #      "synsets: ")
@@ -302,7 +304,6 @@ class Blissymbol:
                         start += 1
                 deriv = deriv[start:]
 
-            '''
             end = 0
             in_parens = False
             while (deriv[end] != ")" or in_parens) and deriv[end] != ":":
@@ -322,7 +323,7 @@ class Blissymbol:
 
             deriv = deriv[:end]
             deriv = deriv.replace("@", "")
-            '''
+
             derivs_itn = deriv.split(" ")
             derivs = derivs_itn
 
@@ -353,6 +354,7 @@ class Blissymbol:
                     elif d != "":
                         derivs[end-1] = self.cleanDefn(derivs[end-1])
                     end += 1
+
             return derivations #[self.removeParens(d) for d in derivations]
 
     def setDerivations(self, derivations):
@@ -412,7 +414,8 @@ class Blissymbol:
             key (str) - language of translations
             val (List[str]) - cleaned Blissymbol translations in language
         """
-        translations = {language: self.cleanTranslation(translations[language]) for language in translations}
+        languages = translations
+        translations = {language: self.cleanTranslation(translations[language]) for language in languages}
         return translations
 
     def getBlissName(self):
@@ -459,6 +462,14 @@ class Blissymbol:
         if self.pos is not None:
             return self.pos
 
+    def getParenPhrase(self):
+        """
+        Returns parenthetical(s) of this Blissymbol.
+
+        :return: str, given word's parenthetical phrase
+        """
+        return self.paren_phrase
+
     def getParens(self, word):
         """
         Returns parenthetical(s) from the given word.
@@ -477,6 +488,19 @@ class Blissymbol:
             else:
                 return word[idx:]
         return None
+
+    def isNeutral(self):
+        """
+        Returns True if this Blissymbol neutral, i.e.
+        if it does not have gender (feminine or masculine) and isn't plural.
+
+        :return: bool, whether this Blissymbol is neutral
+        """
+        if self.paren_phrase is None:
+            return True
+        else:
+            start = self.paren_phrase[1:5]
+            return not (start == "femi" or start == "masc" or start == "plur")
 
     def removeParens(self, word):
         """
@@ -738,37 +762,29 @@ class Blissymbol:
         #seen_add = seen.add
         #return [uni for uni in unicodes if not (uni in seen or seen_add(uni))]
 
-    def addUnicodeToBliss(self, unicode, bliss):
+    def addUnicodeToBliss(self, uni, bliss):
         """
-        Adds the given unicode key to UNICODE_TO_BLISS dict,
+        Adds the given unicode key to this Blissymbol's
+        BlissTranslator's unicode-to-Blissymbol dict,
         with blissymbol name bliss as its value.
-        ~
-        Adds unicode to Blissymbol's self.unicode.
 
-        :param unicode: str, unicode name to add
+        :param uni: str, unicode name to add
         :param bliss: str, name of blissymbol for given unicode
         :return: None
         """
-        if unicode not in UNICODE_TO_BLISS:
-            UNICODE_TO_BLISS[unicode] = []
-        if bliss not in UNICODE_TO_BLISS[unicode]:
-            UNICODE_TO_BLISS[unicode].append(bliss)
+        self.translator.addUnicodeToBliss(uni, bliss)
 
-    def addBlissToUnicode(self, bliss, unicode):
+    def addBlissToUnicode(self, bliss, uni):
         """
-        Adds the given blissymbol key bliss to BLISS_TO_UNICODE dict,
+        Adds the given blissymbol key bliss to this Blissymbol's
+        BlissTranslator's Blissymbol-to-unicode dict,
         with unicode as its value.
-        ~
-        Adds unicode to Blissymbol's self.unicode.
 
         :param bliss: str, name of blissymbol to add
         :param unicode: str, unicode name for given bliss
         :return: None
         """
-        if bliss not in BLISS_TO_UNICODE:
-            BLISS_TO_UNICODE[bliss] = []
-        if unicode not in BLISS_TO_UNICODE[bliss]:
-            BLISS_TO_UNICODE[bliss].append(unicode)
+        self.translator.addBlissToUnicode(bliss, uni)
 
     def addBlissAndUnicode(self, bliss="", unicode=""):
         """
@@ -790,6 +806,40 @@ class Blissymbol:
             bliss = self.getBlissName()
         if unicode == "":
             unicode = self.unicode
+
+        self.writeBlissAndUnicode(bliss, unicode)
+        #self.addBlissToUnicode(bliss, unicode)
+        #self.addUnicodeToBliss(unicode, bliss)
+
+    def writeBlissAndUnicode(self, bliss, unicode):
+        """
+        Creates a new entry to BLISS_TO_UNICODE and UNICODE_TO_BLISS based on
+        given Bliss word bliss and its unicode representation.
+        If Bliss word is already in dict, append new translations
+        appropriately.  Otherwise, add a new lexical entry for this Bliss word.
+
+        :param bliss: str, Bliss word to add to Bliss-to-unicode encoding dicts
+        :param unicode: str, unicode name for given bliss
+        :return: None
+        """
+        path = self.translator.lex_parser.LEXICA_PATH + "bliss_encoding.py"
+
+        if bliss not in self.translator.getBlissToUnicode():
+            bliss_line = '\nBLISS_TO_UNICODE["' + bliss + '"] = ["' + unicode + '"]'
+        else:
+            bliss_line = '\nBLISS_TO_UNICODE["' + bliss + '"].append("' + unicode + '")'
+        bliss_line = self.translator.deUnicodize(bliss_line)
+
+        if unicode not in self.translator.getUnicodeToBliss():
+            uni_line = '\nUNICODE_TO_BLISS["' + unicode + '"] = ["' + bliss + '"]'
+        else:
+            uni_line = '\nUNICODE_TO_BLISS["' + unicode + '"].append("' + bliss + '")'
+        uni_line = self.translator.deUnicodize(uni_line)
+
+        with open(path, "a") as encoding:
+            encoding.write(bliss_line)
+            encoding.write(uni_line)
+            encoding.close()
 
         self.addBlissToUnicode(bliss, unicode)
         self.addUnicodeToBliss(unicode, bliss)
@@ -816,12 +866,12 @@ class Blissymbol:
             uni = uni[2:]
             uni = "U+" + uni
 
-            if lang is not "en":
-                # if given lang isn't English,
-                # get defn's English translation to unicode
-                defns = self.translations["English"]
-            else:
-                defns = defn.split(",")
+            #if lang is not "en":
+            #    # if given lang isn't English,
+            #    # get defn's English translation to unicode
+            defns = self.translations["English"]
+            #else:
+            #    defns = defn.split(",")
 
             for subdefn in defns:
                 # add the same unicode definition for each word
@@ -858,7 +908,7 @@ class Blissymbol:
                     if len(unis) == 1:
                         uni = unis[0]
                         deriv_unicode.add(uni)
-                        self.addBlissAndUnicode(synonym, uni)
+                        #self.addBlissAndUnicode(synonym, uni)
                         break
                     else:
                         unis = set(unis)
@@ -866,12 +916,12 @@ class Blissymbol:
                             unicodes = unis
                         else:
                             unicodes = unicodes.intersection(unis)
-                            for uni in unis:
-                                self.addBlissAndUnicode(synonym, uni)
+                            #for uni in unis:
+                            #    self.addBlissAndUnicode(synonym, uni)
                 else:
                     uni = self.findUnicode(synonym)
                     unicodes.add(uni)
-                    self.addBlissAndUnicode(synonym, uni)
+                    #self.addBlissAndUnicode(synonym, uni)
 
             deriv_unicode = deriv_unicode.union(unicodes)
 
@@ -929,8 +979,8 @@ class Blissymbol:
         if len(translations) != 0:
             translation = translations[0]
             self.unicode = self.findUnicode(translation)
-            for translation in translations:
-                self.addBlissAndUnicode(bliss=translation, unicode=self.unicode)
+            #for translation in translations:
+            #    self.addBlissAndUnicode(bliss=translation, unicode=self.unicode)
         else:
             print("could not find unicode defn for " + self.bliss_name)
             self.unicode = None
@@ -949,7 +999,7 @@ class Blissymbol:
 
     def addSynset(self, synset):
         """
-        Appends the given synset to this Blissymbol's synsets.
+        Adds given synset to this Blissymbol's synsets.
 
         :param synset: Synset, synset to add to synsets
         :return: None
@@ -958,12 +1008,12 @@ class Blissymbol:
 
     def addSynsets(self, synsets):
         """
-        Adds the given synsets to this Blissymbol's synsets.
+        Updates this Blissymbol's synsets with given synsets.
 
         :param synsets: List[Synset], synsets to add to synsets
         :return: None
         """
-        self.synsets.union(synsets)
+        self.synsets.update(synsets)
 
     def initBlissymbolSynsets(self):
         """
@@ -972,11 +1022,12 @@ class Blissymbol:
 
         :return: Set[Synset], this Blissymbol's Wordnet synsets
         """
-        synsets = set(self.translator.lookupBlissymbolSynsets(self))
+        synsets = self.translator.lookupBlissymbolSynsets(self)
         if len(synsets) == 0:
             synsets = self.findBlissymbolSynsets()
-        #print self.getBlissName(), synsets
-        return synsets
+        else:
+            self.synset = synsets[0]
+        return set(synsets)
 
     def findBlissymbolSynsets(self):
         """
@@ -1000,10 +1051,9 @@ class Blissymbol:
                 word = self.removeParens(word)
                 word = word.rstrip("_")
                 word_synset = self.translator.lookupWordSynsets(word, pos)
-                #self.removeDuplicates()
-                word_synsets.update(word_synset)
-
-            #print(word_synsets)
+                word_synsets.intersection_update(word_synset)
+                if self.synset is None and len(word_synset) != 0:
+                    self.synset = word_synset[0]
 
             for lang in translations:
                 if lang != "English":
@@ -1017,7 +1067,6 @@ class Blissymbol:
                             break
                         else:
                             lang_synset.update(synset)
-
                     if not lang:
                         continue
 
@@ -1027,7 +1076,6 @@ class Blissymbol:
                             lang_synsets.intersection_update(lang_synset)
                         else:
                             lang_synsets.update(lang_synset)
-
 
             #print("intersecting multilingual synsets:\t", lang_synsets)
             synset = lang_synsets.intersection(word_synsets)
@@ -1041,28 +1089,12 @@ class Blissymbol:
                 synsets.update(word_synsets.union(lang_synsets))
         else:
             word_synset = set(self.translator.lookupWordSynsets(word, pos))
-            #print word, pos
             synsets = word_synset
 
-        #synsets = list(synsets)
-        #print synsets
-
-        if len(synsets) != 0:
-            pos = (synsets[0]).pos()
+        if self.synset is not None:
+            pos = self.synset.pos()
             self.initPos(pos)
-            '''
-            best_guess = synsets[0]
-            best_sim = 0
-            for idx in range(0, len(synsets)):
-                first = synsets[idx-1]
-                other = synsets[idx]
-                sim = self.translator.synsetSimilarity(first,other)
-                if sim > best_sim:
-                    best_guess = first
-                    best_sim = sim
-            print "best guess: ", best_guess.lemma_names()
-            '''
-        #print("\n")
+
         return synsets
 
     def setUnicode(self, unicode):
@@ -1108,9 +1140,11 @@ class Blissymbol:
     def __eq__(self, other):
         return self.bliss_name == other.bliss_name
 
+    def __hash__(self):
+        return hash(str(self))
+
     def __str__(self):
-        bliss_name = self.img_filename[:-4]
-        return bliss_name
+        return self.bliss_name
 
     __repr__ = __str__
 

@@ -20,13 +20,14 @@ DEMO:
     on the filepath relative to the main folder.
 """
 import blisscribe
-#import excerpts
+import excerpts
 
 #bt = blisscribe.BlissTranslator(language="Polish")
 #lp = blisscribe.LexiconParser(bt)
 #lp.writeBlissLexicon()
 #multi_dict = lp.getMultilingualBlissDict()
 #lp.writeBlissWordnet(lp.blissDictToWordnet(multi_dict))
+
 
 '''
 DefaultTranslator = blisscribe.BlissTranslator()  # defaults to English, Times New Roman, size 30
@@ -46,7 +47,7 @@ CustomTranslator.setFastTranslate(True)
 CustomTranslator.setTranslateAll(True)
 CustomTranslator.chooseOtherPOS(True)
 CustomTranslator.setSafeTranslate(False)
-CustomTranslator.translate("ich habe kein lust mehr, unser wir uns")
+CustomTranslator.translate("Ich habe kein lust mehr, unser wir uns.")
 
 '''
 # Polish translation
@@ -55,8 +56,8 @@ CustomTranslator.setSubAll(True)         # add Polish subtitles below all Blissy
 CustomTranslator.chooseOtherPOS(True)    # translate all parts of speech possible to Blissymbols
 CustomTranslator.setFastTranslate(True)  # translate Polish to Blissymbols immediately
 CustomTranslator.setTranslateAll(True)
-CustomTranslator.translate("Alicja", title='Alicja w Krainie Czar\xc3\xb3w')
-#CustomTranslator.translate(excerpts.alice_in_wonderland_polish[:50], title='Alicja w Krainie Czar\xc3\xb3w')
+#CustomTranslator.translate("Alicja", title='Alicja w Krainie Czar\xc3\xb3w')
+CustomTranslator.translate(excerpts.alice_in_wonderland_polish[:200], title='Alicja w Krainie Czar\xc3\xb3w')
 
 
 # French translation
