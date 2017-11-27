@@ -37,7 +37,7 @@ else:
         BLISS_TO_UNICODE, UNICODE_TO_BLISS, \
         NEW_BLISSYMBOLS
     from parse_lexica import BLISS_SUPPORTED_LANGUAGES as BLISS_LANGS
-'''
+
 try:
     import blisslearn
     from blisslearn import BlissLearner
@@ -49,9 +49,6 @@ except ImportError:
 else:
     import blisslearn
     from blisslearn import BlissLearner
-'''
-import blisslearn
-from blisslearn import BlissLearner
 
 try:
     from translation_word import TranslationWord
@@ -243,6 +240,7 @@ class BlissTranslator:
         # Language
         self.bliss_dict = dict
         self.eng_bliss_dict = dict
+        self.bliss_lexicon = self.lex_parser.bliss_lexicon
         self.uni_to_bliss = UNICODE_TO_BLISS
         self.bliss_to_uni = BLISS_TO_UNICODE
         self.polish_lexicon = dict
@@ -265,7 +263,7 @@ class BlissTranslator:
         self.other = False
 
         self.all_lemma_names = set(wordnet.all_lemma_names(lang=self.lang_code))
-        self.classifier = BlissLearner(self)
+        #self.classifier = BlissLearner(self)
 
     # GETTERS/SETTERS
     # ===============
@@ -330,6 +328,7 @@ class BlissTranslator:
             self.loadMultiLingualLemmas(self.language)
 
         self.setBlissDict()
+        self.bliss_lexicon = self.initBlissLexicon()
 
     def getLanguage(self):
         """
@@ -362,6 +361,29 @@ class BlissTranslator:
         else:
             raise Exception("Blisscribe doesn't support this language yet... oops!")
 
+    def entryToBlissymbol(self, entry):
+        """
+        Returns the given string entry as a Blissymbol.
+
+        :param entry: 4-tuple(str), string to turn to Blissymbol
+        :return: Blissymbol, Blissymbol representation of given entry
+        """
+        blissymbol = self.lex_parser.entryToBlissymbol(entry)
+        self.addBlissEntry(blissymbol)
+        return blissymbol
+
+    def initBlissLexicon(self):
+        """
+        Initializes a Bliss dictionary in English corresponding to
+        the universal Blissymbol lexicon.
+
+        :return: None
+        """
+        lexicon = self.lex_parser.bliss_lexicon
+        self.lex_parser.bliss_lexicon = self.bliss_lexicon
+        self.bliss_lexicon = {entry: self.entryToBlissymbol(lexicon[entry][0])
+                              for entry in sorted(lexicon)}
+
     def initBlissDict(self, language):
         """
         Returns a 2-tuple of 2 Bliss dictionaries, where the
@@ -372,7 +394,7 @@ class BlissTranslator:
             key (str) - word in specified language
             val (List[Blissymbol]) - corresponding Blissymbols
         """
-        return self.lex_parser.initBlissLexica(self, language) #self.lex_parser.getBlissDict(language)
+        return self.lex_parser.initBlissLexica(self, language)
 
     def setBlissDict(self):
         """
@@ -388,18 +410,42 @@ class BlissTranslator:
         self.eng_bliss_dict = bliss_dicts[1]
 
         if self.language == "Polish":
-            self.polish_lexicon = self.lex_parser.parseLexicon("/resources/lexica/polish.txt")
+            self.polish_lexicon = \
+                self.lex_parser.parseLexicon("/resources/lexica/polish.txt")
         elif self.language == "French":
-            self.french_lexicon = self.lex_parser.parseFrenchLexicon("/resources/lexica/french/substitutions.txt")
+            self.french_lexicon = \
+                self.lex_parser.parseFrenchLexicon("/resources/lexica/french.txt")
 
     def getBlissDict(self):
+        """
+        Returns this BlissTranslator's native language Bliss dictionary.
+
+        :return: dict, where...
+            key (str) - word in BlissTranslator's native language
+            val (List[Blissymbol]) - corresponding Blissymbols
+        """
         return self.bliss_dict
 
     def getEngBlissDict(self):
+        """
+        Returns this BlissTranslator's English Bliss dictionary.
+
+        :return: dict, where...
+            key (str) - word in English
+            val (List[Blissymbol]) - corresponding Blissymbols
+        """
         return self.eng_bliss_dict
 
     def getBlissLexicon(self):
-        return self.lex_parser.bliss_lexicon
+        """
+        Returns this BlissTranslator's Bliss dictionary
+        corresponding to the universal Blissymbol lexicon.
+
+        :return: dict, where...
+            key (str) - word in specified language
+            val (List[Blissymbol]) - corresponding Blissymbols
+        """
+        return self.bliss_lexicon
 
     def initSeenChanged(self):
         """
@@ -442,11 +488,9 @@ class BlissTranslator:
         :return: List[str], unicode names for given bliss
         """
         try:
-            defns = self.bliss_to_uni[bliss]
+            return self.bliss_to_uni[bliss]
         except KeyError:
             return []
-        else:
-            return defns
 
     def lookupUnicodeToBliss(self, uni):
         """
@@ -1501,7 +1545,12 @@ class BlissTranslator:
         :param word: str, word to check bliss_dict membership
         :return: bool, whether word is in bliss_dict
         """
-        return word in self.bliss_dict
+        try:
+            self.bliss_dict[word]
+        except KeyError:
+            return False
+        else:
+            return True
 
     def inEngBlissDict(self, word):
         """
@@ -1512,6 +1561,27 @@ class BlissTranslator:
         :return: bool, whether word is in eng_bliss_dict
         """
         return word in self.eng_bliss_dict
+        #try:
+        #    self.eng_bliss_dict[word]
+        #except KeyError:
+        #    return False
+        #else:
+        #    return True
+
+    def inBlissLexicon(self, word):
+        """
+        Returns True if word in bliss_lexicon,
+        False otherwise.
+
+        :param word: str, word to check bliss_lexicon membership
+        :return: bool, whether word is in bliss_lexicon
+        """
+        try:
+            self.bliss_lexicon[word]
+        except KeyError:
+            return False
+        else:
+            return True
 
     def isBlissWord(self, word):
         """
@@ -1521,7 +1591,72 @@ class BlissTranslator:
         :param word: str, word to check if valid Blissymbol
         :return: bool, whether given word is valid Blissymbol
         """
-        return word in BLISS_TO_UNICODE
+        try:
+            self.bliss_to_uni[word]
+        except KeyError:
+            return False
+        else:
+            return True
+
+    def lookupBlissDict(self, word):
+        """
+        Returns native language word's corresponding Blissymbols
+        from this BlissTranslator's bliss_dict.
+        ~
+        If word is not in bliss_dict, returns None.
+
+        :param word: str, word to lookup in bliss_dict
+        :return: List[Blissymbol], word's blissymbols in bliss_dict
+        """
+        try:
+            return self.bliss_dict[word]
+        except KeyError:
+            return
+
+    def lookupEngBlissDict(self, word):
+        """
+        Returns English word's corresponding Blissymbols
+        from this BlissTranslator's eng_bliss_dict.
+        ~
+        If word is not in eng_bliss_dict, returns None.
+
+        :param word: str, word to lookup in eng_bliss_dict
+        :return: List[Blissymbol], word's blissymbols in eng_bliss_dict
+        """
+        try:
+            return self.eng_bliss_dict[word]
+        except KeyError:
+            return
+
+    def lookupBlissLexicon(self, word):
+        """
+        Returns English word's corresponding Blissymbols
+        from this BlissTranslator's bliss_lexicon.
+        ~
+        If word is not in eng_bliss_dict, returns None.
+
+        :param word: str, word to lookup in eng_bliss_dict
+        :return: List[Blissymbol], word's blissymbols in bliss_lexicon
+        """
+        try:
+            return self.bliss_lexicon[word]
+        except KeyError:
+            return
+
+    def lookupBlissnet(self, uni):
+        """
+        Returns this unicode's corresponding synsets
+        from this BlissTranslator's blissnet.
+        ~
+        If unicode is not in blissnet, returns None.
+
+        :param uni: str, Blissymbol unicode to lookup in blissnet
+        :return: List[Synset], synsets corresponding to given unicode
+        """
+        try:
+            return blissnet[uni]
+        except KeyError:
+            return
 
     def inWordNet(self, word):
         """
@@ -1780,23 +1915,17 @@ class BlissTranslator:
     def lookupBlissymbolSynsets(self, blissymbol):
         """
         Returns a list of Wordnet Synsets corresponding to the
-        given word, part-of-speech (pos), and language (lang).
-        ~
-        If lookup fails with given pos, this method returns
-        given word's Wordnet synsets for all parts of speech.
+        given Blissymbol.
 
         :param blissymbol: Blissymbol, blissymbol to lookup synset for
         :return: List[Synset], synsets corresponding to given blissymbol
         """
         if blissymbol.hasUnicode():
             uni = blissymbol.getUnicode()
-            try:
-                synsets = blissnet[uni]
-            except KeyError:
-                #word = blissymbol.get
-                return []
-            else:
+            synsets = self.lookupBlissnet(uni)
+            if synsets is not None:
                 return synsets
+        return []
 
     def findLangCode(self, language):
         """
@@ -2007,8 +2136,8 @@ class BlissTranslator:
         else:
             translations = {}
         translations.setdefault(self.language, [])
-        translations.setdefault("English", [])
-        translations["English"].append(img_filename[:-4])
+        translations["English"] = [name for name in img_filename[:-4].split(",")]
+        #translations["English"].append(img_filename[:-4])
         return Blissymbol(img_filename=img_filename,
                           pos=pos,
                           derivation=derivation,
@@ -2034,7 +2163,7 @@ class BlissTranslator:
             for defn in defns:
                 if idx == 0:  # English
                     if self.inEngBlissDict(defn):
-                        in_bliss_dict = True
+                        #in_bliss_dict = True
                         self.eng_bliss_dict[defn].add(blissymbol)
                     else:
                         self.eng_bliss_dict[defn] = set([blissymbol])
@@ -2148,6 +2277,8 @@ class BlissTranslator:
         indent = self.font_size
         line_no = 0
         idx = 0
+
+        print(self.inBlissDict("juridical"))
 
         for word in raw_phrase:
             if word in self.WHITESPACE:
