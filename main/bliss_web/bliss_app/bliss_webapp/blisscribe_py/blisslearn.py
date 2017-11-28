@@ -18,6 +18,7 @@ BLISSLEARN:
         - official Blissymbol derived vocabulary
 """
 import os
+from string import zfill
 from sklearn.tree import DecisionTreeClassifier
 #from nltk.classify import accuracy, DecisionTreeClassifier
 #from sklearn.metrics import accuracy_score
@@ -35,10 +36,11 @@ class BlissLearner:
     def __init__(self, bliss_translator):
         self.translator = bliss_translator
         self.bliss_lexicon = self.translator.getBlissLexicon()
+        print(self.bliss_lexicon)
         self.classifier = DecisionTreeClassifier() #(label="")
         self.questions = []
         self.answers = []
-        self.qa_pairs = []   # List[2-tuple]
+        #self.qa_pairs = []   # List[2-tuple]
         self.wordnet_indices = self.getWordnetIndices()  # dict
         self.wordnet_entries = self.getWordnetEntries()  # dict
         self.wordnet_descriptions = self.getWordnetDescriptions()  # dict
@@ -53,37 +55,10 @@ class BlissLearner:
         samples = self.wordnet_indices
         questions = []
         answers = []
-        wn_questions = []
-        wn_answers = []
+        test_questions = []
+        test_answers = []
         print("initializing Bliss classifier...")
 
-        #unis = self.translator.getUnicodeToBliss()
-        #print BLISSNET
-        #print(self.translator.getBlissLexicon())
-
-        '''
-        for uni in BLISSNET:
-            synsets = BLISSNET[uni]
-            if len(synsets) == 1:
-                uni_key = str(uni)
-                uni_key = uni_key[2:]  # skip U+ beginning
-                #uni_key = int(uni_key, base=16)
-                for synset in synsets:
-                    print uni_key
-                    wn_num = synset.offset()
-                    wn_num = self.translator.findSynsetId(synset)
-                    print wn_num
-                    pos = synset.pos()
-                    pos_code = self.translator.POS_FEATURE_DICT[pos]
-                    word_features = {"id": int(wn_num),
-                                    "pos": pos_code}
-                    print word_features
-                    print
-                    #questions.append(word_features)
-                    #answers.append(uni)
-                    pair = (word_features, uni_key)
-                    qa_pairs.append(pair)
-        '''
 
         for wn_num in samples:  # iterate thru (unordered) dict
             # convert human-readable data to machine-readable numbers
@@ -111,32 +86,26 @@ class BlissLearner:
                     word_features = [wn_int, pos_code]
 
                     synsets = blissymbol.getSynsets()
-                    for synset in synsets:
-                        print synset.offset(), wn_num[2:]
-                        if synset.offset() == wn_num[2:]:
-                            print("ADDED")
-                            answers.append(uni)
-                            questions.append(word_features)
-                    print
-                    #if 0 < len(unicodes) < 3 and word_features not in questions and len(blissymbol.getSynsets()) != 0:
-                    #    answers.append(uni)
-                    #    questions.append(word_features)
-                        #word_features_dict = {wn_int: pos_code}
-                        #qa_pairs.append((word_features_dict, unicode))
-                    #elif len(unicodes) > 4:
-                    #    wn_questions.append(word_features)
-                    #    wn_answers.append(uni)
-        #shuffle(questions)
-        #shuffle(answers)
+
+                    if word_features not in questions and len(synsets) != 0: # and 0 < len(unicodes) < 3
+                        for synset in synsets:
+                            if (str(synset.offset())).zfill(7) == wn_num[2:]:
+                                if name in self.bliss_lexicon: #self.translator.getBlissLexicon():
+                                    print("ADDED " + name)
+                                    answers.append(uni)
+                                    questions.append(word_features)
+                                    break
+                                else:
+                                    print("SKIPPED " + name)
+                                    test_answers.append(uni)
+                                    test_questions.append(word_features)
+
         self.questions = questions
         self.answers = answers
-        train_questions, train_answers = self.questions[100:], self.answers[100:]
-        test_questions, test_answers = self.questions[50:100], self.answers[50:100]
-        #test_qas = [(question, answer) for question, answer in self.questions, self.answers]
-        #self.qa_pairs = qa_pairs
+        train_questions, train_answers = self.questions, self.answers #self.questions[100:], self.answers[100:]
+        test_questions, test_answers = test_questions, test_answers #self.questions[0:100], self.answers[0:100]
 
         print("\ntraining classifier...")
-        #self.classifier.train(train_pairs)
         self.classifier.fit(train_questions, train_answers)
         print("training complete.\n")
 
@@ -158,8 +127,9 @@ class BlissLearner:
 
         for (ans, guess, q) in all: #sorted(misses):
             print
+
+            # format answer from unicode to Bliss words
             ans = ans.split(" ")
-            #print ans
             new_ans = []
             for uni in ans:
                 defns = self.translator.lookupUnicodeToBliss("U+" + uni)
@@ -167,15 +137,17 @@ class BlissLearner:
                     defn = defns[0]
                     new_ans.append(defn.replace(" ", "_"))
             ans = " ".join(new_ans)
-            #print guess
-            new_guess = []
+
+            # format guess from unicode to Bliss words
             guess = guess.split(" ")
+            new_guess = []
             for uni in guess:
                 defns = self.translator.lookupUnicodeToBliss("U+" + uni)
                 if len(defns) != 0:
                     defn = defns[0]
                     new_guess.append(defn.replace(" ", "_"))
             guess = " ".join(new_guess)
+
             q = self.wordnet_indices[str(q[0])]
             q = q[0][0]
             print('question: {:<30}\nanswer: {:<40s}\nguess: {:<40}'.format(q, ans, guess))
