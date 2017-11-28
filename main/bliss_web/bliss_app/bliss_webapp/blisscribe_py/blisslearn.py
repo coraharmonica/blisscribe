@@ -21,6 +21,7 @@ import os
 from sklearn.tree import DecisionTreeClassifier
 #from nltk.classify import accuracy, DecisionTreeClassifier
 #from sklearn.metrics import accuracy_score
+from random import shuffle
 import blissnet
 from blissnet import BLISSNET
 
@@ -52,11 +53,13 @@ class BlissLearner:
         samples = self.wordnet_indices
         questions = []
         answers = []
-        #qa_pairs = []
-        print("initializing Bliss classifier")
+        wn_questions = []
+        wn_answers = []
+        print("initializing Bliss classifier...")
 
         #unis = self.translator.getUnicodeToBliss()
         #print BLISSNET
+        #print(self.translator.getBlissLexicon())
 
         '''
         for uni in BLISSNET:
@@ -85,6 +88,7 @@ class BlissLearner:
         for wn_num in samples:  # iterate thru (unordered) dict
             # convert human-readable data to machine-readable numbers
             defns = samples[wn_num]
+            shuffle(defns)
 
             for defn in defns:  # iterate thru list
                 name = defn[0]
@@ -92,62 +96,90 @@ class BlissLearner:
                 pos_unabbrev = self.translator.unabbreviateTag(pos)
                         
                 trans_word = self.translator.makeTranslationWord(name, pos_unabbrev, debug=False, language="English")
+                print
+                print(name)
 
                 if trans_word.hasBlissymbol():
                     trans_word.getBlissName() + " has a blissymbol"
                     blissymbol = trans_word.getBlissymbol()
-                    #new_samples.append(samples[wn_num])
+                    print(trans_word.getEngLexeme(), str(blissymbol))
+                    print(blissymbol.getSynsets())
                     unicodes = blissymbol.getDerivUnicode()
-                    if 0 < len(unicodes) < 5:
-                        #print(self.translator.getUnicodeToBliss(u))
-                        uni = " ".join([u[2:] for u in unicodes])
-                        answers.append(uni)
-                        pos_code = self.translator.POS_FEATURE_DICT[pos]
-                        wn_int = int(wn_num)
-                        word_features = [wn_int, pos_code]
-                        #word_features_dict = {wn_int: pos_code}
-                        questions.append(word_features)
-                        #qa_pairs.append((word_features_dict, unicode))
+                    uni = " ".join([u[2:] for u in unicodes])
+                    pos_code = self.translator.POS_FEATURE_DICT[pos]
+                    wn_int = int(wn_num)
+                    word_features = [wn_int, pos_code]
 
+                    synsets = blissymbol.getSynsets()
+                    for synset in synsets:
+                        print synset.offset(), wn_num[2:]
+                        if synset.offset() == wn_num[2:]:
+                            print("ADDED")
+                            answers.append(uni)
+                            questions.append(word_features)
+                    print
+                    #if 0 < len(unicodes) < 3 and word_features not in questions and len(blissymbol.getSynsets()) != 0:
+                    #    answers.append(uni)
+                    #    questions.append(word_features)
+                        #word_features_dict = {wn_int: pos_code}
+                        #qa_pairs.append((word_features_dict, unicode))
+                    #elif len(unicodes) > 4:
+                    #    wn_questions.append(word_features)
+                    #    wn_answers.append(uni)
+        #shuffle(questions)
+        #shuffle(answers)
         self.questions = questions
         self.answers = answers
-        train_questions, train_answers = self.questions[:500], self.answers[:500]
-        test_questions, test_answers = self.questions[500:1000], self.answers[500:1000]
+        train_questions, train_answers = self.questions[100:], self.answers[100:]
+        test_questions, test_answers = self.questions[50:100], self.answers[50:100]
         #test_qas = [(question, answer) for question, answer in self.questions, self.answers]
-
         #self.qa_pairs = qa_pairs
-        print("\ntraining classifier...\n")
-        #print(len(qa_pairs))
+
+        print("\ntraining classifier...")
         #self.classifier.train(train_pairs)
         self.classifier.fit(train_questions, train_answers)
-        print("training complete.")
-        print(train_questions)
-        print(train_answers)
-        print(test_questions)
-        print(test_answers)
+        print("training complete.\n")
 
-        errors = []
+        print("\ntesting classifier...")
+        hits = []
+        misses = []
         for (q, ans) in zip(test_questions, test_answers):
             guess = self.classifier.predict([q])[0]
             if guess != ans:
-                errors.append((ans, guess, q))
+                misses.append((ans, guess, q))
+            else:
+                hits.append((ans, guess, q))
+        all = hits + misses
 
-        print("number on-target: " + str(len(errors)) + " out of " + str(len(test_questions)))
-        print("percent on-target: " + str(float(len(errors))/len(test_questions) * 100) + "%")
-        print()
+        print("testing complete.")
+        print("number on-target: " + str(len(test_questions) - len(misses)) + " out of " + str(len(test_questions)))
+        print("percent on-target: " + str(float(len(test_questions) - len(misses))/len(test_questions) * 100) + "%")
 
-        for (ans, guess, q) in sorted(errors):
-            ans = (self.translator.lookupUnicodeToBliss("U+" + uni) for uni in ans.split(" "))
-            ans = "   ".join([" ".join(bliss) for bliss in ans])
-            guess = guess[0]
-            guess = (self.translator.lookupUnicodeToBliss("U+" + uni) for uni in guess.split(" "))
-            guess = "   ".join([" ".join(bliss) for bliss in guess])
+
+        for (ans, guess, q) in all: #sorted(misses):
+            print
+            ans = ans.split(" ")
+            #print ans
+            new_ans = []
+            for uni in ans:
+                defns = self.translator.lookupUnicodeToBliss("U+" + uni)
+                if len(defns) != 0:
+                    defn = defns[0]
+                    new_ans.append(defn.replace(" ", "_"))
+            ans = " ".join(new_ans)
+            #print guess
+            new_guess = []
+            guess = guess.split(" ")
+            for uni in guess:
+                defns = self.translator.lookupUnicodeToBliss("U+" + uni)
+                if len(defns) != 0:
+                    defn = defns[0]
+                    new_guess.append(defn.replace(" ", "_"))
+            guess = " ".join(new_guess)
             q = self.wordnet_indices[str(q[0])]
             q = q[0][0]
-            print('question: {:<30} guess: {:<40s} answer: {:<40}'.format(q, guess, ans))
-            print()
-
-        #print("\ninitial accuracy score: " + str(accuracy(self.classifier, test_pairs)))
+            print('question: {:<30}\nanswer: {:<40s}\nguess: {:<40}'.format(q, ans, guess))
+            print
 
     def refitClassifier(self):
         """

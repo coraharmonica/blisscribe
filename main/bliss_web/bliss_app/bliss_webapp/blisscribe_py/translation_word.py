@@ -315,7 +315,6 @@ class TranslationWord:
         synonyms of this word.  If no synonyms with Blissymbol
         definitions exist, return a best guess definition from
         a BlissLearner.
-
         :return: None
         """
         self.findSynonyms()
@@ -323,8 +322,8 @@ class TranslationWord:
             self.blissymbol = self.blissymbol
         elif self.blissymbols is not None:
             self.blissymbol = next(iter(self.blissymbols))
-        elif self.translator.translate_all:
-            self.blissymbol = self.findBlissymbol()
+        #elif self.translator.translate_all:
+        #x    self.blissymbol = self.findBlissymbol()
 
         '''
         if self.blissymbol is not None:

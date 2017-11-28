@@ -26,7 +26,7 @@ import excerpts
 #lp = blisscribe.LexiconParser(bt)
 #lp.writeBlissLexicon()
 #multi_dict = lp.getMultilingualBlissDict()
-#lp.writeBlissWordnet(lp.blissDictToWordnet(multi_dict))
+#lp.writeBlissWordnetEncoding(lp.blissDictToEncodingWordnet(multi_dict))
 
 
 '''
@@ -47,6 +47,7 @@ CustomTranslator.setFastTranslate(True)
 CustomTranslator.setTranslateAll(True)
 CustomTranslator.chooseOtherPOS(True)
 CustomTranslator.setSafeTranslate(False)
+CustomTranslator.lex_parser.writeBlissWordnet(CustomTranslator.getEngBlissDict())
 CustomTranslator.translate("Ich habe kein lust mehr, unser wir uns.")
 
 '''
