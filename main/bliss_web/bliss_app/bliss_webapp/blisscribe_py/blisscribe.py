@@ -240,7 +240,8 @@ class BlissTranslator:
         # Language
         self.bliss_dict = dict
         self.eng_bliss_dict = dict
-        self.bliss_lexicon = self.lex_parser.bliss_lexicon
+        self.bliss_lexicon = self.lex_parser.getBlissLexicon()
+        print(self.bliss_lexicon)
         self.uni_to_bliss = UNICODE_TO_BLISS
         self.bliss_to_uni = BLISS_TO_UNICODE
         self.polish_lexicon = dict
@@ -263,7 +264,7 @@ class BlissTranslator:
         self.other = False
 
         self.all_lemma_names = set(wordnet.all_lemma_names(lang=self.lang_code))
-        #self.classifier = BlissLearner(self)
+        self.classifier = BlissLearner(self)
 
     # GETTERS/SETTERS
     # ===============
@@ -442,10 +443,20 @@ class BlissTranslator:
         corresponding to the universal Blissymbol lexicon.
 
         :return: dict, where...
-            key (str) - word in specified language
+            key (str) - word in English
             val (List[Blissymbol]) - corresponding Blissymbols
         """
         return self.bliss_lexicon
+
+    def getBlissnet(self):
+        """
+        Returns the Blissymbols Wordnet, Blissnet.
+
+        :return: dict, where...
+            key (str) - Blissymbols unicode symbol
+            val (List[Synset]) - corresponding Synsets
+        """
+        return blissnet
 
     def initSeenChanged(self):
         """
@@ -2153,33 +2164,25 @@ class BlissTranslator:
         :return: None
         """
         translations = blissymbol.getTranslations()
-        in_bliss_dict = False
         languages = ["English", self.language]
         idx = 0
 
         for language in languages:
             defns = translations[language]
-            #defns = [defn.replace(" ", "_") for defn in defns]
             for defn in defns:
                 if idx == 0:  # English
                     if self.inEngBlissDict(defn):
-                        #in_bliss_dict = True
                         self.eng_bliss_dict[defn].add(blissymbol)
                     else:
                         self.eng_bliss_dict[defn] = set([blissymbol])
                 else:
                     if self.inBlissDict(defn):
-                        #in_bliss_dict = True
                         self.bliss_dict[defn].add(blissymbol)
                     else:
                         self.bliss_dict[defn] = set([blissymbol])
             idx += 1
 
         self.lex_parser.addBlissEntry(blissymbol)
-        #if in_bliss_dict:
-        #    self.extendBlissEntry(blissymbol)
-        #else:
-        #    self.appendBlissEntry(blissymbol)
 
     def extendBlissEntry(self, blissymbol):
         """

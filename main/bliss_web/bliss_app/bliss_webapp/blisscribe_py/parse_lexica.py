@@ -61,8 +61,8 @@ from openpyxl import load_workbook
 from PIL import Image
 import re
 import blissymbols
+from bliss_lexicon import BLISS_LEXICON
 from blissymbols import Blissymbol, BLISS_TO_UNICODE, UNICODE_TO_BLISS, NEW_BLISSYMBOLS
-import bliss_lexicon
 
 LAST_BLISS_ENCODING = blissymbols.LAST_BLISS_ENCODING
 
@@ -126,7 +126,17 @@ class LexiconParser:
 
     def __init__(self, translator):
         self.translator = translator
-        self.bliss_lexicon = bliss_lexicon.BLISS_LEXICON
+        self.bliss_lexicon = BLISS_LEXICON
+
+    def getBlissLexicon(self):
+        """
+        Returns this LexiconParser's Blissymbols lexicon.
+
+        :return: dict, where...
+            key (str) - Blissymbol keys
+            val (List[4-tuple]) -
+        """
+        return self.bliss_lexicon
 
     def parseLexicon(self, filename):
         """
@@ -658,12 +668,12 @@ class LexiconParser:
                 if eng_word in self.bliss_lexicon:
                     # update bliss lexicon if old and new definitions are different
                     if self.bliss_lexicon[eng_word] != self.blissymbolToStr(blissymbol):
-                        line = "BLISS_LEXICON['" + eng_word + "'] = [" + self.blissymbolToStr(blissymbol) + "]\n"
+                        line = 'BLISS_LEXICON["' + eng_word + '"] = [' + self.blissymbolToStr(blissymbol) + ']\n'
                     # otherwise don't do anything since they're the same
                     else:
                         line = ""
                 else:
-                    line = "BLISS_LEXICON['" + eng_word + "'] = [" + self.blissymbolToStr(blissymbol) + "]\n"
+                    line = 'BLISS_LEXICON["' + eng_word + '"] = [' + self.blissymbolToStr(blissymbol) + ']\n'
                 line = self.translator.deUnicodize(line)
                 lexicon.write(line)
             lexicon.close()
@@ -976,7 +986,7 @@ class LexiconParser:
         #if translator is None:
         #    translator = self.translator
 
-        for key in bliss_lexicon.BLISS_LEXICON:
+        for key in BLISS_LEXICON:
             bliss_dict.setdefault(key, set([]))
             for val in self.bliss_lexicon[key]:
                 blissymbol = self.entryToBlissymbol(val)
@@ -999,7 +1009,7 @@ class LexiconParser:
                 translations in given language and English
         """
         bliss_dict = {}
-        lexicon = bliss_lexicon.BLISS_LEXICON
+        lexicon = BLISS_LEXICON
 
         if translator is None:
             translator = self.translator

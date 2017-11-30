@@ -40,15 +40,15 @@ DefaultTranslator.setTranslateAll(True)
 DefaultTranslator.translate(excerpts.hitchhikers_guide[:300], title="The Hitchhiker's Guide to the Galaxy")
 '''
 
-CustomTranslator = blisscribe.BlissTranslator(language="German", font_path=blisscribe.BlissTranslator.SANS_FONT)
+CustomTranslator = blisscribe.BlissTranslator(language="English", font_path=blisscribe.BlissTranslator.SANS_FONT)
 CustomTranslator.setSubAll(True)
 CustomTranslator.chooseOtherPOS(True)
 CustomTranslator.setFastTranslate(True)
 CustomTranslator.setTranslateAll(True)
 CustomTranslator.chooseOtherPOS(True)
 CustomTranslator.setSafeTranslate(False)
-CustomTranslator.lex_parser.writeBlissWordnet(CustomTranslator.getEngBlissDict())
-CustomTranslator.translate("Ich habe kein lust mehr, unser wir uns.")
+#CustomTranslator.lex_parser.writeBlissWordnet(CustomTranslator.getEngBlissDict())
+CustomTranslator.translate("Hi") #"Ich habe kein lust mehr, unser wir uns.")
 
 '''
 # Polish translation

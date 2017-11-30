@@ -7,12 +7,8 @@ BLISSYMBOLS:
     by a user.
 """
 import os
-
 from PIL import Image
-
 from bliss_encoding import BLISS_TO_UNICODE, UNICODE_TO_BLISS
-
-#import bliss_exceptions
 
 BLISS_TO_UNICODE = BLISS_TO_UNICODE
 UNICODE_TO_BLISS = UNICODE_TO_BLISS
@@ -91,13 +87,13 @@ class Blissymbol:
         #self.changed = False  # whether this Blissymbol's translations, etc. have changed at all
         self.synset = None
         self.synsets = self.initBlissymbolSynsets()
-        print("\nHi!  I'm the Blissymbol " + self.bliss_name + ", with the " +
-              "synsets: ")
+        #print("\nHi!  I'm the Blissymbol " + self.bliss_name + ", with the " +
+        #      "synsets: ")
         #print(self.synsets)
-        for synset in self.synsets:
-            print synset, ": " + self.translator.getSynsetDefn(synset)
-        print("and the unicode: " + self.unicode)
-        print("Hope this is okay... Bye!\n")
+        #for synset in self.synsets:
+        #    print synset, ": " + self.translator.getSynsetDefn(synset)
+        #print("and the unicode: " + self.unicode)
+        #print("Hope this is okay... Bye!\n")
 
     def checkImgFilename(self):
         """

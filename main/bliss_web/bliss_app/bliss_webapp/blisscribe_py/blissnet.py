@@ -22,7 +22,7 @@ BLISSNET = {
 	# cloud
 	"U+3205":	[wn.synset("cloud.n.02")],
 
-	# water, fluid, liquid, water,fluid,liquid
+	# water, fluid, liquid
 	"U+3206":	[wn.synset("body_of_water.n.01"),
 				wn.synset("fluid.n.01"),
 				wn.synset("fluid.n.02"),
@@ -36,7 +36,7 @@ BLISSNET = {
 				wn.synset("water.n.06"),
 				wn.synset("water_system.n.02")],
 
-	# oil, lubricant, oil,lubricant
+	# oil, lubricant
 	"U+3207":	[wn.synset("oil.n.01")],
 
 	# steam
@@ -53,7 +53,7 @@ BLISSNET = {
 	# ice
 	"U+320e":	[wn.synset("ice.n.01")],
 
-	# pool, snooker, pool,snooker
+	# pool, snooker
 	"U+320f":	[wn.synset("consortium.n.01"),
 				wn.synset("pond.n.01"),
 				wn.synset("pool.n.01"),
@@ -72,16 +72,16 @@ BLISSNET = {
 	# snowflake
 	"U+3211":	[wn.synset("snowflake.n.01")],
 
-	# freeze, solidify, freeze,solidify
+	# freeze, solidify
 	"U+3212":	[wn.synset("freeze.v.08")],
 
 	# rice
 	"U+3214":	[wn.synset("rice.n.01")],
 
-	# mud, clay, mud,clay
+	# mud, clay
 	"U+3215":	[wn.synset("mud.n.01")],
 
-	# swamp, bog, marsh, swamp,bog,marsh
+	# swamp, bog, marsh
 	"U+3216":	[wn.synset("bog.n.01"),
 				wn.synset("marsh.n.01"),
 				wn.synset("marsh.n.02"),
@@ -92,24 +92,24 @@ BLISSNET = {
 	# island
 	"U+3217":	[wn.synset("island.n.01")],
 
-	# medicine, medication, medicine,medication, medical practice, medicine,medical practice
+	# medicine, medication, medical practice practice
 	"U+3219":	[wn.synset("medicine.n.01"),
 				wn.synset("medicine.n.03")],
 
 	# sperm
 	"U+321b":	[wn.synset("sperm.n.01")],
 
-	# feeling, emotion, sensation, feeling,emotion,sensation
+	# feeling, emotion, sensation
 	"U+321f":	[wn.synset("emotion.n.01"),
 				wn.synset("feeling.n.01")],
 
-	# comfort, console, comfort,console
+	# comfort, console
 	"U+3221":	[wn.synset("comfort.v.01")],
 
 	# discomfort
 	"U+3222":	[wn.synset("discomfort.n.01")],
 
-	# cloth, fabric, material, textile, net, cloth,fabric,material,textile,net
+	# cloth, fabric, material, textile, net
 	"U+3223":	[wn.synset("fabric.n.01")],
 
 	# number
@@ -124,13 +124,13 @@ BLISSNET = {
 	# yard
 	"U+3228":	[wn.synset("yard.n.02")],
 
-	# fence, wall, fence,wall
+	# fence, wall
 	"U+3229":	[wn.synset("fence.n.01")],
 
 	# chimney
 	"U+322a":	[wn.synset("chimney.n.01")],
 
-	# ear, spike, capitulum, ear,spike,capitulum
+	# ear, spike, capitulum
 	"U+322b":	[wn.synset("auricle.n.02"),
 				wn.synset("capitulum.n.01"),
 				wn.synset("capitulum.n.03"),
@@ -155,7 +155,7 @@ BLISSNET = {
 	# deafness
 	"U+322d":	[wn.synset("deafness.n.01")],
 
-	# continue, pass, continue,pass
+	# continue, pass
 	"U+322f":	[wn.synset("authorize.v.01"),
 				wn.synset("communicate.v.01"),
 				wn.synset("continue.v.01"),
@@ -198,7 +198,7 @@ BLISSNET = {
 	# bubble
 	"U+3232":	[wn.synset("bubble.n.01")],
 
-	# give, offer, provide, give,offer,provide, sacrifice, offer,sacrifice
+	# give, offer, provide, sacrifice
 	"U+3233":	[wn.synset("offer.v.01"),
 				wn.synset("offer.v.02"),
 				wn.synset("offer.v.06"),
@@ -208,27 +208,27 @@ BLISSNET = {
 				wn.synset("sacrifice.v.04"),
 				wn.synset("volunteer.v.02")],
 
-	# exchange, substitute, trade, exchange,substitute,trade, substitution, exchange,substitution
+	# exchange, substitute, trade, substitution
 	"U+3234":	[wn.synset("trade.v.04")],
 
 	# forward
 	"U+3236":	[wn.synset("forward.n.01"),
 				wn.synset("forward.n.02")],
 
-	# meet, encounter, see, meet,encounter,see
+	# meet, encounter, see
 	"U+3237":	[wn.synset("meet.v.01"),
 				wn.synset("meet.v.02"),
 				wn.synset("meet.v.08"),
 				wn.synset("meet.v.10"),
 				wn.synset("run_into.v.01")],
 
-	# river, stream, current, river,stream,current
+	# river, stream, current
 	"U+3239":	[wn.synset("river.n.01")],
 
 	# agreement, contract
 	"U+323a":	[wn.synset("agreement.n.01")],
 
-	# back and forth, backward and forward, to and fro, back and forth,backward and forward,to and fro
+	# back and forth, backward and forward, to and fro
 	"U+323b":	[wn.synset("back_and_forth.r.01"),
 				wn.synset("up_and_down.r.01")],
 
@@ -247,10 +247,10 @@ BLISSNET = {
 				wn.synset("visit.n.01"),
 				wn.synset("visit.n.02")],
 
-	# understand, see, understand,see
+	# understand, see
 	"U+323e":	[wn.synset("understand.v.02")],
 
-	# crush, squeeze, crush,squeeze
+	# crush, squeeze
 	"U+3240":	[wn.synset("beat.v.01"),
 				wn.synset("break_down.v.01"),
 				wn.synset("coerce.v.01"),
@@ -268,14 +268,14 @@ BLISSNET = {
 				wn.synset("thrust.v.02"),
 				wn.synset("wedge.v.02")],
 
-	# push, shove, push,shove, pushing, push,pushing
+	# push, shove, pushing
 	"U+3241":	[wn.synset("energy.n.03"),
 				wn.synset("push.n.01"),
 				wn.synset("push.n.02"),
 				wn.synset("push.n.05"),
 				wn.synset("push_button.n.01")],
 
-	# end, arrival, stop, end,arrival,stop
+	# end, arrival, stop
 	"U+3243":	[wn.synset("arrival.n.01"),
 				wn.synset("arrival.n.02"),
 				wn.synset("end.n.01"),
@@ -285,11 +285,11 @@ BLISSNET = {
 				wn.synset("end.n.06"),
 				wn.synset("goal.n.01")],
 
-	# race, competition, contest, race,competition,contest
+	# race, competition, contest
 	"U+3244":	[wn.synset("competition.n.03"),
 				wn.synset("contest.n.01")],
 
-	# get, acquire, receive, get,acquire,receive
+	# get, acquire, receive
 	"U+3247":	[wn.synset("get.v.25"),
 				wn.synset("receive.v.01"),
 				wn.synset("receive.v.02")],
@@ -308,11 +308,11 @@ BLISSNET = {
 	"U+324d":	[wn.synset("success.n.01"),
 				wn.synset("success.n.03")],
 
-	# backward, back, backward,back
+	# backward, back
 	"U+324e":	[wn.synset("back.r.02"),
 				wn.synset("back.r.04")],
 
-	# gathering, assembly, meeting, conference, gathering,assembly,meeting,conference
+	# gathering, assembly, meeting, conference
 	"U+3251":	[wn.synset("meeting.n.01")],
 
 	# explosive
@@ -327,10 +327,10 @@ BLISSNET = {
 	# nucleus
 	"U+3256":	[wn.synset("nucleus.n.02")],
 
-	# rotate, circle, circulate, wind up, orbit, rotate,circle,circulate,wind up,orbit
+	# rotate, circle, circulate, wind up
 	"U+3257":	[wn.synset("revolve.v.01")],
 
-	# mix, blend, mix,blend
+	# mix, blend
 	"U+3258":	[wn.synset("blend.v.03"),
 				wn.synset("shuffle.v.03")],
 
@@ -352,10 +352,10 @@ BLISSNET = {
 				wn.synset("vault.v.01"),
 				wn.synset("vault.v.02")],
 
-	# turn, turning, turn,turning, play, turn,play
+	# turn, turning, play
 	"U+325a":	[wn.synset("turn.v.10")],
 
-	# swing, swinging, swing,swinging, sway, rock, swing,sway,rock
+	# swing, swinging, sway, rock
 	"U+325c":	[wn.synset("swing.n.02")],
 
 	# tractor
@@ -393,14 +393,14 @@ BLISSNET = {
 	# weather
 	"U+326a":	[wn.synset("weather.n.01")],
 
-	# change, alteration, change,alteration, alter, change,alter
+	# change, alteration, alter
 	"U+326b":	[wn.synset("change.v.02"),
 				wn.synset("change.v.03")],
 
 	# development
 	"U+326c":	[wn.synset("development.n.02")],
 
-	# machine, appliance, engine, motor, machine,appliance,engine,motor
+	# machine, appliance, engine, motor
 	"U+326d":	[wn.synset("machine.n.01")],
 
 	# ring
@@ -415,7 +415,7 @@ BLISSNET = {
 	# light
 	"U+3270":	[wn.synset("light.a.01")],
 
-	# egg, fried egg, poached egg, ovum, egg,ovum, boiled egg
+	# egg, fried egg, poached egg, ovum, boiled egg
 	"U+3271":	[wn.synset("egg.n.02")],
 
 	# head
@@ -436,7 +436,7 @@ BLISSNET = {
 	# beard
 	"U+3278":	[wn.synset("beard.n.01")],
 
-	# pimple, blemish, pimple,blemish
+	# pimple, blemish
 	"U+3279":	[wn.synset("pimple.n.01")],
 
 	# raccoon
@@ -470,7 +470,7 @@ BLISSNET = {
 	# metaphor
 	"U+3286":	[wn.synset("metaphor.n.01")],
 
-	# pretend, make believe, pretend,make believe
+	# pretend, make believe believe
 	"U+3287":	[wn.synset("dissemble.v.03"),
 				wn.synset("feign.v.01"),
 				wn.synset("guess.v.02"),
@@ -484,17 +484,17 @@ BLISSNET = {
 	# girl
 	"U+328a":	[wn.synset("female_child.n.01")],
 
-	# boy, lad, boy,lad
+	# boy, lad
 	"U+328b":	[wn.synset("boy.n.02"),
 				wn.synset("male_child.n.01"),
 				wn.synset("son.n.01")],
 
-	# child, kid, youngster, child,kid,youngster
+	# child, kid, youngster
 	"U+328c":	[wn.synset("child.n.01"),
 				wn.synset("child.n.02"),
 				wn.synset("child.n.03")],
 
-	# money, cash, money,cash
+	# money, cash
 	"U+328d":	[wn.synset("cash.n.01"),
 				wn.synset("cash.n.02"),
 				wn.synset("cash.n.03"),
@@ -502,10 +502,10 @@ BLISSNET = {
 				wn.synset("money.n.02"),
 				wn.synset("money.n.03")],
 
-	# flower, bloom, blossom, flower,bloom,blossom
+	# flower, bloom, blossom
 	"U+328f":	[wn.synset("flower.n.01")],
 
-	# stem, stalk, stem,stalk
+	# stem, stalk
 	"U+3290":	[wn.synset("stalk.n.02")],
 
 	# garden
@@ -517,7 +517,7 @@ BLISSNET = {
 	# park
 	"U+3295":	[wn.synset("park.n.02")],
 
-	# tennis, racket sport, racquet sport, tennis,racket sport,racquet sport
+	# tennis, racket sport, racquet sport
 	"U+3296":	[wn.synset("tennis.n.01")],
 
 	# mouth, open mouth, gape
@@ -560,7 +560,7 @@ BLISSNET = {
 	# blind
 	"U+32a0":	[wn.synset("blind.a.01")],
 
-	# taste, gustation, sense of taste, taste,gustation,sense of taste
+	# taste, gustation, sense of taste of taste
 	"U+32a1":	[wn.synset("preference.n.01"),
 				wn.synset("taste.n.06")],
 
@@ -570,20 +570,20 @@ BLISSNET = {
 				wn.synset("food.n.03"),
 				wn.synset("frozen_food.n.01")],
 
-	# spread, paste, spread,paste
+	# spread, paste
 	"U+32a3":	[wn.synset("spread.n.05")],
 
-	# be, am, are, is, exist, be,am,are,is,exist
+	# be, am, are, is, exist
 	"U+32a4":	[wn.synset("be.v.01"),
 				wn.synset("exist.v.01")],
 
-	# event, happening, occasion, event,happening,occasion
+	# event, happening, occasion
 	"U+32a5":	[wn.synset("event.n.01")],
 
 	# nonspeaking
 	"U+32a6":	[wn.synset("nonspeaking.a.01")],
 
-	# name, label, term, title, name,label,term,title
+	# name, label, term, title
 	"U+32a7":	[wn.synset("name.n.01")],
 
 	# language
@@ -591,7 +591,7 @@ BLISSNET = {
 				wn.synset("language.n.05"),
 				wn.synset("speech.n.02")],
 
-	# combination, connection, combination,connection
+	# combination, connection
 	"U+32a9":	[wn.synset("combination.n.01"),
 				wn.synset("combination.n.03")],
 
@@ -604,7 +604,7 @@ BLISSNET = {
 	# grapes
 	"U+32ac":	[wn.synset("grape.n.01")],
 
-	# bow, fore, bow,fore, arc, bow,arc
+	# bow, fore, arc
 	"U+32ad":	[wn.synset("arc.n.02"),
 				wn.synset("bow.n.01"),
 				wn.synset("bow.n.02"),
@@ -632,14 +632,14 @@ BLISSNET = {
 				wn.synset("ball.n.03"),
 				wn.synset("testis.n.01")],
 
-	# earphones, headphones, earphones,headphones
+	# earphones, headphones
 	"U+32b4":	[wn.synset("earphone.n.01"),
 				wn.synset("headset.n.01")],
 
 	# fruit
 	"U+32b5":	[wn.synset("fruit.n.01")],
 
-	# plum, drupe, plum,drupe
+	# plum, drupe
 	"U+32b7":	[wn.synset("plum.n.02")],
 
 	# cherries
@@ -652,7 +652,7 @@ BLISSNET = {
 	# cigarette
 	"U+32bb":	[wn.synset("cigarette.n.01")],
 
-	# pipe, smoking pipe, pipe,smoking pipe, hose, tube, pipe,hose,tube, pipe,tube
+	# pipe, smoking pipe pipe, hose, tube
 	"U+32bc":	[wn.synset("hose.n.02"),
 				wn.synset("hose.n.03"),
 				wn.synset("hosiery.n.01"),
@@ -675,21 +675,21 @@ BLISSNET = {
 	# scissors
 	"U+32bf":	[wn.synset("scissors.n.01")],
 
-	# baby, infant, baby,infant
+	# baby, infant
 	"U+32c1":	[wn.synset("baby.n.01")],
 
-	# raspberry, blackberry, compound berry, raspberry,blackberry,compound berry
+	# raspberry, blackberry, compound berry berry
 	"U+32c4":	[wn.synset("raspberry.n.01"),
 				wn.synset("raspberry.n.02")],
 
 	# conscience
 	"U+32c6":	[wn.synset("conscience.n.01")],
 
-	# forgive, pardon, forgive,pardon
+	# forgive, pardon
 	"U+32c7":	[wn.synset("excuse.v.01"),
 				wn.synset("forgive.v.01")],
 
-	# moral, good, right, moral,good,right
+	# moral, good, right
 	"U+32c8":	[wn.synset("correct.a.01"),
 				wn.synset("correct.s.02"),
 				wn.synset("estimable.s.02"),
@@ -699,7 +699,7 @@ BLISSNET = {
 				wn.synset("right.a.04"),
 				wn.synset("right.a.05")],
 
-	# immoral, bad, wrong, immoral,bad,wrong
+	# immoral, bad, wrong
 	"U+32c9":	[wn.synset("amiss.s.01"),
 				wn.synset("bad.a.01"),
 				wn.synset("bad.s.02"),
@@ -726,7 +726,7 @@ BLISSNET = {
 				wn.synset("wrong.s.06"),
 				wn.synset("wrong.s.07")],
 
-	# mind, intellect, reason, mind,intellect,reason
+	# mind, intellect, reason
 	"U+32ca":	[wn.synset("intellectual.n.01"),
 				wn.synset("mind.n.01"),
 				wn.synset("mind.n.02"),
@@ -734,13 +734,13 @@ BLISSNET = {
 				wn.synset("mind.n.07"),
 				wn.synset("thinker.n.01")],
 
-	# wish, desire, wish,desire
+	# wish, desire
 	"U+32cb":	[wn.synset("wish.v.03")],
 
 	# decision
 	"U+32cd":	[wn.synset("decision.n.02")],
 
-	# idea, thought, idea,thought
+	# idea, thought
 	"U+32ce":	[wn.synset("idea.n.01")],
 
 	# opinion
@@ -762,7 +762,7 @@ BLISSNET = {
 	# fact
 	"U+32d3":	[wn.synset("fact.n.01")],
 
-	# meaning, sense, significance, meaning,sense,significance
+	# meaning, sense, significance
 	"U+32d4":	[wn.synset("meaning.n.02")],
 
 	# use
@@ -770,13 +770,13 @@ BLISSNET = {
 				wn.synset("use.v.02"),
 				wn.synset("use.v.04")],
 
-	# knowledge, class, knowledge,class
+	# knowledge, class
 	"U+32d6":	[wn.synset("cognition.n.01")],
 
 	# forget
 	"U+32d7":	[wn.synset("forget.v.02")],
 
-	# kind, kindly, kind,kindly
+	# kind, kindly
 	"U+32d9":	[wn.synset("charitable.s.03"),
 				wn.synset("kind.a.01"),
 				wn.synset("kind.s.02"),
@@ -789,24 +789,24 @@ BLISSNET = {
 				wn.synset("sports_fan.n.01"),
 				wn.synset("ventilator.n.01")],
 
-	# good, well, fine, ok, okay, all right, good,well,fine,ok,okay,all right
+	# good, well, fine, ok, okay, all right right
 	"U+32db":	[wn.synset("good.a.01")],
 
-	# science, body of learning, science,body of learning
+	# science, body of learning of learning
 	"U+32dc":	[wn.synset("science.n.01")],
 
 	# truth
 	"U+32dd":	[wn.synset("truth.n.01"),
 				wn.synset("truth.n.03")],
 
-	# mathematics, arithmetic, math, mathematics,arithmetic,math, math,mathematics
+	# mathematics, arithmetic, math
 	"U+32de":	[wn.synset("mathematics.n.01")],
 
 	# beetle
 	"U+32df":	[wn.synset("beetle.n.01"),
 				wn.synset("mallet.n.03")],
 
-	# bad, wrong, bad,wrong
+	# bad, wrong
 	"U+32e1":	[wn.synset("bad.s.07")],
 
 	# judge
@@ -814,12 +814,12 @@ BLISSNET = {
 				wn.synset("judge.v.01"),
 				wn.synset("pronounce.v.02")],
 
-	# selfishness, egoism, selfishness,egoism
+	# selfishness, egoism
 	"U+32e3":	[wn.synset("egoism.n.01"),
 				wn.synset("egoism.n.02"),
 				wn.synset("selfishness.n.01")],
 
-	# consideration, thoughtfulness, consideration,thoughtfulness
+	# consideration, thoughtfulness
 	"U+32e4":	[wn.synset("circumstance.n.03"),
 				wn.synset("consideration.n.01"),
 				wn.synset("consideration.n.03"),
@@ -829,7 +829,7 @@ BLISSNET = {
 				wn.synset("retainer.n.01"),
 				wn.synset("thoughtfulness.n.03")],
 
-	# doubt, uncertainty, doubt,uncertainty
+	# doubt, uncertainty
 	"U+32e5":	[wn.synset("doubt.n.02")],
 
 	# interest
@@ -841,7 +841,7 @@ BLISSNET = {
 				wn.synset("pastime.n.01"),
 				wn.synset("sake.n.01")],
 
-	# importance, significance, importance,significance
+	# importance, significance
 	"U+32e7":	[wn.synset("importance.n.01"),
 				wn.synset("importance.n.02"),
 				wn.synset("meaning.n.01"),
@@ -851,7 +851,7 @@ BLISSNET = {
 	# calculate
 	"U+32e8":	[wn.synset("calculate.v.01")],
 
-	# lead, direct, guide, lead,direct,guide
+	# lead, direct, guide
 	"U+32e9":	[wn.synset("jumper_cable.n.01"),
 				wn.synset("lead.n.01"),
 				wn.synset("lead.n.02"),
@@ -883,11 +883,11 @@ BLISSNET = {
 	# horizon
 	"U+32ee":	[wn.synset("horizon.n.01")],
 
-	# curve, curved line, curve,curved line
+	# curve, curved line line
 	"U+32ef":	[wn.synset("bend.n.03"),
 				wn.synset("curve.n.01")],
 
-	# container, bowl, holder, pouch, basket, container,bowl,holder,pouch,basket, container,basket
+	# container, bowl, holder, pouch, basket
 	"U+32f0":	[wn.synset("basket.n.01"),
 				wn.synset("basket.n.02"),
 				wn.synset("basket.n.03"),
@@ -916,19 +916,19 @@ BLISSNET = {
 				wn.synset("float.v.05"),
 				wn.synset("float.v.09")],
 
-	# sieve, colander, strainer, sieve,colander,strainer
+	# sieve, colander, strainer
 	"U+32f2":	[wn.synset("colander.n.01"),
 				wn.synset("sieve.n.01"),
 				wn.synset("strainer.n.01")],
 
-	# take, bring, carry, move, take,bring,carry,move, transport, carry,move,transport, movement, move,movement
+	# take, bring, carry, move, transport, movement
 	"U+32f3":	[wn.synset("bring.v.01"),
 				wn.synset("lead.v.01")],
 
 	# apple
 	"U+32f7":	[wn.synset("apple.n.01")],
 
-	# peach, nectarine, peach,nectarine
+	# peach, nectarine
 	"U+32f8":	[wn.synset("peach.n.03")],
 
 	# cabbage
@@ -951,13 +951,13 @@ BLISSNET = {
 	# snake, grass snake, viper, boa
 	"U+3301":	[wn.synset("snake.n.01")],
 
-	# dolphin, porpoise, dolphin,porpoise
+	# dolphin, porpoise
 	"U+3304":	[wn.synset("dolphin.n.02")],
 
 	# pig, boar
 	"U+3306":	[wn.synset("hog.n.03")],
 
-	# spiral, curl, spiral,curl
+	# spiral, curl
 	"U+3307":	[wn.synset("coil.n.01"),
 				wn.synset("helix.n.01"),
 				wn.synset("spiral.n.01"),
@@ -965,13 +965,13 @@ BLISSNET = {
 				wn.synset("spiral.n.04"),
 				wn.synset("spiral.n.06")],
 
-	# gun, firearm, gun,firearm
+	# gun, firearm
 	"U+3309":	[wn.synset("gun.n.01")],
 
 	# pliers
 	"U+330b":	[wn.synset("pliers.n.01")],
 
-	# dog, canine, canid, dog,canine
+	# dog, canine, canid
 	"U+330c":	[wn.synset("dog.n.01")],
 
 	# tail
@@ -980,7 +980,7 @@ BLISSNET = {
 	# pineapple
 	"U+330f":	[wn.synset("pineapple.n.02")],
 
-	# airplane, aeroplane, plane, airplane,aeroplane,plane
+	# airplane, aeroplane, plane
 	"U+3312":	[wn.synset("airplane.n.01")],
 
 	# angel
@@ -1001,17 +1001,17 @@ BLISSNET = {
 	# branch
 	"U+331f":	[wn.synset("branch.n.02")],
 
-	# trunk, tree trunk, bole, trunk,tree trunk,bole
+	# trunk, tree trunk
 	"U+3320":	[wn.synset("trunk.n.01")],
 
-	# evergreen tree, spruce, fir, fir tree, evergreen tree,spruce,fir,fir tree
+	# evergreen tree, spruce, fir, fir tree
 	"U+3321":	[wn.synset("evergreen.n.01"),
 				wn.synset("fir.n.01"),
 				wn.synset("fir.n.02"),
 				wn.synset("spruce.n.01"),
 				wn.synset("spruce.n.02")],
 
-	# countryside, country, countryside,country
+	# countryside, country
 	"U+3322":	[wn.synset("country.n.04"),
 				wn.synset("countryside.n.01")],
 
@@ -1040,14 +1040,14 @@ BLISSNET = {
 	# grass
 	"U+332e":	[wn.synset("grass.n.01")],
 
-	# grain, cereal, grain,cereal
+	# grain, cereal
 	"U+332f":	[wn.synset("grain.n.02")],
 
 	# field
 	"U+3330":	[wn.synset("field.n.03"),
 				wn.synset("field.n.05")],
 
-	# iron, smoothing iron, iron,smoothing iron
+	# iron, smoothing iron iron
 	"U+3331":	[wn.synset("iron.n.04")],
 
 	# beaver
@@ -1085,7 +1085,7 @@ BLISSNET = {
 	# peas
 	"U+333b":	[wn.synset("pea.n.01")],
 
-	# expectation, anticipation, expectation,anticipation
+	# expectation, anticipation
 	"U+333c":	[wn.synset("anticipation.n.04"),
 				wn.synset("expectation.n.01")],
 
@@ -1095,10 +1095,10 @@ BLISSNET = {
 	# snowshoe
 	"U+333e":	[wn.synset("snowshoe.n.01")],
 
-	# leaf, flap, leaf,flap
+	# leaf, flap
 	"U+333f":	[wn.synset("leaf.n.01")],
 
-	# turnip, rutabaga, vegetable, turnip,rutabaga,vegetable
+	# turnip, rutabaga, vegetable
 	"U+3340":	[wn.synset("rutabaga.n.01"),
 				wn.synset("rutabaga.n.02"),
 				wn.synset("turnip.n.01"),
@@ -1113,10 +1113,10 @@ BLISSNET = {
 				wn.synset("lemon.n.04"),
 				wn.synset("lemon.n.05")],
 
-	# butterfly, moth, butterfly,moth
+	# butterfly, moth
 	"U+3342":	[wn.synset("butterfly.n.01")],
 
-	# body, trunk, body,trunk
+	# body, trunk
 	"U+3343":	[wn.synset("body.n.01")],
 
 	# chest
@@ -1139,7 +1139,7 @@ BLISSNET = {
 	# shoulder
 	"U+3349":	[wn.synset("shoulder.n.01")],
 
-	# stomach, tummy, tum, stomach,tummy,tum, abdomen, belly, stomach,abdomen,belly
+	# stomach, tummy, tum, abdomen, belly
 	"U+334b":	[wn.synset("stomach.n.01")],
 
 	# embryo
@@ -1149,13 +1149,13 @@ BLISSNET = {
 	"U+334e":	[wn.synset("hair.n.01"),
 				wn.synset("hair.n.06")],
 
-	# uterus, womb, uterus,womb
+	# uterus, womb
 	"U+334f":	[wn.synset("uterus.n.01")],
 
 	# vagina
 	"U+3351":	[wn.synset("vagina.n.01")],
 
-	# ago, then, ago,then
+	# ago, then
 	"U+3352":	[wn.synset("ago.r.01"),
 				wn.synset("ago.s.01"),
 				wn.synset("then.n.01"),
@@ -1164,7 +1164,7 @@ BLISSNET = {
 	# now
 	"U+3353":	[wn.synset("now.n.01")],
 
-	# then, so, later, then,so,later
+	# then, so, later
 	"U+3354":	[wn.synset("belated.s.01"),
 				wn.synset("by_and_by.r.01"),
 				wn.synset("former.s.03"),
@@ -1194,7 +1194,7 @@ BLISSNET = {
 	"U+3357":	[wn.synset("avocado.n.01"),
 				wn.synset("avocado.n.02")],
 
-	# bread, loaf of bread, loaf, bread,loaf of bread,loaf, sliced bread
+	# bread, loaf of bread, loaf of sliced bread
 	"U+3358":	[wn.synset("bread.n.01")],
 
 	# toast
@@ -1205,7 +1205,7 @@ BLISSNET = {
 	# pita
 	"U+335a":	[wn.synset("pita.n.01")],
 
-	# roll, bun, roll,bun
+	# roll, bun
 	"U+335b":	[wn.synset("bun.n.01")],
 
 	# hair
@@ -1217,10 +1217,10 @@ BLISSNET = {
 				wn.synset("haircloth.n.01"),
 				wn.synset("mane.n.02")],
 
-	# fur, coat, hair, fur,coat, jacket, jumper, sweater, coat,jacket,jumper,sweater
+	# fur, coat, hair, jacket, jumper, sweater
 	"U+3361":	[wn.synset("fur.n.01")],
 
-	# pit, stone, pit,stone
+	# pit, stone
 	"U+3362":	[wn.synset("pit.v.01"),
 				wn.synset("pit.v.03"),
 				wn.synset("scar.v.01"),
@@ -1230,11 +1230,11 @@ BLISSNET = {
 	"U+3363":	[wn.synset("enclosure.n.01"),
 				wn.synset("enclosure.n.03")],
 
-	# bottom, base, bottom,base, bottom of a thing, bottom,bottom of a thing
+	# bottom, base, bottom of a thing of a thing
 	"U+3364":	[wn.synset("bed.n.03"),
 				wn.synset("buttocks.n.01")],
 
-	# top, top of a thing, top,top of a thing
+	# top, top of a thing of a thing
 	"U+3366":	[wn.synset("acme.n.01"),
 				wn.synset("circus_tent.n.01"),
 				wn.synset("peak.n.04"),
@@ -1246,8 +1246,7 @@ BLISSNET = {
 				wn.synset("top.n.08"),
 				wn.synset("top.n.09"),
 				wn.synset("top.n.10")],
-
-	# out of, exit, out of,exit
+	# out of, exit
 	"U+336a":	[wn.synset("exit.n.01"),
 				wn.synset("exit.n.03"),
 				wn.synset("passing.n.02")],
@@ -1268,7 +1267,7 @@ BLISSNET = {
 	"U+3373":	[wn.synset("window.n.01"),
 				wn.synset("window.n.08")],
 
-	# all, every, everything, total, whole, all,every,everything,total,whole
+	# all, every, everything, total, whole
 	"U+3374":	[wn.synset("all.a.01"),
 				wn.synset("all.s.02"),
 				wn.synset("every.s.01"),
@@ -1279,7 +1278,7 @@ BLISSNET = {
 				wn.synset("whole.n.02"),
 				wn.synset("wholly.r.01")],
 
-	# chest of drawers, bureau, dresser, chest of drawers,bureau,dresser
+	# chest of drawers, bureau, dresser
 	"U+3376":	[wn.synset("chest_of_drawers.n.01")],
 
 	# drawer
@@ -1288,7 +1287,7 @@ BLISSNET = {
 	# book
 	"U+3378":	[wn.synset("book.n.01")],
 
-	# cupboard, closet, wardrobe, cupboard,closet,wardrobe
+	# cupboard, closet, wardrobe
 	"U+3379":	[wn.synset("cabinet.n.03"),
 				wn.synset("closet.n.04"),
 				wn.synset("cupboard.n.01"),
@@ -1297,7 +1296,7 @@ BLISSNET = {
 				wn.synset("wardrobe.n.03"),
 				wn.synset("water_closet.n.01")],
 
-	# answer, reply, answer,reply
+	# answer, reply
 	"U+337a":	[wn.synset("answer.n.01")],
 
 	# exit
@@ -1306,10 +1305,10 @@ BLISSNET = {
 	# postcard
 	"U+337c":	[wn.synset("postcard.n.01")],
 
-	# transport, transportation, transport,transportation
+	# transport, transportation
 	"U+337f":	[wn.synset("transportation.n.05")],
 
-	# cart, carriage, cart,carriage
+	# cart, carriage
 	"U+3380":	[wn.synset("assiduity.n.01"),
 				wn.synset("baby_buggy.n.01"),
 				wn.synset("carriage.n.02"),
@@ -1319,10 +1318,10 @@ BLISSNET = {
 				wn.synset("passenger_car.n.01"),
 				wn.synset("stagecoach.n.01")],
 
-	# thing, object, thing,object
+	# thing, object
 	"U+3382":	[wn.synset("object.n.01")],
 
-	# goods, contents, goods,contents
+	# goods, contents
 	"U+3383":	[wn.synset("capacity.n.03"),
 				wn.synset("commodity.n.01"),
 				wn.synset("content.n.01"),
@@ -1336,13 +1335,13 @@ BLISSNET = {
 				wn.synset("message.n.02"),
 				wn.synset("subject.n.02")],
 
-	# waste, garbage, rubbish, trash, waste,garbage,rubbish,trash
+	# waste, garbage, rubbish, trash
 	"U+3385":	[wn.synset("folderol.n.01"),
 				wn.synset("garbage.n.01"),
 				wn.synset("rubbish.n.01"),
 				wn.synset("trash.n.02")],
 
-	# block, brick, block,brick, city block, block,city block
+	# block, brick, city block block
 	"U+3388":	[wn.synset("auction_block.n.01"),
 				wn.synset("block.n.01"),
 				wn.synset("block.n.02"),
@@ -1356,7 +1355,7 @@ BLISSNET = {
 				wn.synset("engine_block.n.01"),
 				wn.synset("pulley.n.01")],
 
-	# pull, drag, tow, tug, pull,drag,tow,tug, pulling, pull,pulling
+	# pull, drag, tow, tug, pulling
 	"U+338a":	[wn.synset("pull.v.01")],
 
 	# solid thing
@@ -1365,13 +1364,13 @@ BLISSNET = {
 	# kite
 	"U+3391":	[wn.synset("kite.n.03")],
 
-	# rectangle, oblong, rectangle,oblong
+	# rectangle, oblong
 	"U+3394":	[wn.synset("rectangle.n.01")],
 
-	# parcel, package, parcel,package
+	# parcel, package
 	"U+3395":	[wn.synset("package.n.01")],
 
-	# paper, card, page, paper,card,page
+	# paper, card, page
 	"U+3396":	[wn.synset("batting_order.n.01"),
 				wn.synset("calling_card.n.02"),
 				wn.synset("card.n.01"),
@@ -1412,7 +1411,7 @@ BLISSNET = {
 	# ceiling
 	"U+339b":	[wn.synset("ceiling.n.01")],
 
-	# floor, storey, level, etage, floor,storey,level,etage
+	# floor, storey, level, etage
 	"U+339c":	[wn.synset("degree.n.01"),
 				wn.synset("degree.n.02"),
 				wn.synset("floor.n.01"),
@@ -1431,7 +1430,7 @@ BLISSNET = {
 				wn.synset("level.n.05"),
 				wn.synset("level.n.07")],
 
-	# floor covering, linoleum, floor covering,linoleum
+	# floor covering, linoleum
 	"U+339d":	[wn.synset("linoleum.n.01")],
 
 	# wall
@@ -1460,17 +1459,17 @@ BLISSNET = {
 	# fireplace
 	"U+33a3":	[wn.synset("fireplace.n.01")],
 
-	# freedom, liberty, freedom,liberty
+	# freedom, liberty
 	"U+33a4":	[wn.synset("freedom.n.01")],
 
 	# awake
 	"U+33a5":	[wn.synset("alert.s.03"),
 				wn.synset("awake.a.01")],
 
-	# question, be sceptical, doubt, question,be sceptical,doubt
+	# question, be sceptical, doubt
 	"U+33a6":	[wn.synset("interrogate.v.02")],
 
-	# badge, shield, badge,shield
+	# badge, shield
 	"U+33a9":	[wn.synset("badge.n.01"),
 				wn.synset("badge.n.02"),
 				wn.synset("carapace.n.01"),
@@ -1480,7 +1479,7 @@ BLISSNET = {
 	# table
 	"U+33aa":	[wn.synset("table.n.03")],
 
-	# board, board of directors, executive, board,board of directors,executive
+	# board, board of directors, executive
 	"U+33ab":	[wn.synset("administrator.n.03"),
 				wn.synset("board.n.01"),
 				wn.synset("board.n.02"),
@@ -1515,7 +1514,7 @@ BLISSNET = {
 				wn.synset("brush.v.05"),
 				wn.synset("brush.v.06")],
 
-	# box, cube, box,cube
+	# box, cube
 	"U+33b2":	[wn.synset("box.n.01")],
 
 	# comb
@@ -1524,15 +1523,15 @@ BLISSNET = {
 	# shekel
 	"U+33b4":	[wn.synset("shekel.n.01")],
 
-	# pot, kettle, boiler, pot,kettle,boiler, pan, pot,pan
+	# pot, kettle, boiler, pan
 	"U+33b5":	[wn.synset("pot.n.01"),
 				wn.synset("pot.n.03")],
 
-	# glass, drinking glass, glass,drinking glass
+	# glass, drinking glass glass
 	"U+33b6":	[wn.synset("glass.n.02"),
 				wn.synset("glass.n.03")],
 
-	# mug, cup, mug,cup
+	# mug, cup
 	"U+33b7":	[wn.synset("chump.n.01"),
 				wn.synset("countenance.n.03"),
 				wn.synset("cup.n.01"),
@@ -1546,14 +1545,14 @@ BLISSNET = {
 				wn.synset("mug.n.01"),
 				wn.synset("mug.n.04")],
 
-	# effect, result, effect,result
+	# effect, result
 	"U+33b9":	[wn.synset("consequence.n.01"),
 				wn.synset("effect.n.03"),
 				wn.synset("effect.n.05"),
 				wn.synset("effect.n.06"),
 				wn.synset("impression.n.02")],
 
-	# make, manufacture, produce, make,manufacture,produce
+	# make, manufacture, produce
 	"U+33ba":	[wn.synset("produce.v.02")],
 
 	# cause
@@ -1563,7 +1562,7 @@ BLISSNET = {
 				wn.synset("cause.n.02"),
 				wn.synset("lawsuit.n.01")],
 
-	# therefore, so, so that, therefore,so,so that
+	# therefore, so, so that that
 	"U+33bc":	[wn.synset("consequently.r.02"),
 				wn.synset("sol.n.03"),
 				wn.synset("therefore.r.01")],
@@ -1574,7 +1573,7 @@ BLISSNET = {
 	# mine
 	"U+33be":	[wn.synset("mine.n.01")],
 
-	# stone, rock, stone,rock
+	# stone, rock
 	"U+33bf":	[wn.synset("rock.n.01"),
 				wn.synset("rock.n.02"),
 				wn.synset("rock.n.03"),
@@ -1589,7 +1588,7 @@ BLISSNET = {
 	# bone
 	"U+33c5":	[wn.synset("bone.n.01")],
 
-	# structure, construction, structure,construction
+	# structure, construction
 	"U+33c6":	[wn.synset("structure.n.01"),
 				wn.synset("structure.n.02"),
 				wn.synset("structure.n.03")],
@@ -1597,7 +1596,7 @@ BLISSNET = {
 	# joint
 	"U+33c7":	[wn.synset("joint.n.01")],
 
-	# over, above, superior, over,above,superior
+	# over, above, superior
 	"U+33c9":	[wn.synset("above.n.01"),
 				wn.synset("above.r.01"),
 				wn.synset("above.r.02"),
@@ -1624,7 +1623,7 @@ BLISSNET = {
 				wn.synset("division.n.12"),
 				wn.synset("part.n.09")],
 
-	# part, bit, piece, portion, part of, part,bit,piece,portion,part of
+	# part, bit, piece, portion, part of of
 	"U+33cb":	[wn.synset("bit.n.05"),
 				wn.synset("morsel.n.02")],
 
@@ -1642,7 +1641,7 @@ BLISSNET = {
 	"U+33ce":	[wn.synset("speed_of_light.n.01"),
 				wn.synset("there.n.01")],
 
-	# before, in front of, prior to, before,in front of,prior to
+	# before, in front of, prior to
 	"U+33cf":	[wn.synset("ahead.r.01"),
 				wn.synset("earlier.r.01")],
 
@@ -1657,16 +1656,16 @@ BLISSNET = {
 	# that
 	"U+33d3":	[wn.synset("such.s.01")],
 
-	# powder, dust, powder,dust
+	# powder, dust
 	"U+33d5":	[wn.synset("powder.n.01")],
 
 	# stamp
 	"U+33d7":	[wn.synset("stamp.n.08")],
 
-	# fold, folding, pleating, fold,folding,pleating, pleat, fold,pleat
+	# fold, folding, pleating, pleat
 	"U+33d9":	[wn.synset("fold.v.01")],
 
-	# space, dimension, space,dimension
+	# space, dimension
 	"U+33db":	[wn.synset("dimension.n.01"),
 				wn.synset("dimension.n.03"),
 				wn.synset("distance.n.05"),
@@ -1693,7 +1692,7 @@ BLISSNET = {
 	# muscle
 	"U+33df":	[wn.synset("muscle.n.01")],
 
-	# strong, powerful, strong,powerful
+	# strong, powerful
 	"U+33e0":	[wn.synset("brawny.s.01"),
 				wn.synset("firm.s.03"),
 				wn.synset("hard.s.10"),
@@ -1713,23 +1712,23 @@ BLISSNET = {
 	# health
 	"U+33e2":	[wn.synset("health.n.01")],
 
-	# ride, drive, ride,drive
+	# ride, drive
 	"U+33e4":	[wn.synset("drive.v.01")],
 
 	# tray
 	"U+33e8":	[wn.synset("tray.n.01")],
 
-	# buttocks, bottom, bum, rear, ass, buttocks,bottom,bum,rear,ass, back of a thing, rear,back of a thing
+	# buttocks, bottom, bum, rear, ass, back of a thing of a thing
 	"U+33eb":	[wn.synset("buttocks.n.01")],
 
-	# genitals, sex organs, genitals,sex organs
+	# genitals, sex organs organs
 	"U+33ec":	[wn.synset("genitalia.n.01")],
 
-	# erection, erect penis, erection,erect penis
+	# erection, erect penis penis
 	"U+33ed":	[wn.synset("erecting.n.01"),
 				wn.synset("erection.n.01")],
 
-	# male, masculine, male,masculine
+	# male, masculine
 	"U+33ee":	[wn.synset("male.a.01"),
 				wn.synset("male.s.02"),
 				wn.synset("male.s.03"),
@@ -1765,12 +1764,12 @@ BLISSNET = {
 				wn.synset("right.s.12"),
 				wn.synset("veracious.s.02")],
 
-	# key, tonality, key,tonality
+	# key, tonality
 	"U+33f3":	[wn.synset("key.n.01"),
 				wn.synset("key.n.04"),
 				wn.synset("key.n.15")],
 
-	# protection, shelter, protection,shelter
+	# protection, shelter
 	"U+33f5":	[wn.synset("protection.n.01"),
 				wn.synset("protection.n.04"),
 				wn.synset("protective_covering.n.01")],
@@ -1778,16 +1777,16 @@ BLISSNET = {
 	# harbour
 	"U+33f6":	[wn.synset("seaport.n.01")],
 
-	# clothing, clothes, garment, clothing,clothes,garment
+	# clothing, clothes, garment
 	"U+33f7":	[wn.synset("clothing.n.01")],
 
-	# marriage, wedding, marriage,wedding
+	# marriage, wedding
 	"U+33f8":	[wn.synset("marriage.n.01"),
 				wn.synset("marriage.n.03"),
 				wn.synset("marriage.n.04"),
 				wn.synset("wedding.n.01")],
 
-	# cone, conifer cone, strobilus, cone,conifer cone,strobilus
+	# cone, conifer cone, strobilus
 	"U+33f9":	[wn.synset("cone.n.01"),
 				wn.synset("cone.n.02"),
 				wn.synset("cone.n.03"),
@@ -1812,7 +1811,7 @@ BLISSNET = {
 	# son
 	"U+33fe":	[wn.synset("son.n.01")],
 
-	# offspring, child, offspring,child
+	# offspring, child
 	"U+33ff":	[wn.synset("offspring.n.01")],
 
 	# umbrella
@@ -1821,17 +1820,17 @@ BLISSNET = {
 				wn.synset("umbrella.n.02"),
 				wn.synset("umbrella.n.03")],
 
-	# mother, mom, mommy, mum, mother,mom,mommy,mum
+	# mother, mom, mommy, mum
 	"U+3401":	[wn.synset("mother.n.01")],
 
-	# father, dad, daddy, papa, pa, pop, father,dad,daddy,papa,pa,pop
+	# father, dad, daddy, papa, pa, pop
 	"U+3402":	[wn.synset("father.n.01"),
 				wn.synset("father.n.03"),
 				wn.synset("father.n.06"),
 				wn.synset("forefather.n.01"),
 				wn.synset("founder.n.02")],
 
-	# relative, relation, relative,relation
+	# relative, relation
 	"U+3403":	[wn.synset("relation.n.01"),
 				wn.synset("relation.n.04"),
 				wn.synset("relation.n.06"),
@@ -1855,20 +1854,20 @@ BLISSNET = {
 	# uncle
 	"U+3408":	[wn.synset("uncle.n.01")],
 
-	# grandmother, grandma, granny, grandmother,grandma,granny
+	# grandmother, grandma, granny
 	"U+3409":	[wn.synset("grandma.n.01")],
 
-	# grandfather, granddad, grandpa, grandfather,granddad,grandpa
+	# grandfather, granddad, grandpa
 	"U+340c":	[wn.synset("grandfather.n.01")],
 
-	# illness, disease, sickness, illness,disease,sickness
+	# illness, disease, sickness
 	"U+3410":	[wn.synset("illness.n.01")],
 
 	# purpose
 	"U+3412":	[wn.synset("function.n.02"),
 				wn.synset("purpose.n.01")],
 
-	# opposition, counter purpose, opposition,counter purpose
+	# opposition, counter purpose purpose
 	"U+3417":	[wn.synset("confrontation.n.04"),
 				wn.synset("enemy.n.02"),
 				wn.synset("opposition.n.02"),
@@ -1887,7 +1886,7 @@ BLISSNET = {
 				wn.synset("pointer.n.02"),
 				wn.synset("pointer.n.04")],
 
-	# about, concerning, in relation to, of, on, about,concerning,in relation to,of,on
+	# about, concerning, in relation to, of
 	"U+341c":	[wn.synset("about.r.02"),
 				wn.synset("about.r.03"),
 				wn.synset("about.r.04"),
@@ -1919,11 +1918,11 @@ BLISSNET = {
 	# heat
 	"U+3423":	[wn.synset("heat.v.01")],
 
-	# cold, common cold, cold,common cold
+	# cold, common cold cold
 	"U+3424":	[wn.synset("cold.a.01"),
 				wn.synset("cold.a.02")],
 
-	# nuclear radiation, radioactivity, nuclear radiation,radioactivity
+	# nuclear radiation, radioactivity
 	"U+3425":	[wn.synset("radiation.n.04")],
 
 	# or
@@ -1931,38 +1930,38 @@ BLISSNET = {
 				wn.synset("operating_room.n.01"),
 				wn.synset("oregon.n.01")],
 
-	# against, opposed to, against,opposed to
+	# against, opposed to to
 	"U+3427":	[wn.synset("antonym.n.01"),
 				wn.synset("contrary.n.02"),
 				wn.synset("inverse.n.01"),
 				wn.synset("reverse.n.01")],
 
-	# person, human being, individual, human, person,human being,individual,human
+	# person, human being, individual
 	"U+3428":	[wn.synset("person.n.01")],
 
-	# spouse, cohabitant, partner, spouse,cohabitant,partner, dancing, business)
+	# spouse, cohabitant, partner
 	"U+342d":	[wn.synset("collaborator.n.03"),
 				wn.synset("partner.n.03"),
 				wn.synset("spouse.n.01")],
 
-	# addition, gain, addition,gain
+	# addition, gain
 	"U+3431":	[wn.synset("summation.n.04")],
 
-	# and, also, plus, too, and,also,plus,too
+	# and, also, plus, too
 	"U+3434":	[wn.synset("asset.n.01"),
 				wn.synset("besides.r.02"),
 				wn.synset("excessively.r.01"),
 				wn.synset("summation.n.04")],
 
-	# belongs to, of, belongs to,of
+	# belongs to, of
 	"U+3437":	[wn.synset("delaware.n.04")],
 
-	# cross, Christianity, cross,Christianity
+	# cross, Christianity
 	"U+3438":	[wn.synset("cross.v.05"),
 				wn.synset("intersect.v.01"),
 				wn.synset("traverse.v.01")],
 
-	# across, through, across,through
+	# across, through
 	"U+3439":	[wn.synset("across.r.01"),
 				wn.synset("across.r.02"),
 				wn.synset("done.s.01"),
@@ -1978,7 +1977,7 @@ BLISSNET = {
 	# multiplication
 	"U+343a":	[wn.synset("multiplication.n.03")],
 
-	# choice, selection, election, choice,selection,election
+	# choice, selection, election
 	"U+343c":	[wn.synset("choice.n.01"),
 				wn.synset("choice.n.02"),
 				wn.synset("option.n.02")],
@@ -1997,7 +1996,7 @@ BLISSNET = {
 				wn.synset("plus_sign.n.01"),
 				wn.synset("quite.r.01")],
 
-	# much, many, very, much,many,very
+	# much, many, very
 	"U+343e":	[wn.synset("identical.s.02"),
 				wn.synset("many.a.01"),
 				wn.synset("much.a.01"),
@@ -2018,13 +2017,13 @@ BLISSNET = {
 	# comet
 	"U+3447":	[wn.synset("comet.n.01")],
 
-	# knife, sword, knife,sword
+	# knife, sword
 	"U+3448":	[wn.synset("knife.n.01")],
 
 	# plough
 	"U+344a":	[wn.synset("plow.n.01")],
 
-	# creation, nature, creation,nature
+	# creation, nature
 	"U+344b":	[wn.synset("creation.n.01"),
 				wn.synset("creation.n.02")],
 
@@ -2037,7 +2036,7 @@ BLISSNET = {
 	# pyramid
 	"U+344e":	[wn.synset("pyramid.n.01")],
 
-	# rocket, spaceship, rocket,spaceship
+	# rocket, spaceship
 	"U+3450":	[wn.synset("rocket.n.01"),
 				wn.synset("rocket.n.02"),
 				wn.synset("rocket.n.03"),
@@ -2045,7 +2044,7 @@ BLISSNET = {
 				wn.synset("skyrocket.n.02"),
 				wn.synset("starship.n.01")],
 
-	# female, feminine, female,feminine
+	# female, feminine
 	"U+3451":	[wn.synset("female.a.01"),
 				wn.synset("female.s.02"),
 				wn.synset("female.s.03"),
@@ -2066,10 +2065,10 @@ BLISSNET = {
 				wn.synset("tooth.n.04"),
 				wn.synset("tooth.n.05")],
 
-	# cavity, caries, cavity,caries
+	# cavity, caries
 	"U+3454":	[wn.synset("cavity.n.03")],
 
-	# action, act, deed, action,act,deed, demonstrate, act,demonstrate, demonstration, action,demonstration
+	# action, act, deed, demonstrate, demonstration
 	"U+3457":	[wn.synset("act.v.01"),
 				wn.synset("act.v.02"),
 				wn.synset("act.v.03"),
@@ -2124,11 +2123,11 @@ BLISSNET = {
 	# toe
 	"U+345e":	[wn.synset("toe.n.01")],
 
-	# evaluation, value, evaluation,value
+	# evaluation, value
 	"U+3461":	[wn.synset("value.n.01"),
 				wn.synset("value.n.06")],
 
-	# work, employment, job, work,employment,job
+	# work, employment, job
 	"U+3463":	[wn.synset("caper.n.03"),
 				wn.synset("employment.n.01"),
 				wn.synset("employment.n.02"),
@@ -2153,10 +2152,10 @@ BLISSNET = {
 				wn.synset("work.n.05"),
 				wn.synset("workplace.n.01")],
 
-	# gender, sex, gender,sex
+	# gender, sex
 	"U+3465":	[wn.synset("gender.n.01")],
 
-	# insect, bug, insect,bug
+	# insect, bug
 	"U+3466":	[wn.synset("insect.n.01")],
 
 	# electricity
@@ -2172,7 +2171,7 @@ BLISSNET = {
 	# finger
 	"U+3476":	[wn.synset("finger.n.02")],
 
-	# tool, instrument, tool,instrument
+	# tool, instrument
 	"U+3477":	[wn.synset("cock.n.01"),
 				wn.synset("creature.n.03"),
 				wn.synset("instrument.n.01"),
@@ -2189,7 +2188,7 @@ BLISSNET = {
 	# road
 	"U+347d":	[wn.synset("road.n.01")],
 
-	# bus, coach, bus,coach
+	# bus, coach
 	"U+347f":	[wn.synset("bus.n.01")],
 
 	# worm
@@ -2204,13 +2203,13 @@ BLISSNET = {
 	# environment
 	"U+3484":	[wn.synset("environment.n.02")],
 
-	# peace, peace of mind, serenity, peace,peace of mind,serenity
+	# peace, peace of mind, serenity
 	"U+3485":	[wn.synset("peace.n.01"),
 				wn.synset("peace.n.02"),
 				wn.synset("peace.n.03"),
 				wn.synset("peace.n.05")],
 
-	# disturbance, unrest, disturbance,unrest
+	# disturbance, unrest
 	"U+3486":	[wn.synset("affray.n.02"),
 				wn.synset("agitation.n.02"),
 				wn.synset("disturbance.n.02"),
@@ -2235,13 +2234,13 @@ BLISSNET = {
 	# lightning
 	"U+3489":	[wn.synset("lightning.n.01")],
 
-	# air, atmosphere, air,atmosphere
+	# air, atmosphere
 	"U+348a":	[wn.synset("air.n.01")],
 
 	# wind
 	"U+348b":	[wn.synset("wind.n.01")],
 
-	# subtraction, loss, subtraction,loss
+	# subtraction, loss
 	"U+348c":	[wn.synset("loss.n.01"),
 				wn.synset("loss.n.02"),
 				wn.synset("loss.n.03"),
@@ -2253,16 +2252,16 @@ BLISSNET = {
 				wn.synset("subtraction.n.01"),
 				wn.synset("subtraction.n.02")],
 
-	# vehicle, carriage, railway car, vehicle,carriage,railway car
+	# vehicle, carriage, railway car car
 	"U+348d":	[wn.synset("vehicle.n.01")],
 
 	# fill
 	"U+3490":	[wn.synset("fill.v.01")],
 
-	# sailboat, sailing boat, yacht, sailboat,sailing boat,yacht
+	# sailboat, sailing boat, yacht
 	"U+3491":	[wn.synset("sailboat.n.01")],
 
-	# under, below, inferior, under,below,inferior
+	# under, below, inferior
 	"U+3492":	[wn.synset("below.r.01"),
 				wn.synset("below.r.02"),
 				wn.synset("below.r.03"),
@@ -2284,7 +2283,7 @@ BLISSNET = {
 	"U+3493":	[wn.synset("weight.n.01"),
 				wn.synset("weight.n.04")],
 
-	# animal, bovine, ovine, beast, animal,beast
+	# animal, bovine, ovine, beast
 	"U+3494":	[wn.synset("animal.n.01")],
 
 	# paw
@@ -2323,7 +2322,7 @@ BLISSNET = {
 				wn.synset("horn.n.08"),
 				wn.synset("horn.n.09")],
 
-	# place, area, location, space, place,area,location,space
+	# place, area, location, space
 	"U+34a3":	[wn.synset("place.n.02"),
 				wn.synset("position.n.01"),
 				wn.synset("topographic_point.n.01")],
@@ -2333,7 +2332,7 @@ BLISSNET = {
 				wn.synset("bulb.n.06"),
 				wn.synset("light_bulb.n.01")],
 
-	# onion, vegetable, onion,vegetable
+	# onion, vegetable
 	"U+34a6":	[wn.synset("onion.n.01"),
 				wn.synset("onion.n.02"),
 				wn.synset("onion.n.03")],
@@ -2342,7 +2341,7 @@ BLISSNET = {
 	"U+34a8":	[wn.synset("seed.n.01"),
 				wn.synset("semen.n.01")],
 
-	# carrot, vegetable, carrot,vegetable
+	# carrot, vegetable
 	"U+34a9":	[wn.synset("carrot.n.01"),
 				wn.synset("carrot.n.02"),
 				wn.synset("carrot.n.03"),
@@ -2356,7 +2355,7 @@ BLISSNET = {
 	# snail
 	"U+34ab":	[wn.synset("snail.n.01")],
 
-	# lawn, meadow, lawn,meadow
+	# lawn, meadow
 	"U+34ac":	[wn.synset("hayfield.n.01"),
 				wn.synset("lawn.n.01")],
 
@@ -2369,16 +2368,16 @@ BLISSNET = {
 	# street
 	"U+34b0":	[wn.synset("street.n.01")],
 
-	# ski, runner, ski,runner
+	# ski, runner
 	"U+34b1":	[wn.synset("ski.n.01")],
 
 	# skateboard
 	"U+34b2":	[wn.synset("skateboard.n.01")],
 
-	# adult, mature, adult,mature, grownup, adult,grownup
+	# adult, mature, grownup
 	"U+34b4":	[wn.synset("adult.n.01")],
 
-	# teenager, adolescent, youth, teenager,adolescent,youth
+	# teenager, adolescent, youth
 	"U+34b5":	[wn.synset("adolescent.n.01")],
 
 	# eyebrow
@@ -2387,10 +2386,10 @@ BLISSNET = {
 	# temperature
 	"U+34b8":	[wn.synset("temperature.n.01")],
 
-	# most, maximum, most,maximum
+	# most, maximum
 	"U+34b9":	[wn.synset("maximal.a.01")],
 
-	# high, tall, high,tall
+	# high, tall
 	"U+34ba":	[wn.synset("high.a.01"),
 				wn.synset("high.a.02"),
 				wn.synset("high.a.04"),
@@ -2399,17 +2398,17 @@ BLISSNET = {
 	# nail
 	"U+34bb":	[wn.synset("nail.n.02")],
 
-	# shovel, spade, shovel,spade
+	# shovel, spade
 	"U+34bc":	[wn.synset("shovel.n.01")],
 
 	# dig
 	"U+34bd":	[wn.synset("dig.v.01"),
 				wn.synset("excavate.v.04")],
 
-	# same, equal, equality, same,equal,equality
+	# same, equal, equality
 	"U+34bf":	[wn.synset("peer.n.01")],
 
-	# different, other, difference, different,other,difference, different,other
+	# different, other, difference
 	"U+34c0":	[wn.synset("different.a.01"),
 				wn.synset("different.s.02"),
 				wn.synset("different.s.03"),
@@ -2420,17 +2419,17 @@ BLISSNET = {
 				wn.synset("other.s.04"),
 				wn.synset("unlike.a.01")],
 
-	# not, negative, no, don't, doesn't, not,negative,no,don't,doesn't
+	# not, negative, no, don't, doesn't
 	"U+34c1":	[wn.synset("negative.n.02"),
 				wn.synset("no.n.01"),
 				wn.synset("not.r.01")],
 
-	# nowhere, no place, nowhere,no place
+	# nowhere, no place place
 	"U+34c2":	[wn.synset("beak.n.04"),
 				wn.synset("nose.n.01"),
 				wn.synset("nowhere.n.01")],
 
-	# low, short, low,short
+	# low, short
 	"U+34c3":	[wn.synset("low.a.01"),
 				wn.synset("low.a.02")],
 
@@ -2447,20 +2446,20 @@ BLISSNET = {
 				wn.synset("pin.n.09"),
 				wn.synset("pivot.n.02")],
 
-	# love, affection, love,affection
+	# love, affection
 	"U+34c6":	[wn.synset("affection.n.01"),
 				wn.synset("beloved.n.01"),
 				wn.synset("love.n.01"),
 				wn.synset("love.n.02"),
 				wn.synset("love.n.04")],
 
-	# but, except, but,except
+	# but, except
 	"U+34c7":	[wn.synset("demur.v.01"),
 				wn.synset("exclude.v.01"),
 				wn.synset("merely.r.01"),
 				wn.synset("milliampere.n.01")],
 
-	# break, crack, fracture, tear, break,crack,fracture,tear, teardrop, tear,teardrop, gap, cleft, crack,gap,cleft, break,fracture
+	# break, crack, fracture, tear, teardrop, gap, cleft
 	"U+34c8":	[wn.synset("tear.n.01")],
 
 	# on
@@ -2473,7 +2472,7 @@ BLISSNET = {
 				wn.synset("on.r.03"),
 				wn.synset("upstairs.r.01")],
 
-	# bridge, overpass, bridge,overpass
+	# bridge, overpass
 	"U+34cb":	[wn.synset("bridge.n.01")],
 
 	# hole
@@ -2483,7 +2482,7 @@ BLISSNET = {
 	# maple leaf, maple-leaf
 	"U+34ce":	[wn.synset("maple-leaf.n.01")],
 
-	# line, stripe, line,stripe, queue, line,queue
+	# line, stripe, queue
 	"U+34cf":	[wn.synset("queue.n.01")],
 
 	# screw
@@ -2493,7 +2492,7 @@ BLISSNET = {
 				wn.synset("screw.n.03"),
 				wn.synset("screw.n.04")],
 
-	# after, behind, after,behind
+	# after, behind
 	"U+34d1":	[wn.synset("after.r.02"),
 				wn.synset("after.s.01"),
 				wn.synset("buttocks.n.01"),
@@ -2509,12 +2508,12 @@ BLISSNET = {
 	# parallel
 	"U+34d4":	[wn.synset("latitude.n.03")],
 
-	# other, another, other,another
+	# other, another
 	"U+34d5":	[wn.synset("another.s.01"),
 				wn.synset("other.a.01"),
 				wn.synset("other.s.02")],
 
-	# copy, duplicate, copy,duplicate
+	# copy, duplicate
 	"U+34d6":	[wn.synset("copy.n.02"),
 				wn.synset("copy.n.03"),
 				wn.synset("copy.n.04"),
@@ -2522,7 +2521,7 @@ BLISSNET = {
 				wn.synset("extra.n.03"),
 				wn.synset("transcript.n.02")],
 
-	# thin, slim, narrow, thin,slim,narrow
+	# thin, slim, narrow
 	"U+34d7":	[wn.synset("thin.a.01")],
 
 	# deep
@@ -2531,7 +2530,7 @@ BLISSNET = {
 				wn.synset("deep.s.02"),
 				wn.synset("deep.s.05")],
 
-	# wide, broad, wide,broad
+	# wide, broad
 	"U+34db":	[wn.synset("across-the-board.s.01"),
 				wn.synset("broad.s.03"),
 				wn.synset("wide.a.01")],
@@ -2545,7 +2544,7 @@ BLISSNET = {
 				wn.synset("perpendicular.n.04"),
 				wn.synset("plumb_line.n.01")],
 
-	# beginning, start, beginning,start
+	# beginning, start
 	"U+34de":	[wn.synset("beginning.n.02")],
 
 	# month
@@ -2562,7 +2561,7 @@ BLISSNET = {
 	"U+34e5":	[wn.synset("commandment.n.01"),
 				wn.synset("teaching.n.02")],
 
-	# chair, seat, chair,seat
+	# chair, seat
 	"U+34e7":	[wn.synset("chair.n.01")],
 
 	# toilet
@@ -2577,18 +2576,18 @@ BLISSNET = {
 	# bed
 	"U+34eb":	[wn.synset("bed.n.01")],
 
-	# pillow, cushion, pillow,cushion
+	# pillow, cushion
 	"U+34ec":	[wn.synset("cushion.n.03"),
 				wn.synset("pillow.n.01")],
 
-	# bottle, flask, bottle,flask
+	# bottle, flask
 	"U+34ed":	[wn.synset("bottle.n.01")],
 
-	# woman, female, woman,female
+	# woman, female
 	"U+34ee":	[wn.synset("woman.n.01"),
 				wn.synset("woman.n.02")],
 
-	# man, male, man,male
+	# man, male
 	"U+34f4":	[wn.synset("man.n.01")],
 
 	# citizen
@@ -2600,13 +2599,13 @@ BLISSNET = {
 	# stepfather
 	"U+34fc":	[wn.synset("stepfather.n.01")],
 
-	# boat, ship, boat,ship
+	# boat, ship
 	"U+3500":	[wn.synset("ship.n.01")],
 
-	# sack, bag, sack,bag, dismiss, sack,dismiss
+	# sack, bag, dismiss
 	"U+3501":	[wn.synset("displace.v.03")],
 
-	# crab, shellfish, crab,shellfish
+	# crab, shellfish
 	"U+3502":	[wn.synset("crab.n.01")],
 
 	# ankle
@@ -2619,20 +2618,20 @@ BLISSNET = {
 	"U+3506":	[wn.synset("menorah.n.01"),
 				wn.synset("menorah.n.02")],
 
-	# near, almost, close, nearly, near,almost,close,nearly
+	# near, almost, close, nearly
 	"U+3508":	[wn.synset("near.a.01")],
 
-	# far, distant, far,distant
+	# far, distant
 	"U+350a":	[wn.synset("distant.a.01"),
 				wn.synset("far.a.01")],
 
 	# from
 	"U+350b":	[wn.synset("delaware.n.04")],
 
-	# length, longness, length,longness
+	# length, longness
 	"U+350d":	[wn.synset("length.n.03")],
 
-	# measurement, measure, measurement,measure
+	# measurement, measure
 	"U+350e":	[wn.synset("bill.n.01"),
 				wn.synset("measure.n.01"),
 				wn.synset("measure.n.02"),
@@ -2644,7 +2643,7 @@ BLISSNET = {
 				wn.synset("size.n.01"),
 				wn.synset("standard.n.01")],
 
-	# injection, inoculation, shot, injection,inoculation,shot
+	# injection, inoculation, shot
 	"U+350f":	[wn.synset("injection.n.03")],
 
 	# short
@@ -2657,7 +2656,7 @@ BLISSNET = {
 	# it
 	"U+3513":	[wn.synset("information_technology.n.01")],
 
-	# until, till, to, until,till,to, toward, towards, to,toward,towards
+	# until, till, to, toward, towards
 	"U+3514":	[wn.synset("cashbox.n.01"),
 				wn.synset("public_treasury.n.01"),
 				wn.synset("so_far.r.01"),
@@ -2666,7 +2665,7 @@ BLISSNET = {
 	# flag
 	"U+3515":	[wn.synset("flag.n.01")],
 
-	# country, state, country,state
+	# country, state
 	"U+3516":	[wn.synset("country.n.02"),
 				wn.synset("state.n.02"),
 				wn.synset("state.n.03"),
@@ -2682,7 +2681,7 @@ BLISSNET = {
 	# shallow
 	"U+3519":	[wn.synset("shallow.a.01")],
 
-	# fight, combat, fight,combat
+	# fight, combat
 	"U+351a":	[wn.synset("battle.n.01"),
 				wn.synset("fight.n.02")],
 
@@ -2697,7 +2696,7 @@ BLISSNET = {
 	# ladder
 	"U+3520":	[wn.synset("ladder.n.01")],
 
-	# help, aid, assistance, support, help,aid,assistance,support, assist, serve, help,aid,assist,serve,support
+	# help, aid, assistance, support, assist, serve
 	"U+3524":	[wn.synset("help.v.01"),
 				wn.synset("help.v.02")],
 
@@ -2717,7 +2716,7 @@ BLISSNET = {
 	# helicopter
 	"U+352c":	[wn.synset("helicopter.n.01")],
 
-	# seesaw, teeter totter, teeter board, seesaw,teeter-totter,teeter board
+	# seesaw, teeter totter, teeter board
 	"U+352d":	[wn.synset("seesaw.n.01")],
 
 	# energy
@@ -2729,7 +2728,7 @@ BLISSNET = {
 	# microwave oven
 	"U+3532":	[wn.synset("microwave.n.02")],
 
-	# power, powerfulness, power,powerfulness
+	# power, powerfulness
 	"U+3533":	[wn.synset("ability.n.02"),
 				wn.synset("baron.n.03"),
 				wn.synset("exponent.n.03"),
@@ -2747,7 +2746,7 @@ BLISSNET = {
 	# tank
 	"U+3537":	[wn.synset("tank.n.01")],
 
-	# destroy, annul, cancel, cross out, delete, destroy,annul,cancel,cross out,delete
+	# destroy, annul, cancel, cross out, delete
 	"U+3538":	[wn.synset("delete.v.01"),
 				wn.synset("destroy.v.01"),
 				wn.synset("destroy.v.02"),
@@ -2758,13 +2757,13 @@ BLISSNET = {
 				wn.synset("angle.n.03"),
 				wn.synset("slant.n.01")],
 
-	# cannon, gun, cannon,gun
+	# cannon, gun
 	"U+353a":	[wn.synset("cannon.n.01")],
 
 	# fork
 	"U+353e":	[wn.synset("fork.n.01")],
 
-	# hammer, gavel, mallet, hammer,gavel,mallet
+	# hammer, gavel, mallet
 	"U+353f":	[wn.synset("gavel.n.01"),
 				wn.synset("hammer.n.01"),
 				wn.synset("hammer.n.02"),
@@ -2783,7 +2782,7 @@ BLISSNET = {
 	# spoon
 	"U+3543":	[wn.synset("spoon.n.01")],
 
-	# pen, pencil, pen,pencil
+	# pen, pencil
 	"U+3545":	[wn.synset("pen.n.01"),
 				wn.synset("pen.n.02"),
 				wn.synset("pen.n.05"),
@@ -2794,27 +2793,27 @@ BLISSNET = {
 				wn.synset("penitentiary.n.01"),
 				wn.synset("playpen.n.01")],
 
-	# couch, chesterfield, sofa, couch,chesterfield,sofa
+	# couch, chesterfield, sofa
 	"U+3547":	[wn.synset("sofa.n.01")],
 
-	# pitcher, jug, kettle, pot, pitcher,jug,kettle,pot
+	# pitcher, jug, kettle, pot
 	"U+3548":	[wn.synset("jug.n.01"),
 				wn.synset("jug.n.02"),
 				wn.synset("pitcher.n.02")],
 
-	# wagon, cart, truck, wagon,cart,truck, lorry, truck,lorry
+	# wagon, cart, truck, lorry
 	"U+3549":	[wn.synset("truck.n.01")],
 
 	# hedgehog
 	"U+354a":	[wn.synset("hedgehog.n.02")],
 
-	# soup, broth, soup,broth
+	# soup, broth
 	"U+354f":	[wn.synset("soup.n.01")],
 
 	# salad
 	"U+3550":	[wn.synset("salad.n.01")],
 
-	# dish, plate, platter, dish,plate,platter
+	# dish, plate, platter
 	"U+3551":	[wn.synset("plate.n.04")],
 
 	# cereal
@@ -2822,10 +2821,10 @@ BLISSNET = {
 				wn.synset("cereal.n.03"),
 				wn.synset("grain.n.02")],
 
-	# what, question mark, what,question mark
+	# what, question mark mark
 	"U+3555":	[wn.synset("bet.n.02")],
 
-	# command, order, command,order
+	# command, order
 	"U+3557":	[wn.synset("arrange.v.07"),
 				wn.synset("command.v.01"),
 				wn.synset("command.v.02"),
@@ -2859,7 +2858,7 @@ BLISSNET = {
 	# one, 1
 	"U+3560":	[wn.synset("one.n.01")],
 
-	# self, oneself, ego, self,oneself,ego
+	# self, oneself, ego
 	"U+3561":	[wn.synset("self.n.01")],
 
 	# two, 2
@@ -2891,10 +2890,10 @@ BLISSNET = {
 	# nine, 9
 	"U+3569":	[wn.synset("nine.n.01")],
 
-	# difficult, hard, difficult,hard
+	# difficult, hard
 	"U+3576":	[wn.synset("difficult.a.01")],
 
-	# ATB, all terrain bike, ATB,all-terrain bike
+	# ATB, all terrain bike-terrain bike
 	"U+3577":	[wn.synset("mountain_bike.n.01"),
 				wn.synset("trail_bike.n.01")],
 
@@ -2904,16 +2903,16 @@ BLISSNET = {
 	# yellow
 	"U+3579":	[wn.synset("yellow.n.01")],
 
-	# forest, bush, wood, woods, forest,bush,wood,woods, shrub, bush,shrub, lumber, timber, wood,lumber,timber
+	# forest, bush, wood, woods, shrub, lumber, timber
 	"U+357d":	[wn.synset("forest.n.01")],
 
-	# Olympics, Olympic games, Olympics,Olympic games
+	# Olympics, Olympic games games
 	"U+3580":	[wn.synset("olympic_games.n.01")],
 
-	# garbage can, rubbish bin, trash can, garbage can,rubbish bin,trash can
+	# garbage can, rubbish bin, trash can
 	"U+3583":	[wn.synset("ashcan.n.01")],
 
-	# conjure, turn to, transform, conjure,turn to,transform
+	# conjure, turn to, transform
 	"U+3584":	[wn.synset("bid.v.03"),
 				wn.synset("raise.v.07"),
 				wn.synset("transform.v.02"),
@@ -2924,7 +2923,7 @@ BLISSNET = {
 				wn.synset("literally.r.02"),
 				wn.synset("verbatim.r.01")],
 
-	# letter, mail, post, letter,mail,post, mail,post
+	# letter, mail, post
 	"U+3586":	[wn.synset("letter.n.01"),
 				wn.synset("letter.n.02"),
 				wn.synset("letter.n.04"),
@@ -2933,10 +2932,10 @@ BLISSNET = {
 	# telephone
 	"U+3587":	[wn.synset("telephone.n.01")],
 
-	# sexual abuse, sexual assault, sexual violence, sexual abuse,sexual assault,sexual violence
+	# sexual abuse, sexual assault, sexual violence
 	"U+3589":	[wn.synset("rape.n.03")],
 
-	# abuse, assault, violence, abuse,assault,violence
+	# abuse, assault, violence
 	"U+358a":	[wn.synset("abuse.n.02"),
 				wn.synset("assault.n.01"),
 				wn.synset("assault.n.02"),
@@ -2948,11 +2947,11 @@ BLISSNET = {
 				wn.synset("violence.n.01"),
 				wn.synset("violence.n.03")],
 
-	# taco, taco shell, taco,taco shell
+	# taco, taco shell shell
 	"U+358e":	[wn.synset("greaser.n.01"),
 				wn.synset("taco.n.02")],
 
-	# shell, crust, shell,crust
+	# shell, crust
 	"U+358f":	[wn.synset("crust.n.01")],
 
 	# wake up
@@ -2961,10 +2960,10 @@ BLISSNET = {
 	# Euro
 	"U+3592":	[wn.synset("euro.n.01")],
 
-	# water flower, water lily, water flower,water lily
+	# water flower, water lily
 	"U+3594":	[wn.synset("water_lily.n.01")],
 
-	# prize, award, trophy, prize,award,trophy
+	# prize, award, trophy
 	"U+3595":	[wn.synset("trophy.n.02")],
 
 	# win
@@ -2973,31 +2972,31 @@ BLISSNET = {
 	# sport
 	"U+3598":	[wn.synset("sport.n.01")],
 
-	# car, automobile, motor vehicle, car,automobile,motor vehicle
+	# car, automobile, motor vehicle vehicle
 	"U+3599":	[wn.synset("car.n.01")],
 
-	# rent, lease, hire, charter, rent,lease,hire,charter, let, rent,lease,let
+	# rent, lease, hire, charter, let
 	"U+359a":	[wn.synset("lease.v.03"),
 				wn.synset("rent.v.01"),
 				wn.synset("rent.v.04")],
 
-	# limited time, interval, period, awhile, for a while, limited time,interval,period,awhile,for a while
+	# limited time, interval, period, awhile, for a while
 	"U+359b":	[wn.synset("time_period.n.01")],
 
-	# tired, exhausted, weary, tired,exhausted,weary, worn out, exhausted,worn out, raddled, worn-out,raddled
+	# tired, exhausted, weary, worn out out, raddled
 	"U+359d":	[wn.synset("exhausted.a.02"),
 				wn.synset("exhausted.s.01"),
 				wn.synset("exhausted.s.03"),
 				wn.synset("tired.a.01")],
 
-	# rest, comfort, rest,comfort
+	# rest, comfort
 	"U+359e":	[wn.synset("respite.n.04"),
 				wn.synset("rest.n.02")],
 
 	# bacon
 	"U+35a0":	[wn.synset("bacon.n.01")],
 
-	# pork, ham, pork,ham
+	# pork, ham
 	"U+35a1":	[wn.synset("ham.n.01"),
 				wn.synset("ham.n.02"),
 				wn.synset("ham.n.03"),
@@ -3005,7 +3004,7 @@ BLISSNET = {
 				wn.synset("pork.n.01"),
 				wn.synset("pork_barrel.n.01")],
 
-	# linear thing, bar, pole, linear thing,pole
+	# linear thing, bar, pole
 	"U+35a2":	[wn.synset("perch.n.02"),
 				wn.synset("perch.n.03"),
 				wn.synset("pole.n.01"),
@@ -3020,15 +3019,15 @@ BLISSNET = {
 	# second
 	"U+35a3":	[wn.synset("second.n.01")],
 
-	# infertile, sterile, infertile,sterile
+	# infertile, sterile
 	"U+35ac":	[wn.synset("aseptic.s.01"),
 				wn.synset("sterile.a.01"),
 				wn.synset("sterile.s.03")],
 
-	# tuft of grass, tussock, tuft of grass,tussock
+	# tuft of grass, tussock
 	"U+35ae":	[wn.synset("tuft.n.01")],
 
-	# collection, pile, tussock, collection,pile,tussock
+	# collection, pile, tussock
 	"U+35af":	[wn.synset("atomic_pile.n.01"),
 				wn.synset("batch.n.02"),
 				wn.synset("collection.n.01"),
@@ -3043,23 +3042,23 @@ BLISSNET = {
 				wn.synset("tuft.n.01"),
 				wn.synset("voltaic_pile.n.01")],
 
-	# shirt, blouse, shirt,blouse
+	# shirt, blouse
 	"U+35b1":	[wn.synset("blouse.n.01"),
 				wn.synset("shirt.n.01")],
 
 	# tooth fairy
 	"U+35b2":	[wn.synset("tooth_fairy.n.01")],
 
-	# fairy, fairy godmother, fairy,fairy godmother
+	# fairy, fairy godmother godmother
 	"U+35b3":	[wn.synset("fairy.n.01")],
 
-	# forgetting, amnesia, forgetting,amnesia
+	# forgetting, amnesia
 	"U+35b4":	[wn.synset("amnesia.n.01")],
 
 	# thunder
 	"U+35b6":	[wn.synset("thunder.n.02")],
 
-	# cooking, cookery, preparation, cooking,cookery,preparation, readying, readiness, preparedness, preparation,readying,readiness,preparedness
+	# cooking, cookery, preparation, readying, readiness, preparedness
 	"U+35b7":	[wn.synset("cooking.n.01")],
 
 	# hero
@@ -3069,10 +3068,10 @@ BLISSNET = {
 	"U+35bb":	[wn.synset("epic.s.01"),
 				wn.synset("heroic.a.02")],
 
-	# herb, spice plant, herb,spice plant
+	# herb, spice plant plant
 	"U+35bc":	[wn.synset("herb.n.02")],
 
-	# smash, grind, shatter, splinter, smash,grind,shatter,splinter
+	# smash, grind, shatter, splinter
 	"U+35bd":	[wn.synset("bang_up.v.01"),
 				wn.synset("bankrupt.v.01"),
 				wn.synset("crunch.v.02"),
@@ -3098,7 +3097,7 @@ BLISSNET = {
 				wn.synset("smash.v.10"),
 				wn.synset("splinter.v.03")],
 
-	# he, she, him, her, one, he,she,him,her,one, himself, he,him,himself
+	# he, she, him, her, one, himself
 	"U+35c6":	[wn.synset("he.n.02"),
 				wn.synset("helium.n.01"),
 				wn.synset("id.n.03"),
@@ -3123,11 +3122,11 @@ BLISSNET = {
 				wn.synset("substance.n.04"),
 				wn.synset("substance.n.07")],
 
-	# material, raw material, stuff, material,raw material,stuff
+	# material, raw material, stuff
 	"U+35cb":	[wn.synset("material.n.01"),
 				wn.synset("material.n.02")],
 
-	# low tide, ebb, low tide,ebb
+	# low tide, ebb
 	"U+35cc":	[wn.synset("ebb.n.01"),
 				wn.synset("ebb.n.02"),
 				wn.synset("low_tide.n.01")],
@@ -3141,21 +3140,21 @@ BLISSNET = {
 	# neurologist
 	"U+35d0":	[wn.synset("neurologist.n.01")],
 
-	# doctor, physician, doctor,physician, hab)
+	# doctor, physician, hab)
 	"U+35d1":	[wn.synset("doctor.n.01"),
 				wn.synset("doctor.n.04"),
 				wn.synset("doctor_of_the_church.n.01")],
 
-	# central nervous system, CNS, central nervous system,CNS
+	# central nervous system, CNS
 	"U+35d2":	[wn.synset("central_nervous_system.n.01")],
 
-	# military, armed forces, armed services, military,armed forces,armed services
+	# military, armed forces, armed services
 	"U+35d3":	[wn.synset("military.n.01")],
 
 	# group
 	"U+35d4":	[wn.synset("group.n.03")],
 
-	# deletion, cancellation, destruction, deletion,cancellation,destruction
+	# deletion, cancellation, destruction
 	"U+35d5":	[wn.synset("destruction.n.01"),
 				wn.synset("destruction.n.02"),
 				wn.synset("end.n.06")],
@@ -3163,7 +3162,7 @@ BLISSNET = {
 	# roadrunner
 	"U+35d7":	[wn.synset("roadrunner.n.01")],
 
-	# little, small, little,small
+	# little, small
 	"U+35d9":	[wn.synset("little.s.03"),
 				wn.synset("minor.s.10"),
 				wn.synset("small.a.01")],
@@ -3181,7 +3180,7 @@ BLISSNET = {
 	"U+35de":	[wn.synset("cheat.n.05"),
 				wn.synset("shoddy.n.01")],
 
-	# activity, male gender, activity,male gender
+	# activity, male gender gender
 	"U+35df":	[wn.synset("action.n.02")],
 
 	# Sagittarius
@@ -3199,7 +3198,7 @@ BLISSNET = {
 	# passport
 	"U+35e4":	[wn.synset("passport.n.02")],
 
-	# permission, allowance, permission,allowance
+	# permission, allowance
 	"U+35e5":	[wn.synset("license.n.04"),
 				wn.synset("permission.n.01")],
 
@@ -3216,7 +3215,7 @@ BLISSNET = {
 				wn.synset("asleep.s.03"),
 				wn.synset("sleepy.s.01")],
 
-	# divine, holy, divine,holy
+	# divine, holy
 	"U+35ec":	[wn.synset("holy.a.01")],
 
 	# God
@@ -3225,13 +3224,13 @@ BLISSNET = {
 	# holiness
 	"U+35ee":	[wn.synset("holiness.n.01")],
 
-	# calling, vocation, calling,vocation, profession, career, calling,profession,career
+	# calling, vocation, profession, career
 	"U+35f0":	[wn.synset("career.n.01")],
 
-	# hurt, pain, suffer, hurt,pain, suffering, pain,suffering
+	# hurt, pain, suffer, suffering
 	"U+35f1":	[wn.synset("hurt.v.02")],
 
-	# injure, hurt, injure,hurt
+	# injure, hurt
 	"U+35f2":	[wn.synset("injure.v.01")],
 
 	# meteorologist
@@ -3240,7 +3239,7 @@ BLISSNET = {
 	# meteorology
 	"U+35f5":	[wn.synset("meteorology.n.02")],
 
-	# earth, globe, world, earth,globe,world, ground, land, earth,ground,land
+	# earth, globe, world, ground, land
 	"U+35f6":	[wn.synset("background.n.02"),
 				wn.synset("country.n.02"),
 				wn.synset("domain.n.02"),
@@ -3267,7 +3266,7 @@ BLISSNET = {
 				wn.synset("state.n.04"),
 				wn.synset("worldly_concern.n.01")],
 
-	# hold, contain, hold,contain
+	# hold, contain
 	"U+35f7":	[wn.synset("accommodate.v.04"),
 				wn.synset("agree.v.01"),
 				wn.synset("apply.v.02"),
@@ -3308,17 +3307,17 @@ BLISSNET = {
 				wn.synset("restrain.v.03"),
 				wn.synset("retain.v.03")],
 
-	# prepare, set, set up, ready, gear up, fix, prepare,set,set up,ready,gear up,fix, mend, repair, fix,mend,repair, prepared, ready,prepared
+	# prepare, set, set up, ready, gear up, fix up, mend, repair
 	"U+35f8":	[wn.synset("repair.v.01")],
 
-	# unit, example, sample, unit,example,sample
+	# unit, example, sample
 	"U+35f9":	[wn.synset("unit.n.02"),
 				wn.synset("unit_of_measurement.n.01")],
 
 	# fast
 	"U+35fc":	[wn.synset("fast.n.01")],
 
-	# unfair, unjust, unfair,unjust
+	# unfair, unjust
 	"U+35fe":	[wn.synset("inequitable.a.01"),
 				wn.synset("unfair.a.01"),
 				wn.synset("unjust.a.02")],
@@ -3327,24 +3326,24 @@ BLISSNET = {
 	"U+3600":	[wn.synset("artillery.n.01"),
 				wn.synset("artillery.n.02")],
 
-	# sauce, gravy, relish, dressing, sauce,gravy,relish,dressing
+	# sauce, gravy, relish, dressing
 	"U+3603":	[wn.synset("sauce.n.01")],
 
-	# chocolate, cocoa, cacao, chocolate,cocoa,cacao
+	# chocolate, cocoa, cacao
 	"U+3604":	[wn.synset("chocolate.n.02")],
 
 	# currency
 	"U+3605":	[wn.synset("currency.n.01")],
 
-	# want, desire, want,desire
+	# want, desire
 	"U+3606":	[wn.synset("desire.v.01")],
 
-	# trip, journey, travel, voyage, trip,journey,travel,voyage
+	# trip, journey, travel, voyage
 	"U+3607":	[wn.synset("journey.n.01"),
 				wn.synset("trip.n.01"),
 				wn.synset("trip.n.02")],
 
-	# tropical rain forest, jungle, tropical rain forest,jungle
+	# tropical rain forest, jungle
 	"U+3608":	[wn.synset("hobo_camp.n.01"),
 				wn.synset("jungle.n.01"),
 				wn.synset("jungle.n.03")],
@@ -3359,10 +3358,10 @@ BLISSNET = {
 	# panpipe
 	"U+360b":	[wn.synset("panpipe.n.01")],
 
-	# who, that, which, who,that,which, which,that, whom, who,whom,that, who,whom
+	# who, that, which, whom
 	"U+360e":	[wn.synset("world_health_organization.n.01")],
 
-	# hot, spicy, peppery, hot,spicy,peppery
+	# hot, spicy, peppery
 	"U+360f":	[wn.synset("blistering.s.03"),
 				wn.synset("blue.s.05"),
 				wn.synset("hot.a.01"),
@@ -3400,7 +3399,7 @@ BLISSNET = {
 	# intensity
 	"U+3614":	[wn.synset("intensity.n.02")],
 
-	# right turn, right, right turn,right
+	# right turn, right
 	"U+3615":	[wn.synset("right.n.01"),
 				wn.synset("right.n.02"),
 				wn.synset("right.n.04"),
@@ -3413,7 +3412,7 @@ BLISSNET = {
 	# beauty
 	"U+3617":	[wn.synset("beauty.n.01")],
 
-	# happiness, fun, joy, pleasure, happiness,fun,joy,pleasure
+	# happiness, fun, joy, pleasure
 	"U+3618":	[wn.synset("fun.n.01"),
 				wn.synset("fun.n.02"),
 				wn.synset("fun.n.03"),
@@ -3427,33 +3426,33 @@ BLISSNET = {
 				wn.synset("pleasure.n.04"),
 				wn.synset("pleasure.n.05")],
 
-	# opossum, possum, opossum,possum
+	# opossum, possum
 	"U+361c":	[wn.synset("opossum.n.02")],
 
 	# bad conscience
 	"U+361f":	[wn.synset("conscience.n.01")],
 
-	# incorrect, bad, inaccurate, wrong, incorrect,bad,inaccurate,wrong
+	# incorrect, bad, inaccurate, wrong
 	"U+3620":	[wn.synset("incorrect.a.01")],
 
-	# wash up, do the dishes, wash up,do the dishes
+	# wash up, do the dishes
 	"U+3623":	[wn.synset("wash_up.v.03")],
 
 	# glassware
 	"U+3625":	[wn.synset("glass.n.07"),
 				wn.synset("glassware.n.01")],
 
-	# baggage, bag, luggage, suitcase, baggage,bag,luggage,suitcase
+	# baggage, bag, luggage, suitcase
 	"U+3626":	[wn.synset("baggage.n.01")],
 
 	# wing
 	"U+3628":	[wn.synset("wing.n.01"),
 				wn.synset("wing.n.02")],
 
-	# fart, wind, fart,wind
+	# fart, wind
 	"U+3629":	[wn.synset("fart.n.01")],
 
-	# wrap, wind, wrap,wind
+	# wrap, wind
 	"U+362a":	[wn.synset("envelop.v.01"),
 				wn.synset("hoist.v.01"),
 				wn.synset("scent.v.02"),
@@ -3468,10 +3467,10 @@ BLISSNET = {
 	# wine
 	"U+362b":	[wn.synset("wine.n.01")],
 
-	# alcoholic drink, alcoholic beverage, liquor, alcoholic drink,alcoholic beverage,liquor
+	# alcoholic drink, alcoholic beverage, liquor
 	"U+362c":	[wn.synset("liquor.n.01")],
 
-	# limit, limitation, restriction, restrict, restrain, confine, limit,restrict,restrain,confine
+	# limit, limitation, restriction, restrict, restrain, confine
 	"U+362d":	[wn.synset("restrict.v.03")],
 
 	# virus
@@ -3487,19 +3486,19 @@ BLISSNET = {
 	"U+3634":	[wn.synset("kernel.n.01"),
 				wn.synset("meat.n.01")],
 
-	# fidelity, loyalty, solidarity, fidelity,loyalty,solidarity
+	# fidelity, loyalty, solidarity
 	"U+3635":	[wn.synset("fidelity.n.02")],
 
-	# attachment, appendix, annex, attachment,appendix,annex, cecum, caecum, appendix,cecum,caecum
+	# attachment, appendix, annex, cecum, caecum
 	"U+3636":	[wn.synset("appendix.n.02")],
 
-	# playhouse, play house, playhouse,play house
+	# playhouse, play house house
 	"U+3638":	[wn.synset("playhouse.n.01")],
 
-	# house, building, dwelling, residence, house,building,dwelling,residence
+	# house, building, dwelling, residence
 	"U+3639":	[wn.synset("house.n.01")],
 
-	# play, recreation, play,recreation
+	# play, recreation
 	"U+363a":	[wn.synset("play.n.02")],
 
 	# lifeline
@@ -3508,7 +3507,7 @@ BLISSNET = {
 				wn.synset("lifeline.n.04"),
 				wn.synset("line_of_life.n.01")],
 
-	# strap, string, velcro, rope, cord, strap,string,velcro,rope,cord
+	# strap, string, velcro, rope, cord
 	"U+363d":	[wn.synset("bowed_stringed_instrument.n.01"),
 				wn.synset("chain.n.10"),
 				wn.synset("cord.n.01"),
@@ -3543,10 +3542,10 @@ BLISSNET = {
 				wn.synset("string.n.08"),
 				wn.synset("string.n.09")],
 
-	# rope, hawser, rope,hawser
+	# rope, hawser
 	"U+3640":	[wn.synset("rope.n.01")],
 
-	# backpack, rucksack, backpack,rucksack
+	# backpack, rucksack
 	"U+3642":	[wn.synset("backpack.n.01")],
 
 	# back
@@ -3560,7 +3559,7 @@ BLISSNET = {
 				wn.synset("rear.n.05"),
 				wn.synset("spinal_column.n.01")],
 
-	# covered, hidden, covered,hidden
+	# covered, hidden
 	"U+3644":	[wn.synset("concealed.s.01"),
 				wn.synset("covered.a.01"),
 				wn.synset("hidden.s.02"),
@@ -3569,13 +3568,13 @@ BLISSNET = {
 	# invisible
 	"U+3645":	[wn.synset("invisible.a.01")],
 
-	# repetition, copying, duplication, replication, repetition,copying,duplication,replication
+	# repetition, copying, duplication, replication
 	"U+3646":	[wn.synset("repeat.n.01")],
 
-	# blanket, duvet, quilt, blanket,duvet,quilt
+	# blanket, duvet, quilt
 	"U+3649":	[wn.synset("blanket.n.01")],
 
-	# detachment, separation, breakup, detachment,separation,breakup
+	# detachment, separation, breakup
 	"U+364a":	[wn.synset("detachment.n.02"),
 				wn.synset("detachment.n.04"),
 				wn.synset("dissolution.n.05"),
@@ -3591,13 +3590,13 @@ BLISSNET = {
 				wn.synset("separation.n.09"),
 				wn.synset("withdrawal.n.04")],
 
-	# minus, no, without, minus,no,without
+	# minus, no, without
 	"U+364b":	[wn.synset("minus_sign.n.01"),
 				wn.synset("no.n.01"),
 				wn.synset("nobelium.n.01"),
 				wn.synset("subtraction.n.01")],
 
-	# fastener, gripper, velcro, zipper, fastener,gripper,velcro,zipper
+	# fastener, gripper, velcro, zipper
 	"U+364c":	[wn.synset("fastener.n.02")],
 
 	# interrupt
@@ -3607,11 +3606,6 @@ BLISSNET = {
 	"U+3651":	[wn.synset("break.n.13"),
 				wn.synset("interruption.n.02"),
 				wn.synset("pause.n.01")],
-
-	# you, yourself, you,yourself, yourselves, you,yourselves
-	"U+3652":	[wn.synset("quill.n.01"),
-				wn.synset("quill.n.04"),
-				wn.synset("thousand.n.01")],
 
 	# silver
 	"U+3653":	[wn.synset("silver.n.01")],
@@ -3625,17 +3619,17 @@ BLISSNET = {
 				wn.synset("derive.v.04"),
 				wn.synset("derive.v.05")],
 
-	# move bowels, defecate, stool, shit, ca ca, move bowels,defecate,stool,shit,ca-ca
+	# move bowels, defecate, stool, shit, ca ca
 	"U+3656":	[wn.synset("denounce.v.04"),
 				wn.synset("stool.v.01"),
 				wn.synset("stool.v.02"),
 				wn.synset("stool.v.03"),
 				wn.synset("stool.v.04")],
 
-	# bowel movement, defecation, shitting, feces, shit, poop, bowel movement,defecation,shitting,feces,shit,poop
+	# bowel movement, defecation, shitting, feces, shit, poop
 	"U+3657":	[wn.synset("defecation.n.01")],
 
-	# rouge, blusher, rouge,blusher
+	# rouge, blusher
 	"U+3658":	[wn.synset("rouge.n.01")],
 
 	# arrow
@@ -3653,13 +3647,13 @@ BLISSNET = {
 	# telescope
 	"U+365e":	[wn.synset("telescope.n.01")],
 
-	# harmony, harmoniousness, concord, concordance, harmony,harmoniousness,concord,concordance
+	# harmony, harmoniousness, concord, concordance
 	"U+3660":	[wn.synset("harmony.n.01"),
 				wn.synset("harmony.n.02"),
 				wn.synset("harmony.n.03"),
 				wn.synset("harmony.n.04")],
 
-	# lawn bowling, bowls, lawn bowling,bowls
+	# lawn bowling, bowls
 	"U+3661":	[wn.synset("bowl.n.01"),
 				wn.synset("bowl.n.02"),
 				wn.synset("bowl.n.03"),
@@ -3676,13 +3670,13 @@ BLISSNET = {
 				wn.synset("bowling.n.02"),
 				wn.synset("bowling.n.03")],
 
-	# roof, cover, roof,cover
+	# roof, cover
 	"U+3664":	[wn.synset("roof.n.01")],
 
-	# existence, being, existence,being
+	# existence, being
 	"U+3666":	[wn.synset("being.n.01")],
 
-	# message, content, message,content
+	# message, content
 	"U+3668":	[wn.synset("message.n.01")],
 
 	# information
@@ -3693,10 +3687,10 @@ BLISSNET = {
 				wn.synset("communication.n.02"),
 				wn.synset("communication.n.03")],
 
-	# lymph node, lymph gland, lymph node,lymph gland
+	# lymph node, lymph gland
 	"U+366c":	[wn.synset("lymph_node.n.01")],
 
-	# organ, pipe organ, organ,pipe organ, inner organ, inner body part, organ,inner organ,inner body part
+	# organ, pipe organ organ, inner organ, inner body part
 	"U+366d":	[wn.synset("harmonium.n.01"),
 				wn.synset("organ.n.01"),
 				wn.synset("organ.n.02"),
@@ -3719,14 +3713,14 @@ BLISSNET = {
 				wn.synset("encouragement.n.01"),
 				wn.synset("encouragement.n.03")],
 
-	# foundation, base, fundament, foundation,base,fundament
+	# foundation, base, fundament
 	"U+3674":	[wn.synset("base.n.11"),
 				wn.synset("foundation.n.01")],
 
 	# sheet, bedclothes, bed linen
 	"U+3676":	[wn.synset("sheet.n.03")],
 
-	# guess, estimate, guess,estimate, estimation, guess,estimation
+	# guess, estimate, estimation
 	"U+3677":	[wn.synset("guess.v.04")],
 
 	# knit
@@ -3738,11 +3732,11 @@ BLISSNET = {
 	# huge
 	"U+367c":	[wn.synset("huge.s.01")],
 
-	# shuttlecock, birdie, shuttlecock,birdie
+	# shuttlecock, birdie
 	"U+367d":	[wn.synset("birdie.n.01"),
 				wn.synset("shuttlecock.n.01")],
 
-	# wash, bathe, bath, wash,bathe,bath, washing, bath,washing
+	# wash, bathe, bath, washing
 	"U+3681":	[wn.synset("bath.n.01"),
 				wn.synset("bath.n.02"),
 				wn.synset("bath.n.04"),
@@ -3754,10 +3748,10 @@ BLISSNET = {
 				wn.synset("wash.n.02"),
 				wn.synset("washbasin.n.02")],
 
-	# teach, instruct, teach,instruct
+	# teach, instruct
 	"U+3682":	[wn.synset("teach.v.01")],
 
-	# clearness, clarity, transparency, transparence, clearness,clarity,transparency,transparence
+	# clearness, clarity, transparency, transparence
 	"U+3687":	[wn.synset("clarity.n.01"),
 				wn.synset("clearness.n.02")],
 
@@ -3781,7 +3775,7 @@ BLISSNET = {
 				wn.synset("service.n.15"),
 				wn.synset("servicing.n.01")],
 
-	# plan, design, method, system, plan,design,method,system, plan,design
+	# plan, design, method, system
 	"U+368a":	[wn.synset("design.v.02"),
 				wn.synset("design.v.03"),
 				wn.synset("design.v.04"),
@@ -3792,10 +3786,10 @@ BLISSNET = {
 				wn.synset("plan.v.02"),
 				wn.synset("plan.v.03")],
 
-	# constructional blocks, lego, constructional blocks,lego
+	# constructional blocks, lego
 	"U+368b":	[wn.synset("lego.n.01")],
 
-	# together, attached, appended, fastened, joined, together,attached,appended,fastened,joined
+	# together, attached, appended, fastened, joined
 	"U+368c":	[wn.synset("add.v.02"),
 				wn.synset("affiliated.s.01"),
 				wn.synset("append.v.01"),
@@ -3821,28 +3815,28 @@ BLISSNET = {
 				wn.synset("engagement.n.06"),
 				wn.synset("engagement.n.07")],
 
-	# Roman Catholicism, Roman Catholic Church, Roman Catholicism,Roman Catholic Church
+	# Roman Catholicism, Roman Catholic Church
 	"U+368e":	[wn.synset("romanism.n.01")],
 
-	# religion, naturalism, religion,naturalism, theology, philosophy of religion, theology,philosophy of religion
+	# religion, naturalism, theology, philosophy of religion
 	"U+368f":	[wn.synset("theology.n.01")],
 
-	# Vatican, Vatican City, Vatican,Vatican City
+	# Vatican, Vatican City
 	"U+3690":	[wn.synset("vatican.n.01")],
 
-	# hijacker, coup maker, hijacker,coup maker
+	# hijacker, coup maker
 	"U+3691":	[wn.synset("highjacker.n.01"),
 				wn.synset("highjacker.n.02")],
 
-	# coup, coup d'etat, coup,coup d'etat, hijack, takeover, coup,hijack,takeover
+	# coup, coup d'etat d'etat, hijack, takeover
 	"U+3692":	[wn.synset("hijack.n.01")],
 
-	# hijack, make a coup, hijack,make a coup
+	# hijack, make a coup a coup
 	"U+3693":	[wn.synset("commandeer.v.01"),
 				wn.synset("hijack.v.02"),
 				wn.synset("kidnap.v.01")],
 
-	# necessary, necessarily, needed, necessary,necessarily,needed
+	# necessary, necessarily, needed
 	"U+3695":	[wn.synset("necessary.a.01")],
 
 	# need
@@ -3857,10 +3851,10 @@ BLISSNET = {
 				wn.synset("bitter.s.05"),
 				wn.synset("bitter.s.06")],
 
-	# down, downward, down,downward
+	# down, downward
 	"U+3698":	[wn.synset("down.r.01")],
 
-	# hear, listen, hear,listen
+	# hear, listen
 	"U+3699":	[wn.synset("hear.v.01"),
 				wn.synset("hear.v.03"),
 				wn.synset("hear.v.04"),
@@ -3869,10 +3863,10 @@ BLISSNET = {
 				wn.synset("listen.v.01"),
 				wn.synset("listen.v.02")],
 
-	# infiniteness, boundlessness, limitlessness, infiniteness,boundlessness,limitlessness
+	# infiniteness, boundlessness, limitlessness
 	"U+369a":	[wn.synset("infiniteness.n.01")],
 
-	# potholder, oven mitt, potholder,oven mitt
+	# potholder, oven mitt mitt
 	"U+369c":	[wn.synset("handle.n.01"),
 				wn.synset("holder.n.01"),
 				wn.synset("potholder.n.01")],
@@ -3895,10 +3889,10 @@ BLISSNET = {
 	# werewolf
 	"U+36a1":	[wn.synset("werewolf.n.01")],
 
-	# wolf, dingo, wild dog, wolf,dingo,wild dog
+	# wolf, dingo, wild dog dog
 	"U+36a3":	[wn.synset("wolf.n.01")],
 
-	# quickness, rapidity, speediness, quickness,rapidity,speediness
+	# quickness, rapidity, speediness
 	"U+36a4":	[wn.synset("adeptness.n.01"),
 				wn.synset("celerity.n.01"),
 				wn.synset("cursorily.r.01"),
@@ -3910,7 +3904,7 @@ BLISSNET = {
 				wn.synset("quick.s.01"),
 				wn.synset("quickly.r.01")],
 
-	# imprint, depression, imprint,depression, trace, track, imprint,trace,track
+	# imprint, depression, trace, track
 	"U+36a8":	[wn.synset("cut.n.08"),
 				wn.synset("depression.n.08"),
 				wn.synset("imprint.n.01"),
@@ -3937,7 +3931,7 @@ BLISSNET = {
 	# depression
 	"U+36a9":	[wn.synset("depression.n.01")],
 
-	# eagerness, keenness, willingness, eagerness,keenness,willingness
+	# eagerness, keenness, willingness
 	"U+36ab":	[wn.synset("acuteness.n.02"),
 				wn.synset("eagerness.n.01"),
 				wn.synset("enthusiasm.n.01"),
@@ -3945,14 +3939,14 @@ BLISSNET = {
 				wn.synset("sharpness.n.05"),
 				wn.synset("willingness.n.01")],
 
-	# altruism, selflessness, altruism,selflessness
+	# altruism, selflessness
 	"U+36ad":	[wn.synset("altruism.n.01"),
 				wn.synset("selflessness.n.02")],
 
-	# urinate, make water, pass water, micturate, pee, piddle, piss, wee, urinate,make water,pass water,micturate,pee,piddle,piss,wee
+	# urinate, make water, pass water, micturate, pee, piddle, piss, wee
 	"U+36af":	[wn.synset("make.v.49")],
 
-	# urine, piss, pee, piddle, weewee, water, urine,piss,pee,piddle,weewee,water
+	# urine, piss, pee, piddle, weewee, water
 	"U+36b0":	[wn.synset("urine.n.01")],
 
 	# kidnap
@@ -3961,11 +3955,11 @@ BLISSNET = {
 	# theft
 	"U+36b2":	[wn.synset("larceny.n.01")],
 
-	# escalator, moving stairs, escalator,moving stairs
+	# escalator, moving stairs
 	"U+36b3":	[wn.synset("escalator.n.02"),
 				wn.synset("escalator_clause.n.01")],
 
-	# stairs, steps, stairs,steps
+	# stairs, steps
 	"U+36b4":	[wn.synset("dance_step.n.01"),
 				wn.synset("footfall.n.01"),
 				wn.synset("footprint.n.01"),
@@ -3981,7 +3975,7 @@ BLISSNET = {
 				wn.synset("steps.n.02"),
 				wn.synset("tone.n.09")],
 
-	# concrete, cement, concrete,cement
+	# concrete, cement
 	"U+36b6":	[wn.synset("concrete.n.01")],
 
 	# sport lesson
@@ -3993,7 +3987,7 @@ BLISSNET = {
 				wn.synset("gymnastics.n.01"),
 				wn.synset("sport.n.01")],
 
-	# lesson, lecture, class, lesson,lecture,class
+	# lesson, lecture, class
 	"U+36b9":	[wn.synset("lesson.n.01")],
 
 	# responsible
@@ -4026,10 +4020,10 @@ BLISSNET = {
 	"U+36c1":	[wn.synset("support.n.01"),
 				wn.synset("support.n.10")],
 
-	# riding, horseback riding, riding,horseback riding
+	# riding, horseback riding
 	"U+36c2":	[wn.synset("riding.n.02")],
 
-	# shall, will, shall,will
+	# shall, will
 	"U+36c3":	[wn.synset("bequeath.v.01"),
 				wn.synset("crave.v.01"),
 				wn.synset("desire.v.01"),
@@ -4046,7 +4040,7 @@ BLISSNET = {
 	# toy
 	"U+36c5":	[wn.synset("plaything.n.01")],
 
-	# infinite, limitless, infinite,limitless
+	# infinite, limitless
 	"U+36c6":	[wn.synset("infinite.a.01")],
 
 	# open
@@ -4066,28 +4060,28 @@ BLISSNET = {
 				wn.synset("addiction.n.02"),
 				wn.synset("addiction.n.03")],
 
-	# dryness, drought, dryness,drought
+	# dryness, drought
 	"U+36ca":	[wn.synset("dryness.n.01")],
 
 	# dry
 	"U+36cc":	[wn.synset("dry.v.01")],
 
-	# bedbug, wall louse, bedbug,wall louse
+	# bedbug, wall louse
 	"U+36cd":	[wn.synset("bedbug.n.01")],
 
-	# louse, stinging insect, louse,stinging insect
+	# louse, stinging insect
 	"U+36ce":	[wn.synset("bird_louse.n.01"),
 				wn.synset("louse.n.01"),
 				wn.synset("plant_louse.n.01"),
 				wn.synset("worm.n.02")],
 
-	# indoor, indoors, indoor,indoors
+	# indoor, indoors
 	"U+36d0":	[wn.synset("indoor.a.01"),
 				wn.synset("indoor.s.02"),
 				wn.synset("inside.n.01"),
 				wn.synset("inside.n.02")],
 
-	# pacifier, dummy, pacifier,dummy
+	# pacifier, dummy
 	"U+36d1":	[wn.synset("comforter.n.04")],
 
 	# singer
@@ -4099,7 +4093,7 @@ BLISSNET = {
 	# Christian
 	"U+36d4":	[wn.synset("christian.n.01")],
 
-	# group of, much of, many of, quantity of, group of,much of,many of,quantity of
+	# group of, much of, many of, quantity of
 	"U+36d5":	[wn.synset("blood_group.n.01"),
 				wn.synset("bunch.n.01"),
 				wn.synset("crowd.n.02"),
@@ -4116,19 +4110,19 @@ BLISSNET = {
 				wn.synset("camp.n.08"),
 				wn.synset("clique.n.01")],
 
-	# yell, scream, yell,scream
+	# yell, scream
 	"U+36d7":	[wn.synset("shout.v.02")],
 
-	# bomb, explosive, bomb,explosive
+	# bomb, explosive
 	"U+36da":	[wn.synset("bomb.n.01")],
 
-	# explosion, detonation, blowup, explosion,detonation,blowup
+	# explosion, detonation, blowup
 	"U+36db":	[wn.synset("explosion.n.01")],
 
 	# gauge
 	"U+36dc":	[wn.synset("gauge.n.02")],
 
-	# scale, measurement, scale,measurement
+	# scale, measurement
 	"U+36dd":	[wn.synset("measurement.n.01"),
 				wn.synset("plate.n.14"),
 				wn.synset("scale.n.01"),
@@ -4145,11 +4139,11 @@ BLISSNET = {
 	# participate
 	"U+36de":	[wn.synset("participate.v.01")],
 
-	# participation, involvement, participation,involvement
+	# participation, involvement
 	"U+36df":	[wn.synset("engagement.n.07"),
 				wn.synset("involvement.n.02")],
 
-	# fatal, lethal, fatal,lethal
+	# fatal, lethal
 	"U+36e1":	[wn.synset("fatal.a.01")],
 
 	# drug addict
@@ -4168,18 +4162,18 @@ BLISSNET = {
 	# grunt
 	"U+36e7":	[wn.synset("grunt.v.01")],
 
-	# excavator, digger, power shovel, excavator,digger,power shovel
+	# excavator, digger, power shovel shovel
 	"U+36e9":	[wn.synset("digger.n.01"),
 				wn.synset("excavator.n.01"),
 				wn.synset("power_shovel.n.01")],
 
-	# digging, excavation, digging,excavation
+	# digging, excavation
 	"U+36ea":	[wn.synset("dig.n.01")],
 
-	# underpants, briefs, panties, underpants,briefs,panties
+	# underpants, briefs, panties
 	"U+36ed":	[wn.synset("underpants.n.01")],
 
-	# pants, jeans, slacks, trousers, pants,jeans,slacks,trousers
+	# pants, jeans, slacks, trousers
 	"U+36ee":	[wn.synset("bloomers.n.01"),
 				wn.synset("denim.n.02"),
 				wn.synset("gasp.n.01"),
@@ -4209,7 +4203,7 @@ BLISSNET = {
 				wn.synset("circuit.n.05"),
 				wn.synset("tour.n.01")],
 
-	# fixing, fix, mending, mend, repair, reparation, fixing,fix,mending,mend,repair,reparation
+	# fixing, fix, mending, mend, repair, reparation
 	"U+36f3":	[wn.synset("fastener.n.02"),
 				wn.synset("fix.n.01"),
 				wn.synset("fix.n.02"),
@@ -4226,7 +4220,7 @@ BLISSNET = {
 				wn.synset("reparation.n.02"),
 				wn.synset("reparation.n.04")],
 
-	# puddle, pool, puddle,pool
+	# puddle, pool
 	"U+36f5":	[wn.synset("consortium.n.01"),
 				wn.synset("pond.n.01"),
 				wn.synset("pool.n.01"),
@@ -4250,7 +4244,7 @@ BLISSNET = {
 	# boathouse
 	"U+36f9":	[wn.synset("boathouse.n.01")],
 
-	# seat, sitting, seat,sitting
+	# seat, sitting
 	"U+36fa":	[wn.synset("seat.n.03")],
 
 	# liquid
@@ -4260,7 +4254,7 @@ BLISSNET = {
 	# jaguar
 	"U+36fc":	[wn.synset("jaguar.n.01")],
 
-	# spot, mark, spot,mark
+	# spot, mark
 	"U+36fd":	[wn.synset("blot.n.02"),
 				wn.synset("smudge.n.02"),
 				wn.synset("spot.n.05")],
@@ -4268,10 +4262,10 @@ BLISSNET = {
 	# stocking, sock, pantyhose, tights
 	"U+36fe":	[wn.synset("sock.n.01")],
 
-	# disaster, catastrophe, disaster,catastrophe
+	# disaster, catastrophe
 	"U+3700":	[wn.synset("calamity.n.01")],
 
-	# just, fair, just,fair
+	# just, fair
 	"U+3701":	[wn.synset("average.s.03"),
 				wn.synset("bonny.s.01"),
 				wn.synset("clean.s.11"),
@@ -4286,7 +4280,7 @@ BLISSNET = {
 				wn.synset("honest.s.07"),
 				wn.synset("just.a.01")],
 
-	# judgement, law, judgement,law
+	# judgement, law
 	"U+3702":	[wn.synset("judgment.n.03"),
 				wn.synset("law.n.01"),
 				wn.synset("law.n.02"),
@@ -4300,7 +4294,7 @@ BLISSNET = {
 	# greater than
 	"U+3707":	[wn.synset("relationship.n.02")],
 
-	# outcome, result, outcome,result
+	# outcome, result
 	"U+3708":	[wn.synset("consequence.n.01"),
 				wn.synset("result.n.03"),
 				wn.synset("resultant_role.n.01"),
@@ -4321,7 +4315,7 @@ BLISSNET = {
 				wn.synset("miss.v.07"),
 				wn.synset("stumble.v.04")],
 
-	# pot stand, trivet, pot stand,trivet
+	# pot stand, trivet
 	"U+370b":	[wn.synset("trivet.n.02")],
 
 	# best
@@ -4352,7 +4346,7 @@ BLISSNET = {
 	# Purim
 	"U+370d":	[wn.synset("purim.n.01")],
 
-	# holiday, festival, holiday,festival
+	# holiday, festival
 	"U+370e":	[wn.synset("festival.n.01"),
 				wn.synset("festival.n.02"),
 				wn.synset("holiday.n.02"),
@@ -4368,7 +4362,7 @@ BLISSNET = {
 	# tower
 	"U+3711":	[wn.synset("tower.n.01")],
 
-	# yogurt, yoghurt, yogurt,yoghurt
+	# yogurt, yoghurt
 	"U+3712":	[wn.synset("yogurt.n.01")],
 
 	# milk
@@ -4397,19 +4391,19 @@ BLISSNET = {
 				wn.synset("receive.v.13"),
 				wn.synset("welcome.v.02")],
 
-	# keep, preserve, save, keep,preserve,save
+	# keep, preserve, save
 	"U+371c":	[wn.synset("keep.v.03")],
 
-	# wage, pay, salary, spend, pay,spend
+	# wage, pay, salary, spend
 	"U+371e":	[wn.synset("pay.v.01")],
 
 	# for, in order to
 	"U+371f":	[wn.synset("by.r.01")],
 
-	# precious thing, treasure, precious thing,treasure
+	# precious thing, treasure
 	"U+3721":	[wn.synset("treasure.n.04")],
 
-	# precious, treasured, precious,treasured
+	# precious, treasured
 	"U+3722":	[wn.synset("cherished.s.01"),
 				wn.synset("cute.s.02"),
 				wn.synset("precious.s.02"),
@@ -4420,7 +4414,7 @@ BLISSNET = {
 	"U+3723":	[wn.synset("chasuble.n.01"),
 				wn.synset("vestment.n.01")],
 
-	# accident, chance event, accident,chance event
+	# accident, chance event event
 	"U+3724":	[wn.synset("accident.n.01")],
 
 	# incense
@@ -4430,11 +4424,11 @@ BLISSNET = {
 	"U+3727":	[wn.synset("smoke.n.01"),
 				wn.synset("smoke.n.02")],
 
-	# smell, give off odour, smell,give off odour, odour, smell,odour, sense of smell, olfaction, smell,sense of smell,olfaction
+	# smell, give off odour off odour, odour, sense of smell, olfaction
 	"U+3728":	[wn.synset("olfactory_property.n.01"),
 				wn.synset("smell.n.04")],
 
-	# argue, dispute, quarrel, argue,dispute,quarrel, row, quarrel,row
+	# argue, dispute, quarrel, row
 	"U+3729":	[wn.synset("course.n.08"),
 				wn.synset("quarrel.n.01"),
 				wn.synset("quarrel.n.02"),
@@ -4444,7 +4438,7 @@ BLISSNET = {
 				wn.synset("row.n.06"),
 				wn.synset("rowing.n.01")],
 
-	# argument, dispute, quarrel, argument,dispute,quarrel
+	# argument, dispute, quarrel
 	"U+372a":	[wn.synset("dispute.n.01"),
 				wn.synset("quarrel.n.01")],
 
@@ -4461,7 +4455,7 @@ BLISSNET = {
 				wn.synset("poster.n.01"),
 				wn.synset("wag.n.01")],
 
-	# gopher, ground hog, gopher,ground hog
+	# gopher, ground hog hog
 	"U+372d":	[wn.synset("goffer.n.01"),
 				wn.synset("gopher.n.04"),
 				wn.synset("gopher_tortoise.n.01"),
@@ -4469,10 +4463,10 @@ BLISSNET = {
 				wn.synset("minnesotan.n.01"),
 				wn.synset("rodent.n.01")],
 
-	# horse trailer, horsebox, horse trailer,horsebox
+	# horse trailer, horsebox
 	"U+372f":	[wn.synset("horsebox.n.01")],
 
-	# trailer, container transport, trailer,container transport
+	# trailer, container transport
 	"U+3730":	[wn.synset("dawdler.n.01"),
 				wn.synset("preview.n.01"),
 				wn.synset("trailer.n.03"),
@@ -4481,13 +4475,13 @@ BLISSNET = {
 	# pregnancy
 	"U+3732":	[wn.synset("pregnancy.n.01")],
 
-	# conception, fertilization, fertilized egg, conception,fertilization,fertilized egg
+	# conception, fertilization, fertilized egg
 	"U+3733":	[wn.synset("conception.n.02")],
 
-	# missal, liturgical book, missal,liturgical book
+	# missal, liturgical book
 	"U+3734":	[wn.synset("missal.n.01")],
 
-	# true, truly, truthful, truthfully, true,truly,truthful,truthfully
+	# true, truly, truthful, truthfully
 	"U+3735":	[wn.synset("dependable.s.02"),
 				wn.synset("genuine.s.02"),
 				wn.synset("in_truth.r.01"),
@@ -4519,10 +4513,10 @@ BLISSNET = {
 	# lighthouse
 	"U+3738":	[wn.synset("beacon.n.03")],
 
-	# grocery store, food store, supermarket, grocery store,food store,supermarket
+	# grocery store, food store, supermarket
 	"U+3739":	[wn.synset("supermarket.n.01")],
 
-	# store, shop, store,shop
+	# store, shop
 	"U+373a":	[wn.synset("shop.n.01")],
 
 	# union
@@ -4533,13 +4527,13 @@ BLISSNET = {
 				wn.synset("horseradish.n.02"),
 				wn.synset("horseradish.n.03")],
 
-	# fry, saute, fry,saute
+	# fry, saute
 	"U+373d":	[wn.synset("fry.v.02")],
 
-	# nail polish, nail varnish, nail polish,nail varnish
+	# nail polish, nail varnish
 	"U+373f":	[wn.synset("nail_polish.n.01")],
 
-	# saliva, spit, saliva,spit
+	# saliva, spit
 	"U+3740":	[wn.synset("phlegm.n.02"),
 				wn.synset("saliva.n.01"),
 				wn.synset("spit.n.01"),
@@ -4549,10 +4543,10 @@ BLISSNET = {
 	# spitting
 	"U+3741":	[wn.synset("spit.n.04")],
 
-	# rotisserie, spit, rotisserie,spit
+	# rotisserie, spit
 	"U+3742":	[wn.synset("rotisserie.n.02")],
 
-	# rotation, circulation, orbit, lap, circle, round, rotation,circulation,orbit,lap,circle,round, circular, round,circular
+	# rotation, circulation, orbit, lap, circle, round, circular
 	"U+3743":	[wn.synset("beat.n.01"),
 				wn.synset("circle.n.01"),
 				wn.synset("circle.n.03"),
@@ -4613,10 +4607,10 @@ BLISSNET = {
 	# foreskin
 	"U+3749":	[wn.synset("prepuce.n.02")],
 
-	# elevator, lift, elevator,lift, raise, lift,raise, grow, bring up, cultivate, raise,grow,bring up,cultivate
+	# elevator, lift, raise, grow, bring up, cultivate
 	"U+374a":	[wn.synset("raise.v.02")],
 
-	# hoist, lift, hoist,lift
+	# hoist, lift
 	"U+374b":	[wn.synset("aerodynamic_lift.n.01"),
 				wn.synset("airlift.n.01"),
 				wn.synset("elevation.n.01"),
@@ -4631,7 +4625,7 @@ BLISSNET = {
 				wn.synset("lift.n.12"),
 				wn.synset("ski_tow.n.01")],
 
-	# aid, device, support, aid,device,support
+	# aid, device, support
 	"U+374c":	[wn.synset("accompaniment.n.02"),
 				wn.synset("aid.n.01"),
 				wn.synset("aid.n.02"),
@@ -4653,13 +4647,13 @@ BLISSNET = {
 				wn.synset("support.n.10"),
 				wn.synset("support.n.11")],
 
-	# up, upward, up,upward
+	# up, upward
 	"U+374d":	[wn.synset("up.r.01")],
 
-	# tail lift, lift, tail lift,lift
+	# tail lift, lift
 	"U+374e":	[wn.synset("elevator.n.01")],
 
-	# platform, stage, platform,stage
+	# platform, stage
 	"U+374f":	[wn.synset("chopine.n.01"),
 				wn.synset("degree.n.02"),
 				wn.synset("phase.n.01"),
@@ -4677,10 +4671,10 @@ BLISSNET = {
 	# prostitution
 	"U+3750":	[wn.synset("prostitution.n.01")],
 
-	# sexual intercourse, intercourse, copulation, sexual intercourse,intercourse,copulation
+	# sexual intercourse, intercourse, copulation
 	"U+3751":	[wn.synset("sexual_intercourse.n.01")],
 
-	# business, economy, commerce, trade, business,economy,commerce,trade
+	# business, economy, commerce, trade
 	"U+3752":	[wn.synset("commerce.n.03"),
 				wn.synset("trade.n.01"),
 				wn.synset("trade.n.02")],
@@ -4698,7 +4692,7 @@ BLISSNET = {
 	# canoeing
 	"U+3756":	[wn.synset("canoe.v.01")],
 
-	# paddle, oar, paddle,oar
+	# paddle, oar
 	"U+3757":	[wn.synset("oar.n.01"),
 				wn.synset("paddle.n.01"),
 				wn.synset("paddle.n.02"),
@@ -4713,10 +4707,10 @@ BLISSNET = {
 	"U+3759":	[wn.synset("keyboard.n.01"),
 				wn.synset("keyboard.n.02")],
 
-	# eyeliner, kohl, eyeliner,kohl
+	# eyeliner, kohl
 	"U+375a":	[wn.synset("kohl.n.01")],
 
-	# horse box, stall, horse box,stall
+	# horse box, stall
 	"U+375b":	[wn.synset("stall.n.01")],
 
 	# bricklayer
@@ -4725,7 +4719,7 @@ BLISSNET = {
 	# toaster
 	"U+375e":	[wn.synset("toaster.n.02")],
 
-	# a, an, any, a,an,any
+	# a, an, any
 	"U+3760":	[wn.synset("a.n.06"),
 				wn.synset("a.n.07"),
 				wn.synset("adenine.n.01"),
@@ -4738,7 +4732,7 @@ BLISSNET = {
 				wn.synset("one.n.01"),
 				wn.synset("vitamin_a.n.01")],
 
-	# some, any, some,any
+	# some, any
 	"U+3763":	[wn.synset("a_few.s.01"),
 				wn.synset("any.s.01"),
 				wn.synset("some.a.01"),
@@ -4752,10 +4746,10 @@ BLISSNET = {
 	# therapy
 	"U+3765":	[wn.synset("therapy.n.01")],
 
-	# ownership, possession, ownership,possession
+	# ownership, possession
 	"U+3766":	[wn.synset("possession.n.01")],
 
-	# supper, dinner, supper,dinner
+	# supper, dinner
 	"U+3767":	[wn.synset("dinner.n.01"),
 				wn.synset("supper.n.01"),
 				wn.synset("supper.n.02")],
@@ -4763,19 +4757,19 @@ BLISSNET = {
 	# meal
 	"U+3768":	[wn.synset("meal.n.01")],
 
-	# underground station, subway station, underground station,subway station
+	# underground station, subway station
 	"U+3769":	[wn.synset("subway_station.n.01")],
 
 	# station
 	"U+376a":	[wn.synset("station.n.01")],
 
-	# tune, melody, tune,melody
+	# tune, melody
 	"U+376b":	[wn.synset("melody.n.02"),
 				wn.synset("tune.n.01"),
 				wn.synset("tune.n.02"),
 				wn.synset("tune.n.03")],
 
-	# shelter, refuge, shelter,refuge
+	# shelter, refuge
 	"U+376d":	[wn.synset("consignment.n.03"),
 				wn.synset("cupboard.n.01"),
 				wn.synset("protection.n.04"),
@@ -4792,16 +4786,16 @@ BLISSNET = {
 				wn.synset("tax_shelter.n.01"),
 				wn.synset("throw-in.n.01")],
 
-	# scientist, academic, scientist,academic, researcher, scientist,researcher
+	# scientist, academic, researcher
 	"U+376e":	[wn.synset("scientist.n.01")],
 
-	# coldness, cold, coldness,cold
+	# coldness, cold
 	"U+376f":	[wn.synset("coldness.n.03")],
 
 	# juridical
 	"U+3770":	[wn.synset("judicial.a.03")],
 
-	# moo, bellow, moo,bellow
+	# moo, bellow
 	"U+3772":	[wn.synset("moo.v.01")],
 
 	# cow
@@ -4810,31 +4804,31 @@ BLISSNET = {
 	# sleepy
 	"U+3775":	[wn.synset("sleepy.s.01")],
 
-	# costume, disguise, costume,disguise
+	# costume, disguise
 	"U+3776":	[wn.synset("costume.n.01"),
 				wn.synset("costume.n.04")],
 
-	# make believe, pretend, imaginary, make-believe,pretend,imaginary
+	# make believe, pretend, imaginary
 	"U+3777":	[wn.synset("fanciful.s.02"),
 				wn.synset("make-believe.s.01")],
 
-	# dress up, disguise, dress up,disguise
+	# dress up, disguise
 	"U+3778":	[wn.synset("disguise.v.01")],
 
-	# caregiver, protector, defender, caregiver,protector,defender, guard, protector,guard
+	# caregiver, protector, defender, guard
 	"U+3779":	[wn.synset("caregiver.n.02"),
 				wn.synset("defender.n.01"),
 				wn.synset("defender.n.02"),
 				wn.synset("health_professional.n.01")],
 
-	# care, protection, defence, care,protection,defence, protect, defend, care,protect,defend
+	# care, protection, defence, protect, defend
 	"U+377a":	[wn.synset("defend.v.03"),
 				wn.synset("defend.v.06")],
 
-	# preceding, previous, former, earlier, preceding,previous,former,earlier
+	# preceding, previous, former, earlier
 	"U+377b":	[wn.synset("former.s.03")],
 
-	# first, primary, first,primary
+	# first, primary
 	"U+377c":	[wn.synset("first.a.01")],
 
 	# position
@@ -4842,10 +4836,10 @@ BLISSNET = {
 				wn.synset("position.n.06"),
 				wn.synset("status.n.01")],
 
-	# boot, trunk, roof box, luggage compartment, boot,trunk,roof box,luggage compartment
+	# boot, trunk, roof box, luggage compartment
 	"U+3780":	[wn.synset("boot.n.01")],
 
-	# ease, easiness, simplicity, ease,easiness,simplicity
+	# ease, easiness, simplicity
 	"U+3781":	[wn.synset("chasteness.n.01"),
 				wn.synset("ease.n.01"),
 				wn.synset("ease.n.02"),
@@ -4861,29 +4855,29 @@ BLISSNET = {
 	# hay
 	"U+3784":	[wn.synset("hay.n.01")],
 
-	# innocent, not guilty, innocent,not guilty
+	# innocent, not guilty
 	"U+3785":	[wn.synset("innocent.a.01")],
 
 	# innocence
 	"U+3786":	[wn.synset("innocence.n.03")],
 
-	# prison, jail, prison,jail
+	# prison, jail
 	"U+3787":	[wn.synset("jail.n.01"),
 				wn.synset("prison.n.01")],
 
-	# hat, cap, hood, hat,cap,hood
+	# hat, cap, hood
 	"U+3789":	[wn.synset("hat.n.01")],
 
-	# goodbye, farewell, goodbye,farewell
+	# goodbye, farewell
 	"U+378b":	[wn.synset("adieu.n.01"),
 				wn.synset("farewell.n.01"),
 				wn.synset("farewell.n.02")],
 
-	# hello, greetings, hello,greetings
+	# hello, greetings
 	"U+378c":	[wn.synset("greeting.n.01"),
 				wn.synset("hello.n.01")],
 
-	# at one's destination, there, at one's destination,there
+	# at one's destination, there
 	"U+378d":	[wn.synset("there.n.01"),
 				wn.synset("there.r.01"),
 				wn.synset("there.r.02"),
@@ -4895,7 +4889,7 @@ BLISSNET = {
 	# testicle
 	"U+378f":	[wn.synset("testis.n.01")],
 
-	# sweet, confection, sweet,confection
+	# sweet, confection
 	"U+3790":	[wn.synset("angelic.s.03"),
 				wn.synset("dulcet.s.02"),
 				wn.synset("fresh.a.06"),
@@ -4907,7 +4901,7 @@ BLISSNET = {
 				wn.synset("sweet.a.07"),
 				wn.synset("sweet.s.04")],
 
-	# disagreement, discord, disagreement,discord
+	# disagreement, discord
 	"U+3791":	[wn.synset("disagreement.n.01")],
 
 	# possible
@@ -4919,13 +4913,13 @@ BLISSNET = {
 				wn.synset("possibility.n.02"),
 				wn.synset("possibility.n.04")],
 
-	# maybe, perhaps, possibly, maybe,perhaps,possibly
+	# maybe, perhaps, possibly
 	"U+3794":	[wn.synset("possibly.r.01")],
 
 	# fetus
 	"U+3795":	[wn.synset("fetus.n.01")],
 
-	# shadow, shade, shadow,shade
+	# shadow, shade
 	"U+3796":	[wn.synset("apparition.n.03"),
 				wn.synset("darkness.n.02"),
 				wn.synset("ghost.n.01"),
@@ -4944,7 +4938,7 @@ BLISSNET = {
 				wn.synset("tail.n.05"),
 				wn.synset("trace.n.02")],
 
-	# shape, form, shape,form
+	# shape, form
 	"U+3797":	[wn.synset("condition.n.05"),
 				wn.synset("form.n.01"),
 				wn.synset("form.n.03"),
@@ -4955,10 +4949,10 @@ BLISSNET = {
 				wn.synset("shape.n.01"),
 				wn.synset("shape.n.02")],
 
-	# ruin, wreck, wreckage, ruin,wreck,wreckage, wreck,wreckage, castle ruin
+	# ruin, wreck, wreckage, castle ruin
 	"U+3798":	[wn.synset("ruin.n.02")],
 
-	# destroyed, ruined, demolished, deleted, erased, cancelled, destroyed,ruined,demolished,deleted,erased,cancelled
+	# destroyed, ruined, demolished, deleted, erased, cancelled
 	"U+3799":	[wn.synset("delete.v.01"),
 				wn.synset("demolished.s.01"),
 				wn.synset("destroyed.a.01"),
@@ -4971,7 +4965,7 @@ BLISSNET = {
 				wn.synset("finished.s.05"),
 				wn.synset("off.a.03")],
 
-	# church ruin, temple ruin, wreck, wreckage, temple, mosque), church ruin,temple ruin,wreck,wreckage
+	# church ruin, temple ruin, wreck, wreckage, temple, mosque
 	"U+379a":	[wn.synset("crash.n.02"),
 				wn.synset("shipwreck.n.03"),
 				wn.synset("synagogue.n.01"),
@@ -4982,7 +4976,7 @@ BLISSNET = {
 				wn.synset("wreck.n.04"),
 				wn.synset("wreckage.n.01")],
 
-	# church, mosque, temple, church,mosque,temple
+	# church, mosque, temple
 	"U+379b":	[wn.synset("church.n.02")],
 
 	# sliced
@@ -5014,7 +5008,7 @@ BLISSNET = {
 				wn.synset("snip.v.02"),
 				wn.synset("traverse.v.01")],
 
-	# medical tube, catheter, cannula, medical tube,catheter,cannula
+	# medical tube, catheter, cannula
 	"U+37a0":	[wn.synset("cannula.n.01"),
 				wn.synset("catheter.n.01")],
 
@@ -5024,10 +5018,10 @@ BLISSNET = {
 	# cannula
 	"U+37a2":	[wn.synset("cannula.n.01")],
 
-	# pavement, sidewalk, pavement,sidewalk
+	# pavement, sidewalk
 	"U+37a3":	[wn.synset("sidewalk.n.01")],
 
-	# opposite meaning, opposite of, opposite, opposite meaning,opposite of,opposite
+	# opposite meaning, opposite of, opposite
 	"U+37a4":	[wn.synset("antonym.n.01"),
 				wn.synset("inverse.n.01"),
 				wn.synset("opposition.n.04"),
@@ -5039,7 +5033,7 @@ BLISSNET = {
 	# class
 	"U+37a8":	[wn.synset("class.n.08")],
 
-	# correct, accurate, good, right, correct,accurate,good,right
+	# correct, accurate, good, right
 	"U+37a9":	[wn.synset("correct.a.01")],
 
 	# positive
@@ -5049,21 +5043,21 @@ BLISSNET = {
 	# good conscience
 	"U+37ab":	[wn.synset("conscience.n.01")],
 
-	# old, elderly, old,elderly
+	# old, elderly
 	"U+37ac":	[wn.synset("old.a.01"),
 				wn.synset("old.a.02")],
 
 	# young
 	"U+37ad":	[wn.synset("young.a.01")],
 
-	# people, tribe, clan, folk, people,tribe,clan,folk
+	# people, tribe, clan, folk
 	"U+37ae":	[wn.synset("kin.n.02")],
 
 	# go ashore
 	"U+37b0":	[wn.synset("disembark.v.01"),
 				wn.synset("get_off.v.01")],
 
-	# debarkation, disembarkation, debarkation,disembarkation
+	# debarkation, disembarkation
 	"U+37b1":	[wn.synset("debarkation.n.01")],
 
 	# trombone
@@ -5073,7 +5067,7 @@ BLISSNET = {
 	"U+37b7":	[wn.synset("brass.n.02"),
 				wn.synset("cornet.n.01")],
 
-	# leader, director, guide, leader,director,guide
+	# leader, director, guide
 	"U+37b9":	[wn.synset("conductor.n.01"),
 				wn.synset("director.n.01"),
 				wn.synset("director.n.02"),
@@ -5099,10 +5093,10 @@ BLISSNET = {
 	# sociology
 	"U+37bc":	[wn.synset("sociology.n.01")],
 
-	# okra, lady's finger, okra,lady's finger
+	# okra, lady's finger's finger
 	"U+37bd":	[wn.synset("okra.n.02")],
 
-	# practise, practice, drill, exercise, rehearse, practise,practice,drill,exercise,rehearse, work out, exercise,work out
+	# practise, practice, drill, exercise, rehearse, work out out
 	"U+37c0":	[wn.synset("drill.v.03"),
 				wn.synset("exercise.v.04"),
 				wn.synset("exert.v.01"),
@@ -5120,13 +5114,13 @@ BLISSNET = {
 	# gale
 	"U+37c8":	[wn.synset("gale.n.01")],
 
-	# apartment, flat, unit, apartment,flat,unit
+	# apartment, flat, unit
 	"U+37c9":	[wn.synset("apartment.n.01")],
 
-	# sprout, germinate, sprout,germinate
+	# sprout, germinate
 	"U+37ca":	[wn.synset("shoot.v.19")],
 
-	# growth, growing, growth,growing
+	# growth, growing
 	"U+37cc":	[wn.synset("emergence.n.01"),
 				wn.synset("growing.n.02"),
 				wn.synset("growth.n.01"),
@@ -5139,10 +5133,10 @@ BLISSNET = {
 	# trampoline
 	"U+37ce":	[wn.synset("trampoline.n.01")],
 
-	# tumble drier, tumble dryer, tumble-drier,tumble-dryer
+	# tumble drier, tumble dryer
 	"U+37d0":	[wn.synset("tumble-dryer.n.01")],
 
-	# pudding, cream, pudding,cream
+	# pudding, cream
 	"U+37d2":	[wn.synset("cream.n.01"),
 				wn.synset("cream.n.02"),
 				wn.synset("cream.n.03"),
@@ -5150,22 +5144,22 @@ BLISSNET = {
 				wn.synset("pudding.n.02"),
 				wn.synset("pudding.n.03")],
 
-	# gutter, eaves trough, gutter,eaves trough
+	# gutter, eaves trough trough
 	"U+37d3":	[wn.synset("gutter.n.01")],
 
 	# eaves
 	"U+37d4":	[wn.synset("eaves.n.01")],
 
-	# mountain berry, cowberry, lingonberry, mountain berry,cowberry,lingonberry
+	# mountain berry, cowberry, lingonberry
 	"U+37d5":	[wn.synset("cowberry.n.01")],
 
-	# fruit juice, juice, fruit juice,juice
+	# fruit juice, juice
 	"U+37d6":	[wn.synset("juice.n.01"),
 				wn.synset("juice.n.02"),
 				wn.synset("juice.n.03"),
 				wn.synset("juice.n.04")],
 
-	# drink, beverage, drink,beverage
+	# drink, beverage
 	"U+37d7":	[wn.synset("beverage.n.01")],
 
 	# Valentine
@@ -5181,13 +5175,13 @@ BLISSNET = {
 	# seaplane
 	"U+37dc":	[wn.synset("seaplane.n.01")],
 
-	# roti, chapati, flatbread, roti,chapati,flatbread
+	# roti, chapati, flatbread
 	"U+37dd":	[wn.synset("chapatti.n.01"),
 				wn.synset("flatbread.n.01"),
 				wn.synset("grid.n.05"),
 				wn.synset("grill.n.02")],
 
-	# disc, disk, disc,disk
+	# disc, disk
 	"U+37de":	[wn.synset("disk.n.01"),
 				wn.synset("magnetic_disk.n.01")],
 
@@ -5209,14 +5203,14 @@ BLISSNET = {
 				wn.synset("god.n.03"),
 				wn.synset("godhead.n.01")],
 
-	# watch tower, observation tower, watch tower,observation tower
+	# watch tower, observation tower
 	"U+37e6":	[wn.synset("barbican.n.01"),
 				wn.synset("watchtower.n.01")],
 
 	# observation
 	"U+37e7":	[wn.synset("observation.n.02")],
 
-	# happy, glad, gladly, happily, happy,glad,gladly,happily
+	# happy, glad, gladly, happily
 	"U+37e8":	[wn.synset("beaming.s.01"),
 				wn.synset("felicitous.s.02"),
 				wn.synset("glad.a.01"),
@@ -5232,10 +5226,10 @@ BLISSNET = {
 	"U+37e9":	[wn.synset("ice_hockey.n.01"),
 				wn.synset("puck.n.02")],
 
-	# oppressed, unfree, oppressed,unfree
+	# oppressed, unfree
 	"U+37eb":	[wn.synset("unfree.a.01")],
 
-	# oppression, captivity, slavery, oppression,captivity,slavery
+	# oppression, captivity, slavery
 	"U+37ec":	[wn.synset("bondage.n.02"),
 				wn.synset("captivity.n.01"),
 				wn.synset("enslavement.n.01"),
@@ -5245,7 +5239,7 @@ BLISSNET = {
 				wn.synset("slavery.n.02"),
 				wn.synset("slavery.n.03")],
 
-	# giving, gift, giving,gift
+	# giving, gift
 	"U+37ef":	[wn.synset("afford.v.04"),
 				wn.synset("bear.v.05"),
 				wn.synset("bestow.v.02"),
@@ -5290,21 +5284,21 @@ BLISSNET = {
 	# tape recorder
 	"U+37f1":	[wn.synset("recorder.n.01")],
 
-	# congratulations, best of luck, mazel tov, congratulations,best of luck,mazel tov
+	# congratulations, best of luck, mazel tov
 	"U+37f3":	[wn.synset("congratulation.n.01"),
 				wn.synset("congratulation.n.02"),
 				wn.synset("praise.n.01")],
 
-	# luck, fortune, luck,fortune
+	# luck, fortune
 	"U+37f4":	[wn.synset("fortune.n.02"),
 				wn.synset("luck.n.02"),
 				wn.synset("luck.n.03")],
 
-	# in, inside, interior, internal, in,inside,interior,internal
+	# in, inside, interior, internal
 	"U+37f5":	[wn.synset("inside.n.01"),
 				wn.synset("inside.n.02")],
 
-	# tie, bind together, lash, tie,bind together,lash, necktie, tie,necktie
+	# tie, bind together, lash necktie
 	"U+37f6":	[wn.synset("tie.v.01")],
 
 	# knot
@@ -5312,7 +5306,7 @@ BLISSNET = {
 				wn.synset("knot.n.03"),
 				wn.synset("knot.n.04")],
 
-	# powerful, mighty, powerful,mighty
+	# powerful, mighty
 	"U+37f9":	[wn.synset("powerful.a.01")],
 
 	# passenger
@@ -5324,7 +5318,7 @@ BLISSNET = {
 	# adoption
 	"U+37fd":	[wn.synset("adoption.n.02")],
 
-	# anyone, anybody, somebody, someone, anyone,anybody,somebody,someone
+	# anyone, anybody, somebody, someone
 	"U+37ff":	[wn.synset("person.n.01")],
 
 	# Sif
@@ -5337,7 +5331,7 @@ BLISSNET = {
 	"U+3804":	[wn.synset("crutch.n.01"),
 				wn.synset("crutch.n.02")],
 
-	# medical, medically, medical,medically
+	# medical, medically
 	"U+3806":	[wn.synset("medical.a.01")],
 
 	# relay
@@ -5367,26 +5361,26 @@ BLISSNET = {
 	# steamship
 	"U+3814":	[wn.synset("steamer.n.03")],
 
-	# height, tallness, height,tallness, altitude, height,altitude
+	# height, tallness, altitude
 	"U+3815":	[wn.synset("acme.n.01"),
 				wn.synset("altitude.n.01"),
 				wn.synset("height.n.01"),
 				wn.synset("stature.n.02"),
 				wn.synset("tallness.n.02")],
 
-	# taxi driver, cab driver, taxi driver,cab driver
+	# taxi driver, cab driver
 	"U+3817":	[wn.synset("taxidriver.n.01")],
 
-	# taxi, cab, taxi,cab
+	# taxi, cab
 	"U+3818":	[wn.synset("cab.n.03")],
 
-	# lettuce, leafy vegetable, lettuce,leafy vegetable
+	# lettuce, leafy vegetable vegetable
 	"U+3819":	[wn.synset("lettuce.n.02")],
 
 	# electric circuit
 	"U+381b":	[wn.synset("circuit.n.01")],
 
-	# tahini, sesame seed spread, tahini,sesame seed spread
+	# tahini, sesame seed spread seed spread
 	"U+381c":	[wn.synset("tahini.n.01")],
 
 	# white
@@ -5395,7 +5389,7 @@ BLISSNET = {
 	# mummy
 	"U+381e":	[wn.synset("mummy.n.02")],
 
-	# dead, deceased, dead,deceased
+	# dead, deceased
 	"U+381f":	[wn.synset("all_in.s.01"),
 				wn.synset("asleep.s.03"),
 				wn.synset("dead.a.01"),
@@ -5418,7 +5412,7 @@ BLISSNET = {
 	# all powerful
 	"U+3821":	[wn.synset("almighty.s.01")],
 
-	# ability, capability, capacity, potential, ability,capability,capacity,potential
+	# ability, capability, capacity, potential
 	"U+3822":	[wn.synset("ability.n.01")],
 
 	# quantity
@@ -5440,7 +5434,7 @@ BLISSNET = {
 	# chain
 	"U+382a":	[wn.synset("chain.n.03")],
 
-	# alligator, crocodile, alligator,crocodile
+	# alligator, crocodile
 	"U+382b":	[wn.synset("crocodile.n.01")],
 
 	# avalanche
@@ -5461,7 +5455,7 @@ BLISSNET = {
 	# crater
 	"U+3833":	[wn.synset("crater.n.03")],
 
-	# sunscreen, sunblock, sun lotion, sunscreen,sunblock,sun lotion
+	# sunscreen, sunblock, sun lotion lotion
 	"U+3834":	[wn.synset("sunscreen.n.01")],
 
 	# persevere
@@ -5479,7 +5473,7 @@ BLISSNET = {
 	# recipe
 	"U+383a":	[wn.synset("recipe.n.01")],
 
-	# embark, board, embark,board
+	# embark, board
 	"U+383e":	[wn.synset("board.v.01"),
 				wn.synset("board.v.02"),
 				wn.synset("board.v.03"),
@@ -5492,7 +5486,7 @@ BLISSNET = {
 	"U+3840":	[wn.synset("mourn.v.01"),
 				wn.synset("mourn.v.02")],
 
-	# sadness, sorrow, unhappiness, sadness,sorrow,unhappiness
+	# sadness, sorrow, unhappiness
 	"U+3841":	[wn.synset("sadness.n.01")],
 
 	# loss
@@ -5502,7 +5496,7 @@ BLISSNET = {
 	# minute
 	"U+3843":	[wn.synset("minute.n.01")],
 
-	# digital processing, artificial intelligence, AI, digital processing,artificial intelligence,AI
+	# digital processing, artificial intelligence, AI
 	"U+3846":	[wn.synset("army_intelligence.n.01"),
 				wn.synset("artificial_insemination.n.01"),
 				wn.synset("artificial_intelligence.n.01"),
@@ -5526,16 +5520,16 @@ BLISSNET = {
 	# black
 	"U+384c":	[wn.synset("black.n.01")],
 
-	# bottle nipple, teat, bottle nipple,teat
+	# bottle nipple, teat, bottle
 	"U+384d":	[wn.synset("bottle.n.02"),
 				wn.synset("bottle.n.03"),
 				wn.synset("nipple.n.01")],
 
-	# bottleneck, bottle opening, bottleneck,bottle opening
+	# bottleneck, bottle opening opening
 	"U+384e":	[wn.synset("bottleneck.n.02"),
 				wn.synset("constriction.n.01")],
 
-	# go, depart, leave, go,depart,leave
+	# go, depart, leave
 	"U+3850":	[wn.synset("depart.v.03"),
 				wn.synset("depart.v.04"),
 				wn.synset("exit.v.01"),
@@ -5546,23 +5540,23 @@ BLISSNET = {
 	# departure
 	"U+3851":	[wn.synset("departure.n.01")],
 
-	# subway, metro, underground, tube, subway,metro,underground,tube
+	# subway, metro, underground, tube
 	"U+3852":	[wn.synset("metro.n.01")],
 
-	# tunnel, subway, underpass, tunnel,subway,underpass
+	# tunnel, subway, underpass
 	"U+3853":	[wn.synset("tunnel.n.01")],
 
 	# team
 	"U+3854":	[wn.synset("team.n.01")],
 
-	# bonfire, barbeque, campfire, bonfire,barbeque,campfire
+	# bonfire, barbeque, campfire
 	"U+3855":	[wn.synset("barbecue.n.01"),
 				wn.synset("barbecue.n.02"),
 				wn.synset("barbecue.n.03"),
 				wn.synset("bonfire.n.01"),
 				wn.synset("campfire.n.01")],
 
-	# rat, rodent, gnawer, gnawing animal, rat,rodent,gnawer,gnawing animal
+	# rat, rodent, gnawer, gnawing animal
 	"U+3856":	[wn.synset("informer.n.01"),
 				wn.synset("rat.n.01"),
 				wn.synset("rat.n.05"),
@@ -5576,14 +5570,14 @@ BLISSNET = {
 				wn.synset("attic.n.04"),
 				wn.synset("loft.n.02")],
 
-	# fingernail, nail, fingernail,nail
+	# fingernail, nail
 	"U+3858":	[wn.synset("nail.n.01")],
 
-	# farness, remoteness, farawayness, farness,remoteness,farawayness
+	# farness, remoteness, farawayness
 	"U+3859":	[wn.synset("aloofness.n.02"),
 				wn.synset("farness.n.01")],
 
-	# sign, advertisement, sign,advertisement, signal, sign,signal, broadcast, transmitting, signal,broadcast,transmitting
+	# sign, advertisement, signal, broadcast, transmitting
 	"U+385a":	[wn.synset("ad.n.01"),
 				wn.synset("augury.n.01"),
 				wn.synset("polarity.n.02"),
@@ -5608,14 +5602,14 @@ BLISSNET = {
 	# crescent
 	"U+385e":	[wn.synset("crescent.n.01")],
 
-	# hot dog, frankfurter, hot dog,frankfurter
+	# hot dog, frankfurter
 	"U+3860":	[wn.synset("frank.n.02")],
 
 	# long
 	"U+3861":	[wn.synset("long.a.01"),
 				wn.synset("long.a.02")],
 
-	# sausage, frankfurter, hotdog, hot dog, sausage,frankfurter,hotdog,hot dog
+	# sausage, frankfurter, hotdog, hot dog
 	"U+3862":	[wn.synset("sausage.n.01")],
 
 	# parachuting
@@ -5630,10 +5624,10 @@ BLISSNET = {
 	# earmuffs
 	"U+3866":	[wn.synset("earmuff.n.01")],
 
-	# thaw, melt, thaw,melt
+	# thaw, melt
 	"U+3867":	[wn.synset("dissolve.v.09")],
 
-	# thawing, melting, thawing,melting
+	# thawing, melting
 	"U+3868":	[wn.synset("thaw.n.01"),
 				wn.synset("thaw.n.02")],
 
@@ -5657,16 +5651,16 @@ BLISSNET = {
 	# funeral
 	"U+3870":	[wn.synset("funeral.n.01")],
 
-	# empty, evacuate, throw away, void, empty,evacuate,throw away,void
+	# empty, evacuate, throw away, void
 	"U+3871":	[wn.synset("empty.v.01"),
 				wn.synset("empty.v.02")],
 
-	# emptying, voidance, evacuation, emptying,voidance,evacuation
+	# emptying, voidance, evacuation
 	"U+3872":	[wn.synset("elimination.n.02"),
 				wn.synset("emptying.n.01"),
 				wn.synset("evacuation.n.02")],
 
-	# understanding, comprehension, understanding,comprehension
+	# understanding, comprehension
 	"U+3875":	[wn.synset("sympathy.n.01")],
 
 	# magnetism
@@ -5679,7 +5673,7 @@ BLISSNET = {
 	"U+3879":	[wn.synset("address.n.02"),
 				wn.synset("address.n.06")],
 
-	# alone, just, only, solitary, alone,just,only,solitary
+	# alone, just, only, solitary
 	"U+387a":	[wn.synset("alone.s.01"),
 				wn.synset("alone.s.02"),
 				wn.synset("alone.s.03"),
@@ -5716,7 +5710,7 @@ BLISSNET = {
 	# August
 	"U+3883":	[wn.synset("august.n.01")],
 
-	# employed, working, employed,working
+	# employed, working
 	"U+3885":	[wn.synset("employed.a.01"),
 				wn.synset("employed.s.02"),
 				wn.synset("running.s.06"),
@@ -5725,7 +5719,7 @@ BLISSNET = {
 				wn.synset("working.s.03"),
 				wn.synset("working.s.05")],
 
-	# angry, angrily, mad, angry,angrily,mad
+	# angry, angrily, mad
 	"U+3886":	[wn.synset("angry.a.01")],
 
 	# wicket
@@ -5742,7 +5736,7 @@ BLISSNET = {
 				wn.synset("jurist.n.01"),
 				wn.synset("lawyer.n.01")],
 
-	# dichotomy, duality, dichotomy,duality
+	# dichotomy, duality
 	"U+388b":	[wn.synset("dichotomy.n.01"),
 				wn.synset("duality.n.02"),
 				wn.synset("duality.n.03")],
@@ -5750,7 +5744,7 @@ BLISSNET = {
 	# clitoris
 	"U+388c":	[wn.synset("clitoris.n.01")],
 
-	# apparent, clear, evident, obvious, plain, transparent, clear,transparent
+	# apparent, clear, evident, obvious, plain, transparent
 	"U+388f":	[wn.synset("absolved.s.01"),
 				wn.synset("apparent.s.01"),
 				wn.synset("apparent.s.02"),
@@ -5788,7 +5782,7 @@ BLISSNET = {
 	# lumberjack
 	"U+3894":	[wn.synset("lumberman.n.01")],
 
-	# fantasy, phantasy, imagination, illusion, fantasy,phantasy,imagination,illusion
+	# fantasy, phantasy, imagination, illusion
 	"U+3896":	[wn.synset("delusion.n.03"),
 				wn.synset("fantasy.n.01"),
 				wn.synset("fantasy.n.02"),
@@ -5799,13 +5793,13 @@ BLISSNET = {
 	# abortion
 	"U+389a":	[wn.synset("abortion.n.01")],
 
-	# miscarriage, abortion, miscarriage,abortion
+	# miscarriage, abortion
 	"U+389b":	[wn.synset("spontaneous_abortion.n.01")],
 
 	# believer
 	"U+389d":	[wn.synset("believer.n.02")],
 
-	# agreed, in agreement, harmonious, agreed,in agreement,harmonious
+	# agreed, in agreement, harmonious
 	"U+389e":	[wn.synset("agreed.s.01"),
 				wn.synset("harmonious.a.01"),
 				wn.synset("harmonious.s.02"),
@@ -5816,7 +5810,7 @@ BLISSNET = {
 	# with
 	"U+38a0":	[wn.synset("iodine.n.01")],
 
-	# meeting, assembly, conference, meeting,assembly,conference, encounter, meeting,encounter
+	# meeting, assembly, conference, encounter
 	"U+38a2":	[wn.synset("assembly.n.04"),
 				wn.synset("assembly.n.06"),
 				wn.synset("conference.n.01"),
@@ -5829,7 +5823,7 @@ BLISSNET = {
 	# matzo
 	"U+38a6":	[wn.synset("matzo.n.01")],
 
-	# sled, sledge, sleigh, toboggan, sled,sledge,sleigh,toboggan
+	# sled, sledge, sleigh, toboggan
 	"U+38a7":	[wn.synset("maul.n.01"),
 				wn.synset("sled.n.01"),
 				wn.synset("toboggan.n.01")],
@@ -5847,7 +5841,7 @@ BLISSNET = {
 	# divided
 	"U+38ad":	[wn.synset("divided.s.03")],
 
-	# file, data file, file,data file
+	# file, data file file
 	"U+38ae":	[wn.synset("file.n.01"),
 				wn.synset("file.n.02"),
 				wn.synset("file.n.03"),
@@ -5856,19 +5850,19 @@ BLISSNET = {
 	# elephant
 	"U+38af":	[wn.synset("elephant.n.01")],
 
-	# bracha, berakah, prayer, bracha,berakah,prayer
+	# bracha, berakah, prayer
 	"U+38b0":	[wn.synset("entreaty.n.01"),
 				wn.synset("prayer.n.01"),
 				wn.synset("prayer.n.02"),
 				wn.synset("prayer.n.04"),
 				wn.synset("prayer.n.05")],
 
-	# laundromat, launderette, laundry, laundromat,launderette,laundry
+	# laundromat, launderette, laundry
 	"U+38b1":	[wn.synset("launderette.n.01"),
 				wn.synset("laundry.n.01"),
 				wn.synset("laundry.n.02")],
 
-	# explorer, enquirer, explorer,enquirer
+	# explorer, enquirer
 	"U+38b2":	[wn.synset("explorer.n.01"),
 				wn.synset("inquirer.n.01"),
 				wn.synset("internet_explorer.n.01")],
@@ -5889,7 +5883,7 @@ BLISSNET = {
 				wn.synset("stress.v.02"),
 				wn.synset("try.v.07")],
 
-	# sandbox, sandpit, sandtray, sandbox,sandpit,sandtray
+	# sandbox, sandpit, sandtray
 	"U+38b8":	[wn.synset("sandbox.n.02")],
 
 	# sand
@@ -5899,7 +5893,7 @@ BLISSNET = {
 	"U+38bc":	[wn.synset("islam.n.01"),
 				wn.synset("islam.n.02")],
 
-	# Muslim, Moslem, Islamic, Muslim,Moslem,Islamic, Muslim,Moslem
+	# Muslim, Moslem, Islamic
 	"U+38bd":	[wn.synset("muslim.a.01")],
 
 	# archeologist
@@ -5908,7 +5902,7 @@ BLISSNET = {
 	# archeology
 	"U+38bf":	[wn.synset("archeology.n.01")],
 
-	# synthetic speech, text to speech, tts, synthetic speech,text-to-speech,tts
+	# synthetic speech, text to speech, tts
 	"U+38c0":	[wn.synset("micronesia.n.01"),
 				wn.synset("palau.n.01"),
 				wn.synset("terrestrial_time.n.01")],
@@ -5916,19 +5910,19 @@ BLISSNET = {
 	# speech
 	"U+38c1":	[wn.synset("address.n.03")],
 
-	# long for, yearn, long for,yearn
+	# long for, yearn
 	"U+38c2":	[wn.synset("hanker.v.01")],
 
-	# longing, yearning, longing,yearning
+	# longing, yearning
 	"U+38c3":	[wn.synset("longing.n.01")],
 
-	# descend, go down, descend,go down
+	# descend, go down down
 	"U+38c5":	[wn.synset("fall.v.32")],
 
 	# accordion
 	"U+38c6":	[wn.synset("accordion.n.01")],
 
-	# apron, coverall, smock, overall, apron,coverall,smock,overall
+	# apron, coverall, smock, overall
 	"U+38c7":	[wn.synset("apron.n.01")],
 
 	# insomnia
@@ -5938,7 +5932,7 @@ BLISSNET = {
 	"U+38c9":	[wn.synset("nation.n.02"),
 				wn.synset("state.n.04")],
 
-	# forced, compelled, obliged, forced,compelled,obliged
+	# forced, compelled, obliged
 	"U+38ca":	[wn.synset("compel.v.01"),
 				wn.synset("compel.v.02"),
 				wn.synset("constrained.s.01"),
@@ -5947,7 +5941,7 @@ BLISSNET = {
 				wn.synset("forced.s.02"),
 				wn.synset("forced.s.03")],
 
-	# must, have to, be forced to, must,have to,be forced to
+	# must, have to, be forced to
 	"U+38cb":	[wn.synset("must.n.01"),
 				wn.synset("must.n.02"),
 				wn.synset("must.s.01"),
@@ -5963,13 +5957,13 @@ BLISSNET = {
 	# fisherman
 	"U+38cf":	[wn.synset("fisherman.n.01")],
 
-	# quarter, one quarter, quarter,one quarter
+	# quarter, one quarter quarter
 	"U+38d0":	[wn.synset("one-fourth.n.01")],
 
 	# ironing board
 	"U+38d2":	[wn.synset("ironing_board.n.01")],
 
-	# turtle, tortoise, turtle,tortoise
+	# turtle, tortoise
 	"U+38d3":	[wn.synset("turtle.n.02")],
 
 	# square
@@ -6005,18 +5999,18 @@ BLISSNET = {
 				wn.synset("craft.n.05"),
 				wn.synset("trade.n.02")],
 
-	# district, neighbourhood, district,neighbourhood, city district, district,city district,neighbourhood
+	# district, neighbourhood, city district
 	"U+38dc":	[wn.synset("district.n.01"),
 				wn.synset("neighborhood.n.02"),
 				wn.synset("vicinity.n.01")],
 
-	# city, metropolis, city,metropolis
+	# city, metropolis
 	"U+38dd":	[wn.synset("city.n.01")],
 
-	# airforce, air force, airforce,air force
+	# airforce, air force force
 	"U+38de":	[wn.synset("air_force.n.01")],
 
-	# examination, investigation, examination,investigation
+	# examination, investigation
 	"U+38df":	[wn.synset("examen.n.01"),
 				wn.synset("examination.n.01"),
 				wn.synset("examination.n.02"),
@@ -6028,13 +6022,13 @@ BLISSNET = {
 	# fundamental law
 	"U+38e1":	[wn.synset("fundamental_law.n.01")],
 
-	# law, The Law, law,The Law
+	# law, The Law Law
 	"U+38e2":	[wn.synset("law.n.01"),
 				wn.synset("law.n.02"),
 				wn.synset("law.n.03"),
 				wn.synset("law.n.04")],
 
-	# fundamental, basic, fundamental,basic
+	# fundamental, basic
 	"U+38e3":	[wn.synset("basic.a.01"),
 				wn.synset("basic.s.02"),
 				wn.synset("basic.s.03"),
@@ -6052,7 +6046,7 @@ BLISSNET = {
 	# gas planet
 	"U+38e7":	[wn.synset("planet.n.01")],
 
-	# barber, hairdresser, barber,hairdresser
+	# barber, hairdresser
 	"U+38e8":	[wn.synset("barber.n.02")],
 
 	# inhaler
@@ -6062,7 +6056,7 @@ BLISSNET = {
 	"U+38ec":	[wn.synset("breath.n.01"),
 				wn.synset("breath.n.02")],
 
-	# pennywhistle, tin whistle, pennywhistle,tin whistle
+	# pennywhistle, tin whistle whistle
 	"U+38ed":	[wn.synset("pennywhistle.n.01")],
 
 	# soprano
@@ -6078,7 +6072,7 @@ BLISSNET = {
 	# ostrich
 	"U+38f2":	[wn.synset("ostrich.n.02")],
 
-	# aboard, on board, aboard,on board
+	# aboard, on board board
 	"U+38f3":	[wn.synset("aboard.r.01"),
 				wn.synset("aboard.r.02"),
 				wn.synset("aboard.r.03"),
@@ -6114,7 +6108,7 @@ BLISSNET = {
 	# train
 	"U+38fb":	[wn.synset("train.n.01")],
 
-	# ATM, cash machine, ATM,cash machine
+	# ATM, cash machine machine
 	"U+38fc":	[wn.synset("asynchronous_transfer_mode.n.01"),
 				wn.synset("cash_machine.n.01"),
 				wn.synset("standard_atmosphere.n.01")],
@@ -6122,10 +6116,10 @@ BLISSNET = {
 	# pushboat
 	"U+38fe":	[wn.synset("tugboat.n.01")],
 
-	# cloakroom, walk in closet, cloakroom,walk-in closet
+	# cloakroom, walk in closet-in closet
 	"U+3902":	[wn.synset("cloakroom.n.02")],
 
-	# habitation, dwelling place, site, habitation,dwelling place,site
+	# habitation, dwelling place, site
 	"U+3903":	[wn.synset("dwelling.n.01"),
 				wn.synset("habitation.n.01"),
 				wn.synset("inhabitancy.n.01"),
@@ -6133,16 +6127,16 @@ BLISSNET = {
 				wn.synset("site.n.02"),
 				wn.synset("web_site.n.01")],
 
-	# live, dwell, reside, live,dwell,reside
+	# live, dwell, reside
 	"U+3904":	[wn.synset("populate.v.01")],
 
 	# hard rock
 	"U+3905":	[wn.synset("rock_'n'_roll.n.01")],
 
-	# town, city, town,city
+	# town, city
 	"U+3906":	[wn.synset("city.n.01")],
 
-	# goldfish, guppy, pet fish, goldfish,guppy,pet fish
+	# goldfish, guppy, pet fish fish
 	"U+3908":	[wn.synset("goldfish.n.01"),
 				wn.synset("guppy.n.01")],
 
@@ -6152,7 +6146,7 @@ BLISSNET = {
 	# bite
 	"U+390b":	[wn.synset("bite.v.01")],
 
-	# point, indicate, point,indicate, tip, peak, point,tip,peak
+	# point, indicate, tip, peak
 	"U+390c":	[wn.synset("acme.n.01"),
 				wn.synset("bill.n.09"),
 				wn.synset("compass_point.n.01"),
@@ -6189,14 +6183,14 @@ BLISSNET = {
 				wn.synset("tip.n.03"),
 				wn.synset("vertex.n.02")],
 
-	# filled, stuffed, filled,stuffed
+	# filled, stuffed
 	"U+390e":	[wn.synset("filled.a.02"),
 				wn.synset("filled.s.01"),
 				wn.synset("filled.s.03"),
 				wn.synset("stuffed.s.01"),
 				wn.synset("stuffed.s.02")],
 
-	# filling, fill, fullness, filling,fill,fullness
+	# filling, fill, fullness
 	"U+390f":	[wn.synset("comprehensiveness.n.01"),
 				wn.synset("fill.n.01"),
 				wn.synset("filling.n.01"),
@@ -6209,13 +6203,13 @@ BLISSNET = {
 				wn.synset("fullness.n.04"),
 				wn.synset("woof.n.01")],
 
-	# paper money, bill, paper money,bill
+	# paper money, bill
 	"U+3910":	[wn.synset("bill.n.03")],
 
-	# drugstore, pharmacy, drugstore,pharmacy
+	# drugstore, pharmacy
 	"U+3911":	[wn.synset("drugstore.n.01")],
 
-	# baking tin, baking pan, ovenware, baking tin,baking pan,ovenware
+	# baking tin, baking pan, ovenware
 	"U+3912":	[wn.synset("ovenware.n.01")],
 
 	# starfish
@@ -6224,7 +6218,7 @@ BLISSNET = {
 	# water creature
 	"U+3915":	[wn.synset("marine_animal.n.01")],
 
-	# man made item, artefact, artifact, product, man-made item,artefact,artifact,product
+	# man made item, artefact, artifact, product
 	"U+3917":	[wn.synset("artifact.n.01"),
 				wn.synset("intersection.n.04"),
 				wn.synset("merchandise.n.01"),
@@ -6233,7 +6227,7 @@ BLISSNET = {
 				wn.synset("product.n.04"),
 				wn.synset("product.n.05")],
 
-	# making, production, fashioning, making,production,fashioning
+	# making, production, fashioning
 	"U+3918":	[wn.synset("production.n.02"),
 				wn.synset("production.n.07")],
 
@@ -6243,11 +6237,11 @@ BLISSNET = {
 	# iceberg
 	"U+391c":	[wn.synset("iceberg.n.01")],
 
-	# delicious, scrumptious, yummy, delicious,scrumptious,yummy
+	# delicious, scrumptious, yummy
 	"U+391d":	[wn.synset("delectable.s.01"),
 				wn.synset("delightful.s.01")],
 
-	# tasty, good, appetizing, tasty,good,appetizing
+	# tasty, good, appetizing
 	"U+391e":	[wn.synset("adept.s.01"),
 				wn.synset("appetizing.a.01"),
 				wn.synset("beneficial.s.01"),
@@ -6272,38 +6266,38 @@ BLISSNET = {
 				wn.synset("good.s.21"),
 				wn.synset("tasty.a.01")],
 
-	# summary, abstract, summary,abstract
+	# summary, abstract
 	"U+3920":	[wn.synset("summary.n.01")],
 
-	# shiny, glossy, shiny,glossy
+	# shiny, glossy
 	"U+3922":	[wn.synset("bright.s.05"),
 				wn.synset("glazed.a.03"),
 				wn.synset("glistening.s.01"),
 				wn.synset("glossy.s.01"),
 				wn.synset("glossy.s.03")],
 
-	# shine, beam, shine,beam
+	# shine, beam
 	"U+3923":	[wn.synset("glitter.v.01")],
 
-	# medical treatment, medical care, medical treatment,medical care
+	# medical treatment, medical care
 	"U+3924":	[wn.synset("checkup.n.01"),
 				wn.synset("treatment.n.02")],
 
-	# janitor, caretaker, janitor,caretaker
+	# janitor, caretaker
 	"U+3925":	[wn.synset("caretaker.n.01"),
 				wn.synset("caretaker.n.02"),
 				wn.synset("janitor.n.01")],
 
-	# see, look, watch, see,look,watch, wristwatch, watch,wristwatch
+	# see, look, watch, wristwatch
 	"U+3926":	[wn.synset("see.v.01")],
 
-	# discussion, conversation, debate, chat, discussion,conversation,debate,chat
+	# discussion, conversation, debate, chat
 	"U+3927":	[wn.synset("discussion.n.02")],
 
-	# sad, sadly, unhappily, unhappy, sad,sadly,unhappily,unhappy
+	# sad, sadly, unhappily, unhappy
 	"U+3928":	[wn.synset("sad.a.01")],
 
-	# say, speak, talk, tell, express, say,speak,talk,tell,express
+	# say, speak, talk, tell, express
 	"U+3929":	[wn.synset("speak.v.03"),
 				wn.synset("talk.v.01"),
 				wn.synset("talk.v.02")],
@@ -6313,18 +6307,18 @@ BLISSNET = {
 				wn.synset("fool.n.01"),
 				wn.synset("sap.n.01")],
 
-	# flavouring, condiment, seasoning, flavouring,condiment,seasoning, flavouring,seasoning
+	# flavouring, condiment, seasoning
 	"U+392b":	[wn.synset("flavorer.n.01")],
 
-	# handmade object, handicraft, handmade object,handicraft
+	# handmade object, handicraft
 	"U+392c":	[wn.synset("handicraft.n.01"),
 				wn.synset("handicraft.n.02")],
 
-	# handmade figure, handicraft, handmade figure,handicraft
+	# handmade figure, handicraft
 	"U+392d":	[wn.synset("handicraft.n.01"),
 				wn.synset("handicraft.n.02")],
 
-	# wink, blink, wink,blink
+	# wink, blink
 	"U+392e":	[wn.synset("blink.v.01"),
 				wn.synset("flash.v.01"),
 				wn.synset("wink.v.01"),
@@ -6345,7 +6339,7 @@ BLISSNET = {
 	# portability
 	"U+3934":	[wn.synset("portability.n.01")],
 
-	# printer, typewriter, printer,typewriter
+	# printer, typewriter
 	"U+3936":	[wn.synset("printer.n.02")],
 
 	# two storey building
@@ -6355,7 +6349,7 @@ BLISSNET = {
 	"U+3938":	[wn.synset("crochet.v.01"),
 				wn.synset("crochet.v.02")],
 
-	# hook, hanger, hook,hanger
+	# hook, hanger
 	"U+3939":	[wn.synset("hook.n.05")],
 
 	# kneeling
@@ -6391,10 +6385,10 @@ BLISSNET = {
 				wn.synset("satiny.s.01"),
 				wn.synset("undimmed.a.01")],
 
-	# smart, bright, clever, intelligent, smart,bright,clever,intelligent
+	# smart, bright, clever, intelligent
 	"U+3942":	[wn.synset("intelligent.a.01")],
 
-	# smartness, brightness, cleverness, intelligence, smartness,brightness,cleverness,intelligence
+	# smartness, brightness, cleverness, intelligence
 	"U+3943":	[wn.synset("able.a.01"),
 				wn.synset("alacrity.n.01"),
 				wn.synset("brainy.s.01"),
@@ -6414,16 +6408,16 @@ BLISSNET = {
 				wn.synset("news.n.01"),
 				wn.synset("smart.n.01")],
 
-	# fiber, fibre, fibril, filament, strand, fiber,fibre,fibril,filament,strand
+	# fiber, fibre, fibril, filament, strand
 	"U+3949":	[wn.synset("fiber.n.01")],
 
-	# slow, slowly, slow,slowly
+	# slow, slowly
 	"U+394b":	[wn.synset("slow.a.01")],
 
-	# spill, slop, spill,slop
+	# spill, slop
 	"U+394c":	[wn.synset("spill.v.02")],
 
-	# dirt, soil, dirt,soil
+	# dirt, soil
 	"U+394d":	[wn.synset("crap.n.01"),
 				wn.synset("dirt.n.02"),
 				wn.synset("land.n.02"),
@@ -6442,10 +6436,10 @@ BLISSNET = {
 	# liberation
 	"U+3952":	[wn.synset("liberation.n.01")],
 
-	# field hockey, hockey, field hockey,hockey
+	# field hockey, hockey
 	"U+3953":	[wn.synset("field_hockey.n.01")],
 
-	# dressing gown, housecoat, robe, dressing gown,housecoat,robe
+	# dressing gown, housecoat, robe
 	"U+3955":	[wn.synset("dressing_gown.n.01"),
 				wn.synset("gown.n.05"),
 				wn.synset("negligee.n.01"),
@@ -6456,19 +6450,19 @@ BLISSNET = {
 				wn.synset("dishtowel.n.01"),
 				wn.synset("rag.n.01")],
 
-	# helper, aide, assistant, personal assistant, helper,aide,assistant,personal assistant
+	# helper, aide, assistant, personal assistant assistant
 	"U+3958":	[wn.synset("assistant.n.01")],
 
-	# freezing, hardening, solidifying, freezing,hardening,solidifying
+	# freezing, hardening, solidifying
 	"U+3959":	[wn.synset("freeze.n.01"),
 				wn.synset("hardening.n.01"),
 				wn.synset("hardening.n.02"),
 				wn.synset("hardening.n.03")],
 
-	# rule, regulation, rule,regulation
+	# rule, regulation
 	"U+3960":	[wn.synset("rule.n.01")],
 
-	# swimming, swim, swimming,swim
+	# swimming, swim
 	"U+3962":	[wn.synset("swimming.n.01")],
 
 	# artist
@@ -6482,17 +6476,17 @@ BLISSNET = {
 				wn.synset("borrow.v.01"),
 				wn.synset("lend.v.02")],
 
-	# snowsuit, winter clothing, snowsuit,winter clothing
+	# snowsuit, winter clothing clothing
 	"U+3968":	[wn.synset("snowsuit.n.01")],
 
-	# bindi, tika, bindi,tika
+	# bindi, tika
 	"U+3969":	[wn.synset("bandage.n.01"),
 				wn.synset("tie.n.07")],
 
-	# pancake, crepe, tortilla, pancake,crepe,tortilla
+	# pancake, crepe, tortilla
 	"U+396a":	[wn.synset("pancake.n.01")],
 
-	# vision, apparition, vision,apparition
+	# vision, apparition
 	"U+396b":	[wn.synset("apparition.n.01"),
 				wn.synset("apparition.n.02"),
 				wn.synset("apparition.n.03"),
@@ -6503,26 +6497,19 @@ BLISSNET = {
 	# supernatural
 	"U+396c":	[wn.synset("supernatural.a.01")],
 
-	# sight, vision, visual sense, sight,vision,visual sense
+	# sight, vision, visual sense sense
 	"U+396d":	[wn.synset("sight.n.03")],
 
 	# masseur
 	"U+3970":	[wn.synset("massager.n.01"),
 				wn.synset("masseur.n.01")],
 
-	# we, us, ourselves, we,us,ourselves
-	"U+3971":	[wn.synset("maine.n.01"),
-				wn.synset("u.n.03"),
-				wn.synset("united_states.n.01"),
-				wn.synset("uracil.n.01"),
-				wn.synset("uranium.n.01")],
-
 	# diver
 	"U+3972":	[wn.synset("diver.n.01"),
 				wn.synset("diver.n.02"),
 				wn.synset("loon.n.02")],
 
-	# diving, activity under water, diving,activity under water
+	# diving, activity under water under water
 	"U+3973":	[wn.synset("dive.n.02"),
 				wn.synset("diving.n.01")],
 
@@ -6536,7 +6523,7 @@ BLISSNET = {
 				wn.synset("reading.n.08"),
 				wn.synset("recitation.n.02")],
 
-	# towboat, tugboat, towboat,tugboat
+	# towboat, tugboat
 	"U+3976":	[wn.synset("tugboat.n.01")],
 
 	# fundamental rule
@@ -6544,7 +6531,7 @@ BLISSNET = {
 				wn.synset("constitution.n.04"),
 				wn.synset("fundamental_law.n.01")],
 
-	# lamb, mutton, lamb,mutton
+	# lamb, mutton
 	"U+3978":	[wn.synset("mouton.n.01")],
 
 	# sheep
@@ -6553,7 +6540,7 @@ BLISSNET = {
 	# drug dependency
 	"U+397a":	[wn.synset("drug_addiction.n.01")],
 
-	# drug, mind altering drug, drug,mind-altering drug
+	# drug, mind altering drug-altering drug
 	"U+397c":	[wn.synset("drug.n.01")],
 
 	# rickshaw
@@ -6572,7 +6559,7 @@ BLISSNET = {
 	"U+3981":	[wn.synset("bible.n.01"),
 				wn.synset("bible.n.02")],
 
-	# bicycle helmet, crash helmet, bicycle helmet,crash helmet
+	# bicycle helmet, crash helmet
 	"U+3982":	[wn.synset("helmet.n.02")],
 
 	# helmet
@@ -6613,7 +6600,7 @@ BLISSNET = {
 	# credit
 	"U+398c":	[wn.synset("credit.n.02")],
 
-	# designer, planner, designer,planner
+	# designer, planner
 	"U+398e":	[wn.synset("architect.n.01"),
 				wn.synset("couturier.n.01"),
 				wn.synset("designer.n.04"),
@@ -6622,7 +6609,7 @@ BLISSNET = {
 				wn.synset("planner.n.01"),
 				wn.synset("planner.n.02")],
 
-	# ophthalmologist, oculist, ophthalmologist,oculist
+	# ophthalmologist, oculist
 	"U+3990":	[wn.synset("ophthalmologist.n.01")],
 
 	# homosexuality, lesbianism
@@ -6631,10 +6618,10 @@ BLISSNET = {
 	# couple
 	"U+3992":	[wn.synset("couple.n.01")],
 
-	# slip, petticoat, half slip, underskirt, slip,petticoat,half-slip,underskirt
+	# slip, petticoat, half slip, underskirt
 	"U+3993":	[wn.synset("petticoat.n.01")],
 
-	# dress, wear, dress,wear
+	# dress, wear
 	"U+3994":	[wn.synset("break.v.42"),
 				wn.synset("dress.v.01"),
 				wn.synset("dress.v.02"),
@@ -6665,7 +6652,7 @@ BLISSNET = {
 	"U+3995":	[wn.synset("boar.n.02"),
 				wn.synset("wild_boar.n.01")],
 
-	# boss, supervisor, boss,supervisor
+	# boss, supervisor
 	"U+3996":	[wn.synset("foreman.n.01")],
 
 	# stretch
@@ -6673,7 +6660,7 @@ BLISSNET = {
 				wn.synset("stretch.v.02"),
 				wn.synset("unfold.v.03")],
 
-	# vacation, holiday, vacation,holiday
+	# vacation, holiday
 	"U+3999":	[wn.synset("holiday.n.02"),
 				wn.synset("vacation.n.01"),
 				wn.synset("vacation.n.02")],
@@ -6693,20 +6680,20 @@ BLISSNET = {
 	# mountain climbing
 	"U+399e":	[wn.synset("mountain_climbing.n.01")],
 
-	# clerk, legal aid, clerk,legal aid
+	# clerk, legal aid aid
 	"U+39a0":	[wn.synset("clerk.n.01"),
 				wn.synset("salesclerk.n.01")],
 
-	# Joseph, Saint Joseph, Joseph,Saint Joseph
+	# Joseph, Saint Joseph Joseph
 	"U+39a1":	[wn.synset("joseph.n.02"),
 				wn.synset("joseph.n.03")],
 
-	# newspaper, bulletin, newsletter, newspaper,bulletin,newsletter
+	# newspaper, bulletin, newsletter
 	"U+39a3":	[wn.synset("newspaper.n.01"),
 				wn.synset("newspaper.n.02"),
 				wn.synset("newspaper.n.03")],
 
-	# girth, cinch, girth,cinch
+	# girth, cinch
 	"U+39a4":	[wn.synset("cinch.n.02")],
 
 	# canoe
@@ -6715,7 +6702,7 @@ BLISSNET = {
 	# touch screen
 	"U+39a6":	[wn.synset("touch_screen.n.01")],
 
-	# computer screen, monitor, computer screen,monitor
+	# computer screen, monitor
 	"U+39a7":	[wn.synset("monitor.n.04")],
 
 	# engaged
@@ -6732,7 +6719,7 @@ BLISSNET = {
 	"U+39aa":	[wn.synset("engineering.n.02"),
 				wn.synset("technology.n.01")],
 
-	# cafe, coffee house, snack bar, cafe,coffee house,snack bar
+	# cafe, coffee house, snack bar
 	"U+39ad":	[wn.synset("cafe.n.01")],
 
 	# snack
@@ -6744,17 +6731,15 @@ BLISSNET = {
 	# gelding
 	"U+39b1":	[wn.synset("gelding.n.01")],
 
-	# stallion, entire, stallion,entire
+	# stallion, entire
 	"U+39b2":	[wn.synset("stallion.n.01")],
 
-	# I, me, myself, I,me,myself
+	# I, me, myself
 	"U+39b4":	[wn.synset("ego.n.03"),
 				wn.synset("i.n.03"),
-				wn.synset("iodine.n.01"),
-				wn.synset("maine.n.01"),
 				wn.synset("one.n.01")],
 
-	# deflate, let out air, deflate,let out air
+	# deflate, let out air out air
 	"U+39b6":	[wn.synset("deflate.v.01"),
 				wn.synset("deflate.v.02"),
 				wn.synset("deflate.v.03"),
@@ -6771,7 +6756,7 @@ BLISSNET = {
 	"U+39b8":	[wn.synset("abstinence.n.01"),
 				wn.synset("teetotaling.n.01")],
 
-	# alcohol, ethanol, alcohol,ethanol
+	# alcohol, ethanol
 	"U+39b9":	[wn.synset("alcohol.n.01")],
 
 	# Loki
@@ -6786,7 +6771,7 @@ BLISSNET = {
 	# summer
 	"U+39c1":	[wn.synset("summer.n.01")],
 
-	# creature, being, creature,being
+	# creature, being
 	"U+39c2":	[wn.synset("animal.n.01"),
 				wn.synset("being.n.01"),
 				wn.synset("creature.n.02")],
@@ -6797,12 +6782,12 @@ BLISSNET = {
 				wn.synset("steamer.n.02"),
 				wn.synset("steamer.n.03")],
 
-	# disperse, disseminate, scatter, spread, disperse,disseminate,scatter,spread
+	# disperse, disseminate, scatter, spread
 	"U+39c4":	[wn.synset("disperse.v.02"),
 				wn.synset("spread.v.02"),
 				wn.synset("spread.v.07")],
 
-	# dispersion, dissemination, scattering, spread, spreading, dispersion,dissemination,scattering,spread,spreading
+	# dispersion, dissemination, scattering, spread, spreading
 	"U+39c5":	[wn.synset("banquet.n.02"),
 				wn.synset("bedspread.n.01"),
 				wn.synset("dispersion.n.01"),
@@ -6826,7 +6811,7 @@ BLISSNET = {
 	# mandolin
 	"U+39c9":	[wn.synset("mandolin.n.01")],
 
-	# continuance, continuation, continuance,continuation
+	# continuance, continuation
 	"U+39cd":	[wn.synset("continuance.n.01"),
 				wn.synset("duration.n.01"),
 				wn.synset("duration.n.02"),
@@ -6848,7 +6833,7 @@ BLISSNET = {
 	# traffic
 	"U+39d0":	[wn.synset("traffic.n.01")],
 
-	# bandage, dressing, bandage,dressing
+	# bandage, dressing
 	"U+39d1":	[wn.synset("bandage.n.01")],
 
 	# dare
@@ -6856,16 +6841,16 @@ BLISSNET = {
 				wn.synset("defy.v.03"),
 				wn.synset("make_bold.v.01")],
 
-	# brave, courageous, brave,courageous
+	# brave, courageous
 	"U+39d5":	[wn.synset("brave.a.01")],
 
-	# fiance, groom to be, fiance,groom-to-be
+	# fiance, groom to be-to-be
 	"U+39d7":	[wn.synset("fiance.n.01")],
 
-	# oyster, clam, oyster,clam
+	# oyster, clam
 	"U+39d8":	[wn.synset("oyster.n.01")],
 
-	# stranger, unknown, stranger,unknown
+	# stranger, unknown
 	"U+39da":	[wn.synset("stranger.n.01"),
 				wn.synset("stranger.n.02"),
 				wn.synset("unknown.n.01"),
@@ -6875,10 +6860,10 @@ BLISSNET = {
 	"U+39db":	[wn.synset("strange.a.01"),
 				wn.synset("strange.s.02")],
 
-	# Halloween, All Saint's Day, Halloween,All Saint's Day
+	# Halloween, All Saint's Day Saint's Day
 	"U+39dc":	[wn.synset("halloween.n.01")],
 
-	# ghost, phantom, ghost,phantom
+	# ghost, phantom
 	"U+39dd":	[wn.synset("apparition.n.01"),
 				wn.synset("apparition.n.03"),
 				wn.synset("ghost.n.01"),
@@ -6892,14 +6877,14 @@ BLISSNET = {
 	# metal craft
 	"U+39e2":	[wn.synset("metalworking.n.01")],
 
-	# applaud, clap, applaud,clap
+	# applaud, clap
 	"U+39e3":	[wn.synset("applaud.v.01"),
 				wn.synset("applaud.v.02")],
 
-	# applause, clapping, applause,clapping
+	# applause, clapping
 	"U+39e4":	[wn.synset("applause.n.01")],
 
-	# meeting room, auditorium, meeting room,auditorium
+	# meeting room, auditorium
 	"U+39e5":	[wn.synset("auditorium.n.01")],
 
 	# pickled
@@ -6932,30 +6917,30 @@ BLISSNET = {
 				wn.synset("sour.s.01"),
 				wn.synset("sour.s.03")],
 
-	# lava, magma, lava,magma
+	# lava, magma
 	"U+39ea":	[wn.synset("lava.n.01")],
 
-	# wireless connection, WiFi, wireless connection,WiFi
+	# wireless connection, WiFi
 	"U+39eb":	[wn.synset("wireless_local_area_network.n.01")],
 
 	# lobster
 	"U+39ed":	[wn.synset("lobster.n.01"),
 				wn.synset("lobster.n.02")],
 
-	# big, large, big,large
+	# big, large
 	"U+39ef":	[wn.synset("large.a.01")],
 
 	# noon
 	"U+39f0":	[wn.synset("noon.n.01")],
 
-	# hour, o'clock, hour,o'clock
+	# hour, o'clock'clock
 	"U+39f1":	[wn.synset("hour.n.01"),
 				wn.synset("hour.n.02")],
 
 	# tuba
 	"U+39f3":	[wn.synset("bass_horn.n.01")],
 
-	# trumpet, horn, cornet, trumpet,horn,cornet
+	# trumpet, horn, cornet
 	"U+39f4":	[wn.synset("cornet.n.01"),
 				wn.synset("horn.n.02"),
 				wn.synset("horn.n.06"),
@@ -6966,7 +6951,7 @@ BLISSNET = {
 				wn.synset("bass.n.06"),
 				wn.synset("bass.n.07")],
 
-	# no speech, anarthria, no speech,anarthria
+	# no speech, anarthria
 	"U+39f7":	[wn.synset("anarthria.n.01")],
 
 	# control
@@ -6978,24 +6963,24 @@ BLISSNET = {
 				wn.synset("dominance.n.02"),
 				wn.synset("restraint.n.02")],
 
-	# intimate, close, intimate,close, enclose, shut, close,enclose,shut
+	# intimate, close, enclose, shut
 	"U+39fa":	[wn.synset("close.v.01")],
 
-	# intimacy, closeness, intimacy,closeness
+	# intimacy, closeness
 	"U+39fb":	[wn.synset("affair.n.02"),
 				wn.synset("closeness.n.01"),
 				wn.synset("familiarity.n.03")],
 
-	# balance, poise, sense of balance, balance,sense of balance, standing)
+	# balance, poise, sense of balance of balance, standing)
 	"U+39fc":	[wn.synset("proportion.n.05")],
 
-	# fall, drop, spill, tumble, fall,drop,spill,tumble
+	# fall, drop, spill, tumble
 	"U+39fd":	[wn.synset("drop.n.06"),
 				wn.synset("fall.n.05"),
 				wn.synset("fall.n.06"),
 				wn.synset("spill.n.04")],
 
-	# leadership, guidance, leadership,guidance
+	# leadership, guidance
 	"U+39fe":	[wn.synset("leadership.n.01")],
 
 	# side
@@ -7012,11 +6997,11 @@ BLISSNET = {
 				wn.synset("side.n.10"),
 				wn.synset("slope.n.01")],
 
-	# do, act, do,act
+	# do, act
 	"U+3a04":	[wn.synset("act.v.01"),
 				wn.synset("perform.v.01")],
 
-	# mean, cruel, mean,cruel, signify, mean,signify
+	# mean, cruel, signify
 	"U+3a05":	[wn.synset("average.s.01"),
 				wn.synset("barbarous.s.01"),
 				wn.synset("base.s.05"),
@@ -7033,13 +7018,13 @@ BLISSNET = {
 	# burning
 	"U+3a07":	[wn.synset("burning.s.01")],
 
-	# picture, image, icon, painting, picture,image,icon,painting
+	# picture, image, icon, painting
 	"U+3a08":	[wn.synset("painting.n.01")],
 
 	# man doll
 	"U+3a09":	[wn.synset("doll.n.01")],
 
-	# apologize, apologise, regret, apologize,apologise,regret
+	# apologize, apologise, regret
 	"U+3a0a":	[wn.synset("apologize.v.01"),
 				wn.synset("apologize.v.02"),
 				wn.synset("regret.v.02"),
@@ -7047,7 +7032,7 @@ BLISSNET = {
 				wn.synset("regret.v.04"),
 				wn.synset("repent.v.02")],
 
-	# racket, racquet, racket,racquet
+	# racket, racquet
 	"U+3a0d":	[wn.synset("racket.n.04")],
 
 	# can opener
@@ -7058,7 +7043,7 @@ BLISSNET = {
 				wn.synset("opener.n.03"),
 				wn.synset("undoer.n.02")],
 
-	# can, tin, jar, can,tin,jar, be able, can,be able, tin,can
+	# can, tin, jar, be able able
 	"U+3a10":	[wn.synset("can.n.01")],
 
 	# harpsichord
@@ -7073,7 +7058,7 @@ BLISSNET = {
 				wn.synset("chicken.n.04"),
 				wn.synset("wimp.n.01")],
 
-	# finish, complete, finish,complete
+	# finish, complete
 	"U+3a15":	[wn.synset("complete.v.01"),
 				wn.synset("complete.v.02"),
 				wn.synset("complete.v.04"),
@@ -7086,10 +7071,10 @@ BLISSNET = {
 				wn.synset("finish.v.06"),
 				wn.synset("finish_up.v.02")],
 
-	# finished, complete, completed, finished,complete,completed
+	# finished, complete, completed
 	"U+3a17":	[wn.synset("complete.s.05")],
 
-	# cake, bread with sugar, cake,bread with sugar
+	# cake, bread with sugar with sugar
 	"U+3a18":	[wn.synset("cake.n.03")],
 
 	# game
@@ -7097,22 +7082,22 @@ BLISSNET = {
 				wn.synset("game.n.02"),
 				wn.synset("game.n.03")],
 
-	# takeoff, take off, airplane take off, takeoff,take-off,airplane take-off
+	# takeoff, take off, airplane take off
 	"U+3a1b":	[wn.synset("parody.n.01"),
 				wn.synset("parody.n.02"),
 				wn.synset("takeoff.n.01"),
 				wn.synset("takeoff.n.02")],
 
-	# camper, caravan, mobile home, camper,caravan,mobile home
+	# camper, caravan, mobile home home
 	"U+3a1c":	[wn.synset("van.n.04")],
 
 	# anti virus program, anti-virus program
 	"U+3a1d":	[wn.synset("anti-virus_program.n.01")],
 
-	# beautiful, attractive, good looking, handsome, pretty, beautiful,attractive,good-looking,handsome,pretty
+	# beautiful, attractive, good looking, handsome, pretty-looking
 	"U+3a1f":	[wn.synset("beautiful.a.01")],
 
-	# hurry, rush, hurry,rush, hurried, rushed
+	# hurry, rush, hurried, rushed
 	"U+3a20":	[wn.synset("haste.n.01"),
 				wn.synset("haste.n.02"),
 				wn.synset("hurry.n.01")],
@@ -7124,12 +7109,12 @@ BLISSNET = {
 				wn.synset("ragtime.n.01"),
 				wn.synset("tabloid.n.02")],
 
-	# usage, use, usage,use
+	# usage, use
 	"U+3a22":	[wn.synset("custom.n.01"),
 				wn.synset("use.n.01"),
 				wn.synset("use.n.03")],
 
-	# dirty, soiled, dirty,soiled
+	# dirty, soiled
 	"U+3a23":	[wn.synset("dirty.a.01")],
 
 	# agree
@@ -7144,10 +7129,10 @@ BLISSNET = {
 	# gong
 	"U+3a25":	[wn.synset("gong.n.01")],
 
-	# fear, fright, concern, fear,fright,concern, be afraid, dread, fear,be afraid,dread
+	# fear, fright, concern, be afraid, dread
 	"U+3a27":	[wn.synset("fear.n.01")],
 
-	# certain, sure, certain,sure
+	# certain, sure
 	"U+3a28":	[wn.synset("certain.a.02"),
 				wn.synset("certain.a.03"),
 				wn.synset("certain.a.04"),
@@ -7158,7 +7143,7 @@ BLISSNET = {
 	# Thursday
 	"U+3a29":	[wn.synset("thursday.n.01")],
 
-	# still, calm, peaceful, tranquil, still,calm,peaceful,tranquil, continuously, still,continuously, lull, calm,lull, serene, peaceful,serene,calm, continuing, ongoing, still,continuing,ongoing
+	# still, calm, peaceful, tranquil, continuously, lull, serene, continuing, ongoing
 	"U+3a2b":	[wn.synset("calm.a.02"),
 				wn.synset("calm.s.01"),
 				wn.synset("passive.s.02"),
@@ -7182,7 +7167,7 @@ BLISSNET = {
 	# nutcracker
 	"U+3a32":	[wn.synset("nutcracker.n.01")],
 
-	# kitchen tool, utensils, kitchen tool,utensils
+	# kitchen tool, utensils
 	"U+3a33":	[wn.synset("utensil.n.01")],
 
 	# nut
@@ -7194,26 +7179,26 @@ BLISSNET = {
 				wn.synset("nut.n.03"),
 				wn.synset("testis.n.01")],
 
-	# dense, thick, compact, tight, jammed, dense,thick,compact,tight,jammed
+	# dense, thick, compact, tight, jammed
 	"U+3a36":	[wn.synset("compact.a.01"),
 				wn.synset("thick.a.01"),
 				wn.synset("thick.a.03")],
 
-	# density, denseness, concentration, density,denseness,concentration, compactness, tightness, density,denseness,compactness,tightness
+	# density, denseness, concentration, compactness, tightness
 	"U+3a37":	[wn.synset("concentration.n.01"),
 				wn.synset("concentration.n.05")],
 
 	# puppy
 	"U+3a38":	[wn.synset("puppy.n.02")],
 
-	# bruised, dented, bruised,dented
+	# bruised, dented
 	"U+3a3a":	[wn.synset("bent.s.03"),
 				wn.synset("bruise.v.01"),
 				wn.synset("bruise.v.03"),
 				wn.synset("bruise.v.04"),
 				wn.synset("hurt.v.05")],
 
-	# bruise, contusion, haematoma, bruise,contusion,haematoma, dent, bruise,dent
+	# bruise, contusion, haematoma, dent
 	"U+3a3b":	[wn.synset("bruise.n.01"),
 				wn.synset("dent.n.01"),
 				wn.synset("dent.n.03"),
@@ -7237,13 +7222,13 @@ BLISSNET = {
 				wn.synset("groom.v.03"),
 				wn.synset("prepare.v.05")],
 
-	# horse brush, body brush, horse brush,body brush
+	# horse brush, body brush
 	"U+3a43":	[wn.synset("currycomb.n.01")],
 
-	# mask, false face, mask,false face
+	# mask, false face face
 	"U+3a44":	[wn.synset("mask.n.01")],
 
-	# mash, crush, squeeze, squash, mash,crush,squeeze,squash, mush, pulp, mash,mush,pulp, pumpkin, squash,pumpkin
+	# mash, crush, squeeze, squash, mush, pulp, pumpkin
 	"U+3a46":	[wn.synset("crush.v.04"),
 				wn.synset("jam.v.03"),
 				wn.synset("squash.v.01")],
@@ -7254,13 +7239,13 @@ BLISSNET = {
 	# Canada
 	"U+3a4b":	[wn.synset("canada.n.01")],
 
-	# flu, influenza, flu,influenza
+	# flu, influenza
 	"U+3a4c":	[wn.synset("influenza.n.01")],
 
-	# motorcycling, motocross, motorcycling,motocross
+	# motorcycling, motocross
 	"U+3a4d":	[wn.synset("motorcycling.n.01")],
 
-	# reflect, consider, reflect,consider
+	# reflect, consider
 	"U+3a4e":	[wn.synset("chew_over.v.01"),
 				wn.synset("consider.v.03"),
 				wn.synset("consider.v.04"),
@@ -7271,23 +7256,23 @@ BLISSNET = {
 	# reflection, consideration
 	"U+3a4f":	[wn.synset("contemplation.n.02")],
 
-	# neigh, whinny, neigh,whinny
+	# neigh, whinny
 	"U+3a50":	[wn.synset("neigh.v.01")],
 
-	# stop, arrive, end, stop,arrive,end, platform, stop,platform
+	# stop, arrive, end, platform
 	"U+3a52":	[wn.synset("discontinue.v.01"),
 				wn.synset("stop.v.01")],
 
-	# wart, papilloma, wart,papilloma
+	# wart, papilloma
 	"U+3a53":	[wn.synset("papilloma.n.01")],
 
-	# stoma, medical hole, stoma,medical hole
+	# stoma, medical hole hole
 	"U+3a54":	[wn.synset("fistula.n.02"),
 				wn.synset("ostomy.n.01"),
 				wn.synset("stoma.n.01"),
 				wn.synset("stoma.n.02")],
 
-	# hunt, hunting, hunt,hunting
+	# hunt, hunting
 	"U+3a55":	[wn.synset("hunt.n.08")],
 
 	# spirit
@@ -7297,10 +7282,10 @@ BLISSNET = {
 				wn.synset("spirit.n.03"),
 				wn.synset("spirit.n.04")],
 
-	# lottery, game of chance, lottery,game of chance
+	# lottery, game of chance of chance
 	"U+3a58":	[wn.synset("lottery.n.02")],
 
-	# smile, grin, smile,grin
+	# smile, grin
 	"U+3a5a":	[wn.synset("smile.v.01")],
 
 	# appointment
@@ -7311,15 +7296,15 @@ BLISSNET = {
 				wn.synset("capricorn.n.03"),
 				wn.synset("capricornus.n.01")],
 
-	# salesperson, shop owner, salesperson,shop owner
+	# salesperson, shop owner owner
 	"U+3a5f":	[wn.synset("salesman.n.01"),
 				wn.synset("salesperson.n.01"),
 				wn.synset("seller.n.01")],
 
-	# MP3 player, iPod, MP3 player,iPod
+	# MP3 player, iPod
 	"U+3a61":	[wn.synset("ipod.n.01")],
 
-	# electric wire, electric cord, cord, cable, lead, electric wire,electric cord,cord,cable,lead
+	# electric wire, electric cord, cord, cable, lead
 	"U+3a63":	[wn.synset("cable.n.01"),
 				wn.synset("cable.n.02"),
 				wn.synset("cable.n.03"),
@@ -7350,20 +7335,20 @@ BLISSNET = {
 				wn.synset("star.n.04"),
 				wn.synset("tip.n.03")],
 
-	# wire, cable, wire,cable
+	# wire, cable
 	"U+3a64":	[wn.synset("cable.n.02"),
 				wn.synset("cable.n.04")],
 
-	# underwear, underclothes, underwear,underclothes
+	# underwear, underclothes
 	"U+3a65":	[wn.synset("underwear.n.01")],
 
-	# bigness, largeness, bigness,largeness
+	# bigness, largeness
 	"U+3a66":	[wn.synset("breadth.n.01"),
 				wn.synset("largeness.n.02"),
 				wn.synset("largeness.n.03"),
 				wn.synset("pretentiousness.n.02")],
 
-	# swimsuit, swimwear, bathing suit, swimsuit,swimwear,bathing suit
+	# swimsuit, swimwear, bathing suit suit
 	"U+3a69":	[wn.synset("swimsuit.n.01")],
 
 	# twin brother
@@ -7373,14 +7358,14 @@ BLISSNET = {
 	# brother
 	"U+3a6c":	[wn.synset("brother.n.01")],
 
-	# beyond, past, beyond,past
+	# beyond, past
 	"U+3a6e":	[wn.synset("beyond.r.01"),
 				wn.synset("beyond.r.02"),
 				wn.synset("beyond.r.03"),
 				wn.synset("past.a.01"),
 				wn.synset("past.s.02")],
 
-	# ticket, pass, ticket,pass
+	# ticket, pass
 	"U+3a6f":	[wn.synset("ticket.n.01")],
 
 	# vanilla sauce
@@ -7392,7 +7377,7 @@ BLISSNET = {
 				wn.synset("vanilla.n.02"),
 				wn.synset("vanilla.n.03")],
 
-	# clock, timepiece, clock,timepiece
+	# clock, timepiece
 	"U+3a73":	[wn.synset("clock.n.01")],
 
 	# nurse
@@ -7402,7 +7387,7 @@ BLISSNET = {
 	"U+3a77":	[wn.synset("contrast.v.01"),
 				wn.synset("contrast.v.02")],
 
-	# full, satisfied, full,satisfied
+	# full, satisfied
 	"U+3a78":	[wn.synset("broad.s.05"),
 				wn.synset("entire.s.01"),
 				wn.synset("full.a.01"),
@@ -7432,7 +7417,7 @@ BLISSNET = {
 	# sauna
 	"U+3a7c":	[wn.synset("sauna.n.01")],
 
-	# vomiting, vomit, puking, vomiting,vomit,puking, throw up, puke, vomit,throw up,puke
+	# vomiting, vomit, puking, throw up, puke
 	"U+3a7d":	[wn.synset("vomit.n.03")],
 
 	# Latvian
@@ -7441,20 +7426,20 @@ BLISSNET = {
 	# Latvia
 	"U+3a7f":	[wn.synset("latvia.n.01")],
 
-	# folk tale, legend, folk tale,legend
+	# folk tale, legend
 	"U+3a81":	[wn.synset("caption.n.03"),
 				wn.synset("legend.n.01")],
 
-	# story, historic story, report, tale, story,report,tale
+	# story, historic story, report, tale
 	"U+3a82":	[wn.synset("fib.n.01"),
 				wn.synset("history.n.02"),
 				wn.synset("story.n.02")],
 
-	# criminality, crime, criminality,crime
+	# criminality, crime
 	"U+3a84":	[wn.synset("crime.n.01"),
 				wn.synset("crime.n.02")],
 
-	# illegal, criminal, illegal,criminal
+	# illegal, criminal
 	"U+3a85":	[wn.synset("illegal.a.01")],
 
 	# criminal
@@ -7463,7 +7448,7 @@ BLISSNET = {
 	# experience
 	"U+3a87":	[wn.synset("experience.n.01")],
 
-	# gerbil, guinea pig, hamster, gerbil,guinea pig,hamster
+	# gerbil, guinea pig, hamster
 	"U+3a88":	[wn.synset("gerbil.n.01"),
 				wn.synset("hamster.n.01")],
 
@@ -7478,21 +7463,21 @@ BLISSNET = {
 	# society
 	"U+3a8a":	[wn.synset("society.n.01")],
 
-	# scepticism, skepticism, scepticism,skepticism
+	# scepticism, skepticism
 	"U+3a8b":	[wn.synset("agnosticism.n.02")],
 
-	# sweetness, sweet, sweetness,sweet
+	# sweetness, sweet
 	"U+3a8c":	[wn.synset("dessert.n.01")],
 
-	# spray bottle, vaporizer, spray can, spray bottle,vaporizer,spray can
+	# spray bottle, vaporizer, spray can
 	"U+3a8d":	[wn.synset("atomizer.n.01"),
 				wn.synset("vaporizer.n.01")],
 
-	# spray, vaporization, spray,vaporization, vaporize, spray,vaporize
+	# spray, vaporization, vaporize
 	"U+3a8e":	[wn.synset("vaporization.n.01"),
 				wn.synset("vaporization.n.02")],
 
-	# period, point, full stop, decimal point, period,point,full stop,decimal point
+	# period, point, full stop, decimal point
 	"U+3a90":	[wn.synset("time_period.n.01")],
 
 	# Scorpio
@@ -7504,10 +7489,10 @@ BLISSNET = {
 	# scorpion
 	"U+3a93":	[wn.synset("scorpion.n.03")],
 
-	# potty, chamber pot, bedpan, potty,chamber pot,bedpan
+	# potty, chamber pot, bedpan
 	"U+3a95":	[wn.synset("chamberpot.n.01")],
 
-	# choose, pick, select, choose,pick,select
+	# choose, pick, select
 	"U+3a97":	[wn.synset("choose.v.01")],
 
 	# pole vaulting
@@ -7527,7 +7512,7 @@ BLISSNET = {
 	# odometer
 	"U+3a9c":	[wn.synset("odometer.n.01")],
 
-	# perfume, fragrance, aroma, scent, perfume,fragrance,aroma,scent
+	# perfume, fragrance, aroma, scent
 	"U+3a9e":	[wn.synset("aroma.n.02"),
 				wn.synset("olfactory_property.n.01"),
 				wn.synset("perfume.n.02")],
@@ -7541,7 +7526,7 @@ BLISSNET = {
 				wn.synset("soviet_russia.n.01"),
 				wn.synset("soviet_union.n.01")],
 
-	# homework, home studying, homework,home studying
+	# homework, home studying studying
 	"U+3aa2":	[wn.synset("homework.n.01")],
 
 	# right triangle
@@ -7550,7 +7535,7 @@ BLISSNET = {
 	# triangle
 	"U+3aa4":	[wn.synset("triangle.n.01")],
 
-	# curiosity, curiousness, inquisitiveness, curiosity,curiousness,inquisitiveness
+	# curiosity, curiousness, inquisitiveness
 	"U+3aa5":	[wn.synset("curio.n.01"),
 				wn.synset("curiosity.n.01"),
 				wn.synset("curiousness.n.01"),
@@ -7572,7 +7557,7 @@ BLISSNET = {
 	# causality
 	"U+3aa9":	[wn.synset("causality.n.01")],
 
-	# shopping centre, mall, plaza, shopping centre,mall,plaza
+	# shopping centre, mall, plaza
 	"U+3aaa":	[wn.synset("hypermarket.n.01"),
 				wn.synset("plaza.n.01"),
 				wn.synset("plaza.n.02"),
@@ -7581,7 +7566,7 @@ BLISSNET = {
 	# roe deer
 	"U+3aab":	[wn.synset("roe_deer.n.01")],
 
-	# deer, cervine, cervid, deer,cervine
+	# deer, cervine, cervid
 	"U+3aac":	[wn.synset("cervine.a.01"),
 				wn.synset("deer.n.01")],
 
@@ -7593,10 +7578,10 @@ BLISSNET = {
 				wn.synset("memorize.v.01"),
 				wn.synset("teach.v.01")],
 
-	# desk, worktable, work table, desk,worktable,work table
+	# desk, worktable, work table table
 	"U+3aae":	[wn.synset("desk.n.01")],
 
-	# gull, seagull, sea gull, gull,seagull,sea gull
+	# gull, seagull, sea gull gull
 	"U+3aaf":	[wn.synset("gull.n.02")],
 
 	# speech therapy
@@ -7610,7 +7595,7 @@ BLISSNET = {
 				wn.synset("canter.v.02"),
 				wn.synset("canter.v.03")],
 
-	# autumn, fall, autumn,fall
+	# autumn, fall
 	"U+3ab5":	[wn.synset("fall.n.01")],
 
 	# salty
@@ -7618,7 +7603,7 @@ BLISSNET = {
 				wn.synset("salty.a.02"),
 				wn.synset("salty.s.03")],
 
-	# hearing, audition, auditory sense, hearing,audition,auditory sense
+	# hearing, audition, auditory sense sense
 	"U+3ab7":	[wn.synset("audition.n.02"),
 				wn.synset("earshot.n.01"),
 				wn.synset("hearing.n.01"),
@@ -7627,19 +7612,19 @@ BLISSNET = {
 				wn.synset("hearing.n.06"),
 				wn.synset("listening.n.01")],
 
-	# sentence, condemn, sentence,condemn, clause, phrase, sentence,clause,phrase
+	# sentence, condemn, clause, phrase
 	"U+3ab8":	[wn.synset("sentence.v.01")],
 
 	# guilty
 	"U+3ab9":	[wn.synset("guilty.a.01")],
 
-	# increase, enlarge, increase,enlarge
+	# increase, enlarge
 	"U+3aba":	[wn.synset("increase.v.01")],
 
-	# sacked, dismissed, sacked,dismissed
+	# sacked, dismissed
 	"U+3abb":	[wn.synset("discharged.s.01")],
 
-	# factory, plant, factory,plant
+	# factory, plant
 	"U+3abe":	[wn.synset("factory.n.01")],
 
 	# Israel
@@ -7662,7 +7647,7 @@ BLISSNET = {
 	# volleyball
 	"U+3ac5":	[wn.synset("volleyball.n.01")],
 
-	# duck, bird, waterbird, waterfowl, seabird, seafowl, duck,bird
+	# duck, bird, waterbird, waterfowl, seabird, seafowl
 	"U+3ac7":	[wn.synset("duck.n.01")],
 
 	# Hebrew
@@ -7677,7 +7662,7 @@ BLISSNET = {
 	"U+3aca":	[wn.synset("root.n.01"),
 				wn.synset("root.n.08")],
 
-	# foam, mousse, foam,mousse
+	# foam, mousse
 	"U+3acb":	[wn.synset("foam.n.01")],
 
 	# its
@@ -7688,7 +7673,7 @@ BLISSNET = {
 	# astrology
 	"U+3acd":	[wn.synset("astrology.n.01")],
 
-	# quick, fast, quickly, rapid, rapidly, quick,fast,quickly,rapid,rapidly
+	# quick, fast, quickly, rapid, rapidly
 	"U+3ace":	[wn.synset("fast.a.01"),
 				wn.synset("quick.s.01"),
 				wn.synset("rapid.s.01")],
@@ -7699,7 +7684,7 @@ BLISSNET = {
 	# colleague
 	"U+3ad1":	[wn.synset("colleague.n.01")],
 
-	# equal, same, equal,same
+	# equal, same
 	"U+3ad2":	[wn.synset("equal.v.01"),
 				wn.synset("equal.v.02"),
 				wn.synset("equal.v.03")],
@@ -7707,10 +7692,10 @@ BLISSNET = {
 	# hysterectomy
 	"U+3ad3":	[wn.synset("hysterectomy.n.01")],
 
-	# fire place, campfire site, fire place,campfire site
+	# fire place, campfire site
 	"U+3ad4":	[wn.synset("fire.n.04")],
 
-	# stove, furnace, heater, oven, stove,furnace,heater,oven
+	# stove, furnace, heater, oven
 	"U+3ad5":	[wn.synset("fastball.n.01"),
 				wn.synset("furnace.n.01"),
 				wn.synset("heater.n.01"),
@@ -7718,10 +7703,10 @@ BLISSNET = {
 				wn.synset("stove.n.01"),
 				wn.synset("stove.n.02")],
 
-	# suggest, propose, suggest,propose
+	# suggest, propose
 	"U+3ad6":	[wn.synset("propose.v.01")],
 
-	# suggestion, proposal, suggestion,proposal
+	# suggestion, proposal
 	"U+3ad7":	[wn.synset("hypnotism.n.01"),
 				wn.synset("marriage_proposal.n.01"),
 				wn.synset("proposal.n.01"),
@@ -7741,7 +7726,7 @@ BLISSNET = {
 				wn.synset("snowball.n.03"),
 				wn.synset("snowball.n.04")],
 
-	# sea captain, skipper, sea captain,skipper
+	# sea captain, skipper
 	"U+3adb":	[wn.synset("captain.n.02"),
 				wn.synset("master.n.07")],
 
@@ -7749,7 +7734,7 @@ BLISSNET = {
 	"U+3adc":	[wn.synset("misapply.v.01"),
 				wn.synset("pervert.v.03")],
 
-	# always, ever, forever, always,ever,forever, whenever, ever,whenever
+	# always, ever, forever, whenever
 	"U+3ade":	[wn.synset("always.r.01"),
 				wn.synset("always.r.05"),
 				wn.synset("constantly.r.02"),
@@ -7760,23 +7745,23 @@ BLISSNET = {
 	"U+3adf":	[wn.synset("knight.n.01"),
 				wn.synset("knight.n.02")],
 
-	# Bliss, Bliss language, Blissymbolics, Bliss,Bliss language,Blissymbolics
+	# Bliss, Bliss language, Blissymbolics
 	"U+3ae0":	[wn.synset("bliss.n.01")],
 
-	# flashlight, lantern, flashlight,lantern
+	# flashlight, lantern
 	"U+3ae2":	[wn.synset("flashlight.n.01"),
 				wn.synset("lantern.n.01"),
 				wn.synset("torch.n.01")],
 
-	# burned out, burnt out, burned-out,burnt-out
+	# burned out, burnt out
 	"U+3ae3":	[wn.synset("burned-out.s.01")],
 
-	# decrease, reduce, decrease,reduce
+	# decrease, reduce
 	"U+3ae4":	[wn.synset("decrease.v.01"),
 				wn.synset("decrease.v.02"),
 				wn.synset("reduce.v.01")],
 
-	# Sabbath, day of rest, Sabbath,day of rest
+	# Sabbath, day of rest of rest
 	"U+3ae5":	[wn.synset("sabbath.n.01")],
 
 	# shortness, length)
@@ -7787,7 +7772,7 @@ BLISSNET = {
 				wn.synset("shortness.n.04"),
 				wn.synset("shortness.n.05")],
 
-	# lowness, shortness, lowness,shortness
+	# lowness, shortness
 	"U+3ae7":	[wn.synset("abruptness.n.01"),
 				wn.synset("downheartedness.n.01"),
 				wn.synset("low_status.n.01"),
@@ -7799,12 +7784,12 @@ BLISSNET = {
 				wn.synset("shortness.n.04"),
 				wn.synset("shortness.n.05")],
 
-	# real, really, real,really
+	# real, really
 	"U+3ae8":	[wn.synset("real.a.01"),
 				wn.synset("real.a.02"),
 				wn.synset("real.a.06")],
 
-	# try, attempt, try,attempt
+	# try, attempt
 	"U+3ae9":	[wn.synset("try.v.01")],
 
 	# psychology
@@ -7824,14 +7809,14 @@ BLISSNET = {
 				wn.synset("religion.n.02"),
 				wn.synset("wedding_ring.n.01")],
 
-	# hypothesis, theory, hypothesis,theory
+	# hypothesis, theory
 	"U+3aee":	[wn.synset("guess.n.01"),
 				wn.synset("hypothesis.n.02")],
 
-	# table tennis, ping pong, table tennis,ping-pong
+	# table tennis, ping pong
 	"U+3af0":	[wn.synset("table_tennis.n.01")],
 
-	# flight deck, cockpit, flight deck,cockpit
+	# flight deck, cockpit
 	"U+3af1":	[wn.synset("cockpit.n.01"),
 				wn.synset("cockpit.n.02"),
 				wn.synset("cockpit.n.03")],
@@ -7850,7 +7835,7 @@ BLISSNET = {
 	"U+3af5":	[wn.synset("definition.n.01"),
 				wn.synset("definition.n.02")],
 
-	# explanation, reason, explanation,reason
+	# explanation, reason
 	"U+3af6":	[wn.synset("explanation.n.03"),
 				wn.synset("rationality.n.01")],
 
@@ -7882,22 +7867,22 @@ BLISSNET = {
 	# lump
 	"U+3b03":	[wn.synset("swelling.n.01")],
 
-	# visitor, guest, visitor,guest
+	# visitor, guest
 	"U+3b04":	[wn.synset("visitor.n.01")],
 
-	# jet, jet plane, jet,jet plane
+	# jet, jet plane plane
 	"U+3b05":	[wn.synset("jet.n.01")],
 
 	# saint
 	"U+3b07":	[wn.synset("saint.n.01")],
 
-	# lawn mower, mower, lawn mower,mower
+	# lawn mower, mower
 	"U+3b08":	[wn.synset("lawn_mower.n.01")],
 
-	# fossil fuel, coal, fossil fuel,coal
+	# fossil fuel, coal
 	"U+3b09":	[wn.synset("coal.n.01")],
 
-	# afraid, frightened, scared, afraid,frightened,scared
+	# afraid, frightened, scared
 	"U+3b0b":	[wn.synset("afraid.a.01"),
 				wn.synset("afraid.s.03")],
 
@@ -7933,13 +7918,13 @@ BLISSNET = {
 	# mood
 	"U+3b15":	[wn.synset("temper.n.02")],
 
-	# blackboard, chalkboard, whiteboard, writing board, blackboard,chalkboard,whiteboard,writing board
+	# blackboard, chalkboard, whiteboard, writing board board
 	"U+3b18":	[wn.synset("blackboard.n.01")],
 
 	# yawn
 	"U+3b19":	[wn.synset("yawn.v.01")],
 
-	# program, programme, program,programme, presentation, program,programme,presentation
+	# program, programme, presentation
 	"U+3b1b":	[wn.synset("broadcast.n.02"),
 				wn.synset("course_of_study.n.01"),
 				wn.synset("plan.n.01"),
@@ -7952,7 +7937,7 @@ BLISSNET = {
 	# darts
 	"U+3b1f":	[wn.synset("darts.n.01")],
 
-	# capture, catch, seize, capture,catch,seize, grab, catch,grab
+	# capture, catch, seize, grab
 	"U+3b20":	[wn.synset("capture.v.02"),
 				wn.synset("capture.v.06"),
 				wn.synset("catch.v.01"),
@@ -7988,10 +7973,10 @@ BLISSNET = {
 				wn.synset("trip_up.v.01"),
 				wn.synset("watch.v.03")],
 
-	# protect, cover, shelter, take care of, protect,cover,shelter,take care of
+	# protect, cover, shelter, take care of care of
 	"U+3b22":	[wn.synset("protect.v.01")],
 
-	# ugh, yuk, ugh,yuk
+	# ugh, yuk
 	"U+3b25":	[wn.synset("phi.n.01")],
 
 	# golf
@@ -8003,7 +7988,7 @@ BLISSNET = {
 				wn.synset("gold.n.03"),
 				wn.synset("gold.n.04")],
 
-	# mixer, blender, mixer,blender
+	# mixer, blender
 	"U+3b28":	[wn.synset("mixer.n.03")],
 
 	# mixture
@@ -8021,22 +8006,22 @@ BLISSNET = {
 	# circle
 	"U+3b3a":	[wn.synset("circle.n.01")],
 
-	# cassette, audiocassette, videocassette, cassette,audiocassette,videocassette
+	# cassette, audiocassette, videocassette
 	"U+3b3e":	[wn.synset("cassette.n.01")],
 
 	# condom
 	"U+3b3f":	[wn.synset("condom.n.01")],
 
-	# molasses, dark syrup, black treacle, molasses,dark syrup,black treacle
+	# molasses, dark syrup, black treacle
 	"U+3b40":	[wn.synset("molasses.n.01")],
 
 	# syrup
 	"U+3b41":	[wn.synset("syrup.n.01")],
 
-	# free of charge, gratis, for free, free of charge,gratis,for free
+	# free of charge, gratis, for free
 	"U+3b42":	[wn.synset("complimentary.s.02")],
 
-	# cost, price, cost,price
+	# cost, price
 	"U+3b43":	[wn.synset("price.n.02")],
 
 	# distance
@@ -8063,24 +8048,24 @@ BLISSNET = {
 	# compass
 	"U+3b48":	[wn.synset("compass.n.01")],
 
-	# cry, weep, cry,weep
+	# cry, weep
 	"U+3b49":	[wn.synset("cry.v.02")],
 
-	# proclaim, announce, proclaim,announce
+	# proclaim, announce
 	"U+3b4a":	[wn.synset("announce.v.02"),
 				wn.synset("proclaim.v.02")],
 
-	# proclamation, announcement, proclamation,announcement
+	# proclamation, announcement
 	"U+3b4b":	[wn.synset("announcement.n.01")],
 
-	# ocean, sea, ocean,sea
+	# ocean, sea
 	"U+3b4d":	[wn.synset("ocean.n.02"),
 				wn.synset("sea.n.01")],
 
-	# movie, film, movie,film
+	# movie, film
 	"U+3b4e":	[wn.synset("movie.n.01")],
 
-	# cylinder, can, cylinder,can
+	# cylinder, can
 	"U+3b4f":	[wn.synset("can.n.01")],
 
 	# nuclear energy
@@ -8090,27 +8075,27 @@ BLISSNET = {
 	# kneel
 	"U+3b51":	[wn.synset("kneel.v.01")],
 
-	# adversity, hardship, setback, adversity,hardship,setback
+	# adversity, hardship, setback
 	"U+3b52":	[wn.synset("reverse.n.03")],
 
-	# half, one half, half,one-half
+	# half, one half-half
 	"U+3b53":	[wn.synset("one-half.n.01")],
 
 	# fish bone
 	"U+3b54":	[wn.synset("skeletal_structure.n.01"),
 				wn.synset("skeletal_system.n.01")],
 
-	# last, final, last,final, etc)
+	# last, final, etc)
 	"U+3b55":	[wn.synset("last.a.02"),
 				wn.synset("last.s.01")],
 
 	# South Pole
 	"U+3b57":	[wn.synset("south_pole.n.01")],
 
-	# let, allow, permit, let,allow,permit
+	# let, allow, permit
 	"U+3b5a":	[wn.synset("permit.v.01")],
 
-	# similar, like, alike, similar,like,alike
+	# similar, like, alike
 	"U+3b5c":	[wn.synset("alike.a.01"),
 				wn.synset("alike.r.01"),
 				wn.synset("alike.r.02"),
@@ -8130,7 +8115,7 @@ BLISSNET = {
 				wn.synset("load.n.01"),
 				wn.synset("load.n.02")],
 
-	# bell, chime bar, bell,chime bar
+	# bell, chime bar bar
 	"U+3b60":	[wn.synset("bell.n.01"),
 				wn.synset("bell.n.03"),
 				wn.synset("bell.n.04"),
@@ -8142,7 +8127,7 @@ BLISSNET = {
 				wn.synset("chime.n.01"),
 				wn.synset("doorbell.n.01")],
 
-	# lend, loan, lend,loan
+	# lend, loan
 	"U+3b61":	[wn.synset("lend.v.02")],
 
 	# indefinite
@@ -8152,7 +8137,7 @@ BLISSNET = {
 				wn.synset("indefinite.s.02"),
 				wn.synset("overall.s.01")],
 
-	# belt, sash, belt,sash
+	# belt, sash
 	"U+3b63":	[wn.synset("belt.n.02")],
 
 	# devil
@@ -8162,10 +8147,10 @@ BLISSNET = {
 	# electro magnet
 	"U+3b66":	[wn.synset("electromagnet.n.01")],
 
-	# hard, firm, hard,firm
+	# hard, firm
 	"U+3b67":	[wn.synset("hard.a.03")],
 
-	# sweetheart, lover, sweetheart,lover
+	# sweetheart, lover
 	"U+3b68":	[wn.synset("fan.n.03"),
 				wn.synset("lover.n.01"),
 				wn.synset("lover.n.03"),
@@ -8173,7 +8158,7 @@ BLISSNET = {
 				wn.synset("sweetheart.n.01"),
 				wn.synset("sweetheart.n.02")],
 
-	# board and lodging, room and board, board and lodging,room and board
+	# board and lodging, room and board
 	"U+3b6a":	[wn.synset("billet.n.02"),
 				wn.synset("boarding_house.n.01"),
 				wn.synset("diggings.n.02"),
@@ -8191,7 +8176,7 @@ BLISSNET = {
 	# infection
 	"U+3b6e":	[wn.synset("infection.n.01")],
 
-	# wakefulness, alertness, wakefulness,alertness
+	# wakefulness, alertness
 	"U+3b70":	[wn.synset("alertness.n.02"),
 				wn.synset("alertness.n.03"),
 				wn.synset("wakefulness.n.01"),
@@ -8212,7 +8197,7 @@ BLISSNET = {
 	"U+3b75":	[wn.synset("face_guard.n.01"),
 				wn.synset("face_mask.n.01")],
 
-	# uncertain, unsure, uncertain,unsure
+	# uncertain, unsure
 	"U+3b76":	[wn.synset("changeable.s.03"),
 				wn.synset("diffident.a.02"),
 				wn.synset("uncertain.a.01"),
@@ -8222,7 +8207,7 @@ BLISSNET = {
 				wn.synset("uncertain.s.07"),
 				wn.synset("unsealed.a.01")],
 
-	# linear, straight, linear,straight
+	# linear, straight
 	"U+3b77":	[wn.synset("analogue.a.01"),
 				wn.synset("linear.a.01"),
 				wn.synset("linear.a.02"),
@@ -8244,13 +8229,13 @@ BLISSNET = {
 				wn.synset("true.s.12"),
 				wn.synset("uncoiled.a.01")],
 
-	# budget, business plan, budget,business plan
+	# budget, business plan plan
 	"U+3b78":	[wn.synset("budget.n.02")],
 
 	# wave
 	"U+3b7a":	[wn.synset("wave.n.01")],
 
-	# mistake, error, fault, mistake,error,fault, mishap, error,mishap
+	# mistake, error, fault, mishap
 	"U+3b7b":	[wn.synset("erroneousness.n.01"),
 				wn.synset("error.n.03"),
 				wn.synset("error.n.04"),
@@ -8258,7 +8243,7 @@ BLISSNET = {
 				wn.synset("error.n.07"),
 				wn.synset("mistake.n.01")],
 
-	# quills, spines, quills,spines
+	# quills, spines
 	"U+3b7d":	[wn.synset("flight_feather.n.01"),
 				wn.synset("quill.n.01"),
 				wn.synset("quill.n.02"),
@@ -8272,7 +8257,7 @@ BLISSNET = {
 	# swim
 	"U+3b7f":	[wn.synset("swim.v.01")],
 
-	# upset, disturbance, agitation, upset,disturbance,agitation
+	# upset, disturbance, agitation
 	"U+3b80":	[wn.synset("affray.n.02"),
 				wn.synset("agitation.n.01"),
 				wn.synset("agitation.n.02"),
@@ -8300,21 +8285,21 @@ BLISSNET = {
 				wn.synset("chase.n.03"),
 				wn.synset("pursuit.n.01")],
 
-	# funny, humorous, funny,humorous
+	# funny, humorous
 	"U+3b84":	[wn.synset("amusing.s.02")],
 
-	# laugh, laughter, laugh,laughter
+	# laugh, laughter
 	"U+3b85":	[wn.synset("laugh.n.01")],
 
 	# guest room
 	"U+3b87":	[wn.synset("guestroom.n.01")],
 
-	# forgiveness, pardon, forgiveness,pardon, what did you say, pardon,what did you say
+	# forgiveness, pardon, what did you say did you say
 	"U+3b88":	[wn.synset("amnesty.n.03"),
 				wn.synset("forgiveness.n.02"),
 				wn.synset("pardon.n.02")],
 
-	# watchful, alert, watchful,alert
+	# watchful, alert
 	"U+3b89":	[wn.synset("alert.a.01"),
 				wn.synset("alert.s.02"),
 				wn.synset("alert.s.03"),
@@ -8326,10 +8311,10 @@ BLISSNET = {
 	# tobacco
 	"U+3b8b":	[wn.synset("tobacco.n.01")],
 
-	# recent, recently, recent,recently
+	# recent, recently
 	"U+3b8d":	[wn.synset("recent.s.01")],
 
-	# greenhouse, glasshouse, hothouse, greenhouse,glasshouse,hothouse
+	# greenhouse, glasshouse, hothouse
 	"U+3b8f":	[wn.synset("greenhouse.n.01")],
 
 	# crayfish
@@ -8347,13 +8332,13 @@ BLISSNET = {
 	# javelin throw
 	"U+3b97":	[wn.synset("javelin.n.01")],
 
-	# javelin, spear, javelin,spear
+	# javelin, spear
 	"U+3b98":	[wn.synset("javelin.n.01"),
 				wn.synset("javelin.n.02"),
 				wn.synset("spear.n.01"),
 				wn.synset("spear.n.02")],
 
-	# barge, river boat, barge,river boat
+	# barge, river boat boat
 	"U+3b99":	[wn.synset("barge.n.01")],
 
 	# freighter
@@ -8365,12 +8350,12 @@ BLISSNET = {
 	# sandal
 	"U+3b9c":	[wn.synset("sandal.n.01")],
 
-	# goblet, wineglass, goblet,wineglass
+	# goblet, wineglass
 	"U+3b9d":	[wn.synset("chalice.n.01"),
 				wn.synset("goblet.n.01"),
 				wn.synset("wineglass.n.01")],
 
-	# eager, keen, willing, eager,keen,willing
+	# eager, keen, willing
 	"U+3b9e":	[wn.synset("willing.a.01")],
 
 	# grapefruit
@@ -8394,7 +8379,7 @@ BLISSNET = {
 				wn.synset("hand_brake.n.01"),
 				wn.synset("rapid.s.01")],
 
-	# family, couple, family,couple
+	# family, couple
 	"U+3ba5":	[wn.synset("class.n.01"),
 				wn.synset("couple.n.01"),
 				wn.synset("couple.n.02"),
@@ -8410,10 +8395,10 @@ BLISSNET = {
 				wn.synset("pair.n.03"),
 				wn.synset("syndicate.n.01")],
 
-	# sick, ill, sick,ill
+	# sick, ill
 	"U+3ba6":	[wn.synset("ill.a.01")],
 
-	# washcloth, washrag, flannel, washcloth,washrag,flannel
+	# washcloth, washrag, flannel
 	"U+3ba8":	[wn.synset("flannel.n.01"),
 				wn.synset("flannel.n.03"),
 				wn.synset("gauntlet.n.02"),
@@ -8432,7 +8417,7 @@ BLISSNET = {
 	# maple syrup
 	"U+3bab":	[wn.synset("maple_syrup.n.01")],
 
-	# OK, alright, OK,alright
+	# OK, alright
 	"U+3bac":	[wn.synset("all_right.s.01")],
 
 	# enough
@@ -8446,10 +8431,10 @@ BLISSNET = {
 				wn.synset("reasonably.r.01"),
 				wn.synset("sufficiently.r.01")],
 
-	# mouse, pointing device, mouse,pointing device
+	# mouse, pointing device device
 	"U+3bae":	[wn.synset("mouse.n.04")],
 
-	# choir, chorus, choir,chorus
+	# choir, chorus
 	"U+3baf":	[wn.synset("choir.n.01"),
 				wn.synset("choir.n.02"),
 				wn.synset("choir.n.03"),
@@ -8465,11 +8450,11 @@ BLISSNET = {
 	# palm
 	"U+3bb2":	[wn.synset("palm.n.03")],
 
-	# curious, inquisitive, curious,inquisitive
+	# curious, inquisitive
 	"U+3bb3":	[wn.synset("curious.a.02"),
 				wn.synset("curious.s.01")],
 
-	# twinkle, shine, sparkle, twinkle,shine,sparkle
+	# twinkle, shine, sparkle
 	"U+3bb5":	[wn.synset("fall.v.08"),
 				wn.synset("flash.v.01"),
 				wn.synset("foam.v.01"),
@@ -8491,7 +8476,7 @@ BLISSNET = {
 	"U+3bb6":	[wn.synset("broadband.a.01"),
 				wn.synset("broadband.a.02")],
 
-	# band, orchestra, band,orchestra
+	# band, orchestra
 	"U+3bb7":	[wn.synset("band.n.02"),
 				wn.synset("band.n.03"),
 				wn.synset("band.n.04"),
@@ -8508,7 +8493,7 @@ BLISSNET = {
 				wn.synset("ring.n.08"),
 				wn.synset("set.n.05")],
 
-	# newness, novelty, newness,novelty
+	# newness, novelty
 	"U+3bb8":	[wn.synset("bangle.n.02"),
 				wn.synset("freshness.n.02"),
 				wn.synset("knickknack.n.01"),
@@ -8518,7 +8503,7 @@ BLISSNET = {
 				wn.synset("news_program.n.01"),
 				wn.synset("novelty.n.02")],
 
-	# protest, object, oppose, protest,object,oppose, objection, opposition, protest,objection,opposition, resist, protest,resist, resistance, protest,resistance
+	# protest, object, oppose, objection, opposition, resist, resistance
 	"U+3bb9":	[wn.synset("confrontation.n.04"),
 				wn.synset("enemy.n.02"),
 				wn.synset("expostulation.n.01"),
@@ -8537,33 +8522,33 @@ BLISSNET = {
 	# school
 	"U+3bbd":	[wn.synset("school.n.02")],
 
-	# Christmas song, carol, Christmas song,carol
+	# Christmas song, carol
 	"U+3bbe":	[wn.synset("carol.n.01"),
 				wn.synset("carol.n.02")],
 
 	# Christmas
 	"U+3bbf":	[wn.synset("christmas.n.02")],
 
-	# by, by means of, of, by,by means of,of
+	# by, by means of
 	"U+3bc0":	[wn.synset("by.r.01")],
 
-	# anything, something, anything,something
+	# anything, something
 	"U+3bc3":	[wn.synset("some.a.01")],
 
-	# movie theatre, cinema, movie theatre,cinema
+	# movie theatre, cinema
 	"U+3bc4":	[wn.synset("cinema.n.02")],
 
-	# candy, sweets, candy,sweets
+	# candy, sweets
 	"U+3bc7":	[wn.synset("candy.n.01")],
 
-	# tour, sightseeing, tour,sightseeing
+	# tour, sightseeing
 	"U+3bc8":	[wn.synset("tour.n.01")],
 
-	# habit, custom, habit,custom
+	# habit, custom
 	"U+3bc9":	[wn.synset("habit.n.01"),
 				wn.synset("habit.n.02")],
 
-	# usually, usual, usually,usual
+	# usually, usual
 	"U+3bca":	[wn.synset("common.s.04"),
 				wn.synset("normally.r.01"),
 				wn.synset("usual.a.01")],
@@ -8576,13 +8561,13 @@ BLISSNET = {
 				wn.synset("suit.n.05"),
 				wn.synset("suit.n.06")],
 
-	# minister, pastor, preacher, priest, rabbi, minister,pastor,preacher,priest,rabbi
+	# minister, pastor, preacher, priest, rabbi
 	"U+3bcd":	[wn.synset("minister.n.02")],
 
-	# combine, connect, link, combine,connect,link
+	# combine, connect, link
 	"U+3bcf":	[wn.synset("compound.v.02")],
 
-	# army, regular army, ground forces, army,regular army,ground forces
+	# army, regular army, ground forces
 	"U+3bd2":	[wn.synset("army.n.01")],
 
 	# Africa
@@ -8594,33 +8579,33 @@ BLISSNET = {
 	# harness
 	"U+3bd7":	[wn.synset("harness.v.01")],
 
-	# aerial, antenna, aerial,antenna
+	# aerial, antenna
 	"U+3bd8":	[wn.synset("antenna.n.01"),
 				wn.synset("antenna.n.03")],
 
-	# skullcap, kipa, yarmulke, skullcap,kipa,yarmulke
+	# skullcap, kipa, yarmulke
 	"U+3bd9":	[wn.synset("calvaria.n.01"),
 				wn.synset("skullcap.n.01"),
 				wn.synset("skullcap.n.02"),
 				wn.synset("yarmulke.n.01")],
 
-	# burnable, combustible, ignitable, burnable,combustible,ignitable
+	# burnable, combustible, ignitable
 	"U+3bda":	[wn.synset("burnable.s.01"),
 				wn.synset("combustible.a.01")],
 
-	# influence, affect, influence,affect
+	# influence, affect
 	"U+3bdb":	[wn.synset("affect.v.01")],
 
 	# country music
 	"U+3bdd":	[wn.synset("country_music.n.01")],
 
-	# parakeet, budgie, parakeet,budgie
+	# parakeet, budgie
 	"U+3bde":	[wn.synset("parakeet.n.01")],
 
-	# parrot, myna, talking bird, parrot,myna,talking bird
+	# parrot, myna, talking bird bird
 	"U+3bdf":	[wn.synset("parrot.n.01")],
 
-	# pie, tart, pie,tart
+	# pie, tart
 	"U+3be0":	[wn.synset("pie.n.01"),
 				wn.synset("prostitute.n.01"),
 				wn.synset("proto-indo_european.n.01"),
@@ -8630,7 +8615,7 @@ BLISSNET = {
 	# rabies
 	"U+3be1":	[wn.synset("rabies.n.01")],
 
-	# humerus, upper arm bone, humerus,upper arm bone
+	# humerus, upper arm bone arm bone
 	"U+3be4":	[wn.synset("humerus.n.01")],
 
 	# upper arm
@@ -8657,10 +8642,10 @@ BLISSNET = {
 				wn.synset("prosecution.n.02"),
 				wn.synset("pursuance.n.02")],
 
-	# landing, airplane landing, landing,airplane landing
+	# landing, airplane landing landing
 	"U+3be9":	[wn.synset("landing.n.03")],
 
-	# Host, wafer, Host,wafer
+	# Host, wafer
 	"U+3bea":	[wn.synset("horde.n.01"),
 				wn.synset("host.n.01"),
 				wn.synset("host.n.03"),
@@ -8687,7 +8672,7 @@ BLISSNET = {
 	# walker
 	"U+3bee":	[wn.synset("walker.n.06")],
 
-	# away, at a distance, off, away,at a distance,off
+	# away, at a distance, off
 	"U+3bef":	[wn.synset("aside.r.02"),
 				wn.synset("aside.r.06"),
 				wn.synset("away.a.02"),
@@ -8719,11 +8704,11 @@ BLISSNET = {
 	# Mercury
 	"U+3bf1":	[wn.synset("mercury.n.03")],
 
-	# rock planet, terrestrial planet, rock planet,terrestrial planet
+	# rock planet, terrestrial planet
 	"U+3bf2":	[wn.synset("chasuble.n.01"),
 				wn.synset("planet.n.01")],
 
-	# code, password, code,password
+	# code, password
 	"U+3bf3":	[wn.synset("code.n.03")],
 
 	# scratch
@@ -8731,7 +8716,7 @@ BLISSNET = {
 				wn.synset("rub.v.03"),
 				wn.synset("scratch.v.02")],
 
-	# illustrated, illustrating, illustrated,illustrating
+	# illustrated, illustrating
 	"U+3bf5":	[wn.synset("exemplify.v.02"),
 				wn.synset("illustrate.v.02"),
 				wn.synset("illustrate.v.03"),
@@ -8743,7 +8728,7 @@ BLISSNET = {
 	# leisure time
 	"U+3bf8":	[wn.synset("leisure.n.02")],
 
-	# free, freely, free,freely
+	# free, freely
 	"U+3bf9":	[wn.synset("free.a.01")],
 
 	# send
@@ -8762,10 +8747,10 @@ BLISSNET = {
 	# Netherlands, Holland
 	"U+3bff":	[wn.synset("netherlands.n.01")],
 
-	# Chanukah, Hanukkah, Chanukah,Hanukkah
+	# Chanukah, Hanukkah
 	"U+3c00":	[wn.synset("hanukkah.n.01")],
 
-	# wipe, dust, polish, wipe,dust,polish
+	# wipe, dust, polish
 	"U+3c03":	[wn.synset("blot.v.01"),
 				wn.synset("clean.v.01"),
 				wn.synset("clean.v.02"),
@@ -8785,17 +8770,17 @@ BLISSNET = {
 	"U+3c04":	[wn.synset("magic.n.01"),
 				wn.synset("magic_trick.n.01")],
 
-	# mystery, unknown, mystery,unknown
+	# mystery, unknown
 	"U+3c05":	[wn.synset("mystery.n.01")],
 
 	# marry
 	"U+3c06":	[wn.synset("marry.v.01")],
 
-	# fewer, less, fewer,less
+	# fewer, less
 	"U+3c07":	[wn.synset("fewer.a.01"),
 				wn.synset("less.a.01")],
 
-	# anxious, anxiously, anxious,anxiously
+	# anxious, anxiously
 	"U+3c08":	[wn.synset("anxious.s.01"),
 				wn.synset("anxious.s.02"),
 				wn.synset("anxiously.r.01"),
@@ -8806,10 +8791,10 @@ BLISSNET = {
 	# anxiety
 	"U+3c09":	[wn.synset("anxiety.n.02")],
 
-	# compete, race, compete,race
+	# compete, race
 	"U+3c0a":	[wn.synset("compete.v.01")],
 
-	# rack, single foot, rack,single-foot
+	# rack, single foot-foot
 	"U+3c0b":	[wn.synset("extort.v.02"),
 				wn.synset("rack.v.02"),
 				wn.synset("rack.v.03"),
@@ -8825,15 +8810,15 @@ BLISSNET = {
 	# Iceland
 	"U+3c0c":	[wn.synset("iceland.n.02")],
 
-	# promise, pledge, promise,pledge
+	# promise, pledge
 	"U+3c0d":	[wn.synset("promise.v.01"),
 				wn.synset("promise.v.02")],
 
-	# sweet shop, candy store, sweet shop,candy store
+	# sweet shop, candy store
 	"U+3c0e":	[wn.synset("confectionery.n.02"),
 				wn.synset("tuck_shop.n.01")],
 
-	# touch, sense of touch, tactile sense, touch,sense of touch,tactile sense, feel, touch,feel, touching, touch,touching
+	# touch, sense of touch, tactile sense, feel, touching
 	"U+3c0f":	[wn.synset("touch.n.10")],
 
 	# skin
@@ -8841,7 +8826,7 @@ BLISSNET = {
 				wn.synset("peel.n.02"),
 				wn.synset("skin.n.01")],
 
-	# biomass, biofuel, biomass,biofuel
+	# biomass, biofuel
 	"U+3c11":	[wn.synset("biomass.n.01"),
 				wn.synset("biomass.n.02")],
 
@@ -8861,7 +8846,7 @@ BLISSNET = {
 	# Durga
 	"U+3c16":	[wn.synset("durga.n.01")],
 
-	# index, list of contents, index,list of contents
+	# index, list of contents
 	"U+3c19":	[wn.synset("exponent.n.03"),
 				wn.synset("index.n.02"),
 				wn.synset("index.n.04"),
@@ -8874,7 +8859,7 @@ BLISSNET = {
 	"U+3c1c":	[wn.synset("gemini.n.01"),
 				wn.synset("gemini.n.03")],
 
-	# switch off, turn off, switch off,turn off
+	# switch off, turn off
 	"U+3c1d":	[wn.synset("switch_off.v.01")],
 
 	# switch
@@ -8887,10 +8872,10 @@ BLISSNET = {
 				wn.synset("switch.n.06"),
 				wn.synset("switch.n.07")],
 
-	# scenery, landscape, scenery,landscape
+	# scenery, landscape
 	"U+3c20":	[wn.synset("landscape.n.01")],
 
-	# lee, shelter, lee,shelter
+	# lee, shelter
 	"U+3c21":	[wn.synset("shelter.n.05")],
 
 	# poverty
@@ -8900,7 +8885,7 @@ BLISSNET = {
 	"U+3c23":	[wn.synset("vinegar.n.01"),
 				wn.synset("vinegar.n.02")],
 
-	# wow, super, great, neat, cool, wow,super,great,neat,cool, wonderful, fantastic, great,wonderful,fantastic, chilly, cool,chilly
+	# wow, super, great, neat, cool, wonderful, fantastic, chilly
 	"U+3c25":	[wn.synset("chilly.s.01"),
 				wn.synset("chilly.s.02"),
 				wn.synset("chilly.s.03"),
@@ -8911,13 +8896,13 @@ BLISSNET = {
 				wn.synset("cool.s.05"),
 				wn.synset("cool.s.06")],
 
-	# well, water well, well,water well
+	# well, water well well
 	"U+3c26":	[wn.synset("well.n.01")],
 
 	# fine
 	"U+3c27":	[wn.synset("fine.n.01")],
 
-	# case, casing, case,casing
+	# case, casing
 	"U+3c2b":	[wn.synset("case.n.01"),
 				wn.synset("case.n.04"),
 				wn.synset("case.n.05"),
@@ -8943,7 +8928,7 @@ BLISSNET = {
 	# coffin
 	"U+3c2c":	[wn.synset("coffin.n.01")],
 
-	# reclining, lying, reclining,lying
+	# reclining, lying
 	"U+3c2d":	[wn.synset("cipher.n.04"),
 				wn.synset("lying.n.01"),
 				wn.synset("no.n.01"),
@@ -8960,13 +8945,13 @@ BLISSNET = {
 	# popcorn
 	"U+3c31":	[wn.synset("popcorn.n.02")],
 
-	# castle, palace, castle,palace
+	# castle, palace
 	"U+3c32":	[wn.synset("castle.n.02")],
 
-	# maker, manufacturer, producer, maker,manufacturer,producer
+	# maker, manufacturer, producer
 	"U+3c33":	[wn.synset("manufacturer.n.01")],
 
-	# sun lounger, deck chair, sun lounger,deck chair
+	# sun lounger, deck chair
 	"U+3c34":	[wn.synset("deck_chair.n.01")],
 
 	# self control, self-control
@@ -8975,17 +8960,17 @@ BLISSNET = {
 	# dormouse
 	"U+3c38":	[wn.synset("dormouse.n.01")],
 
-	# samosa, pirogue, samosa,pirogue
+	# samosa, pirogue
 	"U+3c39":	[wn.synset("dugout_canoe.n.01"),
 				wn.synset("samosa.n.01")],
 
-	# trust, confidence, trust,confidence
+	# trust, confidence
 	"U+3c3a":	[wn.synset("confidence.n.02"),
 				wn.synset("confidence.n.03"),
 				wn.synset("faith.n.02"),
 				wn.synset("trust.n.03")],
 
-	# exciting, excitingly, excited, excitedly, exciting,excitingly,excited,excitedly
+	# exciting, excitingly, excited, excitedly
 	"U+3c3b":	[wn.synset("excited.a.02")],
 
 	# excitement
@@ -8995,14 +8980,14 @@ BLISSNET = {
 	# next
 	"U+3c3d":	[wn.synset("following.s.02")],
 
-	# repeat, copy, duplicate, reproduce, repeat,copy,duplicate,reproduce
+	# repeat, copy, duplicate, reproduce
 	"U+3c3f":	[wn.synset("repeat.v.01"),
 				wn.synset("repeat.v.04")],
 
 	# fish finger
 	"U+3c43":	[wn.synset("fish_stick.n.01")],
 
-	# bar, pub, bar,pub, cake, bar,cake
+	# bar, pub, cake
 	"U+3c48":	[wn.synset("bar.n.02"),
 				wn.synset("bar.n.03"),
 				wn.synset("bar.n.05"),
@@ -9030,7 +9015,7 @@ BLISSNET = {
 	"U+3c4a":	[wn.synset("charity.n.02"),
 				wn.synset("charity.n.03")],
 
-	# client, customer, client,customer
+	# client, customer
 	"U+3c4c":	[wn.synset("customer.n.01")],
 
 	# pop music
@@ -9039,7 +9024,7 @@ BLISSNET = {
 	# challenge
 	"U+3c4e":	[wn.synset("challenge.n.01")],
 
-	# thinness, narrowness, thinness,narrowness
+	# thinness, narrowness
 	"U+3c4f":	[wn.synset("fineness.n.02"),
 				wn.synset("leanness.n.02"),
 				wn.synset("narrow-mindedness.n.01"),
@@ -9073,7 +9058,7 @@ BLISSNET = {
 	# ginger
 	"U+3c55":	[wn.synset("ginger.n.03")],
 
-	# slide, skid, slip, slide,skid,slip
+	# slide, skid, slip
 	"U+3c56":	[wn.synset("slither.v.01")],
 
 	# birthday
@@ -9086,11 +9071,11 @@ BLISSNET = {
 	# comedy
 	"U+3c5b":	[wn.synset("comedy.n.01")],
 
-	# notebook, writing book, notebook,writing book
+	# notebook, writing book book
 	"U+3c5c":	[wn.synset("notebook.n.01"),
 				wn.synset("notebook.n.02")],
 
-	# beach, bank, coast, shore, beach,bank,coast,shore
+	# beach, bank, coast, shore
 	"U+3c5e":	[wn.synset("beach.n.01")],
 
 	# tomato
@@ -9114,7 +9099,7 @@ BLISSNET = {
 	"U+3c65":	[wn.synset("prison_guard.n.01"),
 				wn.synset("warder.n.01")],
 
-	# thigh, upper leg, thigh,upper leg
+	# thigh, upper leg leg
 	"U+3c66":	[wn.synset("thigh.n.01")],
 
 	# insight
@@ -9124,7 +9109,7 @@ BLISSNET = {
 				wn.synset("intuition.n.01"),
 				wn.synset("penetration.n.02")],
 
-	# motorcycle, scooter, motorcycle,scooter
+	# motorcycle, scooter
 	"U+3c68":	[wn.synset("iceboat.n.02"),
 				wn.synset("motor_scooter.n.01"),
 				wn.synset("motorcycle.n.01"),
@@ -9144,10 +9129,10 @@ BLISSNET = {
 	# perfection
 	"U+3c6b":	[wn.synset("perfection.n.01")],
 
-	# cease fire, armistice, cease-fire,armistice
+	# cease fire, armistice
 	"U+3c6c":	[wn.synset("armistice.n.01")],
 
-	# dump, dispose, dump,dispose
+	# dump, dispose
 	"U+3c6d":	[wn.synset("deck.v.03"),
 				wn.synset("discard.v.01"),
 				wn.synset("dispose.v.01"),
@@ -9163,23 +9148,23 @@ BLISSNET = {
 				wn.synset("throw.v.01"),
 				wn.synset("waste.v.01")],
 
-	# horse sled, horse drawn sleigh, horse sled,horse-drawn sleigh
+	# horse sled, horse drawn sleigh
 	"U+3c6f":	[wn.synset("sled.n.01")],
 
-	# hobby, pastime, hobby,pastime
+	# hobby, pastime
 	"U+3c72":	[wn.synset("avocation.n.01")],
 
-	# interesting, interested, interesting,interested
+	# interesting, interested
 	"U+3c73":	[wn.synset("interesting.a.01")],
 
-	# burp, belch, burp,belch
+	# burp, belch
 	"U+3c74":	[wn.synset("burp.v.01")],
 
 	# earn
 	"U+3c76":	[wn.synset("earn.v.02"),
 				wn.synset("gain.v.08")],
 
-	# sugar, sweetener, sugar,sweetener
+	# sugar, sweetener
 	"U+3c77":	[wn.synset("sugar.n.01")],
 
 	# cage
@@ -9189,7 +9174,7 @@ BLISSNET = {
 				wn.synset("cage.n.03"),
 				wn.synset("cage.n.04")],
 
-	# bridle, headstall, bridle,headstall
+	# bridle, headstall
 	"U+3c7b":	[wn.synset("bridle.n.01")],
 
 	# muzzle
@@ -9202,10 +9187,10 @@ BLISSNET = {
 	"U+3c7d":	[wn.synset("common_room.n.01"),
 				wn.synset("community_center.n.01")],
 
-	# glasses, eyeglasses, glasses,eyeglasses
+	# glasses, eyeglasses
 	"U+3c7f":	[wn.synset("spectacles.n.01")],
 
-	# bump, press, pressing, bump,press,pressing, bump,press
+	# bump, press, pressing
 	"U+3c81":	[wn.synset("blow.n.02"),
 				wn.synset("bulge.n.01"),
 				wn.synset("bump.n.01"),
@@ -9240,13 +9225,13 @@ BLISSNET = {
 				wn.synset("witness.n.04"),
 				wn.synset("witness.n.05")],
 
-	# henhouse, chicken coop, henhouse,chicken coop
+	# henhouse, chicken coop coop
 	"U+3c87":	[wn.synset("chicken_coop.n.01")],
 
-	# grid, matrix, grid,matrix
+	# grid, matrix
 	"U+3c88":	[wn.synset("matrix.n.01")],
 
-	# sacking, dismissal, sacking,dismissal
+	# sacking, dismissal
 	"U+3c89":	[wn.synset("dismissal.n.02"),
 				wn.synset("dismissal.n.03"),
 				wn.synset("dismissal.n.04"),
@@ -9259,10 +9244,10 @@ BLISSNET = {
 	# microscope
 	"U+3c8c":	[wn.synset("microscope.n.01")],
 
-	# rectangular, oblong, rectangular,oblong
+	# rectangular, oblong
 	"U+3c8f":	[wn.synset("rectangular.s.01")],
 
-	# songbird, finch, thrush, songbird,finch,thrush
+	# songbird, finch, thrush
 	"U+3c90":	[wn.synset("finch.n.01"),
 				wn.synset("songbird.n.01"),
 				wn.synset("thrush.n.01"),
@@ -9275,7 +9260,7 @@ BLISSNET = {
 	# eat
 	"U+3c93":	[wn.synset("eat.v.01")],
 
-	# thrilling, scary, thrilling,scary
+	# thrilling, scary
 	"U+3c95":	[wn.synset("chilling.s.01")],
 
 	# fruit cream, compote, fruit cream,compote
@@ -9328,7 +9313,7 @@ BLISSNET = {
 	# Iran
 	"U+3ca2":	[wn.synset("iran.n.01")],
 
-	# party, festival, party,festival
+	# party, festival
 	"U+3ca3":	[wn.synset("party.n.02")],
 
 	# traveller
@@ -9337,11 +9322,11 @@ BLISSNET = {
 	# Iraq
 	"U+3ca5":	[wn.synset("iraq.n.01")],
 
-	# projectile, rocket, spacecraft, projectile,rocket,spacecraft
+	# projectile, rocket, spacecraft
 	"U+3ca6":	[wn.synset("projectile.n.01"),
 				wn.synset("rocket.n.01")],
 
-	# painful, painfully, sore, painful,painfully,sore
+	# painful, painfully, sore
 	"U+3ca7":	[wn.synset("painful.a.01")],
 
 	# shorts
@@ -9354,7 +9339,7 @@ BLISSNET = {
 				wn.synset("hoop_snake.n.01"),
 				wn.synset("whip-snake.n.01")],
 
-	# boring, dull, depressing, boring,dull,depressing
+	# boring, dull, depressing
 	"U+3cac":	[wn.synset("boring.s.01")],
 
 	# monotheism
@@ -9363,7 +9348,7 @@ BLISSNET = {
 	# steel
 	"U+3cae":	[wn.synset("steel.n.01")],
 
-	# hymn, psalm, gospel song, hymn,psalm,gospel song
+	# hymn, psalm, gospel song song
 	"U+3caf":	[wn.synset("hymn.n.01"),
 				wn.synset("psalm.n.01")],
 
@@ -9376,26 +9361,26 @@ BLISSNET = {
 				wn.synset("devotion.n.04"),
 				wn.synset("idolatry.n.01")],
 
-	# important, significant, important,significant
+	# important, significant
 	"U+3cb2":	[wn.synset("important.a.01"),
 				wn.synset("significant.a.01")],
 
 	# beggar
 	"U+3cb3":	[wn.synset("beggar.n.01")],
 
-	# ask, inquire, question, ask,inquire,question
+	# ask, inquire, question
 	"U+3cb4":	[wn.synset("ask.v.01")],
 
 	# deodorant
 	"U+3cb9":	[wn.synset("deodorant.n.01")],
 
-	# connector, interface box, connector,interface box
+	# connector, interface box box
 	"U+3cba":	[wn.synset("connection.n.03")],
 
 	# tonight
 	"U+3cbb":	[wn.synset("tonight.n.01")],
 
-	# football, soccer, football,soccer
+	# football, soccer
 	"U+3cbd":	[wn.synset("soccer.n.01")],
 
 	# bacterium
@@ -9411,18 +9396,18 @@ BLISSNET = {
 	"U+3cc2":	[wn.synset("tenor.n.01"),
 				wn.synset("tenor.n.03")],
 
-	# cry out, call, cry out,call, telephone, ring, call,telephone,ring
+	# cry out, call, cry telephone, ring
 	"U+3cc3":	[wn.synset("call.v.03")],
 
 	# ashore
 	"U+3cc4":	[wn.synset("ashore.r.01")],
 
-	# wideness, broadness, wideness,broadness
+	# wideness, broadness
 	"U+3cc5":	[wn.synset("enormousness.n.01"),
 				wn.synset("wideness.n.01"),
 				wn.synset("width.n.01")],
 
-	# soap, detergent, soap,detergent
+	# soap, detergent
 	"U+3cc6":	[wn.synset("soap.n.01")],
 
 	# raindrop
@@ -9441,7 +9426,7 @@ BLISSNET = {
 				wn.synset("grace.n.07"),
 				wn.synset("thanksgiving.n.01")],
 
-	# thanks, thank you, thanks,thank you
+	# thanks, thank you you
 	"U+3ccb":	[wn.synset("thanks.n.01"),
 				wn.synset("thanks.n.02")],
 
@@ -9455,7 +9440,7 @@ BLISSNET = {
 	"U+3ccf":	[wn.synset("economic.a.01"),
 				wn.synset("economics.n.01")],
 
-	# principal, headteacher, principal,headteacher
+	# principal, headteacher
 	"U+3cd0":	[wn.synset("principal.n.01"),
 				wn.synset("principal.n.02"),
 				wn.synset("principal.n.04"),
@@ -9466,15 +9451,15 @@ BLISSNET = {
 	# police officer, policeman, policewoman, police officer,policeman,policewoman
 	"U+3cd1":	[wn.synset("policeman.n.01")],
 
-	# should, would, should,would
+	# should, would
 	"U+3cd2":	[wn.synset("have.v.10"),
 				wn.synset("need.v.03"),
 				wn.synset("owe.v.03")],
 
-	# jam, jelly, marmalade, preserves, jam,jelly,marmalade,preserves
+	# jam, jelly, marmalade, preserves
 	"U+3cd3":	[wn.synset("jam.n.01")],
 
-	# ribbon, tape, ribbon,tape
+	# ribbon, tape
 	"U+3cd4":	[wn.synset("decoration.n.02"),
 				wn.synset("magnetic_tape.n.01"),
 				wn.synset("ribbon.n.01"),
@@ -9490,7 +9475,7 @@ BLISSNET = {
 				wn.synset("hope.v.02"),
 				wn.synset("hope.v.03")],
 
-	# movement, motion, movement,motion
+	# movement, motion
 	"U+3cd7":	[wn.synset("gesture.n.02"),
 				wn.synset("motion.n.03"),
 				wn.synset("motion.n.06"),
@@ -9501,7 +9486,7 @@ BLISSNET = {
 	# handle
 	"U+3cd9":	[wn.synset("handle.n.01")],
 
-	# lucky, fortunate, lucky,fortunate
+	# lucky, fortunate
 	"U+3cda":	[wn.synset("fortunate.a.01"),
 				wn.synset("fortunate.s.02"),
 				wn.synset("fortunate.s.03"),
@@ -9509,7 +9494,7 @@ BLISSNET = {
 				wn.synset("lucky.a.02"),
 				wn.synset("lucky.s.01")],
 
-	# wiggle, squirm, wiggle,squirm
+	# wiggle, squirm
 	"U+3cdb":	[wn.synset("jiggle.v.01"),
 				wn.synset("rock.v.01"),
 				wn.synset("swing.v.02"),
@@ -9542,21 +9527,21 @@ BLISSNET = {
 				wn.synset("platinum.n.01"),
 				wn.synset("platter.n.01")],
 
-	# pail, bucket, pail,bucket
+	# pail, bucket
 	"U+3ce4":	[wn.synset("bucket.n.01")],
 
-	# sexual arousal, sexual excitement, sexual arousal,sexual excitement
+	# sexual arousal, sexual excitement
 	"U+3ce5":	[wn.synset("craving.n.01"),
 				wn.synset("sexual_desire.n.01")],
 
-	# finger spelling, finger alphabet, finger spelling,finger alphabet
+	# finger spelling, finger alphabet
 	"U+3ce6":	[wn.synset("finger_spelling.n.01"),
 				wn.synset("manual_alphabet.n.01")],
 
-	# pencil case, pencil box, pencil case,pencil box
+	# pencil case, pencil box
 	"U+3ce7":	[wn.synset("pencil_box.n.01")],
 
-	# handgun, pistol, handgun,pistol
+	# handgun, pistol
 	"U+3ce8":	[wn.synset("pistol.n.01")],
 
 	# e mail, email, e-mail,email
@@ -9568,7 +9553,7 @@ BLISSNET = {
 	# ramp
 	"U+3cee":	[wn.synset("ramp.n.01")],
 
-	# doorway, gate, doorway,gate
+	# doorway, gate
 	"U+3cef":	[wn.synset("gate.n.01")],
 
 	# Jesus, Jesus Christ, Christ
@@ -9616,10 +9601,10 @@ BLISSNET = {
 	# intranet
 	"U+3cfa":	[wn.synset("intranet.n.01")],
 
-	# bathtub, bath, tub, bathtub,bath,tub
+	# bathtub, bath, tub
 	"U+3cfc":	[wn.synset("bathtub.n.01")],
 
-	# sink, basin, sink,basin
+	# sink, basin
 	"U+3cfd":	[wn.synset("sink.n.01")],
 
 	# lust
@@ -9639,12 +9624,12 @@ BLISSNET = {
 	"U+3d04":	[wn.synset("mountain_bike.n.01"),
 				wn.synset("trail_bike.n.01")],
 
-	# overspend, buy over budget, overspend,buy over budget
+	# overspend, buy over budget over budget
 	"U+3d05":	[wn.synset("overspend.v.01"),
 				wn.synset("overspend.v.02"),
 				wn.synset("spend.v.02")],
 
-	# often, frequent, frequently, often,frequent,frequently
+	# often, frequent, frequently
 	"U+3d07":	[wn.synset("frequently.r.01")],
 
 	# cremation
@@ -9659,7 +9644,7 @@ BLISSNET = {
 	# woman doll
 	"U+3d0b":	[wn.synset("doll.n.01")],
 
-	# terror, panic, terror,panic
+	# terror, panic
 	"U+3d0c":	[wn.synset("panic.n.01")],
 
 	# nervous system
@@ -9668,7 +9653,7 @@ BLISSNET = {
 	# neuron
 	"U+3d0f":	[wn.synset("nerve_cell.n.01")],
 
-	# eternity, infinity, eternity,infinity
+	# eternity, infinity
 	"U+3d10":	[wn.synset("eternity.n.01"),
 				wn.synset("eternity.n.02"),
 				wn.synset("eternity.n.03")],
@@ -9682,27 +9667,27 @@ BLISSNET = {
 	# green
 	"U+3d14":	[wn.synset("green.n.01")],
 
-	# rifle, shotgun, rifle,shotgun
+	# rifle, shotgun
 	"U+3d17":	[wn.synset("rifle.n.01")],
 
-	# glue, adhesive, paste, glue,adhesive,paste, stick, glue,paste,stick, log, stick,log
+	# glue, adhesive, paste, stick, log
 	"U+3d18":	[wn.synset("glue.n.01")],
 
-	# noisemaker, musical toy, noisemaker,musical toy
+	# noisemaker, musical toy toy
 	"U+3d1a":	[wn.synset("noisemaker.n.01")],
 
 	# arrest
 	"U+3d1b":	[wn.synset("collar.v.01")],
 
-	# cookie jar, biscuit tin, cookie jar,biscuit tin
+	# cookie jar, biscuit tin
 	"U+3d1c":	[wn.synset("cookie.n.01")],
 
-	# scoundrel, villain, scoundrel,villain
+	# scoundrel, villain
 	"U+3d1e":	[wn.synset("rogue.n.01"),
 				wn.synset("villain.n.01"),
 				wn.synset("villain.n.02")],
 
-	# pill, tablet, pill,tablet
+	# pill, tablet
 	"U+3d20":	[wn.synset("pill.n.01"),
 				wn.synset("pill.n.02")],
 
@@ -9753,7 +9738,7 @@ BLISSNET = {
 	# gymnastics
 	"U+3d31":	[wn.synset("gymnastics.n.01")],
 
-	# ballot, voting slip, ballot,voting slip
+	# ballot, voting slip slip
 	"U+3d32":	[wn.synset("ballot.n.01"),
 				wn.synset("vote.n.01")],
 
@@ -9787,7 +9772,7 @@ BLISSNET = {
 	# biology
 	"U+3d39":	[wn.synset("biology.n.01")],
 
-	# schedule, timetable, schedule,timetable
+	# schedule, timetable
 	"U+3d3b":	[wn.synset("agenda.n.01"),
 				wn.synset("agenda.n.02"),
 				wn.synset("broadcast.n.02"),
@@ -9821,7 +9806,7 @@ BLISSNET = {
 	# conductor, therapist)
 	"U+3d41":	[wn.synset("conductor.n.02")],
 
-	# software, computer program, application, app, software,computer program,application,app
+	# software, computer program, application, app program,application,app
 	"U+3d43":	[wn.synset("software.n.01")],
 
 	# Virgo
@@ -9835,10 +9820,10 @@ BLISSNET = {
 	# frustration
 	"U+3d46":	[wn.synset("frustration.n.01")],
 
-	# catamaran, pontoon boat, catamaran,pontoon boat
+	# catamaran, pontoon boat boat
 	"U+3d47":	[wn.synset("catamaran.n.01")],
 
-	# hull, body, hull,body
+	# hull, body
 	"U+3d48":	[wn.synset("hull.n.06")],
 
 	# circulatory system
@@ -9869,7 +9854,7 @@ BLISSNET = {
 				wn.synset("smooth.a.06"),
 				wn.synset("smooth.s.07")],
 
-	# persuade, convince, persuade,convince
+	# persuade, convince
 	"U+3d52":	[wn.synset("convert.v.09")],
 
 	# persuasion
@@ -9877,7 +9862,7 @@ BLISSNET = {
 				wn.synset("opinion.n.01"),
 				wn.synset("persuasion.n.01")],
 
-	# monument, commemorative work, monument,commemorative work
+	# monument, commemorative work work
 	"U+3d54":	[wn.synset("memorial.n.03")],
 
 	# problem
@@ -9886,7 +9871,7 @@ BLISSNET = {
 	# make believe woman, make-believe woman
 	"U+3d56":	[wn.synset("imaginary_being.n.01")],
 
-	# menstruation, menstrual period, period, menstruation,menstrual period,period
+	# menstruation, menstrual period, period period,period
 	"U+3d57":	[wn.synset("menstruation.n.01")],
 
 	# spiritual awareness
@@ -9902,10 +9887,10 @@ BLISSNET = {
 	# February
 	"U+3d5d":	[wn.synset("february.n.01")],
 
-	# chance, risk, chance,risk
+	# chance, risk
 	"U+3d5e":	[wn.synset("risk.n.02")],
 
-	# maracas, calabash, maracas,calabash
+	# maracas, calabash
 	"U+3d5f":	[wn.synset("calabash.n.01")],
 
 	# veil
@@ -9918,7 +9903,7 @@ BLISSNET = {
 	"U+3d63":	[wn.synset("fruit_cocktail.n.01"),
 				wn.synset("fruit_salad.n.01")],
 
-	# govern, rule, govern,rule
+	# govern, rule
 	"U+3d64":	[wn.synset("govern.v.03")],
 
 	# post office
@@ -9930,7 +9915,7 @@ BLISSNET = {
 				wn.synset("write.v.02"),
 				wn.synset("write.v.07")],
 
-	# front, front of a thing, front,front of a thing
+	# front, front of a thing of a thing
 	"U+3d6a":	[wn.synset("battlefront.n.01"),
 				wn.synset("front.n.01"),
 				wn.synset("front.n.03"),
@@ -9945,16 +9930,16 @@ BLISSNET = {
 	# desirable
 	"U+3d6b":	[wn.synset("desirable.a.01")],
 
-	# kindergarten, preschool, nursery, play group, kindergarten,preschool,nursery,play group
+	# kindergarten, preschool, nursery, play group group
 	"U+3d6d":	[wn.synset("greenhouse.n.01"),
 				wn.synset("kindergarten.n.01"),
 				wn.synset("nursery.n.01"),
 				wn.synset("preschool.n.01")],
 
-	# protected, saved, protected,saved, sheltered, protected,sheltered
+	# protected, saved, sheltered
 	"U+3d6e":	[wn.synset("protected.a.01")],
 
-	# voter, elector, voter,elector
+	# voter, elector
 	"U+3d6f":	[wn.synset("voter.n.01")],
 
 	# firecraft
@@ -9974,13 +9959,13 @@ BLISSNET = {
 	# venereal papilloma
 	"U+3d76":	[wn.synset("papilloma.n.01")],
 
-	# whisk, beater, whisk,beater
+	# whisk, beater
 	"U+3d77":	[wn.synset("beater.n.01"),
 				wn.synset("beater.n.02"),
 				wn.synset("whisk.n.01"),
 				wn.synset("whisk.n.02")],
 
-	# detective, investigator, detective,investigator
+	# detective, investigator
 	"U+3d79":	[wn.synset("detective.n.01")],
 
 	# humidity
@@ -9998,10 +9983,10 @@ BLISSNET = {
 	# midsummer
 	"U+3d7e":	[wn.synset("summer_solstice.n.01")],
 
-	# cook, chef, cook,chef
+	# cook, chef
 	"U+3d7f":	[wn.synset("cook.n.01")],
 
-	# lizard, reptile, lizard,reptile
+	# lizard, reptile
 	"U+3d81":	[wn.synset("lizard.n.01")],
 
 	# plug in, connect, plug in,connect
@@ -10045,7 +10030,7 @@ BLISSNET = {
 				wn.synset("stressed.s.01"),
 				wn.synset("taut.s.01")],
 
-	# lonely, lonesome, lonely,lonesome
+	# lonely, lonesome
 	"U+3d8e":	[wn.synset("alone.s.02"),
 				wn.synset("lone.s.02"),
 				wn.synset("lone.s.03"),
@@ -10061,7 +10046,7 @@ BLISSNET = {
 	# stomach flu
 	"U+3d92":	[wn.synset("vomit.n.03")],
 
-	# bra, brassiere, bra,brassiere
+	# bra, brassiere
 	"U+3d93":	[wn.synset("brassiere.n.01")],
 
 	# motivate
@@ -10083,7 +10068,7 @@ BLISSNET = {
 	# geographer
 	"U+3d99":	[wn.synset("geographer.n.01")],
 
-	# hug, cuddle, embrace, hug,cuddle,embrace, squeeze, hug,squeeze,embrace
+	# hug, cuddle, embrace, squeeze
 	"U+3d9a":	[wn.synset("credit_crunch.n.01"),
 				wn.synset("embrace.n.01"),
 				wn.synset("embrace.n.02"),
@@ -10096,13 +10081,13 @@ BLISSNET = {
 				wn.synset("squeeze.n.05"),
 				wn.synset("squeeze.n.08")],
 
-	# mechanic, technician, mechanic,technician
+	# mechanic, technician
 	"U+3d9b":	[wn.synset("automobile_mechanic.n.01"),
 				wn.synset("machinist.n.01"),
 				wn.synset("technician.n.01"),
 				wn.synset("technician.n.02")],
 
-	# document, written record, document,written record, digital document
+	# document, written record record, digital document
 	"U+3d9c":	[wn.synset("document.n.01")],
 
 	# violin
@@ -10113,7 +10098,7 @@ BLISSNET = {
 				wn.synset("stereo.n.01"),
 				wn.synset("stereo.n.02")],
 
-	# tattoo, picture on skin, tattoo,picture on skin
+	# tattoo, picture on skin on skin
 	"U+3da2":	[wn.synset("tattoo.n.02")],
 
 	# gamble
@@ -10133,7 +10118,7 @@ BLISSNET = {
 				wn.synset("cube.n.04"),
 				wn.synset("cube.n.05")],
 
-	# fever, temperature, fever,temperature
+	# fever, temperature
 	"U+3da8":	[wn.synset("fever.n.01")],
 
 	# body temperature
@@ -10149,10 +10134,10 @@ BLISSNET = {
 				wn.synset("pill.n.04"),
 				wn.synset("pill.n.05")],
 
-	# astronaut, cosmonaut, astronaut,cosmonaut
+	# astronaut, cosmonaut
 	"U+3dae":	[wn.synset("astronaut.n.01")],
 
-	# appreciate, value, treasure, appreciate,value,treasure
+	# appreciate, value, treasure
 	"U+3daf":	[wn.synset("appreciate.v.01"),
 				wn.synset("appreciate.v.02"),
 				wn.synset("appreciate.v.04"),
@@ -10164,7 +10149,7 @@ BLISSNET = {
 				wn.synset("respect.v.01"),
 				wn.synset("value.v.01")],
 
-	# waiter, waitress, waiter,waitress
+	# waiter, waitress
 	"U+3db1":	[wn.synset("waiter.n.01")],
 
 	# ambulance
@@ -10177,7 +10162,7 @@ BLISSNET = {
 	"U+3db4":	[wn.synset("agency.n.01"),
 				wn.synset("office.n.01")],
 
-	# muffin, bun, muffin,bun, roll, scone, brioche
+	# muffin, bun, roll, scone, brioche
 	"U+3db5":	[wn.synset("bun.n.01")],
 
 	# lower body
@@ -10187,7 +10172,7 @@ BLISSNET = {
 	"U+3db8":	[wn.synset("adolescence.n.01"),
 				wn.synset("adolescence.n.02")],
 
-	# anywhere, anyplace, someplace, somewhere, anywhere,anyplace,someplace,somewhere
+	# anywhere, anyplace, someplace, somewhere
 	"U+3dba":	[wn.synset("anywhere.r.01"),
 				wn.synset("somewhere.n.01"),
 				wn.synset("somewhere.r.01")],
@@ -10198,7 +10183,7 @@ BLISSNET = {
 	# friend
 	"U+3dbc":	[wn.synset("friend.n.01")],
 
-	# owl, night bird, owl,night bird
+	# owl, night bird bird
 	"U+3dbd":	[wn.synset("owl.n.01")],
 
 	# coffee
@@ -10207,7 +10192,7 @@ BLISSNET = {
 	# ashes
 	"U+3dc2":	[wn.synset("ash.n.01")],
 
-	# influenced, affected, influenced,affected
+	# influenced, affected
 	"U+3dc3":	[wn.synset("affected.a.01"),
 				wn.synset("affected.a.02"),
 				wn.synset("charm.v.04"),
@@ -10215,7 +10200,7 @@ BLISSNET = {
 				wn.synset("influence.v.01"),
 				wn.synset("moved.a.01")],
 
-	# safe, safely, secure, securely, safe,safely,secure,securely
+	# safe, safely, secure, securely
 	"U+3dc4":	[wn.synset("dependable.s.04"),
 				wn.synset("impregnable.s.01"),
 				wn.synset("safe.a.01"),
@@ -10230,7 +10215,7 @@ BLISSNET = {
 				wn.synset("securely.r.03"),
 				wn.synset("securely.r.04")],
 
-	# safety, security, safety,security
+	# safety, security
 	"U+3dc5":	[wn.synset("safety.n.01")],
 
 	# rest period, break, rest period,break
@@ -10280,7 +10265,7 @@ BLISSNET = {
 	# September
 	"U+3dda":	[wn.synset("september.n.01")],
 
-	# organize, arrange, organize,arrange
+	# organize, arrange
 	"U+3ddd":	[wn.synset("arrange.v.01"),
 				wn.synset("arrange.v.02"),
 				wn.synset("arrange.v.06"),
@@ -10298,10 +10283,10 @@ BLISSNET = {
 	# disembark
 	"U+3de0":	[wn.synset("disembark.v.01")],
 
-	# fat, thick, fat,thick
+	# fat, thick
 	"U+3de2":	[wn.synset("thick.a.01")],
 
-	# fatness, thickness, fatness,thickness
+	# fatness, thickness
 	"U+3de3":	[wn.synset("fatness.n.01"),
 				wn.synset("thickness.n.01"),
 				wn.synset("thickness.n.02"),
@@ -10318,7 +10303,7 @@ BLISSNET = {
 				wn.synset("inflate.v.03"),
 				wn.synset("inflate.v.04")],
 
-	# van, minibus, van,minibus
+	# van, minibus
 	"U+3de8":	[wn.synset("avant-garde.n.01"),
 				wn.synset("minibus.n.01"),
 				wn.synset("van.n.03"),
@@ -10363,16 +10348,16 @@ BLISSNET = {
 	# silversmith
 	"U+3df6":	[wn.synset("silversmith.n.01")],
 
-	# alcoholism, alcohol addiction, alcoholism,alcohol addiction
+	# alcoholism, alcohol addiction addiction
 	"U+3df7":	[wn.synset("alcoholism.n.01")],
 
-	# alcohol abuse, alcohol addiction, alcohol abuse,alcohol addiction
+	# alcohol abuse, alcohol addiction
 	"U+3df8":	[wn.synset("alcoholism.n.01")],
 
-	# podiatrist, chiropodist, podiatrist,chiropodist
+	# podiatrist, chiropodist
 	"U+3df9":	[wn.synset("chiropodist.n.01")],
 
-	# broadcast, transmit, broadcast,transmit
+	# broadcast, transmit
 	"U+3dfa":	[wn.synset("air.v.03"),
 				wn.synset("broadcast.v.02"),
 				wn.synset("circulate.v.02"),
@@ -10383,7 +10368,7 @@ BLISSNET = {
 	# cordless phone
 	"U+3dfb":	[wn.synset("telephone.n.01")],
 
-	# drying room, drying chamber, drying room,drying chamber
+	# drying room, drying chamber
 	"U+3dfc":	[wn.synset("dryer.n.01")],
 
 	# landing gear
@@ -10393,7 +10378,7 @@ BLISSNET = {
 	# glove, mitt, mitten
 	"U+3dff":	[wn.synset("glove.n.02")],
 
-	# cane, stick, walking stick, cane,stick,walking stick
+	# cane, stick, walking stick stick
 	"U+3e00":	[wn.synset("cane.n.01"),
 				wn.synset("cane.n.02"),
 				wn.synset("cane.n.03"),
@@ -10434,7 +10419,7 @@ BLISSNET = {
 	# steal
 	"U+3e0d":	[wn.synset("steal.v.01")],
 
-	# manager, secretary, manager,secretary
+	# manager, secretary
 	"U+3e0f":	[wn.synset("coach.n.01"),
 				wn.synset("director.n.01"),
 				wn.synset("repository.n.02"),
@@ -10479,7 +10464,7 @@ BLISSNET = {
 	# cod
 	"U+3e1c":	[wn.synset("cod.n.03")],
 
-	# receiver, dish, receiver,dish
+	# receiver, dish
 	"U+3e1e":	[wn.synset("cup_of_tea.n.01"),
 				wn.synset("dish.n.01"),
 				wn.synset("dish.n.02"),
@@ -10493,7 +10478,7 @@ BLISSNET = {
 				wn.synset("smasher.n.02"),
 				wn.synset("telephone_receiver.n.01")],
 
-	# selfish, self centred, self centered, egoistic, egoistical, egocentric, selfish,self-centred,self-centered,egoistic,egoistical,egocentric
+	# selfish, self centred, self centered, egoistic, egoistical, egocentric-centred,self-centered,egoistic,egoistical,egocentric
 	"U+3e1f":	[wn.synset("egoistic.a.01")],
 
 	# sweet drink
@@ -10511,14 +10496,14 @@ BLISSNET = {
 				wn.synset("family.n.01"),
 				wn.synset("house.n.01")],
 
-	# easy, easily, easy,easily
+	# easy, easily
 	"U+3e25":	[wn.synset("easily.r.01"),
 				wn.synset("easy.a.01")],
 
 	# general practitioner
 	"U+3e26":	[wn.synset("general_practitioner.n.01")],
 
-	# suddenly, abrupt, sudden, suddenly,abrupt,sudden
+	# suddenly, abrupt, sudden
 	"U+3e28":	[wn.synset("abruptly.r.01"),
 				wn.synset("suddenly.r.01")],
 
@@ -10535,7 +10520,7 @@ BLISSNET = {
 				wn.synset("voice.n.09"),
 				wn.synset("voice.n.10")],
 
-	# usually do, habitually do, usually do,habitually do
+	# usually do, habitually do
 	"U+3e2b":	[wn.synset("domesticate.v.01")],
 
 	# dizzy
@@ -10551,7 +10536,7 @@ BLISSNET = {
 	# perform
 	"U+3e30":	[wn.synset("perform.v.03")],
 
-	# performance, show, performance,show, demonstrate, show,demonstrate
+	# performance, show, demonstrate
 	"U+3e31":	[wn.synset("indicate.v.02")],
 
 	# water ice lollipop
@@ -10561,13 +10546,13 @@ BLISSNET = {
 	# independent
 	"U+3e34":	[wn.synset("independent.a.01")],
 
-	# hang, hook, hang,hook
+	# hang, hook
 	"U+3e35":	[wn.synset("hang.v.02")],
 
 	# fuse
 	"U+3e36":	[wn.synset("fuse.n.01")],
 
-	# humble, meek, humble,meek
+	# humble, meek
 	"U+3e37":	[wn.synset("base.s.02"),
 				wn.synset("humble.a.02"),
 				wn.synset("humble.s.01")],
@@ -10584,7 +10569,7 @@ BLISSNET = {
 				wn.synset("indigo.n.02"),
 				wn.synset("indigo.n.03")],
 
-	# photograph, photo, pic, photograph,photo,pic
+	# photograph, photo, pic
 	"U+3e3d":	[wn.synset("photograph.n.01")],
 
 	# stepdaughter
@@ -10623,7 +10608,7 @@ BLISSNET = {
 				wn.synset("sign.v.06"),
 				wn.synset("sign.v.07")],
 
-	# thermos, cooler, flask, thermos,cooler,flask
+	# thermos, cooler, flask
 	"U+3e4c":	[wn.synset("thermos.n.01")],
 
 	# starvation
@@ -10638,13 +10623,13 @@ BLISSNET = {
 	# tiger
 	"U+3e4f":	[wn.synset("tiger.n.02")],
 
-	# collarbone, clavicle, collarbone,clavicle
+	# collarbone, clavicle
 	"U+3e50":	[wn.synset("clavicle.n.01")],
 
 	# congratulate
 	"U+3e51":	[wn.synset("congratulate.v.02")],
 
-	# purple, violet, purple,violet
+	# purple, violet
 	"U+3e52":	[wn.synset("violet.n.02")],
 
 	# Leo
@@ -10655,7 +10640,7 @@ BLISSNET = {
 	# lion
 	"U+3e55":	[wn.synset("lion.n.01")],
 
-	# Shevat, Shvat, Shevat,Shvat
+	# Shevat, Shvat
 	"U+3e56":	[wn.synset("shebat.n.01")],
 
 	# peel
@@ -10669,7 +10654,7 @@ BLISSNET = {
 				wn.synset("illustration.n.01"),
 				wn.synset("illustration.n.04")],
 
-	# filled vegetable, stuffed vegetable, filled vegetable,stuffed vegetable
+	# filled vegetable, stuffed vegetable
 	"U+3e5c":	[wn.synset("greens.n.01")],
 
 	# coral
@@ -10697,7 +10682,7 @@ BLISSNET = {
 				wn.synset("die.v.01"),
 				wn.synset("murmur.v.02")],
 
-	# frog, toad, frog,toad
+	# frog, toad
 	"U+3e64":	[wn.synset("frog.n.01")],
 
 	# glass material
@@ -10715,7 +10700,7 @@ BLISSNET = {
 	# intellectual impairment, cognitive impairment, mental impairment, intellectual impairment,cognitive impairment,mental impairment
 	"U+3e6a":	[wn.synset("retarded.a.01")],
 
-	# compression, compressing, squeezing, compression,compressing,squeezing
+	# compression, compressing, squeezing
 	"U+3e6b":	[wn.synset("compaction.n.01"),
 				wn.synset("compression.n.02"),
 				wn.synset("compression.n.03"),
@@ -10729,7 +10714,7 @@ BLISSNET = {
 	"U+3e6c":	[wn.synset("means.n.01"),
 				wn.synset("way.n.05")],
 
-	# discuss, converse, debate, discuss,converse,debate
+	# discuss, converse, debate
 	"U+3e6f":	[wn.synset("argue.v.02"),
 				wn.synset("debate.v.01"),
 				wn.synset("debate.v.03"),
@@ -10755,7 +10740,7 @@ BLISSNET = {
 				wn.synset("evidence.n.02"),
 				wn.synset("evidence.n.03")],
 
-	# manure, fertilizer, manure,fertilizer
+	# manure, fertilizer
 	"U+3e76":	[wn.synset("fertilizer.n.01"),
 				wn.synset("manure.n.01")],
 
@@ -10769,10 +10754,10 @@ BLISSNET = {
 	# baguette
 	"U+3e79":	[wn.synset("baguet.n.01")],
 
-	# Pterosaur, Pterodactyl, Pterosaur,Pterodactyl
+	# Pterosaur, Pterodactyl
 	"U+3e7b":	[wn.synset("pterodactyl.n.01")],
 
-	# flute, recorder, flute,recorder, transverse flute, flute,transverse flute
+	# flute, recorder, transverse flute flute
 	"U+3e7c":	[wn.synset("flute.n.01")],
 
 	# recorder
@@ -10781,7 +10766,7 @@ BLISSNET = {
 				wn.synset("recorder.n.03"),
 				wn.synset("registrar.n.03")],
 
-	# reed, bamboo, reed,bamboo
+	# reed, bamboo
 	"U+3e7e":	[wn.synset("bamboo.n.01"),
 				wn.synset("bamboo.n.02"),
 				wn.synset("beating-reed_instrument.n.01"),
@@ -10799,7 +10784,7 @@ BLISSNET = {
 				wn.synset("property.n.01"),
 				wn.synset("retention.n.01")],
 
-	# test, assessment, exam, test,assessment,exam
+	# test, assessment, exam
 	"U+3e81":	[wn.synset("examination.n.02")],
 
 	# welcome
@@ -10816,7 +10801,7 @@ BLISSNET = {
 				wn.synset("reception.n.04"),
 				wn.synset("reception.n.05")],
 
-	# dance, dancing, dance,dancing
+	# dance, dancing
 	"U+3e88":	[wn.synset("dance.n.01"),
 				wn.synset("dancing.n.01")],
 
@@ -10826,7 +10811,7 @@ BLISSNET = {
 				wn.synset("devoted.s.01"),
 				wn.synset("devoted.s.02")],
 
-	# devotee, fan, devotee,fan
+	# devotee, fan
 	"U+3e8a":	[wn.synset("fan.n.03")],
 
 	# splurge
@@ -10839,10 +10824,10 @@ BLISSNET = {
 				wn.synset("brown.n.03"),
 				wn.synset("brown_university.n.01")],
 
-	# Formula One, NASCAR Kart, Formula One,NASCAR Kart
+	# Formula One, NASCAR Kart
 	"U+3e90":	[wn.synset("rally.n.01")],
 
-	# brownie, house elf, brownie,house elf
+	# brownie, house elf elf
 	"U+3e91":	[wn.synset("brownie.n.01"),
 				wn.synset("brownie.n.03"),
 				wn.synset("elf.n.01")],
@@ -10853,22 +10838,22 @@ BLISSNET = {
 	# kitten
 	"U+3e94":	[wn.synset("kitten.n.01")],
 
-	# cat, feline, felid, cat,feline
+	# cat, feline, felid
 	"U+3e95":	[wn.synset("cat.n.01")],
 
 	# fresh cheese
 	"U+3e98":	[wn.synset("quark_cheese.n.01")],
 
-	# inflammable, flammable, inflammable,flammable
+	# inflammable, flammable
 	"U+3e99":	[wn.synset("flammable.s.01")],
 
-	# breakable, fragile, breakable,fragile
+	# breakable, fragile
 	"U+3e9b":	[wn.synset("delicate.s.03")],
 
 	# electric field
 	"U+3e9d":	[wn.synset("electric_field.n.01")],
 
-	# diarrhea, diarrhoea, diarrhea,diarrhoea
+	# diarrhea, diarrhoea
 	"U+3e9e":	[wn.synset("diarrhea.n.01")],
 
 	# courage
@@ -10891,7 +10876,7 @@ BLISSNET = {
 	# appear
 	"U+3ea7":	[wn.synset("appear.v.02")],
 
-	# appearance, manifestation, appearance,manifestation
+	# appearance, manifestation
 	"U+3ea8":	[wn.synset("appearance.n.02"),
 				wn.synset("appearance.n.05"),
 				wn.synset("demonstration.n.03"),
@@ -10905,7 +10890,7 @@ BLISSNET = {
 	# uniform
 	"U+3eab":	[wn.synset("uniform.n.01")],
 
-	# crew, staff, crew,staff
+	# crew, staff
 	"U+3eac":	[wn.synset("crew.n.01"),
 				wn.synset("crew.n.04"),
 				wn.synset("crowd.n.02"),
@@ -10923,7 +10908,7 @@ BLISSNET = {
 	# decade
 	"U+3eae":	[wn.synset("decade.n.01")],
 
-	# common, mutual, shared, common,mutual,shared
+	# common, mutual, shared
 	"U+3eaf":	[wn.synset("common.s.03")],
 
 	# English
@@ -10935,7 +10920,7 @@ BLISSNET = {
 	# England
 	"U+3eb1":	[wn.synset("england.n.01")],
 
-	# teacher, instructor, teacher,instructor, pedagogue, educator, teacher,pedagogue,educator
+	# teacher, instructor, pedagogue, educator
 	"U+3eb2":	[wn.synset("educator.n.01"),
 				wn.synset("teacher.n.01")],
 
@@ -10947,10 +10932,10 @@ BLISSNET = {
 	# Portugal
 	"U+3eb4":	[wn.synset("portugal.n.01")],
 
-	# drain, sift, strain, drain,sift,strain
+	# drain, sift, strain
 	"U+3eb5":	[wn.synset("drain.v.03")],
 
-	# explode, blow up, detonate, burst, explode,blow up,detonate,burst
+	# explode, blow up, detonate, burst up,detonate,burst
 	"U+3eb6":	[wn.synset("explode.v.02")],
 
 	# trial
@@ -10973,7 +10958,7 @@ BLISSNET = {
 				wn.synset("retirement.n.02"),
 				wn.synset("retirement.n.03")],
 
-	# berth, bunk, berth,bunk
+	# berth, bunk
 	"U+3ebc":	[wn.synset("bunk.n.03")],
 
 	# snowboard
@@ -10982,7 +10967,7 @@ BLISSNET = {
 	# living room, lounge, sitting room, front room, parlor, parlour, waiting room, living room,lounge,sitting room,front room,parlor,parlour,waiting room
 	"U+3ebe":	[wn.synset("living_room.n.01")],
 
-	# crayon, coloured pencil, marker, crayon,coloured pencil,marker
+	# crayon, coloured pencil, marker pencil,marker
 	"U+3ebf":	[wn.synset("marker.n.03")],
 
 	# market
@@ -11003,7 +10988,7 @@ BLISSNET = {
 	# MMS
 	"U+3ec6":	[wn.synset("millimeter.n.01")],
 
-	# mew, meow, mew,meow
+	# mew, meow
 	"U+3ec8":	[wn.synset("meow.v.01"),
 				wn.synset("mew.v.02")],
 
@@ -11040,7 +11025,7 @@ BLISSNET = {
 	"U+3ed0":	[wn.synset("french-fry.v.01"),
 				wn.synset("fry.v.02")],
 
-	# gift, offering, present, gift,offering,present
+	# gift, offering, present
 	"U+3ed1":	[wn.synset("gift.n.01")],
 
 	# southern
@@ -11056,23 +11041,23 @@ BLISSNET = {
 	# toilet paper
 	"U+3ed4":	[wn.synset("toilet_tissue.n.01")],
 
-	# remember, recall, remember,recall
+	# remember, recall
 	"U+3ed6":	[wn.synset("remember.v.01")],
 
-	# anytime, sometime, anytime,sometime
+	# anytime, sometime
 	"U+3ed7":	[wn.synset("erstwhile.s.01"),
 				wn.synset("sometime.r.01")],
 
 	# lid
 	"U+3ed9":	[wn.synset("lid.n.02")],
 
-	# counsellor, adviser, counsellor,adviser
+	# counsellor, adviser
 	"U+3eda":	[wn.synset("adviser.n.01")],
 
 	# brain
 	"U+3edb":	[wn.synset("brain.n.01")],
 
-	# braid, plait, braid,plait, pigtail, braid,plait,pigtail
+	# braid, plait, pigtail
 	"U+3edd":	[wn.synset("braid.v.01"),
 				wn.synset("braid.v.02"),
 				wn.synset("plait.v.02")],
@@ -11090,17 +11075,17 @@ BLISSNET = {
 	# rake
 	"U+3ee5":	[wn.synset("rake.n.03")],
 
-	# introduce, present, introduce,present
+	# introduce, present
 	"U+3ee6":	[wn.synset("introduce.v.01")],
 
-	# type, kind, sort, type,kind,sort
+	# type, kind, sort
 	"U+3ee8":	[wn.synset("character.n.05"),
 				wn.synset("kind.n.01"),
 				wn.synset("sort.n.03"),
 				wn.synset("type.n.01"),
 				wn.synset("type.n.03")],
 
-	# corridor, hall, corridor,hall
+	# corridor, hall
 	"U+3ee9":	[wn.synset("anteroom.n.01"),
 				wn.synset("corridor.n.01"),
 				wn.synset("dormitory.n.01"),
@@ -11116,7 +11101,7 @@ BLISSNET = {
 				wn.synset("manor_hall.n.01"),
 				wn.synset("mansion.n.02")],
 
-	# barrow, grave mound, barrow,grave mound
+	# barrow, grave mound mound
 	"U+3eeb":	[wn.synset("barrow.n.01"),
 				wn.synset("barrow.n.03"),
 				wn.synset("burial_mound.n.01")],
@@ -11154,7 +11139,7 @@ BLISSNET = {
 	# prone board, scooter board, prone board,scooter-board
 	"U+3eef":	[wn.synset("skateboard.n.01")],
 
-	# happen, occur, happen,occur
+	# happen, occur
 	"U+3ef2":	[wn.synset("happen.v.01")],
 
 	# Norwegian
@@ -11163,7 +11148,7 @@ BLISSNET = {
 	# fjord
 	"U+3ef5":	[wn.synset("fjord.n.01")],
 
-	# mental, intellectual, rational, thinking, mental,intellectual,rational,thinking
+	# mental, intellectual, rational, thinking
 	"U+3ef7":	[wn.synset("cerebral.a.01"),
 				wn.synset("genial.a.02"),
 				wn.synset("intellectual.a.02"),
@@ -11181,7 +11166,7 @@ BLISSNET = {
 	"U+3ef8":	[wn.synset("high_jump.n.01"),
 				wn.synset("high_jump.n.02")],
 
-	# milkmaid, dairymaid, milkmaid,dairymaid
+	# milkmaid, dairymaid
 	"U+3ef9":	[wn.synset("dairymaid.n.01")],
 
 	# parking lot
@@ -11218,7 +11203,7 @@ BLISSNET = {
 	# Asia
 	"U+3f06":	[wn.synset("asia.n.01")],
 
-	# sanctify, consecrate, sanctify,consecrate
+	# sanctify, consecrate
 	"U+3f07":	[wn.synset("consecrate.v.04")],
 
 	# tomorrow
@@ -11227,7 +11212,7 @@ BLISSNET = {
 	# size
 	"U+3f09":	[wn.synset("size.n.01")],
 
-	# disabled, impaired, handicapped, mentally), disabled,impaired,handicapped
+	# disabled, impaired, handicapped, mentally)
 	"U+3f0a":	[wn.synset("afflicted.s.02"),
 				wn.synset("disabled.s.01"),
 				wn.synset("impaired.a.01")],
@@ -11244,7 +11229,7 @@ BLISSNET = {
 				wn.synset("silent.s.04"),
 				wn.synset("silent.s.05")],
 
-	# silence, quiet, silence,quiet, quietly, quiet,quietly
+	# silence, quiet, quietly
 	"U+3f0d":	[wn.synset("silence.n.02")],
 
 	# merry go round, carousel, merry-go-round,carousel
@@ -11267,7 +11252,7 @@ BLISSNET = {
 	# television
 	"U+3f16":	[wn.synset("television_receiver.n.01")],
 
-	# clarinet, reed instrument, clarinet,reed instrument
+	# clarinet, reed instrument instrument
 	"U+3f17":	[wn.synset("clarinet.n.01")],
 
 	# physiotherapist
@@ -11286,7 +11271,7 @@ BLISSNET = {
 	# lumpy
 	"U+3f1d":	[wn.synset("chunky.s.01")],
 
-	# equipment, gear, equipment,gear
+	# equipment, gear
 	"U+3f1e":	[wn.synset("equipment.n.01")],
 
 	# space travel, space voyage, space flight, space travel,space voyage,space flight
@@ -11295,13 +11280,13 @@ BLISSNET = {
 	# galaxy
 	"U+3f20":	[wn.synset("galaxy.n.03")],
 
-	# disability, handicap, impairment, disability,handicap,impairment
+	# disability, handicap, impairment
 	"U+3f21":	[wn.synset("disability.n.01")],
 
-	# begin, start, begin,start
+	# begin, start
 	"U+3f22":	[wn.synset("begin.v.03")],
 
-	# puncture, prick, puncture,prick
+	# puncture, prick
 	"U+3f23":	[wn.synset("sting.v.02")],
 
 	# downhill skiing
@@ -11315,13 +11300,13 @@ BLISSNET = {
 	"U+3f27":	[wn.synset("sunset.n.01"),
 				wn.synset("sunset.n.03")],
 
-	# step, stair, step,stair
+	# step, stair
 	"U+3f29":	[wn.synset("step.n.04")],
 
 	# scalene triangle
 	"U+3f2b":	[wn.synset("triangle.n.01")],
 
-	# exhibitionism, immodesty, indecent exposure, exhibitionism,immodesty,indecent exposure
+	# exhibitionism, immodesty, indecent exposure exposure
 	"U+3f2e":	[wn.synset("exhibitionism.n.01"),
 				wn.synset("exhibitionism.n.02"),
 				wn.synset("immodesty.n.01")],
@@ -11341,18 +11326,18 @@ BLISSNET = {
 	# concert
 	"U+3f32":	[wn.synset("concert.n.01")],
 
-	# active, actively, active,actively
+	# active, actively
 	"U+3f33":	[wn.synset("active.a.03"),
 				wn.synset("active.a.05"),
 				wn.synset("active.s.02")],
 
-	# jump rope, skipping rope, jump rope,skipping rope
+	# jump rope, skipping rope
 	"U+3f34":	[wn.synset("jump_rope.n.01")],
 
 	# loudspeaker
 	"U+3f35":	[wn.synset("loudspeaker.n.01")],
 
-	# out, exterior, external, outside, out,exterior,external,outside
+	# out, exterior, external, outside
 	"U+3f36":	[wn.synset("outside.n.01"),
 				wn.synset("outside.n.02")],
 
@@ -11367,7 +11352,7 @@ BLISSNET = {
 	# skyscraper
 	"U+3f3a":	[wn.synset("skyscraper.n.01")],
 
-	# tangerine, clementine, mandarin, tangerine,clementine,mandarin
+	# tangerine, clementine, mandarin
 	"U+3f3c":	[wn.synset("mandarin.n.01"),
 				wn.synset("tangerine.n.01")],
 
@@ -11382,7 +11367,7 @@ BLISSNET = {
 	"U+3f40":	[wn.synset("ecological.a.01"),
 				wn.synset("ecological.a.02")],
 
-	# broil, barbecue, grill, broil,barbecue,grill
+	# broil, barbecue, grill
 	"U+3f41":	[wn.synset("bake.v.04"),
 				wn.synset("barbeque.v.01"),
 				wn.synset("broil.v.01"),
@@ -11400,7 +11385,7 @@ BLISSNET = {
 	# sulky
 	"U+3f45":	[wn.synset("sulky.n.01")],
 
-	# skull, cranium, skull,cranium
+	# skull, cranium
 	"U+3f46":	[wn.synset("skull.n.01")],
 
 	# cycling
@@ -11433,7 +11418,7 @@ BLISSNET = {
 	# develop
 	"U+3f53":	[wn.synset("develop.v.01")],
 
-	# magnifier, magnifying glass, magnifier,magnifying glass
+	# magnifier, magnifying glass glass
 	"U+3f54":	[wn.synset("hand_glass.n.02"),
 				wn.synset("magnifier.n.01")],
 
@@ -11445,7 +11430,7 @@ BLISSNET = {
 				wn.synset("price.n.02"),
 				wn.synset("wrong.n.02")],
 
-	# ruler, measuring stick, tapeline, tape measure, ruler,measuring stick,tapeline,tape measure
+	# ruler, measuring stick, tapeline, tape measure stick,tapeline,tape measure
 	"U+3f56":	[wn.synset("rule.n.12")],
 
 	# foal
@@ -11507,10 +11492,10 @@ BLISSNET = {
 	# miracle
 	"U+3f6f":	[wn.synset("miracle.n.02")],
 
-	# malodor, malodour, stench, malodor,malodour,stench
+	# malodor, malodour, stench
 	"U+3f70":	[wn.synset("malodor.n.01")],
 
-	# blog, web blog, blog,web blog
+	# blog, web blog blog
 	"U+3f71":	[wn.synset("web_log.n.01")],
 
 	# astronomer
@@ -11537,7 +11522,7 @@ BLISSNET = {
 	# Frigg
 	"U+3f79":	[wn.synset("frigg.n.01")],
 
-	# gather, assemble, gather,assemble
+	# gather, assemble
 	"U+3f7a":	[wn.synset("assemble.v.03")],
 
 	# bazaar
@@ -11567,16 +11552,16 @@ BLISSNET = {
 	# expose oneself indecently
 	"U+3f81":	[wn.synset("produce.v.04")],
 
-	# disinfectant, antiseptic, disinfectant,antiseptic
+	# disinfectant, antiseptic
 	"U+3f82":	[wn.synset("antiseptic.n.01")],
 
 	# earring
 	"U+3f86":	[wn.synset("earring.n.01")],
 
-	# jewelry, jewellery, jewelry,jewellery
+	# jewelry, jewellery
 	"U+3f87":	[wn.synset("jewelry.n.01")],
 
-	# celeriac, celery, celeriac,celery
+	# celeriac, celery
 	"U+3f88":	[wn.synset("celery.n.01"),
 				wn.synset("celery.n.02")],
 
@@ -11584,7 +11569,7 @@ BLISSNET = {
 	"U+3f89":	[wn.synset("come_to.v.04"),
 				wn.synset("revive.v.04")],
 
-	# grater, grinder, grater,grinder
+	# grater, grinder
 	"U+3f8c":	[wn.synset("bomber.n.03"),
 				wn.synset("grater.n.01"),
 				wn.synset("grinder.n.04"),
@@ -11594,10 +11579,10 @@ BLISSNET = {
 	# fashion designer
 	"U+3f8d":	[wn.synset("couturier.n.01")],
 
-	# omelette, omelet, omelette,omelet
+	# omelette, omelet
 	"U+3f8f":	[wn.synset("omelet.n.01")],
 
-	# cabin, cottage, hut, cabin,cottage,hut
+	# cabin, cottage, hut
 	"U+3f90":	[wn.synset("bungalow.n.01"),
 				wn.synset("cabin.n.01"),
 				wn.synset("cabin.n.02"),
@@ -11626,11 +11611,11 @@ BLISSNET = {
 	# washing machine, washer, washing machine,washer
 	"U+3f9b":	[wn.synset("washer.n.03")],
 
-	# housekeep, housework, housekeep,housework
+	# housekeep, housework
 	"U+3f9c":	[wn.synset("housekeep.v.01"),
 				wn.synset("housework.n.01")],
 
-	# paten, holy tray, paten,holy tray
+	# paten, holy tray tray
 	"U+3f9d":	[wn.synset("patina.n.01")],
 
 	# houseboat
@@ -11645,7 +11630,7 @@ BLISSNET = {
 				wn.synset("nestling.n.01"),
 				wn.synset("newcomer.n.01")],
 
-	# ugly, unattractive, ugly,unattractive
+	# ugly, unattractive
 	"U+3fa2":	[wn.synset("atrocious.s.03"),
 				wn.synset("despicable.s.01"),
 				wn.synset("surly.s.01"),
@@ -11654,7 +11639,7 @@ BLISSNET = {
 				wn.synset("unattractive.s.02"),
 				wn.synset("unattractive.s.03")],
 
-	# cupcake, fancy cake, pastry, cupcake,fancy cake,pastry
+	# cupcake, fancy cake, pastry cake,pastry
 	"U+3fa3":	[wn.synset("cake.n.03"),
 				wn.synset("cupcake.n.01"),
 				wn.synset("pastry.n.01"),
@@ -11666,7 +11651,7 @@ BLISSNET = {
 	# skeleton
 	"U+3fa8":	[wn.synset("skeletal_system.n.01")],
 
-	# considerate, thoughtful, considerate,thoughtful
+	# considerate, thoughtful
 	"U+3fa9":	[wn.synset("considerate.a.01"),
 				wn.synset("heedful.a.01")],
 
@@ -11682,7 +11667,7 @@ BLISSNET = {
 	# religious
 	"U+3fae":	[wn.synset("religious.a.02")],
 
-	# rug, carpet, mat, rug,carpet,mat
+	# rug, carpet, mat
 	"U+3faf":	[wn.synset("rug.n.01")],
 
 	# dumpling
@@ -11694,7 +11679,7 @@ BLISSNET = {
 				wn.synset("fountain.n.03"),
 				wn.synset("fountain.n.04")],
 
-	# bathroom, washroom, bathroom,washroom
+	# bathroom, washroom
 	"U+3fb2":	[wn.synset("bathroom.n.01")],
 
 	# screwdriver
@@ -11735,7 +11720,7 @@ BLISSNET = {
 	# inspired
 	"U+3fbf":	[wn.synset("divine.s.06")],
 
-	# soldier, warrior, soldier,warrior
+	# soldier, warrior
 	"U+3fc0":	[wn.synset("soldier.n.01")],
 
 	# car mechanic
@@ -11744,7 +11729,7 @@ BLISSNET = {
 	# carriage racing
 	"U+3fc2":	[wn.synset("harness_race.n.01")],
 
-	# put, locate, place, put,locate,place
+	# put, locate, place
 	"U+3fc3":	[wn.synset("arrange.v.07"),
 				wn.synset("frame.v.04"),
 				wn.synset("identify.v.01"),
@@ -11771,20 +11756,20 @@ BLISSNET = {
 				wn.synset("station.v.01"),
 				wn.synset("target.v.01")],
 
-	# mysterious, unknown, mysterious,unknown
+	# mysterious, unknown
 	"U+3fc4":	[wn.synset("cryptic.s.01")],
 
 	# excuse
 	"U+3fc5":	[wn.synset("apologize.v.02"),
 				wn.synset("excuse.v.06")],
 
-	# each other, one another, each other,one another
+	# each other, one another
 	"U+3fca":	[wn.synset("together.r.01")],
 
 	# swash
 	"U+3fcd":	[wn.synset("swash.n.01")],
 
-	# walk, go, walk,go
+	# walk, go
 	"U+3fce":	[wn.synset("walk.v.01"),
 				wn.synset("walk.v.02"),
 				wn.synset("walk.v.03"),
@@ -11807,7 +11792,7 @@ BLISSNET = {
 				wn.synset("ballooning.n.01"),
 				wn.synset("hot-air_balloon.n.01")],
 
-	# stave, staff, stave,staff
+	# stave, staff
 	"U+3fd2":	[wn.synset("staff.n.06")],
 
 	# archipelago
@@ -11821,7 +11806,7 @@ BLISSNET = {
 				wn.synset("revel.n.01"),
 				wn.synset("revelation.n.02")],
 
-	# vase, urn, trophy cup, vase,urn,trophy cup
+	# vase, urn, trophy cup cup
 	"U+3fd6":	[wn.synset("urn.n.01"),
 				wn.synset("urn.n.02"),
 				wn.synset("vase.n.01")],
@@ -11829,7 +11814,7 @@ BLISSNET = {
 	# less than
 	"U+3fd7":	[wn.synset("relationship.n.02")],
 
-	# xylophone, vibraphone, xylophone,vibraphone
+	# xylophone, vibraphone
 	"U+3fd8":	[wn.synset("marimba.n.01")],
 
 	# horizontal
@@ -11842,14 +11827,14 @@ BLISSNET = {
 	# hobbit
 	"U+3fe1":	[wn.synset("hobbit.n.01")],
 
-	# universal, world wide, universal,world-wide
+	# universal, world wide-wide
 	"U+3fe2":	[wn.synset("cosmopolitan.s.03"),
 				wn.synset("global.s.01"),
 				wn.synset("universal.s.02"),
 				wn.synset("universal.s.03"),
 				wn.synset("worldwide.s.01")],
 
-	# touchpad, trackpad, touchpad,trackpad
+	# touchpad, trackpad
 	"U+3fe6":	[wn.synset("smooth_plane.n.01")],
 
 	# soon
@@ -11862,7 +11847,7 @@ BLISSNET = {
 	# moshav
 	"U+3fe9":	[wn.synset("moshav.n.01")],
 
-	# guitar, string instrument, guitar,string instrument
+	# guitar, string instrument instrument
 	"U+3fea":	[wn.synset("guitar.n.01")],
 
 	# hang gliding
@@ -11885,7 +11870,7 @@ BLISSNET = {
 	# bass guitar
 	"U+3ff2":	[wn.synset("bass_guitar.n.01")],
 
-	# CD, record, CD,record
+	# CD, record
 	"U+3ff4":	[wn.synset("cadmium.n.01"),
 				wn.synset("candle.n.02"),
 				wn.synset("certificate_of_deposit.n.01"),
@@ -11911,7 +11896,7 @@ BLISSNET = {
 	# beer
 	"U+3ff6":	[wn.synset("beer.n.01")],
 
-	# Lapps, Lapplander, Sami, Lapps,Lapplander
+	# Lapps, Lapplander, Sami
 	"U+3ff7":	[wn.synset("lapp.n.01"),
 				wn.synset("lapp.n.02"),
 				wn.synset("patch.n.03")],
@@ -11919,7 +11904,7 @@ BLISSNET = {
 	# unharness
 	"U+3ff9":	[wn.synset("unharness.v.01")],
 
-	# surrounded, encircled, surrounding, surrounded,encircled,surrounding
+	# surrounded, encircled, surrounding
 	"U+3ffb":	[wn.synset("encompassing.s.02"),
 				wn.synset("surrounded.s.01")],
 
@@ -11943,7 +11928,7 @@ BLISSNET = {
 	"U+4002":	[wn.synset("gardener.n.01"),
 				wn.synset("gardener.n.02")],
 
-	# think, reason, think,reason
+	# think, reason
 	"U+4004":	[wn.synset("think.v.01"),
 				wn.synset("think.v.03")],
 
@@ -11972,7 +11957,7 @@ BLISSNET = {
 	# knocking
 	"U+400d":	[wn.synset("knock.n.01")],
 
-	# miss, lose, miss,lose
+	# miss, lose
 	"U+400f":	[wn.synset("miss.v.02")],
 
 	# obedience
@@ -11985,10 +11970,10 @@ BLISSNET = {
 				wn.synset("diamond.n.01"),
 				wn.synset("diamond.n.02")],
 
-	# expect, anticipate, expect,anticipate
+	# expect, anticipate
 	"U+4014":	[wn.synset("expect.v.01")],
 
-	# gray, grey, gray,grey
+	# gray, grey
 	"U+4015":	[wn.synset("gray.n.01"),
 				wn.synset("gray.n.05"),
 				wn.synset("gray.n.06"),
@@ -12005,7 +11990,7 @@ BLISSNET = {
 	# go kart, kart, go-kart,kart
 	"U+4017":	[wn.synset("go-kart.n.01")],
 
-	# playroom, family room, recreation room, playroom,family room,recreation room, moadan, recreation room,moadan
+	# playroom, family room, recreation room room,recreation room, moadan, recreation room,moadan
 	"U+4018":	[wn.synset("rumpus_room.n.01")],
 
 	# juicy
@@ -12029,7 +12014,7 @@ BLISSNET = {
 	# pyjama, nightgown, nightie, pajama
 	"U+4020":	[wn.synset("pajama.n.02")],
 
-	# snuff, kat, coca, snuff,kat,coca
+	# snuff, kat, coca
 	"U+4022":	[wn.synset("cake.n.03"),
 				wn.synset("coca.n.02"),
 				wn.synset("coca.n.03"),
@@ -12052,11 +12037,11 @@ BLISSNET = {
 	"U+4027":	[wn.synset("clean.v.01"),
 				wn.synset("clean.v.02")],
 
-	# drying cupboard, airing cupboard, drying cupboard,airing cupboard
+	# drying cupboard, airing cupboard
 	"U+4028":	[wn.synset("clothes_dryer.n.01"),
 				wn.synset("hand_blower.n.01")],
 
-	# humid, damp, moist, humid,damp,moist
+	# humid, damp, moist
 	"U+402a":	[wn.synset("damp.s.01"),
 				wn.synset("humid.s.01")],
 
@@ -12081,17 +12066,17 @@ BLISSNET = {
 	# small intestine
 	"U+4033":	[wn.synset("small_intestine.n.01")],
 
-	# basement, cellar, basement,cellar
+	# basement, cellar
 	"U+4034":	[wn.synset("basement.n.01")],
 
-	# during, while, during,while
+	# during, while
 	"U+4036":	[wn.synset("throughout.r.01"),
 				wn.synset("while.n.01")],
 
 	# no one, nobody, no one,nobody
 	"U+4037":	[wn.synset("cipher.n.04")],
 
-	# cramp, spasm, cramp,spasm
+	# cramp, spasm
 	"U+403b":	[wn.synset("spasm.n.01")],
 
 	# champagne
@@ -12104,7 +12089,7 @@ BLISSNET = {
 	# Kislev
 	"U+403e":	[wn.synset("kislev.n.01")],
 
-	# nearness, closeness, proximity, nearness,closeness,proximity
+	# nearness, closeness, proximity
 	"U+403f":	[wn.synset("closeness.n.01"),
 				wn.synset("closeness.n.05"),
 				wn.synset("familiarity.n.03"),
@@ -12121,22 +12106,22 @@ BLISSNET = {
 				wn.synset("sea.n.01"),
 				wn.synset("sea.n.03")],
 
-	# gravity, gravitation, gravity,gravitation
+	# gravity, gravitation
 	"U+4041":	[wn.synset("gravity.n.01")],
 
-	# probable, likely, probably, probable,likely,probably
+	# probable, likely, probably
 	"U+4042":	[wn.synset("probable.a.01")],
 
 	# fishball
 	"U+4044":	[wn.synset("gefilte_fish.n.01")],
 
-	# wok, wok pan, wok,wok pan
+	# wok, wok pan pan
 	"U+4045":	[wn.synset("wok.n.01")],
 
 	# cartographer
 	"U+4046":	[wn.synset("cartographer.n.01")],
 
-	# synthesizer, synthesiser, keyboard, synthesizer,synthesiser,keyboard
+	# synthesizer, synthesiser, keyboard
 	"U+4047":	[wn.synset("keyboard.n.01"),
 				wn.synset("keyboard.n.02"),
 				wn.synset("synthesist.n.01"),
@@ -12148,14 +12133,14 @@ BLISSNET = {
 	# main course
 	"U+404b":	[wn.synset("piece_de_resistance.n.02")],
 
-	# middle, centre, middle,centre
+	# middle, centre
 	"U+404c":	[wn.synset("center.n.01"),
 				wn.synset("center.n.04")],
 
 	# both
 	"U+404d":	[wn.synset("both.s.01")],
 
-	# barbershop, beauty shop, barbershop,beauty shop
+	# barbershop, beauty shop shop
 	"U+404e":	[wn.synset("barbershop.n.01")],
 
 	# eggplant
@@ -12175,31 +12160,31 @@ BLISSNET = {
 	# solar eclipse
 	"U+4054":	[wn.synset("solar_eclipse.n.01")],
 
-	# wet, damp, moist, watery, wet,damp,moist,watery
+	# wet, damp, moist, watery
 	"U+4055":	[wn.synset("wet.a.01")],
 
-	# add, gain, add,gain
+	# add, gain
 	"U+4056":	[wn.synset("add.v.01"),
 				wn.synset("add.v.02")],
 
 	# chipmunk
 	"U+4057":	[wn.synset("chipmunk.n.01")],
 
-	# baby bottle, feeding bottle, baby bottle,feeding bottle
+	# baby bottle, feeding bottle
 	"U+4058":	[wn.synset("bottle.n.02"),
 				wn.synset("bottle.n.03")],
 
 	# liver
 	"U+4059":	[wn.synset("liver.n.01")],
 
-	# pram straps, safety harness, pram straps,safety harness
+	# pram straps, safety harness
 	"U+405a":	[wn.synset("safety_belt.n.01")],
 
 	# vaginal discharge
 	"U+405b":	[wn.synset("leukorrhea.n.01"),
 				wn.synset("vaginal_discharge.n.01")],
 
-	# Spanish, Castilian, Spanish,Castilian
+	# Spanish, Castilian
 	"U+405c":	[wn.synset("spanish.n.01")],
 
 	# temporary
@@ -12218,14 +12203,14 @@ BLISSNET = {
 	# pasta salad
 	"U+4062":	[wn.synset("pasta_salad.n.01")],
 
-	# auditor, accountant, auditor,accountant
+	# auditor, accountant
 	"U+4063":	[wn.synset("accountant.n.01")],
 
 	# empowered
 	"U+4065":	[wn.synset("authorized.a.01"),
 				wn.synset("empowered.s.01")],
 
-	# fiancee, bride to be, fiancee,bride-to-be
+	# fiancee, bride to be-to-be
 	"U+4066":	[wn.synset("fiancee.n.01")],
 
 	# cemetery
@@ -12249,7 +12234,7 @@ BLISSNET = {
 	# kazoo
 	"U+406f":	[wn.synset("kazoo.n.01")],
 
-	# draw, sketch, draw,sketch
+	# draw, sketch
 	"U+4070":	[wn.synset("draw.v.06")],
 
 	# woking
@@ -12273,7 +12258,7 @@ BLISSNET = {
 				wn.synset("worsen.v.01"),
 				wn.synset("worsen.v.02")],
 
-	# simmer, poach, simmer,poach
+	# simmer, poach
 	"U+4075":	[wn.synset("simmer.v.01")],
 
 	# rain gauge
@@ -12289,7 +12274,7 @@ BLISSNET = {
 	# run
 	"U+4078":	[wn.synset("run.v.01")],
 
-	# rub, massage, rub,massage
+	# rub, massage
 	"U+4079":	[wn.synset("massage.n.01")],
 
 	# Ganesh
@@ -12306,7 +12291,7 @@ BLISSNET = {
 				wn.synset("pain.n.03"),
 				wn.synset("sorrow.n.01")],
 
-	# subtract, remove, take away, subtract,remove,take away, take away,remove
+	# subtract, remove, take away away, take away,remove
 	"U+407d":	[wn.synset("absent.v.01"),
 				wn.synset("get_rid_of.v.01"),
 				wn.synset("murder.v.01"),
@@ -12316,7 +12301,7 @@ BLISSNET = {
 				wn.synset("remove.v.08"),
 				wn.synset("take_out.v.01")],
 
-	# dwarf, gnome, dwarf,gnome
+	# dwarf, gnome
 	"U+407e":	[wn.synset("dwarf.n.01"),
 				wn.synset("dwarf.n.03"),
 				wn.synset("gnome.n.01"),
@@ -12325,7 +12310,7 @@ BLISSNET = {
 	# corn syrup
 	"U+4082":	[wn.synset("corn_syrup.n.01")],
 
-	# finally, at last, finally,at last
+	# finally, at last last
 	"U+4084":	[wn.synset("finally.r.01"),
 				wn.synset("ultimately.r.01")],
 
@@ -12358,24 +12343,24 @@ BLISSNET = {
 				wn.synset("nag.v.02"),
 				wn.synset("nag.v.03")],
 
-	# electric, electrical, electric,electrical
+	# electric, electrical
 	"U+408d":	[wn.synset("electric.a.01")],
 
-	# autoharp, zither, kantele, autoharp,zither,kantele
+	# autoharp, zither, kantele
 	"U+408e":	[wn.synset("zither.n.01")],
 
-	# fewest, least, fewest,least
+	# fewest, least
 	"U+408f":	[wn.synset("few.a.01"),
 				wn.synset("fewest.a.01"),
 				wn.synset("least.a.01")],
 
-	# resign, quit, resign,quit
+	# resign, quit
 	"U+4090":	[wn.synset("leave_office.v.01")],
 
 	# physics
 	"U+4092":	[wn.synset("physics.n.01")],
 
-	# outing, excursion, outing,excursion
+	# outing, excursion
 	"U+4093":	[wn.synset("excursion.n.01")],
 
 	# depth
@@ -12393,7 +12378,7 @@ BLISSNET = {
 	# Av
 	"U+4096":	[wn.synset("ab.n.02")],
 
-	# advance, go, advance,go
+	# advance, go
 	"U+4099":	[wn.synset("progress.v.01")],
 
 	# wizard
@@ -12415,7 +12400,7 @@ BLISSNET = {
 	# nuclear fuel
 	"U+40a5":	[wn.synset("nuclear_fuel.n.01")],
 
-	# button, gripper, snap, button,gripper,snap
+	# button, gripper, snap
 	"U+40a8":	[wn.synset("button.n.01")],
 
 	# Uranus
@@ -12427,7 +12412,7 @@ BLISSNET = {
 	# micro organism, micro-organism
 	"U+40ac":	[wn.synset("microorganism.n.01")],
 
-	# purse, pocketbook, wallet, purse,pocketbook,wallet
+	# purse, pocketbook, wallet
 	"U+40ad":	[wn.synset("bag.n.04"),
 				wn.synset("pocketbook.n.01"),
 				wn.synset("pocketbook.n.03"),
@@ -12456,7 +12441,7 @@ BLISSNET = {
 	"U+40b3":	[wn.synset("conversion.n.01"),
 				wn.synset("conversion.n.04")],
 
-	# toilet chair, commode chair, toilet chair,commode chair
+	# toilet chair, commode chair
 	"U+40b4":	[wn.synset("toilet.n.02")],
 
 	# Arabic
@@ -12477,7 +12462,7 @@ BLISSNET = {
 				wn.synset("pitch.n.10"),
 				wn.synset("sales_talk.n.01")],
 
-	# satisfaction, contentment, satisfaction,contentment
+	# satisfaction, contentment
 	"U+40b8":	[wn.synset("atonement.n.01"),
 				wn.synset("contentment.n.01"),
 				wn.synset("gratification.n.01"),
@@ -12502,7 +12487,7 @@ BLISSNET = {
 				wn.synset("patriarch.n.04"),
 				wn.synset("retiree.n.01")],
 
-	# appetizer, starter, entree, appetizer,starter,entree
+	# appetizer, starter, entree
 	"U+40bf":	[wn.synset("appetizer.n.01"),
 				wn.synset("crank.n.04"),
 				wn.synset("entrance.n.01"),
@@ -12516,10 +12501,10 @@ BLISSNET = {
 				wn.synset("starter.n.03"),
 				wn.synset("starter.n.07")],
 
-	# orange, citrus fruit, orange,citrus fruit
+	# orange, citrus fruit fruit
 	"U+40c3":	[wn.synset("orange.n.02")],
 
-	# tailor, dressmaker, seamstress, tailor,dressmaker,seamstress
+	# tailor, dressmaker, seamstress
 	"U+40c6":	[wn.synset("tailor.n.01")],
 
 	# any day, someday, any day,someday
@@ -12528,20 +12513,20 @@ BLISSNET = {
 	# skirt
 	"U+40c8":	[wn.synset("skirt.n.02")],
 
-	# sweat, perspire, sweat,perspire, perspiration, sweat,perspiration
+	# sweat, perspire, perspiration
 	"U+40c9":	[wn.synset("perspiration.n.01")],
 
-	# oval, elliptic, elliptical, oval,elliptic,elliptical, ellipse, oval,ellipse
+	# oval, elliptic, elliptical, ellipse
 	"U+40ca":	[wn.synset("ellipse.n.01")],
 
-	# mailbox, letterbox, postbox, mailbox,letterbox,postbox
+	# mailbox, letterbox, postbox
 	"U+40cb":	[wn.synset("mailbox.n.01"),
 				wn.synset("postbox.n.01")],
 
 	# pink
 	"U+40cc":	[wn.synset("pink.n.01")],
 
-	# bells, chime bars, tubular bells, bells,chime bars,tubular bells
+	# bells, chime bars, tubular bells bars,tubular bells
 	"U+40cd":	[wn.synset("bell.n.01"),
 				wn.synset("bell.n.03"),
 				wn.synset("bell.n.04"),
@@ -12597,10 +12582,10 @@ BLISSNET = {
 	# university
 	"U+40df":	[wn.synset("university.n.03")],
 
-	# armoured force, tank force, armoured force,tank force
+	# armoured force, tank force
 	"U+40e0":	[wn.synset("cavalry.n.02")],
 
-	# special, particular, special,particular
+	# special, particular
 	"U+40e2":	[wn.synset("especial.s.01"),
 				wn.synset("particular.s.01"),
 				wn.synset("special.s.02"),
@@ -12614,7 +12599,7 @@ BLISSNET = {
 	# foster mother
 	"U+40e4":	[wn.synset("foster-mother.n.01")],
 
-	# wading pool, paddling pool, wading pool,paddling pool
+	# wading pool, paddling pool
 	"U+40e9":	[wn.synset("wading_pool.n.01")],
 
 	# undo
@@ -12654,7 +12639,7 @@ BLISSNET = {
 				wn.synset("handkerchief.n.01"),
 				wn.synset("headscarf.n.01")],
 
-	# fasten, attach, join, append, connect, fasten,attach,join,append,connect
+	# fasten, attach, join, append, connect
 	"U+40f9":	[wn.synset("add.v.02"),
 				wn.synset("append.v.01"),
 				wn.synset("append.v.02"),
@@ -12701,7 +12686,7 @@ BLISSNET = {
 				wn.synset("facial_hair.n.01"),
 				wn.synset("mustache.n.01")],
 
-	# beg, plead, beg,plead
+	# beg, plead
 	"U+40fd":	[wn.synset("beg.v.01"),
 				wn.synset("beg.v.03"),
 				wn.synset("beg.v.04"),
@@ -12732,13 +12717,13 @@ BLISSNET = {
 	# microphone
 	"U+4106":	[wn.synset("microphone.n.01")],
 
-	# carrycot, bassinet, carrycot,bassinet
+	# carrycot, bassinet
 	"U+4107":	[wn.synset("carrycot.n.01")],
 
 	# Batman
 	"U+4108":	[wn.synset("batman.n.01")],
 
-	# speaker, lecturer, speaker,lecturer
+	# speaker, lecturer
 	"U+410a":	[wn.synset("speaker.n.01")],
 
 	# orthoptist
@@ -12763,7 +12748,7 @@ BLISSNET = {
 	# mixing spoon
 	"U+4116":	[wn.synset("spoon.n.01")],
 
-	# tire, tyre, tire,tyre
+	# tire, tyre
 	"U+4117":	[wn.synset("tire.n.01")],
 
 	# hopeful
@@ -12781,7 +12766,7 @@ BLISSNET = {
 	"U+411b":	[wn.synset("accomplishment.n.01"),
 				wn.synset("operation.n.07")],
 
-	# roast, joint, roast,joint
+	# roast, joint
 	"U+411e":	[wn.synset("articulation.n.02"),
 				wn.synset("joint.n.01"),
 				wn.synset("joint.n.02"),
@@ -12797,7 +12782,7 @@ BLISSNET = {
 	"U+4120":	[wn.synset("opera.n.01"),
 				wn.synset("opera.n.03")],
 
-	# DVD, movie disc, DVD,movie disc
+	# DVD, movie disc disc
 	"U+4124":	[wn.synset("videodisk.n.01")],
 
 	# motorboat
@@ -12809,7 +12794,7 @@ BLISSNET = {
 	# computer
 	"U+412b":	[wn.synset("computer.n.01")],
 
-	# overturn, turn over, tip over, overturn,turn over,tip over
+	# overturn, turn over, tip over over,tip over
 	"U+412c":	[wn.synset("overrule.v.01"),
 				wn.synset("overthrow.v.01"),
 				wn.synset("overturn.v.01"),
@@ -12818,7 +12803,7 @@ BLISSNET = {
 				wn.synset("revolutionize.v.01"),
 				wn.synset("topple.v.02")],
 
-	# direction, cardinal point, direction,cardinal point
+	# direction, cardinal point point
 	"U+412d":	[wn.synset("direction.n.02")],
 
 	# washable
@@ -12831,7 +12816,7 @@ BLISSNET = {
 	# southward
 	"U+4130":	[wn.synset("southbound.s.01")],
 
-	# province, county, region, state, province,county,region,state
+	# province, county, region, state
 	"U+4132":	[wn.synset("country.n.02"),
 				wn.synset("state.n.01"),
 				wn.synset("state.n.02"),
@@ -12868,7 +12853,7 @@ BLISSNET = {
 				wn.synset("yam.n.03"),
 				wn.synset("yam.n.04")],
 
-	# treat, care for, treat,care for
+	# treat, care for for
 	"U+4142":	[wn.synset("treat.v.03")],
 
 	# circus
@@ -12879,7 +12864,7 @@ BLISSNET = {
 				wn.synset("circus.n.05"),
 				wn.synset("circus.n.06")],
 
-	# our, ours, our,ours
+	# our, ours
 	"U+4146":	[wn.synset("spring.n.01")],
 
 	# respiratory illness
@@ -12897,10 +12882,10 @@ BLISSNET = {
 	# Viking
 	"U+414f":	[wn.synset("viking.n.01")],
 
-	# firefighter, fireman, firefighter,fireman
+	# firefighter, fireman
 	"U+4150":	[wn.synset("fireman.n.04")],
 
-	# extinction, extinguishing, extinction,extinguishing
+	# extinction, extinguishing
 	"U+4151":	[wn.synset("extinction.n.01"),
 				wn.synset("extinction.n.02"),
 				wn.synset("extinction.n.03"),
@@ -12908,7 +12893,7 @@ BLISSNET = {
 				wn.synset("extinction.n.05"),
 				wn.synset("extinction.n.06")],
 
-	# hitchrack, hitching bar, hitchrack,hitching bar
+	# hitchrack, hitching bar bar
 	"U+4153":	[wn.synset("handbarrow.n.01"),
 				wn.synset("hitchrack.n.01")],
 
@@ -12943,7 +12928,7 @@ BLISSNET = {
 	# goodness
 	"U+4159":	[wn.synset("good.n.02")],
 
-	# healthy, well, healthy,well
+	# healthy, well
 	"U+415a":	[wn.synset("good.s.13"),
 				wn.synset("goodly.s.01"),
 				wn.synset("healthy.a.01"),
@@ -12962,7 +12947,7 @@ BLISSNET = {
 	# polder
 	"U+415d":	[wn.synset("polder.n.01")],
 
-	# disagree, discord, disaccord, disagree,discord,disaccord
+	# disagree, discord, disaccord
 	"U+415e":	[wn.synset("disagree.v.01"),
 				wn.synset("disagree.v.02")],
 
@@ -12981,7 +12966,7 @@ BLISSNET = {
 	# disappearance
 	"U+4164":	[wn.synset("disappearance.n.01")],
 
-	# propeller, rotor, propeller,rotor
+	# propeller, rotor
 	"U+4166":	[wn.synset("propeller.n.01"),
 				wn.synset("rotor.n.03")],
 
@@ -12992,10 +12977,10 @@ BLISSNET = {
 	# protestantism
 	"U+4168":	[wn.synset("protestantism.n.01")],
 
-	# barn, stable, shed, barn,stable,shed
+	# barn, stable, shed
 	"U+416a":	[wn.synset("stable.n.01")],
 
-	# chirp, twitter, chirp,twitter
+	# chirp, twitter
 	"U+416b":	[wn.synset("peep.v.03")],
 
 	# library
@@ -13015,7 +13000,7 @@ BLISSNET = {
 	# tadpole
 	"U+4170":	[wn.synset("tadpole.n.01")],
 
-	# fable, allegory, parable, fable,allegory,parable
+	# fable, allegory, parable
 	"U+4171":	[wn.synset("allegory.n.03"),
 				wn.synset("emblem.n.02"),
 				wn.synset("fable.n.02"),
@@ -13024,13 +13009,13 @@ BLISSNET = {
 				wn.synset("parable.n.02"),
 				wn.synset("simile.n.01")],
 
-	# orienteer, read map, orienteer,read map
+	# orienteer, read map map
 	"U+4172":	[wn.synset("adviser.n.01")],
 
 	# map reading
 	"U+4173":	[wn.synset("orientation.n.03")],
 
-	# magazine, journal, magazine,journal
+	# magazine, journal
 	"U+4174":	[wn.synset("diary.n.01"),
 				wn.synset("journal.n.02"),
 				wn.synset("magazine.n.01")],
@@ -13056,7 +13041,7 @@ BLISSNET = {
 	# electric piano
 	"U+417c":	[wn.synset("piano.n.01")],
 
-	# snowplow, snowplough, snowplow,snowplough
+	# snowplow, snowplough
 	"U+417d":	[wn.synset("snowplow.n.01")],
 
 	# museum
@@ -13082,10 +13067,10 @@ BLISSNET = {
 	# triangular
 	"U+4184":	[wn.synset("triangular.s.01")],
 
-	# palmtop, PDA, palmtop,PDA
+	# palmtop, PDA
 	"U+4186":	[wn.synset("personal_digital_assistant.n.01")],
 
-	# abseiling, rappelling, abseiling,rappelling
+	# abseiling, rappelling
 	"U+4188":	[wn.synset("decrease.n.01"),
 				wn.synset("demotion.n.01"),
 				wn.synset("descent.n.01"),
@@ -13099,13 +13084,13 @@ BLISSNET = {
 	# cello
 	"U+418a":	[wn.synset("cello.n.01")],
 
-	# education, didactics, pedagogy, education,didactics,pedagogy
+	# education, didactics, pedagogy
 	"U+418d":	[wn.synset("teaching_method.n.01")],
 
-	# balcony, porch, veranda, balcony,porch,veranda
+	# balcony, porch, veranda
 	"U+418e":	[wn.synset("balcony.n.02")],
 
-	# mite, tick, mite,tick
+	# mite, tick
 	"U+418f":	[wn.synset("check_mark.n.01"),
 				wn.synset("mite.n.02"),
 				wn.synset("tick.n.01"),
@@ -13113,7 +13098,7 @@ BLISSNET = {
 				wn.synset("tick.n.04"),
 				wn.synset("touch.n.06")],
 
-	# slaughterhouse, abattoir, slaughterhouse,abattoir
+	# slaughterhouse, abattoir
 	"U+4190":	[wn.synset("abattoir.n.01")],
 
 	# slaughter
@@ -13159,7 +13144,7 @@ BLISSNET = {
 				wn.synset("foreplay.n.01"),
 				wn.synset("inflammation.n.03")],
 
-	# stay, remain, stay,remain
+	# stay, remain
 	"U+419e":	[wn.synset("stay.v.02")],
 
 	# celebration of life
@@ -13171,7 +13156,7 @@ BLISSNET = {
 	"U+41a2":	[wn.synset("atheism.n.01"),
 				wn.synset("atheism.n.02")],
 
-	# limited, restricted, confined, limited,restricted,confined
+	# limited, restricted, confined
 	"U+41a4":	[wn.synset("limited.a.01"),
 				wn.synset("restricted.a.01")],
 
@@ -13182,7 +13167,7 @@ BLISSNET = {
 	"U+41a8":	[wn.synset("teaspoon.n.01"),
 				wn.synset("teaspoon.n.02")],
 
-	# instruction, teaching, instruction,teaching, direction
+	# instruction, teaching, direction
 	"U+41a9":	[wn.synset("commission.n.06"),
 				wn.synset("direction.n.01"),
 				wn.synset("direction.n.02"),
@@ -13202,7 +13187,7 @@ BLISSNET = {
 	# tandem bicycle
 	"U+41ab":	[wn.synset("bicycle-built-for-two.n.01")],
 
-	# raw, uncooked, raw,uncooked
+	# raw, uncooked
 	"U+41ac":	[wn.synset("raw.a.03")],
 
 	# farmhouse
@@ -13217,7 +13202,7 @@ BLISSNET = {
 	# desktop computer
 	"U+41b1":	[wn.synset("computer.n.01")],
 
-	# barometer, manometer, barometer,manometer
+	# barometer, manometer
 	"U+41b6":	[wn.synset("barometer.n.01")],
 
 	# never
@@ -13229,7 +13214,7 @@ BLISSNET = {
 	# remote control
 	"U+41b9":	[wn.synset("remote_control.n.01")],
 
-	# cardboard, paperboard, cardboard,paperboard
+	# cardboard, paperboard
 	"U+41ba":	[wn.synset("cardboard.n.01"),
 				wn.synset("paperboard.n.01")],
 
@@ -13246,7 +13231,7 @@ BLISSNET = {
 	# male genitals
 	"U+41bc":	[wn.synset("man.n.01")],
 
-	# skytrain, monorail, skytrain,monorail
+	# skytrain, monorail
 	"U+41be":	[wn.synset("monorail.n.01")],
 
 	# bronze age
@@ -13257,13 +13242,13 @@ BLISSNET = {
 	"U+41c1":	[wn.synset("bronze.n.01"),
 				wn.synset("bronze.n.02")],
 
-	# advise, counsel, recommend, advise,counsel,recommend
+	# advise, counsel, recommend
 	"U+41c2":	[wn.synset("rede.v.02")],
 
-	# advice, counsel, recommendation, advice,counsel,recommendation
+	# advice, counsel, recommendation
 	"U+41c3":	[wn.synset("advice.n.01")],
 
-	# supporters, cheering section, supporters,cheering section
+	# supporters, cheering section section
 	"U+41c4":	[wn.synset("assistant.n.01"),
 				wn.synset("athletic_supporter.n.01"),
 				wn.synset("fandom.n.01"),
@@ -13280,7 +13265,7 @@ BLISSNET = {
 				wn.synset("warning.n.01"),
 				wn.synset("warning.n.03")],
 
-	# dhoti, lungi, dhoti,lungi
+	# dhoti, lungi
 	"U+41c9":	[wn.synset("dhoti.n.01")],
 
 	# anchor
@@ -13314,11 +13299,11 @@ BLISSNET = {
 	# go to sea
 	"U+41d7":	[wn.synset("embark.v.01")],
 
-	# boarding, embarkation, boarding,embarkation
+	# boarding, embarkation
 	"U+41d8":	[wn.synset("boarding.n.01"),
 				wn.synset("boarding.n.02")],
 
-	# buy, purchase, buy,purchase
+	# buy, purchase
 	"U+41da":	[wn.synset("buy.v.01")],
 
 	# deck
@@ -13365,7 +13350,7 @@ BLISSNET = {
 	# India
 	"U+41e8":	[wn.synset("india.n.01")],
 
-	# bake, cook, roast, bake,cook,roast
+	# bake, cook, roast
 	"U+41e9":	[wn.synset("bake.v.01"),
 				wn.synset("bake.v.02"),
 				wn.synset("bake.v.04"),
@@ -13393,7 +13378,7 @@ BLISSNET = {
 	# signature
 	"U+41ef":	[wn.synset("signature.n.01")],
 
-	# loud, noisy, loud,noisy
+	# loud, noisy
 	"U+41f1":	[wn.synset("brassy.s.02"),
 				wn.synset("forte.a.01"),
 				wn.synset("loud.a.01"),
@@ -13408,7 +13393,7 @@ BLISSNET = {
 				wn.synset("noise.n.05"),
 				wn.synset("randomness.n.02")],
 
-	# naughty, not nice, naughty,not nice
+	# naughty, not nice nice
 	"U+41f3":	[wn.synset("blue.s.05"),
 				wn.synset("disobedient.a.01"),
 				wn.synset("naughty.s.02")],
@@ -13434,14 +13419,14 @@ BLISSNET = {
 	"U+41fa":	[wn.synset("shallowness.n.02"),
 				wn.synset("superficiality.n.01")],
 
-	# gym, gymnasium, gym,gymnasium
+	# gym, gymnasium
 	"U+41fc":	[wn.synset("gymnasium.n.02")],
 
 	# gambler
 	"U+41fd":	[wn.synset("gambler.n.01"),
 				wn.synset("gambler.n.02")],
 
-	# solar energy, solar power, solar energy,solar power
+	# solar energy, solar power
 	"U+41fe":	[wn.synset("solar_energy.n.01")],
 
 	# rattle
@@ -13449,7 +13434,7 @@ BLISSNET = {
 				wn.synset("rattle.n.02"),
 				wn.synset("rattle.n.03")],
 
-	# my, mine, my,mine
+	# my, mine
 	"U+4200":	[wn.synset("mine.n.01"),
 				wn.synset("mine.n.02")],
 
@@ -13487,13 +13472,13 @@ BLISSNET = {
 	"U+420f":	[wn.synset("poison.n.01"),
 				wn.synset("poison.n.02")],
 
-	# explain, give a reason, explain,give a reason
+	# explain, give a reason a reason
 	"U+4212":	[wn.synset("explain.v.01")],
 
 	# acne
 	"U+4213":	[wn.synset("acne.n.01")],
 
-	# adding, additive, adding,additive
+	# adding, additive
 	"U+4214":	[wn.synset("add.v.01"),
 				wn.synset("add.v.02"),
 				wn.synset("add.v.04"),
@@ -13526,14 +13511,14 @@ BLISSNET = {
 	"U+4220":	[wn.synset("chew_over.v.01"),
 				wn.synset("study.v.06")],
 
-	# obey, comply, obey,comply
+	# obey, comply
 	"U+4222":	[wn.synset("comply.v.01"),
 				wn.synset("obey.v.01")],
 
 	# disco
 	"U+4223":	[wn.synset("disco.n.02")],
 
-	# bleat, baa, bleat,baa
+	# bleat, baa
 	"U+4225":	[wn.synset("bleat.v.02")],
 
 	# linguist
@@ -13558,7 +13543,7 @@ BLISSNET = {
 	# Christmas Eve
 	"U+422d":	[wn.synset("christmas_eve.n.01")],
 
-	# shaver, razor, shaver,razor
+	# shaver, razor
 	"U+422e":	[wn.synset("razor.n.01")],
 
 	# physicist
@@ -13570,7 +13555,7 @@ BLISSNET = {
 	# cousin
 	"U+4231":	[wn.synset("cousin.n.01")],
 
-	# theologian, theologist, theologian,theologist
+	# theologian, theologist
 	"U+4232":	[wn.synset("theologian.n.01")],
 
 	# Gemini
@@ -13593,7 +13578,7 @@ BLISSNET = {
 	"U+423c":	[wn.synset("irani.n.01"),
 				wn.synset("persian.n.02")],
 
-	# diaphragm, pessary, midriff, diaphragm,midriff
+	# diaphragm, pessary, midriff
 	"U+423f":	[wn.synset("diaphragm.n.01"),
 				wn.synset("diaphragm.n.02"),
 				wn.synset("diaphragm.n.03")],
@@ -13601,7 +13586,7 @@ BLISSNET = {
 	# shame
 	"U+4241":	[wn.synset("shame.n.01")],
 
-	# astrologer, astrologist, astrologer,astrologist
+	# astrologer, astrologist
 	"U+4242":	[wn.synset("astrologer.n.01")],
 
 	# disappear
@@ -13611,7 +13596,7 @@ BLISSNET = {
 	"U+4245":	[wn.synset("grumble.v.03"),
 				wn.synset("snap.v.01")],
 
-	# writer, author, writer,author
+	# writer, author
 	"U+4246":	[wn.synset("writer.n.01")],
 
 	# waterfall
@@ -13640,7 +13625,7 @@ BLISSNET = {
 				wn.synset("left.n.05"),
 				wn.synset("left_field.n.01")],
 
-	# napkin, serviette, napkin,serviette
+	# napkin, serviette
 	"U+4252":	[wn.synset("napkin.n.01")],
 
 	# yes
@@ -13723,7 +13708,7 @@ BLISSNET = {
 	# bury
 	"U+426a":	[wn.synset("bury.v.02")],
 
-	# hide, conceal, hide,conceal
+	# hide, conceal
 	"U+426b":	[wn.synset("hide.v.01")],
 
 	# sleeping bag
@@ -13738,27 +13723,27 @@ BLISSNET = {
 	# castanets
 	"U+426f":	[wn.synset("bones.n.01")],
 
-	# jobcentre, job centre, jobcentre,job-centre
+	# jobcentre, job centre-centre
 	"U+4270":	[wn.synset("jobcentre.n.01")],
 
 	# flying
 	"U+4272":	[wn.synset("fast-flying.s.01"),
 				wn.synset("flying.s.02")],
 
-	# educationalist, educationist, educationalist,educationist
+	# educationalist, educationist
 	"U+4273":	[wn.synset("educationist.n.01")],
 
 	# January
 	"U+4274":	[wn.synset("january.n.01")],
 
-	# diaper, nappy, diaper,nappy
+	# diaper, nappy
 	"U+4275":	[wn.synset("diaper.n.01")],
 
-	# fort, fortress, fort,fortress
+	# fort, fortress
 	"U+4276":	[wn.synset("fortress.n.01"),
 				wn.synset("garrison.n.01")],
 
-	# return, come back, reverse, return,come back,reverse
+	# return, come back, reverse back,reverse
 	"U+4277":	[wn.synset("come_back.v.01"),
 				wn.synset("return.v.01")],
 
@@ -13789,7 +13774,7 @@ BLISSNET = {
 	# Tibet
 	"U+427e":	[wn.synset("tibet.n.01")],
 
-	# cartoon, animated picture, cartoon,animated picture
+	# cartoon, animated picture picture
 	"U+427f":	[wn.synset("animation.n.05"),
 				wn.synset("cartoon.n.01"),
 				wn.synset("cartoon.n.02")],
@@ -13819,7 +13804,7 @@ BLISSNET = {
 	# potato
 	"U+4286":	[wn.synset("potato.n.01")],
 
-	# monkey, ape, gorilla, primate, monkey,ape,gorilla,primate
+	# monkey, ape, gorilla, primate
 	"U+4287":	[wn.synset("anthropoid.n.01"),
 				wn.synset("ape.n.01"),
 				wn.synset("archpriest.n.01"),
@@ -13846,7 +13831,7 @@ BLISSNET = {
 	# Holy Trinity
 	"U+428f":	[wn.synset("trinity.n.02")],
 
-	# smartphone, digital phone, smartphone,digital phone
+	# smartphone, digital phone phone
 	"U+4290":	[wn.synset("cellular_telephone.n.01")],
 
 	# yeast
@@ -13859,7 +13844,7 @@ BLISSNET = {
 	# die
 	"U+4294":	[wn.synset("die.v.01")],
 
-	# dice, die, dice,die
+	# dice, die
 	"U+4295":	[wn.synset("die.n.01"),
 				wn.synset("die.n.02"),
 				wn.synset("die.n.03")],
@@ -13883,7 +13868,7 @@ BLISSNET = {
 	# makeup
 	"U+429e":	[wn.synset("makeup.n.01")],
 
-	# detest, despise, detest,despise
+	# detest, despise
 	"U+429f":	[wn.synset("abhor.v.01"),
 				wn.synset("contemn.v.01"),
 				wn.synset("hate.v.01")],
@@ -13891,7 +13876,7 @@ BLISSNET = {
 	# earthquake
 	"U+42a0":	[wn.synset("earthquake.n.01")],
 
-	# wait, waiting, wait,waiting
+	# wait, waiting
 	"U+42a2":	[wn.synset("delay.n.01"),
 				wn.synset("wait.n.02")],
 
@@ -13931,10 +13916,10 @@ BLISSNET = {
 	# cremate
 	"U+42b1":	[wn.synset("cremate.v.01")],
 
-	# labyrinth, maze, labyrinth,maze
+	# labyrinth, maze
 	"U+42b2":	[wn.synset("maze.n.01")],
 
-	# GPS, satnav, GPS,satnav
+	# GPS, satnav
 	"U+42b3":	[wn.synset("global_positioning_system.n.01")],
 
 	# soul
@@ -13955,7 +13940,7 @@ BLISSNET = {
 	# psychiatrist
 	"U+42bb":	[wn.synset("psychiatrist.n.01")],
 
-	# allergy, hypersensitivity, allergy,hypersensitivity
+	# allergy, hypersensitivity
 	"U+42bc":	[wn.synset("allergy.n.01")],
 
 	# reaction
@@ -13996,25 +13981,25 @@ BLISSNET = {
 	# pillowcase
 	"U+42c8":	[wn.synset("case.n.19")],
 
-	# shake, jiggle, shake,jiggle
+	# shake, jiggle
 	"U+42c9":	[wn.synset("shake.v.01")],
 
 	# quarter of an hour
 	"U+42ca":	[wn.synset("quarter.n.04")],
 
-	# killer, murderer, killer,murderer
+	# killer, murderer
 	"U+42cc":	[wn.synset("murderer.n.01")],
 
-	# lunch, dinner, lunch,dinner
+	# lunch, dinner
 	"U+42ce":	[wn.synset("lunch.n.01")],
 
-	# safari, wildlife expedition, safari,wildlife expedition
+	# safari, wildlife expedition expedition
 	"U+42cf":	[wn.synset("campaign.n.04")],
 
 	# sea chart
 	"U+42d0":	[wn.synset("chart.n.02")],
 
-	# own, possess, own,possess
+	# own, possess
 	"U+42d1":	[wn.synset("own.v.01"),
 				wn.synset("possess.v.03")],
 
@@ -14042,7 +14027,7 @@ BLISSNET = {
 	# blacksmith
 	"U+42dd":	[wn.synset("blacksmith.n.01")],
 
-	# few, little, few,little
+	# few, little
 	"U+42e0":	[wn.synset("few.a.01"),
 				wn.synset("little.a.02")],
 
@@ -14052,10 +14037,10 @@ BLISSNET = {
 	# anus
 	"U+42e2":	[wn.synset("anus.n.01")],
 
-	# Nisan, Nissan, Nisan,Nissan
+	# Nisan, Nissan
 	"U+42e3":	[wn.synset("nisan.n.01")],
 
-	# memo, reminder note, memo,reminder note
+	# memo, reminder note note
 	"U+42e5":	[wn.synset("memo.n.01")],
 
 	# exhibition hall, showplace, exhibition hall,showplace
@@ -14068,7 +14053,7 @@ BLISSNET = {
 	# osteopath
 	"U+42e7":	[wn.synset("osteopath.n.01")],
 
-	# ceramics, pottery, ceramics,pottery
+	# ceramics, pottery
 	"U+42e8":	[wn.synset("ceramic.n.01"),
 				wn.synset("ceramics.n.01"),
 				wn.synset("pottery.n.01"),
@@ -14126,7 +14111,7 @@ BLISSNET = {
 	# umbilical cord
 	"U+42fb":	[wn.synset("umbilical_cord.n.01")],
 
-	# cards, playing cards, cards,playing cards
+	# cards, playing cards cards
 	"U+42fc":	[wn.synset("batting_order.n.01"),
 				wn.synset("calling_card.n.02"),
 				wn.synset("card.n.01"),
@@ -14152,10 +14137,10 @@ BLISSNET = {
 	# chiropractor
 	"U+4301":	[wn.synset("chiropractor.n.01")],
 
-	# stupid, dumb, stupid,dumb
+	# stupid, dumb
 	"U+4304":	[wn.synset("stupid.a.01")],
 
-	# fire truck, fire engine, fire truck,fire engine
+	# fire truck, fire engine
 	"U+4305":	[wn.synset("fire_engine.n.01")],
 
 	# seal
@@ -14164,20 +14149,20 @@ BLISSNET = {
 	# calendar
 	"U+430a":	[wn.synset("calendar.n.01")],
 
-	# decoration, ornament, decoration,ornament
+	# decoration, ornament
 	"U+430c":	[wn.synset("decoration.n.01"),
 				wn.synset("decoration.n.03")],
 
 	# pump
 	"U+430d":	[wn.synset("pump.v.03")],
 
-	# killing, murder, slaughter, killing,murder,slaughter
+	# killing, murder, slaughter
 	"U+4310":	[wn.synset("murder.n.01")],
 
 	# fried
 	"U+4311":	[wn.synset("fried.s.01")],
 
-	# rugby, football, rugby,football
+	# rugby, football
 	"U+4312":	[wn.synset("rugby.n.01")],
 
 	# cancer
@@ -14205,18 +14190,13 @@ BLISSNET = {
 	# bear's head
 	"U+431e":	[wn.synset("bear.n.01")],
 
-	# they, them, themselves, they,them,themselves
-	"U+431f":	[wn.synset("nebraska.n.01"),
-				wn.synset("neon.n.01"),
-				wn.synset("northeast.n.01")],
-
 	# synagogue
 	"U+4320":	[wn.synset("synagogue.n.01")],
 
 	# workplace
 	"U+4321":	[wn.synset("workplace.n.01")],
 
-	# caesarean section, C section, caesarean section,C-section
+	# caesarean section, C section
 	"U+4322":	[wn.synset("cesarean_delivery.n.01")],
 
 	# running
@@ -14225,7 +14205,7 @@ BLISSNET = {
 	# cloudberry
 	"U+4325":	[wn.synset("cloudberry.n.01")],
 
-	# Heaven, Kingdom of God, Heaven,Kingdom of God
+	# Heaven, Kingdom of God of God
 	"U+4326":	[wn.synset("eden.n.01")],
 
 	# weave
@@ -14243,7 +14223,7 @@ BLISSNET = {
 	# anemometer
 	"U+432c":	[wn.synset("anemometer.n.01")],
 
-	# riding school, manege, riding school,manege
+	# riding school, manege
 	"U+432f":	[wn.synset("carousel.n.01"),
 				wn.synset("carousel.n.02"),
 				wn.synset("merry-go-round.n.01")],
@@ -14257,11 +14237,11 @@ BLISSNET = {
 	# bull
 	"U+4332":	[wn.synset("bull.n.01")],
 
-	# copier, photocopier, copier,photocopier
+	# copier, photocopier
 	"U+4334":	[wn.synset("duplicator.n.01"),
 				wn.synset("photocopier.n.01")],
 
-	# filled food, stuffed food, filled food,stuffed food
+	# filled food, stuffed food
 	"U+4335":	[wn.synset("commissariat.n.01"),
 				wn.synset("diet.n.01"),
 				wn.synset("fare.n.04"),
@@ -14279,7 +14259,7 @@ BLISSNET = {
 	# doll
 	"U+4338":	[wn.synset("doll.n.01")],
 
-	# rise, ascend, go up, rise,ascend,go up
+	# rise, ascend, go up up
 	"U+4339":	[wn.synset("arise.v.03"),
 				wn.synset("ascend.v.01"),
 				wn.synset("ascend.v.02"),
@@ -14304,14 +14284,14 @@ BLISSNET = {
 				wn.synset("surface.v.01"),
 				wn.synset("wax.v.02")],
 
-	# alternating current, AC, alternating current,AC
+	# alternating current, AC
 	"U+433a":	[wn.synset("alternating_current.n.01")],
 
-	# pasture, enclosed field, pasture,enclosed field, put out to pasture, pasture,put out to pasture
+	# pasture, enclosed field field, put out to pasture out to pasture
 	"U+433b":	[wn.synset("crop.v.04"),
 				wn.synset("crop.v.05")],
 
-	# organization, organizing, organization,organizing
+	# organization, organizing
 	"U+433c":	[wn.synset("administration.n.02"),
 				wn.synset("arrangement.n.03"),
 				wn.synset("constitution.n.02"),
@@ -14326,11 +14306,11 @@ BLISSNET = {
 				wn.synset("organize.v.05"),
 				wn.synset("unionize.v.02")],
 
-	# too much, too many, too much,too many
+	# too much, too many
 	"U+433d":	[wn.synset("excessively.r.01"),
 				wn.synset("overmuch.r.01")],
 
-	# lotto, bingo, lotto,bingo
+	# lotto, bingo
 	"U+433e":	[wn.synset("lotto.n.01")],
 
 	# raincoat
@@ -14427,11 +14407,11 @@ BLISSNET = {
 	# multi storey building
 	"U+4355":	[wn.synset("building.n.01")],
 
-	# walkway, footpath, walkway,footpath
+	# walkway, footpath
 	"U+4356":	[wn.synset("pathway.n.02"),
 				wn.synset("walk.n.05")],
 
-	# blackbird, crow, raven, blackbird,crow,raven
+	# blackbird, crow, raven
 	"U+4358":	[wn.synset("blackbird.n.02")],
 
 	# USA
@@ -14450,7 +14430,7 @@ BLISSNET = {
 	# girlfriend
 	"U+435f":	[wn.synset("girlfriend.n.02")],
 
-	# court, field, court,field, courtroom, court,courtroom, courthouse, court,courthouse
+	# court, field, courtroom, courthouse
 	"U+4360":	[wn.synset("court.n.10"),
 				wn.synset("discipline.n.01"),
 				wn.synset("field.n.01"),
@@ -14468,7 +14448,7 @@ BLISSNET = {
 	# sneeze
 	"U+4363":	[wn.synset("sneeze.v.01")],
 
-	# herring, sardine, herring,sardine
+	# herring, sardine
 	"U+4364":	[wn.synset("herring.n.01"),
 				wn.synset("herring.n.02"),
 				wn.synset("pilchard.n.02"),
@@ -14517,7 +14497,7 @@ BLISSNET = {
 	"U+4375":	[wn.synset("populace.n.01"),
 				wn.synset("public.n.02")],
 
-	# donkey, mule, donkey,mule
+	# donkey, mule
 	"U+4377":	[wn.synset("domestic_ass.n.01"),
 				wn.synset("donkey.n.01")],
 
@@ -14530,7 +14510,7 @@ BLISSNET = {
 				wn.synset("search.v.02"),
 				wn.synset("search.v.04")],
 
-	# lasagne, lasagna, lasagne,lasagna
+	# lasagne, lasagna
 	"U+437b":	[wn.synset("lasagna.n.01"),
 				wn.synset("lasagna.n.02")],
 
@@ -14552,7 +14532,7 @@ BLISSNET = {
 	# Europe
 	"U+4382":	[wn.synset("europe.n.01")],
 
-	# lollipop, sucker, lollipop,sucker
+	# lollipop, sucker
 	"U+4383":	[wn.synset("lollipop.n.02")],
 
 	# splash
@@ -14565,7 +14545,7 @@ BLISSNET = {
 	# maple syrup flavouring
 	"U+4386":	[wn.synset("maple_syrup.n.01")],
 
-	# nothing, none, nothing,none
+	# nothing, none
 	"U+4388":	[wn.synset("nothing.n.01")],
 
 	# isosceles triangle
@@ -14574,7 +14554,7 @@ BLISSNET = {
 	# driving license
 	"U+438a":	[wn.synset("driver's_license.n.01")],
 
-	# den, lair, den,lair
+	# den, lair
 	"U+438b":	[wn.synset("bullet.n.01"),
 				wn.synset("burrow.n.01"),
 				wn.synset("den.n.03"),
@@ -14595,7 +14575,7 @@ BLISSNET = {
 	# share
 	"U+438f":	[wn.synset("share.v.02")],
 
-	# birdhouse, house for bird, birdhouse,house for bird
+	# birdhouse, house for bird for bird
 	"U+4390":	[wn.synset("birdhouse.n.01")],
 
 	# botanist
@@ -14619,7 +14599,7 @@ BLISSNET = {
 	# mislead
 	"U+4399":	[wn.synset("misinform.v.01")],
 
-	# stepparent, step parent, stepparent,step-parent
+	# stepparent, step parent-parent
 	"U+439a":	[wn.synset("stepparent.n.01")],
 
 	# Christmas pudding
@@ -14647,7 +14627,7 @@ BLISSNET = {
 				wn.synset("late.s.03"),
 				wn.synset("late.s.04")],
 
-	# detach, take apart, detach,take apart
+	# detach, take apart apart
 	"U+43a3":	[wn.synset("detach.v.01"),
 				wn.synset("detach.v.02"),
 				wn.synset("detach.v.03")],
@@ -14664,7 +14644,7 @@ BLISSNET = {
 	# greengrocer
 	"U+43a9":	[wn.synset("greengrocer.n.01")],
 
-	# rabbit, hare, rabbit,hare
+	# rabbit, hare
 	"U+43ab":	[wn.synset("rabbit.n.01")],
 
 	# difficulty
@@ -14679,7 +14659,7 @@ BLISSNET = {
 	# harp
 	"U+43af":	[wn.synset("harp.n.01")],
 
-	# prepare food, cook, prepare food,cook
+	# prepare food, cook
 	"U+43b0":	[wn.synset("cook.v.02")],
 
 	# print
@@ -14691,7 +14671,7 @@ BLISSNET = {
 	# Ukraine
 	"U+43b4":	[wn.synset("ukraine.n.01")],
 
-	# nice, pleasant, nice,pleasant
+	# nice, pleasant
 	"U+43b5":	[wn.synset("pleasant.a.01")],
 
 	# prophet
@@ -14704,26 +14684,26 @@ BLISSNET = {
 	# copper
 	"U+43ba":	[wn.synset("copper.n.01")],
 
-	# shoal, school, shoal,school
+	# shoal, school
 	"U+43bb":	[wn.synset("school.n.07")],
 
 	# divorce
 	"U+43bc":	[wn.synset("disassociate.v.01"),
 				wn.synset("divorce.v.02")],
 
-	# hidden treasure, treasure trove, hidden treasure,treasure trove
+	# hidden treasure, treasure trove
 	"U+43bd":	[wn.synset("tax.n.01"),
 				wn.synset("treasure.n.04")],
 
 	# jewel
 	"U+43be":	[wn.synset("jewel.n.02")],
 
-	# build, construct, build,construct
+	# build, construct
 	"U+43bf":	[wn.synset("construct.v.01"),
 				wn.synset("construct.v.03"),
 				wn.synset("manufacture.v.01")],
 
-	# paint, dye, paint,dye
+	# paint, dye
 	"U+43c0":	[wn.synset("paint.n.01")],
 
 	# statement
@@ -14770,7 +14750,7 @@ BLISSNET = {
 	# charm
 	"U+43ce":	[wn.synset("appeal.n.02")],
 
-	# refrigerator, fridge, refrigerator,fridge
+	# refrigerator, fridge
 	"U+43cf":	[wn.synset("electric_refrigerator.n.01"),
 				wn.synset("refrigerator.n.01")],
 
@@ -14787,7 +14767,7 @@ BLISSNET = {
 	"U+43d3":	[wn.synset("organism.n.01"),
 				wn.synset("organism.n.02")],
 
-	# outdoor, outdoors, outdoor,outdoors
+	# outdoor, outdoors
 	"U+43d7":	[wn.synset("outdoor.a.01")],
 
 	# find
@@ -14803,13 +14783,13 @@ BLISSNET = {
 				wn.synset("giant.n.06"),
 				wn.synset("giant_star.n.01")],
 
-	# bandit, armed robber, bandit,armed robber
+	# bandit, armed robber robber
 	"U+43da":	[wn.synset("bandit.n.01")],
 
 	# batter
 	"U+43dd":	[wn.synset("batter.n.02")],
 
-	# smell bad, stink, smell bad,stink
+	# smell bad, stink
 	"U+43de":	[wn.synset("reek.v.02"),
 				wn.synset("stink.v.01")],
 
@@ -14819,13 +14799,13 @@ BLISSNET = {
 	# TV programme, TV show, radio programme, TV programme,TV show,radio programme
 	"U+43e1":	[wn.synset("show.n.01")],
 
-	# infectious, contagious, infectious,contagious
+	# infectious, contagious
 	"U+43e2":	[wn.synset("infectious.a.02")],
 
 	# Triceratops
 	"U+43e4":	[wn.synset("triceratops.n.01")],
 
-	# snorkeling, scuba diving, deep sea diving, snorkeling,scuba diving,deep sea diving
+	# snorkeling, scuba diving, deep sea diving diving,deep sea diving
 	"U+43e5":	[wn.synset("dip.n.08"),
 				wn.synset("dive.n.02"),
 				wn.synset("dive.n.03"),
@@ -14848,13 +14828,13 @@ BLISSNET = {
 	# lower arm
 	"U+43e8":	[wn.synset("forearm.n.01")],
 
-	# burned, burnt, burned,burnt
+	# burned, burnt
 	"U+43e9":	[wn.synset("burned.s.01")],
 
 	# sparkling wine
 	"U+43ea":	[wn.synset("champagne.n.01")],
 
-	# restaurant, cafeteria, restaurant,cafeteria
+	# restaurant, cafeteria
 	"U+43eb":	[wn.synset("restaurant.n.01")],
 
 	# foreign
@@ -14883,7 +14863,7 @@ BLISSNET = {
 	# Passover
 	"U+43f4":	[wn.synset("passover.n.01")],
 
-	# choke, gag, choke,gag
+	# choke, gag
 	"U+43f6":	[wn.synset("choke.v.01"),
 				wn.synset("choke.v.02"),
 				wn.synset("choke.v.03"),
@@ -14913,7 +14893,7 @@ BLISSNET = {
 	# politics
 	"U+43fa":	[wn.synset("politics.n.03")],
 
-	# genocide, holocaust, genocide,holocaust
+	# genocide, holocaust
 	"U+43fb":	[wn.synset("genocide.n.01")],
 
 	# horseshoe
@@ -14932,7 +14912,7 @@ BLISSNET = {
 	# century
 	"U+4402":	[wn.synset("century.n.01")],
 
-	# breastbone, sternum, breastbone,sternum
+	# breastbone, sternum
 	"U+4404":	[wn.synset("sternum.n.01")],
 
 	# urethra
@@ -14976,7 +14956,7 @@ BLISSNET = {
 	# cut
 	"U+4412":	[wn.synset("cut.v.01")],
 
-	# wound, cut, sore, wound,cut,sore
+	# wound, cut, sore
 	"U+4413":	[wn.synset("wound.n.01")],
 
 	# stand in, substitute, alternate, stand-in,substitute,alternate
@@ -14995,13 +14975,13 @@ BLISSNET = {
 	# bib
 	"U+4419":	[wn.synset("bib.n.02")],
 
-	# littleness, smallness, littleness,smallness
+	# littleness, smallness
 	"U+441a":	[wn.synset("pettiness.n.03"),
 				wn.synset("smallness.n.01"),
 				wn.synset("smallness.n.02"),
 				wn.synset("smallness.n.03")],
 
-	# knock, tap, knock,tap
+	# knock, tap
 	"U+441c":	[wn.synset("faucet.n.01"),
 				wn.synset("pat.n.01"),
 				wn.synset("rap.n.02"),
@@ -15034,7 +15014,7 @@ BLISSNET = {
 	# pet
 	"U+4423":	[wn.synset("pet.n.01")],
 
-	# bench, pew, bench,pew
+	# bench, pew
 	"U+4425":	[wn.synset("bench.n.01"),
 				wn.synset("bench.n.05"),
 				wn.synset("bench.n.06"),
@@ -15063,7 +15043,7 @@ BLISSNET = {
 				wn.synset("snip.v.02"),
 				wn.synset("traverse.v.01")],
 
-	# patient, enduring, patient,enduring
+	# patient, enduring
 	"U+4428":	[wn.synset("patient.a.01")],
 
 	# patience
@@ -15090,7 +15070,7 @@ BLISSNET = {
 	# jockey
 	"U+4433":	[wn.synset("jockey.n.01")],
 
-	# horse rider, equestrian, horse rider,equestrian
+	# horse rider, equestrian
 	"U+4434":	[wn.synset("horseman.n.01")],
 
 	# infected
@@ -15109,7 +15089,7 @@ BLISSNET = {
 	# cure
 	"U+443b":	[wn.synset("bring_around.v.02")],
 
-	# percent, percentage, %, percent,percentage,%
+	# percent, percentage, %,%
 	"U+443c":	[wn.synset("percentage.n.01")],
 
 	# May
@@ -15139,7 +15119,7 @@ BLISSNET = {
 	# give birth
 	"U+4445":	[wn.synset("food.n.01")],
 
-	# reindeer, caribou, reindeer,caribou
+	# reindeer, caribou
 	"U+4446":	[wn.synset("caribou.n.01")],
 
 	# amplifier
@@ -15205,7 +15185,7 @@ BLISSNET = {
 	# Norway
 	"U+4458":	[wn.synset("norway.n.01")],
 
-	# intrauterine device, IUD, intrauterine device,IUD
+	# intrauterine device, IUD
 	"U+445a":	[wn.synset("coil.n.02"),
 				wn.synset("coil.n.04"),
 				wn.synset("intrauterine_device.n.01"),
@@ -15229,7 +15209,7 @@ BLISSNET = {
 	# manna
 	"U+4463":	[wn.synset("miraculous_food.n.01")],
 
-	# trachea, wind pipe, trachea,wind pipe
+	# trachea, wind pipe pipe
 	"U+4464":	[wn.synset("trachea.n.01")],
 
 	# private
@@ -15254,7 +15234,7 @@ BLISSNET = {
 	# asteroid
 	"U+446c":	[wn.synset("asteroid.n.01")],
 
-	# handcraft, craft, handcraft,craft
+	# handcraft, craft
 	"U+446d":	[wn.synset("craft.v.01"),
 				wn.synset("handcraft.v.01")],
 
@@ -15264,7 +15244,7 @@ BLISSNET = {
 	# Estonia
 	"U+446f":	[wn.synset("estonia.n.01")],
 
-	# hymnal, hymn book, hymnal,hymn book
+	# hymnal, hymn book book
 	"U+4470":	[wn.synset("hymnal.n.01")],
 
 	# hangar
@@ -15289,7 +15269,7 @@ BLISSNET = {
 				wn.synset("drape.n.02"),
 				wn.synset("drape.n.03")],
 
-	# linen, flax fabric, linen,flax fabric
+	# linen, flax fabric fabric
 	"U+447a":	[wn.synset("linen.n.03")],
 
 	# Buddha
@@ -15324,13 +15304,13 @@ BLISSNET = {
 	"U+4483":	[wn.synset("barley.n.01"),
 				wn.synset("barley.n.02")],
 
-	# straw, drinking straw, straw,drinking straw
+	# straw, drinking straw straw
 	"U+4484":	[wn.synset("chaff.n.01"),
 				wn.synset("pale_yellow.n.01"),
 				wn.synset("straw.n.01"),
 				wn.synset("straw.n.04")],
 
-	# amuse, entertain, please, amuse,entertain,please
+	# amuse, entertain, please
 	"U+4485":	[wn.synset("amuse.v.01"),
 				wn.synset("amuse.v.02")],
 
@@ -15361,7 +15341,7 @@ BLISSNET = {
 				wn.synset("puppet.n.01"),
 				wn.synset("puppet.n.03")],
 
-	# oesophagus, gullet, oesophagus,gullet
+	# oesophagus, gullet
 	"U+448f":	[wn.synset("esophagus.n.01")],
 
 	# unending
@@ -15386,7 +15366,7 @@ BLISSNET = {
 	# bisexuality
 	"U+4497":	[wn.synset("bisexuality.n.02")],
 
-	# comfortable, restful, comfortable,restful
+	# comfortable, restful
 	"U+4498":	[wn.synset("comfortable.a.01"),
 				wn.synset("comfortable.a.02"),
 				wn.synset("comfortable.s.03"),
@@ -15423,7 +15403,7 @@ BLISSNET = {
 	# request
 	"U+44a3":	[wn.synset("request.v.01")],
 
-	# switch on, turn on, switch on,turn on
+	# switch on, turn on
 	"U+44a4":	[wn.synset("ignite.v.01"),
 				wn.synset("open.v.02"),
 				wn.synset("switch_on.v.01")],
@@ -15431,10 +15411,10 @@ BLISSNET = {
 	# Saturday
 	"U+44a5":	[wn.synset("saturday.n.01")],
 
-	# birdfeeder, bird table, birdfeeder,bird table
+	# birdfeeder, bird table table
 	"U+44a6":	[wn.synset("bird_feeder.n.01")],
 
-	# reaching aid, grabber, reaching aid,grabber
+	# reaching aid, grabber
 	"U+44ab":	[wn.synset("clasp.n.02"),
 				wn.synset("grabber.n.01"),
 				wn.synset("grasping.n.02"),
@@ -15460,7 +15440,7 @@ BLISSNET = {
 	# shot put
 	"U+44b6":	[wn.synset("shot_put.n.01")],
 
-	# binoculars, field glass, binoculars,field glass
+	# binoculars, field glass glass
 	"U+44b7":	[wn.synset("binoculars.n.01")],
 
 	# water polo
@@ -15475,7 +15455,7 @@ BLISSNET = {
 	# July
 	"U+44bc":	[wn.synset("july.n.01")],
 
-	# respect, admiration, respect,admiration
+	# respect, admiration
 	"U+44bd":	[wn.synset("respect.n.03")],
 
 	# cauliflower
@@ -15517,7 +15497,7 @@ BLISSNET = {
 				wn.synset("petroleum.n.01"),
 				wn.synset("vegetable_oil.n.01")],
 
-	# handwriting, penmanship, handwriting,penmanship
+	# handwriting, penmanship
 	"U+44ca":	[wn.synset("calligraphy.n.01")],
 
 	# Haggadah
@@ -15539,7 +15519,7 @@ BLISSNET = {
 	# clinic
 	"U+44d4":	[wn.synset("clinic.n.01")],
 
-	# hospital, clinic, hospital,clinic
+	# hospital, clinic
 	"U+44d5":	[wn.synset("hospital.n.01")],
 
 	# toothbrush
@@ -15548,7 +15528,7 @@ BLISSNET = {
 	# Friday
 	"U+44d8":	[wn.synset("friday.n.01")],
 
-	# lake, pond, lake,pond
+	# lake, pond
 	"U+44d9":	[wn.synset("lake.n.01")],
 
 	# bobsleigh
@@ -15558,12 +15538,12 @@ BLISSNET = {
 	# match
 	"U+44db":	[wn.synset("match.n.01")],
 
-	# thread, string, cord, thread,string,cord
+	# thread, string, cord
 	"U+44dd":	[wn.synset("cord.n.04"),
 				wn.synset("string.n.01"),
 				wn.synset("thread.n.01")],
 
-	# enter, absorb, insert, penetrate, enter,absorb,insert,penetrate, go through, penetrate,go through
+	# enter, absorb, insert, penetrate, go through through
 	"U+44de":	[wn.synset("enter.v.01")],
 
 	# journalist
@@ -15587,7 +15567,7 @@ BLISSNET = {
 	# paddock
 	"U+44e3":	[wn.synset("paddock.n.01")],
 
-	# corpse, cadaver, corpse,cadaver
+	# corpse, cadaver
 	"U+44e4":	[wn.synset("cadaver.n.01")],
 
 	# hurricane
@@ -15612,7 +15592,7 @@ BLISSNET = {
 	# blood vessel
 	"U+44ee":	[wn.synset("blood_vessel.n.01")],
 
-	# hitch, tie up, fix up, hitch,tie up,fix up
+	# hitch, tie up, fix up up,fix up
 	"U+44ef":	[wn.synset("adhere.v.06"),
 				wn.synset("buck.v.04"),
 				wn.synset("hitch.v.01"),
@@ -15672,7 +15652,7 @@ BLISSNET = {
 	"U+4500":	[wn.synset("baker.n.01"),
 				wn.synset("baker.n.02")],
 
-	# student, pupil, student,pupil
+	# student, pupil
 	"U+4501":	[wn.synset("pupil.n.02"),
 				wn.synset("scholar.n.01"),
 				wn.synset("schoolchild.n.01"),
@@ -15684,7 +15664,7 @@ BLISSNET = {
 	# ladybird
 	"U+4503":	[wn.synset("ladybug.n.01")],
 
-	# hate, hatred, hate,hatred
+	# hate, hatred
 	"U+4506":	[wn.synset("hate.n.01")],
 
 	# playground
@@ -15693,7 +15673,7 @@ BLISSNET = {
 	# dreidel top
 	"U+450a":	[wn.synset("top.n.08")],
 
-	# each, every, each,every
+	# each, every
 	"U+450b":	[wn.synset("each.s.01"),
 				wn.synset("every.s.01")],
 
@@ -15710,7 +15690,7 @@ BLISSNET = {
 	"U+450f":	[wn.synset("butcher.n.01"),
 				wn.synset("butcher.n.03")],
 
-	# French fries, chips, French fries,chips
+	# French fries, chips
 	"U+4510":	[wn.synset("french_fries.n.01")],
 
 	# go by airplane
@@ -15729,10 +15709,10 @@ BLISSNET = {
 	# excellent
 	"U+4519":	[wn.synset("excellent.s.01")],
 
-	# kangaroo, marsupial, pouched mammal, kangaroo,marsupial
+	# kangaroo, marsupial, pouched mammal
 	"U+451a":	[wn.synset("kangaroo.n.01")],
 
-	# advocacy, representation, advocacy,representation
+	# advocacy, representation
 	"U+451b":	[wn.synset("advocacy.n.01"),
 				wn.synset("apology.n.02"),
 				wn.synset("representation.n.01"),
@@ -15746,7 +15726,7 @@ BLISSNET = {
 				wn.synset("representation.n.10"),
 				wn.synset("theatrical_performance.n.01")],
 
-	# Muhammad, Mohammed, Muhammed, Muhammad,Mohammed,Muhammed
+	# Muhammad, Mohammed, Muhammed
 	"U+451c":	[wn.synset("mohammed.n.01")],
 
 	# tissue
@@ -15814,7 +15794,7 @@ BLISSNET = {
 	"U+453a":	[wn.synset("wafer.n.02"),
 				wn.synset("waffle.n.01")],
 
-	# hotel, motel, hotel,motel
+	# hotel, motel
 	"U+453d":	[wn.synset("hotel.n.01")],
 
 	# eternal
@@ -15823,7 +15803,7 @@ BLISSNET = {
 	# acrobat
 	"U+453f":	[wn.synset("acrobat.n.01")],
 
-	# cheap, inexpensive, cheap,inexpensive
+	# cheap, inexpensive
 	"U+4540":	[wn.synset("cheap.a.01")],
 
 	# Antarctic
@@ -15853,7 +15833,7 @@ BLISSNET = {
 	# paediatrician
 	"U+4547":	[wn.synset("baby_doctor.n.01")],
 
-	# kill, murder, kill,murder
+	# kill, murder
 	"U+4548":	[wn.synset("murder.v.01")],
 
 	# western
@@ -15889,7 +15869,7 @@ BLISSNET = {
 				wn.synset("rap.n.04"),
 				wn.synset("rap.n.05")],
 
-	# food processor, kitchen machine, food processor,kitchen machine
+	# food processor, kitchen machine
 	"U+4554":	[wn.synset("mixer.n.04")],
 
 	# milkman
@@ -15905,7 +15885,7 @@ BLISSNET = {
 	# coin
 	"U+4559":	[wn.synset("coin.n.01")],
 
-	# unforgivable, inexcusable, unforgivable,inexcusable
+	# unforgivable, inexcusable
 	"U+455a":	[wn.synset("inexcusable.a.01"),
 				wn.synset("inexcusable.s.02"),
 				wn.synset("unpardonable.a.01")],
@@ -15922,7 +15902,7 @@ BLISSNET = {
 				wn.synset("radiance.n.01"),
 				wn.synset("reflection.n.02")],
 
-	# raisins, currants, raisins,currants
+	# raisins, currants
 	"U+455e":	[wn.synset("raisin.n.01")],
 
 	# inspire
@@ -15939,7 +15919,7 @@ BLISSNET = {
 	# head louse
 	"U+4563":	[wn.synset("head_louse.n.01")],
 
-	# bus stop, bus bay, bus stop,bus bay
+	# bus stop, bus bay
 	"U+4564":	[wn.synset("bus_stop.n.01")],
 
 	# sunglasses
@@ -15968,7 +15948,7 @@ BLISSNET = {
 				wn.synset("approach_path.n.01"),
 				wn.synset("overture.n.03")],
 
-	# come, approach, come,approach
+	# come, approach
 	"U+456f":	[wn.synset("come.v.01"),
 				wn.synset("come.v.03")],
 
@@ -16010,10 +15990,10 @@ BLISSNET = {
 	# decorated cake
 	"U+457e":	[wn.synset("cake.n.03")],
 
-	# list, inventory, list,inventory
+	# list, inventory
 	"U+457f":	[wn.synset("list.n.01")],
 
-	# shoulder blade, scapula, shoulder blade,scapula
+	# shoulder blade, scapula
 	"U+4580":	[wn.synset("scapula.n.01")],
 
 	# several
@@ -16021,10 +16001,10 @@ BLISSNET = {
 				wn.synset("several.s.01"),
 				wn.synset("several.s.03")],
 
-	# moose, elk, moose,elk
+	# moose, elk
 	"U+4582":	[wn.synset("elk.n.01")],
 
-	# cycle, ride a bike, cycle,ride a bike
+	# cycle, ride a bike a bike
 	"U+4584":	[wn.synset("bicycle.v.01")],
 
 	# snowman
@@ -16061,7 +16041,7 @@ BLISSNET = {
 	# paratrooper
 	"U+458d":	[wn.synset("paratrooper.n.01")],
 
-	# celibacy, chastity, abstinence, celibacy,chastity,abstinence, celibacy,chastity
+	# celibacy, chastity, abstinence
 	"U+458f":	[wn.synset("abstinence.n.02")],
 
 	# specific
@@ -16081,7 +16061,7 @@ BLISSNET = {
 				wn.synset("evasion.n.03"),
 				wn.synset("safety_valve.n.01")],
 
-	# icy, frozen, icy,frozen
+	# icy, frozen
 	"U+4595":	[wn.synset("arctic.s.02"),
 				wn.synset("frigid.s.03")],
 
@@ -16089,7 +16069,7 @@ BLISSNET = {
 	"U+4596":	[wn.synset("backspace.v.01"),
 				wn.synset("erase.v.03")],
 
-	# espionage, spying, espionage,spying
+	# espionage, spying
 	"U+4597":	[wn.synset("detection.n.02"),
 				wn.synset("espionage.n.01"),
 				wn.synset("spying.n.01"),
@@ -16118,7 +16098,7 @@ BLISSNET = {
 	# electorate
 	"U+459f":	[wn.synset("electorate.n.01")],
 
-	# Chumash, Pentateuch, Chumash,Pentateuch
+	# Chumash, Pentateuch
 	"U+45a1":	[wn.synset("torah.n.02")],
 
 	# why
@@ -16132,11 +16112,11 @@ BLISSNET = {
 	"U+45a4":	[wn.synset("bring_around.v.02"),
 				wn.synset("mend.v.02")],
 
-	# dollhouse, doll house, dollhouse,doll house
+	# dollhouse, doll house house
 	"U+45a6":	[wn.synset("dollhouse.n.01"),
 				wn.synset("dollhouse.n.02")],
 
-	# rich, wealthy, rich,wealthy
+	# rich, wealthy
 	"U+45a7":	[wn.synset("abundance.n.01"),
 				wn.synset("affluence.n.01"),
 				wn.synset("affluent.s.01"),
@@ -16190,13 +16170,13 @@ BLISSNET = {
 	# navigational sign
 	"U+45b2":	[wn.synset("beacon.n.03")],
 
-	# tablet computer, tablet, tablet PC, tablet computer,tablet,tablet PC
+	# tablet computer, tablet, tablet PC
 	"U+45b3":	[wn.synset("pad.n.01"),
 				wn.synset("pill.n.02"),
 				wn.synset("tablet.n.01"),
 				wn.synset("tablet.n.03")],
 
-	# layer, level, layer,level
+	# layer, level
 	"U+45b4":	[wn.synset("layer.n.02")],
 
 	# cloudy
@@ -16310,7 +16290,7 @@ BLISSNET = {
 	# light year
 	"U+45df":	[wn.synset("light_year.n.01")],
 
-	# hawk, eagle, hawk,eagle
+	# hawk, eagle
 	"U+45e0":	[wn.synset("hawk.n.01")],
 
 	# flyer
@@ -16321,7 +16301,7 @@ BLISSNET = {
 	# notary
 	"U+45e2":	[wn.synset("notary.n.01")],
 
-	# sceptical, skeptical, questioning, sceptical,skeptical,questioning
+	# sceptical, skeptical, questioning
 	"U+45e3":	[wn.synset("disbelieving.s.01"),
 				wn.synset("doubting.s.01"),
 				wn.synset("inquisitive.s.01"),
@@ -16407,7 +16387,7 @@ BLISSNET = {
 	# resurrection
 	"U+4602":	[wn.synset("resurrection.n.02")],
 
-	# buffalo, bison, buffalo,bison
+	# buffalo, bison
 	"U+4603":	[wn.synset("american_bison.n.01")],
 
 	# picnic
@@ -16437,7 +16417,7 @@ BLISSNET = {
 				wn.synset("hiss.v.02"),
 				wn.synset("hiss.v.03")],
 
-	# when, what time, when,what time
+	# when, what time time
 	"U+460d":	[wn.synset("equally.r.01"),
 				wn.synset("once.r.02")],
 
@@ -16484,7 +16464,7 @@ BLISSNET = {
 	# macaroni
 	"U+4621":	[wn.synset("macaroni.n.02")],
 
-	# driver, chauffeur, driver,chauffeur
+	# driver, chauffeur
 	"U+4622":	[wn.synset("driver.n.01")],
 
 	# footprint
@@ -16720,7 +16700,7 @@ BLISSNET = {
 	# pray
 	"U+4676":	[wn.synset("pray.v.01")],
 
-	# power plant, power station, power plant,power station
+	# power plant, power station
 	"U+4677":	[wn.synset("power_station.n.01")],
 
 	# hunter
@@ -16741,7 +16721,7 @@ BLISSNET = {
 	# hill
 	"U+467d":	[wn.synset("hill.n.01")],
 
-	# cookie, biscuit, cookie,biscuit
+	# cookie, biscuit
 	"U+467e":	[wn.synset("cookie.n.03")],
 
 	# Iyar
@@ -16981,7 +16961,7 @@ BLISSNET = {
 	# wave length
 	"U+46ce":	[wn.synset("wavelength.n.01")],
 
-	# hydropower, hydro energy, hydropower,hydro energy
+	# hydropower, hydro energy energy
 	"U+46d0":	[wn.synset("waterpower.n.01")],
 
 	# sled sport
@@ -17004,7 +16984,7 @@ BLISSNET = {
 				wn.synset("apricot.n.02"),
 				wn.synset("yellowish_pink.n.01")],
 
-	# summer house, summerhouse, summer house,summerhouse
+	# summer house, summerhouse
 	"U+46d7":	[wn.synset("gazebo.n.01")],
 
 	# sometimes
@@ -17013,7 +16993,7 @@ BLISSNET = {
 	# Father's Day
 	"U+46d9":	[wn.synset("father's_day.n.01")],
 
-	# Earth, Tellus, Earth,Tellus
+	# Earth, Tellus
 	"U+46da":	[wn.synset("earth.n.01"),
 				wn.synset("earth.n.04")],
 
