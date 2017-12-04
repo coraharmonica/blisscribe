@@ -61,27 +61,27 @@ from openpyxl import load_workbook
 from PIL import Image
 import re
 import blissymbols
-from bliss_lexicon import BLISS_LEXICON
+import bliss_lexicon #import BLISS_LEXICON
 from blissymbols import Blissymbol, BLISS_TO_UNICODE, UNICODE_TO_BLISS, NEW_BLISSYMBOLS
 
 LAST_BLISS_ENCODING = blissymbols.LAST_BLISS_ENCODING
 
-BLISS_SUPPORTED_LANGUAGES = set(["English",
-                                 "Swedish",
-                                 "Norwegian",
-                                 "Finnish",
-                                 "Hungarian",
-                                 "German",
-                                 "Dutch",
-                                 "Afrikaans",
-                                 "Russian",
-                                 "Latvian",
-                                 "Polish",
-                                 "French",
-                                 "Spanish",
-                                 "Portuguese",
-                                 "Italian",
-                                 "Danish"])
+BLISS_SUPPORTED_LANGUAGES = {"English",
+                             "Swedish",
+                             "Norwegian",
+                             "Finnish",
+                             "Hungarian",
+                             "German",
+                             "Dutch",
+                             "Afrikaans",
+                             "Russian",
+                             "Latvian",
+                             "Polish",
+                             "French",
+                             "Spanish",
+                             "Portuguese",
+                             "Italian",
+                             "Danish"}
 
 
 class LexiconParser:
@@ -126,7 +126,7 @@ class LexiconParser:
 
     def __init__(self, translator):
         self.translator = translator
-        self.bliss_lexicon = BLISS_LEXICON
+        self.bliss_lexicon = bliss_lexicon.BLISS_LEXICON
 
     def getBlissLexicon(self):
         """
@@ -554,7 +554,7 @@ class LexiconParser:
             if col == bci_col:
                 row.append("C+" + uni)
             elif col == pos_col:
-                row.append(blissymbol.getPosCode())
+                row.append(blissymbol.posToInt())
             elif col == deriv_col:
                 row.append(blissymbol.getDerivation())
             else:
@@ -964,6 +964,9 @@ class LexiconParser:
         pos = entry[1]
         deriv = entry[2]
         trans = entry[3]
+        print
+        print(trans)
+        print
         blissymbol = self.translator.makeBlissymbol(img_filename=img_filename,
                                                     pos=pos,
                                                     derivation=deriv,
@@ -986,8 +989,8 @@ class LexiconParser:
         #if translator is None:
         #    translator = self.translator
 
-        for key in BLISS_LEXICON:
-            bliss_dict.setdefault(key, set([]))
+        for key in bliss_lexicon.BLISS_LEXICON:
+            bliss_dict.setdefault(key, set())
             for val in self.bliss_lexicon[key]:
                 blissymbol = self.entryToBlissymbol(val)
                 #blissymbol = translator.entryToBlissymbol(val)
@@ -1009,7 +1012,7 @@ class LexiconParser:
                 translations in given language and English
         """
         bliss_dict = {}
-        lexicon = BLISS_LEXICON
+        lexicon = bliss_lexicon.BLISS_LEXICON
 
         if translator is None:
             translator = self.translator
@@ -1022,7 +1025,7 @@ class LexiconParser:
                 blissymbol = Blissymbol(bliss_word[0]+u".png", bliss_word[1], bliss_word[2], bliss_word[3], translator)
                 lang_words = blissymbol.getTranslation(language)
                 for lang_word in lang_words:
-                    bliss_dict.setdefault(lang_word, set([]))
+                    bliss_dict.setdefault(lang_word, set())
                     bliss_dict[lang_word].add(blissymbol)
 
         return bliss_dict

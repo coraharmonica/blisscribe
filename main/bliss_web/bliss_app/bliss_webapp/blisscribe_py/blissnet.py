@@ -9480,6 +9480,7 @@ BLISSNET = {
 				wn.synset("motion.n.03"),
 				wn.synset("motion.n.06"),
 				wn.synset("movement.n.04"),
+                #s(100798245,5,'movement',n,6,4).
 				wn.synset("movement.n.05"),
 				wn.synset("movement.n.10")],
 

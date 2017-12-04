@@ -22,6 +22,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageChops
 from fpdf import FPDF
 #import bliss_exceptions
 import blissnet
+#import sklearn
 from blissnet import BLISSNET as blissnet
 
 try:
@@ -38,10 +39,11 @@ else:
         NEW_BLISSYMBOLS
     from parse_lexica import BLISS_SUPPORTED_LANGUAGES as BLISS_LANGS
 
+'''
 try:
     import blisslearn
     from blisslearn import BlissLearner
-except ImportError:
+except None: #ImportError:
     raise ImportError
     print("blisslearn module could not be imported.\n\
     Please find the local module blisslearn.py \n\
@@ -49,6 +51,7 @@ except ImportError:
 else:
     import blisslearn
     from blisslearn import BlissLearner
+'''
 
 try:
     from translation_word import TranslationWord
@@ -101,7 +104,7 @@ class BlissTranslator:
            --> setSubAll()
     """
     PATH = os.path.dirname(os.path.realpath(__file__))
-    
+
     # FONTS
     # -----
     ROMAN_FONT = "/Library/Fonts/Times New Roman.ttf"
@@ -117,32 +120,32 @@ class BlissTranslator:
                   HIP_FONT: "Helvetica",
                   BLISS_FONT: "Blissymbols"}
     DEFAULT_FONT_SIZE = 30
-    
+
     # IMAGES
     # ------
     IMG_PATH = PATH + "/symbols/png/full/"
     IMAGES_SAVED = 0
-    
+
     # LANGUAGE
     # --------
-    STARTING_PUNCT = set(["(", '"', "-",
-                          "\xe2\x80\x9c", "\xe2\x80\x98", "\xe2\x80\x9e"])  # spaces BEFORE
-    ENDING_PUNCT = set([".", ",", ";", ":", "?", "!", ")", '"', "-",
-                        "\xe2\x80\x9d", "\xe2\x80\x99", u"\u201d"])  # spaces AFTER
+    STARTING_PUNCT = {"(", '"', "-",
+                      "\xe2\x80\x9c", "\xe2\x80\x98", "\xe2\x80\x9e"}  # spaces BEFORE
+    ENDING_PUNCT = {".", ",", ";", ":", "?", "!", ")", '"', "-",
+                    "\xe2\x80\x9d", "\xe2\x80\x99", u"\u201d"}  # spaces AFTER
     PUNCTUATION = STARTING_PUNCT.union(ENDING_PUNCT)
-    MID_PUNCT = set(["-", u"\u2013", u"\u2014"])
-    CONTRACTIONS = set("'")
+    MID_PUNCT = {"-", u"\u2013", u"\u2014"}
+    CONTRACTIONS = {"'"}
     for punct in string.punctuation:
         PUNCTUATION.add(str(punct))
     PUNCTUATION = PUNCTUATION.union(MID_PUNCT.union(CONTRACTIONS))
-    WHITESPACE = set(["\n", '', ' ', '_'])
+    WHITESPACE = {"\n", '', ' ', '_'}
 
     # --> Parts of Speech
     # Penn Treebank parts-of-speech set
-    PARTS_OF_SPEECH = set(["CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
-                           "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$",
-                           "RB", "RBR", "RBS", "RP", "TO", "UH", "VB", "VBD", "VBG",
-                           "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"])
+    PARTS_OF_SPEECH = {"CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
+                       "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$",
+                       "RB", "RBR", "RBS", "RP", "TO", "UH", "VB", "VBD", "VBG",
+                       "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"}
     # Penn Treebank parts-of-speech key
     POS_KEY = {"CC": "Coordinating conjunction",
                "CD": "Cardinal number",
@@ -185,14 +188,16 @@ class BlissTranslator:
     POS_ABBREVS = {"JJ": "a", "JJS": "s", "NN": "n", "VB": "v", "RB": "r"}
     POS_NAMES = {"a": "ADJ", "s": "ADJ", "n": "NOUN", "v": "VERB", "r": "ADV"}
     POS_FEATURE_DICT = {"n": 1, "v": 2, "a": 3, "s": 3, "r": 4}
+    POS_CODE_DICT = {1: "n", 2: "v", 3: "a", 4: "r"}
 
-    DEFAULT_POS = set(["NN", "NNS", "VB", "VBD", "VBG", "VBN", "JJ", "JJR", "JJS"])
+    DEFAULT_POS = {"NN", "NNS", "VB", "VBD", "VBG", "VBN", "JJ", "JJR", "JJS"}
     CHOSEN_POS = DEFAULT_POS
     DEFAULT_LANG = "English"
     LANG_CODES = {"Arabic": "arb",
                   "Bulgarian": 'bul',
                   "Catalan": 'cat',
                   "Danish": 'dan',
+                  "Dutch": 'nld',
                   "German": 'deu',
                   "Greek": 'ell',
                   "English": 'eng',
@@ -221,6 +226,7 @@ class BlissTranslator:
     TOKENIZER = WordPunctTokenizer()
     SUPPORTED_LANGS = BLISS_LANGS.intersection(WORDNET_LANGS)
     PATTERN_LANGS = text.LANGUAGES
+    SUPPORTED_LANGS.update(PATTERN_LANGS)
 
     def __init__(self, language="English", font_path=SANS_FONT, font_size=DEFAULT_FONT_SIZE):
         self.lex_parser = LexiconParser(translator=self)
@@ -264,7 +270,7 @@ class BlissTranslator:
         self.other = False
 
         self.all_lemma_names = set(wordnet.all_lemma_names(lang=self.lang_code))
-        self.classifier = BlissLearner(self)
+        #self.classifier = BlissLearner(self)
 
     # GETTERS/SETTERS
     # ===============
@@ -406,7 +412,7 @@ class BlissTranslator:
         """
         bliss_dicts = self.initBlissDict(self.language)
         self.bliss_dict = bliss_dicts[0]
-        
+
         #if self.language != "English":
         self.eng_bliss_dict = bliss_dicts[1]
 
@@ -867,10 +873,10 @@ class BlissTranslator:
         else:
             return self.getBlissImg(img_filename, max_width, max_height)
 
-        #bliss_word = Image.open(self.IMG_PATH + img_filename)
-        #img = bliss_word
-        #img.thumbnail((max_width, max_height))
-        #return img
+            #bliss_word = Image.open(self.IMG_PATH + img_filename)
+            #img = bliss_word
+            #img.thumbnail((max_width, max_height))
+            #return img
 
     def getSubbedBlissImg(self, trans_word, max_width, max_height, subs=True):
         """
@@ -1802,10 +1808,10 @@ class BlissTranslator:
             return self.isTranslatable(trans_word)
         else:
             return False
-        #return trans_word.hasBlissymbol() or \
-        #       self.isChosenPOS(trans_word.getPos()) and \
-        #       self.isTranslatable(trans_word)
-        #       #and not self.isPunctuation(trans_word)
+            #return trans_word.hasBlissymbol() or \
+            #       self.isChosenPOS(trans_word.getPos()) and \
+            #       self.isTranslatable(trans_word)
+            #       #and not self.isPunctuation(trans_word)
 
     def translateNow(self, trans_word):
         """
@@ -2084,7 +2090,8 @@ class BlissTranslator:
         """
         Finds a synset ID for this synset.
 
-        :return: str, a 9-digit Wordnet Synset ID
+        :param synset: Synset, synset to find ID for
+        :return: int, a 9-digit Wordnet Synset ID
         """
         try:
             wn_num = synset.offset()
@@ -2093,7 +2100,19 @@ class BlissTranslator:
         else:
             pos_code = self.POS_FEATURE_DICT[synset.pos()]
             full_synset = str(pos_code) + str(wn_num).zfill(8)
-            return full_synset
+            return int(full_synset)
+
+    def findFullSynsetId(self, synset):
+        """
+        Returns a full synset ID for this 2-tuple synset ID and its
+        part-of-speech code.
+
+        :param id: tuple(int,int), 7-digit synset ID and its pos code
+        :return: int, a full 9-digit Wordnet Synset ID
+        """
+        id, pos = synset[0], synset[1]
+        full_synset = str(pos) + str(id).zfill(8)
+        return int(full_synset)
 
     def translateUntranslatable(self, trans_word):
         """
@@ -2174,15 +2193,20 @@ class BlissTranslator:
                     if self.inEngBlissDict(defn):
                         self.eng_bliss_dict[defn].add(blissymbol)
                     else:
-                        self.eng_bliss_dict[defn] = set([blissymbol])
+                        self.eng_bliss_dict[defn] = set(blissymbol)
+                    entry = self.lex_parser.blissymbolToStr(blissymbol)
+                    if self.inBlissLexicon(defn):
+                        self.bliss_lexicon[defn].append(entry)
+                    else:
+                        self.bliss_lexicon[defn] = [entry]
                 else:
                     if self.inBlissDict(defn):
                         self.bliss_dict[defn].add(blissymbol)
                     else:
-                        self.bliss_dict[defn] = set([blissymbol])
+                        self.bliss_dict[defn] = set(blissymbol)
             idx += 1
 
-        self.lex_parser.addBlissEntry(blissymbol)
+            #self.lex_parser.addBlissEntry(blissymbol)
 
     def extendBlissEntry(self, blissymbol):
         """

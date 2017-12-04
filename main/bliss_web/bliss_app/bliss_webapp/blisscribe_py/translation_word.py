@@ -363,7 +363,7 @@ class TranslationWord:
                 print("Success: " + self.eng_lexeme + " in English bliss dict!")
                 blissymbols = self.eng_bliss_dict[self.eng_lexeme]
                 self.blissymbol = blissymbols[0]
-                self.translator.lex_parser.addBlissEntry(self.blissymbol)
+                #self.translator.lex_parser.addBlissEntry(self.blissymbol)
                 return self.blissymbol
             elif self.lexeme in self.bliss_dict:
                 blissymbols = self.bliss_dict[self.lexeme]
@@ -400,18 +400,18 @@ class TranslationWord:
                 # TODO: change filename to be the same as the bliss image
                 translations = {}
                 print("adding to English translations:")
-                print(self.synsets_lemmas)
-                print(self.eng_lexeme)
+                #print(self.synsets_lemmas)
+                #print(self.eng_lexeme)
                 translations["English"] = self.synsets_lemmas
                 translations["English"] = [eng_lexeme]
                 print("adding to " + self.language + " translations:")
                 #print(self.synonyms)
                 #print(self.synset.lemma_names(lang_code))
-                print(self.lexeme)
+                #print(self.lexeme)
                 translations.setdefault(self.language, [])
                 #translations[self.language] = self.synset.lemma_names(lang_code)
                 translations[self.language].append(lexeme)
-                print(translations)
+                #print(translations)
                 blissymbol = self.translator.makeBlissymbol(img_filename=img_filename + ".png",
                                                             pos=self.getPos(),
                                                             derivation=derivation,
@@ -726,7 +726,7 @@ class TranslationWord:
         N.B. TranslationWord's synset_id corresponds to Synset.offset()
         in NLTK's Wordnet module, i.e., a 9-digit numerical identifier.
 
-        :return: str, a 9-digit Wordnet Synset ID
+        :return: int, a 9-digit Wordnet Synset ID
         """
         return self.translator.findSynsetId(synset)
 
@@ -737,7 +737,7 @@ class TranslationWord:
         N.B. TranslationWord's synset_id corresponds to Synset.offset()
         in NLTK's Wordnet module, i.e., a 9-digit numerical identifier.
 
-        :param id: str, a 9-digit Wordnet Synset ID
+        :param id: int, a 9-digit Wordnet Synset ID
         :return: None
         """
         self.synset_id = id

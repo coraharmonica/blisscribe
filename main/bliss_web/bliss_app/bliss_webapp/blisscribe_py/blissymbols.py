@@ -1063,7 +1063,7 @@ class Blissymbol:
 
         :return: Set[Synset], this Blissymbol's Wordnet synsets
         """
-        synsets = set([])
+        synsets = set()
         translations = self.getTranslations()
         word = self.getBlissName()
         word = word.replace("_", " ")
@@ -1071,8 +1071,8 @@ class Blissymbol:
         pos = self.getPos()
 
         if len(words) > 0:
-            word_synsets = set([])
-            lang_synsets = set([])
+            word_synsets = set()
+            lang_synsets = set()
 
             for word in words:
                 word = self.removeParens(word)
@@ -1086,7 +1086,7 @@ class Blissymbol:
             for lang in translations:
                 if lang != "English":
                     translation = translations[lang]
-                    lang_synset = set([])
+                    lang_synset = set()
 
                     for defn in translation:
                         synset = self.translator.lookupWordSynsets(defn, pos, lang=lang)
