@@ -8,7 +8,7 @@ from blisscribe_py import blisscribe
 
 
 class FormTranslator:
-    FILE_PATH = blisscribe.BlissTranslator.FILE_PATH + '/bliss pdfs'
+    FILE_PATH = blisscribe.BlissTranslator.PATH + '/bliss pdfs'
     
     def __init__(self, phrase, title, title_page,
                  lang, font_fam, font_size,
