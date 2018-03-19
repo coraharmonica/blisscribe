@@ -14,7 +14,7 @@ IMG_PATH = PATH + "/symbols/png/full/"
 def equate_images(img1, img2):
     """
     Returns a 2-tuple of the given images but
-    set to the same size as each other.
+    set to the same size as each translate_other.
 
     :param img1: Image, first image to set equal in size
     :param img2: Image, second image to set equal in size
@@ -22,21 +22,36 @@ def equate_images(img1, img2):
     """
     img1 = img1.convert('RGBA')
     img2 = img2.convert('RGBA')
+    w1, h1 = img1.size
+    w2, h2 = img2.size
 
-    if img1.size > img2.size:
-        bg_size = img1.size
-        bg = Image.new(mode='RGBA', size=bg_size)
-        x = bg.size[0]/2 - img2.size[0]/2
-        y = bg.size[1]/2 - img2.size[1]/2
-        bg.paste(img2, (x, y))
-        img2 = bg
-    elif img1.size < img2.size:
-        bg_size = img2.size
-        bg = Image.new(mode='RGBA', size=bg_size)
-        x = bg.size[0]/2 - img1.size[0]/2
-        y = bg.size[1]/2 - img1.size[1]/2
-        bg.paste(img1, (x, y))
-        img1 = bg
+    if w1 != w2 or h1 != h2:
+        bg_size = max(w1, w2), max(h1, h2)
+        bg = Image.new(mode='RGBA', size=bg_size, color=(255, 255, 255, 0))
+
+        if img1.size == bg_size:
+            x = w1/2 - w2/2
+            y = h1/2 - h2/2
+            bg.paste(img2, (x, y))
+            img2 = bg
+        elif img2.size == bg_size:
+            x = w2/2 - w1/2
+            y = h2/2 - h1/2
+            bg.paste(img1, (x, y))
+            img1 = bg
+        else:
+            bg_img1 = bg
+            bg_img2 = bg_img1.copy()
+            x_mid = bg_size[0]/2
+            y_mid = bg_size[1]/2
+            x1 = x_mid - img1.size[0]/2
+            y1 = y_mid - img1.size[1]/2
+            x2 = x_mid - img2.size[0]/2
+            y2 = y_mid - img2.size[1]/2
+            bg_img1.paste(img1, (x1, y1))
+            bg_img2.paste(img2, (x2, y2))
+            img1 = bg_img1
+            img2 = bg_img2
 
     return img1, img2
 
@@ -52,7 +67,7 @@ def overlay(front, back):
     :return: Image, foreground overlaid on background
     """
     front, back = equate_images(front, back)
-    img = Image.alpha_composite(front, back)
+    img = Image.alpha_composite(back, front)
     return img
 
 
@@ -115,16 +130,16 @@ def get_word_img(word, font_path, font_size, img_h):
     :param img_h: int, desired height for output image
     :return: Image, image of input str
     """
-    img = make_blank_img(len(word) * font_size, img_h)
     if word == "\n":
-        return img
+        return make_blank_img(1, img_h)
     else:
-        #word = unicodize(word)
+        font = ImageFont.truetype(font=font_path, size=font_size)
+        img = make_blank_img(font.getsize(word)[0], img_h)
         sketch = ImageDraw.Draw(img)
         sketch.text((0, int(font_size*0.75)),
                     word,
-                    font=ImageFont.truetype(font=font_path, size=font_size),
-                    fill="black")
+                    fill="black",
+                    font=font)
         return trim_horizontal(img)
 
 

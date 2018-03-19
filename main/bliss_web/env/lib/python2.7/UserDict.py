@@ -182,7 +182,7 @@ class DictMixin:
         del self[k]
         return (k, v)
     def update(self, other=None, **kwargs):
-        # Make progressively weaker assumptions about "other"
+        # Make progressively weaker assumptions about "translate_other"
         if other is None:
             pass
         elif hasattr(other, 'iteritems'):  # iteritems saves memory and lookups

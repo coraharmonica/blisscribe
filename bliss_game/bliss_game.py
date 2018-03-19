@@ -320,7 +320,7 @@ class BlissGame:
         #   title of text (opt)
         #   font to use (opt)
         #   font size
-        #   translate... nouns, verbs, adj/advs, other
+        #   translate... translate_nouns, translate_verbs, adj/advs, translate_other
         #   translate uncommon words
         #   include page #s
         pygame.init()
@@ -398,7 +398,7 @@ class BlissGame:
                         else:
                             self.translator.set_language(language)
                             self.translator.set_font(font_path, font_size)
-                        self.translator.choose_translatables(nouns, verbs, adjvs, other)
+                        self.translator.set_translatables(nouns, verbs, adjvs, other)
                         self.translator.set_translate_all(uncommon)
                         self.translator.set_page_nums(page_nums)
                         self.translator.set_fast_translate(fast_translate)

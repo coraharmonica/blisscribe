@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 # bliss_webapp/helpers.py
-from django.http import HttpResponse
-from django.forms import Form
 from django.utils.encoding import smart_str
-#import os
 from blisscribe_py import blisscribe
 
 
 class FormTranslator:
-    FILE_PATH = blisscribe.BlissTranslator.PATH + '/outout'
+    FILE_PATH = blisscribe.BlissTranslator.PATH + '/out'
     
     def __init__(self, phrase, title, title_page,
                  lang, font_fam, font_size,
@@ -33,8 +30,7 @@ class FormTranslator:
         self.configTranslator()
 
     def configTranslator(self):
-        self.translator.set_font(self.font_fam, self.font_size)
-        self.translator.choose_translatables(self.nouns, self.verbs, self.adjs, self.other)
+        self.translator.set_translatables(self.nouns, self.verbs, self.adjs, self.other)
         self.translator.set_fast_translate(self.fast_translate)
         self.translator.set_sub_all(self.sub_all)
         self.translator.set_page_nums(self.page_nums)

@@ -38,10 +38,10 @@ class ConceptAnalyzer:
     def draw_concept_cloud(self, text, title=u"concept cloud", cap=None):
         """
         Draws a concept cloud image for text in this ConceptAnalyzer's language
-        and saves it under the given title.
+        and saves it under this title.
         ~
         By default cap is set to None, so this function draws all concepts
-        in the given text until their frequency drops below the 10th percentile.
+        in this text until their frequency drops below the 10th percentile.
         Users can opt to set cap to a custom maximum number of concepts to draw.
         ~
         Returns None.
@@ -146,7 +146,7 @@ class ConceptAnalyzer:
     def write_concept_cloud(self, bliss_freqs, title=u"concept cloud"):
         """
         Writes each concept in bliss_freqs in decreasing order
-        of frequency to a file saved under the given title.
+        of frequency to a file saved under this title.
         ~
         Returns None.
 
@@ -167,7 +167,7 @@ class ConceptAnalyzer:
     def fetch_all_contexts(self, word, cap=10):
         """
         Fetches a list of all sentences from NLTK's
-        Project Gutenberg and other sources using this
+        Project Gutenberg and translate_other sources using this
         word.
         ~
         This method halts when it has found cap sentences.

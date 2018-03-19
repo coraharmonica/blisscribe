@@ -26,9 +26,7 @@ class Blissymbol:
                        "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"]
     POS_COLOURS = ["RED", "YELLOW", "BLUE", "GREEN", "GRAY", "WHITE"]
     POS_COLOUR_CODE = {"GRAY": ["INDICATOR"],
-                       #"WHITE": ["CC", "CD", "DT", "EX", "IN", "JJ", "PRP", "RP", "UH", "WDT"],
-                       # WHITE also includes colours & relations
-                       "WHITE": PARTS_OF_SPEECH,  # WHITE is catch-all other parts of speech
+                       "WHITE": PARTS_OF_SPEECH,  # WHITE is catch-all translate_other parts of speech
                        "YELLOW": ["NN",
                                   "NNS",
                                   "NNP",
@@ -41,7 +39,7 @@ class Blissymbol:
                                "VBP",
                                "VBZ",
                                ],
-                       "BLUE": ["NN",  # personal (pro-)nouns
+                       "BLUE": ["NN",  # personal (pro-)translate_nouns
                                 "NNS",
                                 "NNP",
                                 "NNPS",
@@ -78,7 +76,6 @@ class Blissymbol:
         self.init_deriv_unicode()
         self.synset = None
         self.synsets = self.init_blissymbol_synsets()
-
         self.translator.add_bliss_entry(self)
 
     def check_img_filename(self):
@@ -116,7 +113,7 @@ class Blissymbol:
         combines derivations to make a new Blissymbol image
         and returns the result.
         ~
-        Saves the resulting image under given filename.
+        Saves the resulting image under this filename.
 
         :param derivations: List[str], derivative Blissymbol(s)
         :param filename: str, filename to save Blissymbol under
@@ -167,8 +164,8 @@ class Blissymbol:
 
     def add_translation(self, language, translation):
         """
-        Adds given translation to self.translations
-        under given language.
+        Adds this translation to self.translations
+        under this language.
 
         e.g. add_translation("Polish", "kot") ->
              self.translations == {"Polish": ["kot"]}
@@ -177,7 +174,7 @@ class Blissymbol:
              self.translations == {"Polish": ["kot"],
                                    "French": ["chat"]}
 
-        :param language: str, language of given translation
+        :param language: str, language of this translation
         :param translation: str, Blissymbol translation in language
         :return: None
         """
@@ -187,8 +184,8 @@ class Blissymbol:
 
     def add_translations(self, language, translations):
         """
-        Adds given translations to self.translations
-        under given language.
+        Adds this translations to self.translations
+        under this language.
 
         e.g. add_translation("Polish", ["kot", "kotka"]) ->
              self.translations == {"Polish": ["kot", "kotka"]}
@@ -197,13 +194,14 @@ class Blissymbol:
              self.translations == {"Polish": ["kot", "kotka"],
                                    "French": ["chat", "chatton"]}
 
-        :param language: str, language of given translation
+        :param language: str, language of this translation
         :param translation: List[str], Blissymbol translations in language
         :return: None
         """
-        self.translations.setdefault(language, [])
-        for translation in translations:
-            self.add_translation(language, translation)
+        if len(translations) != 0:
+            self.translations.setdefault(language, list())
+            for translation in translations:
+                self.add_translation(language, translation)
 
     def get_derivation(self):
         """
@@ -215,7 +213,7 @@ class Blissymbol:
 
     def set_derivation(self, derivation):
         """
-        Sets this Blissymbol's derivation to given derivation.
+        Sets this Blissymbol's derivation to this derivation.
 
         :param derivation: str, derivation of Blissymbol
         :return: None
@@ -319,7 +317,7 @@ class Blissymbol:
 
     def set_derivations(self, derivations):
         """
-        Sets this Blissymbol's derivations to given derivations.
+        Sets this Blissymbol's derivations to this derivations.
 
         :param derivation: List[str], derivations of Blissymbol
         :return: None
@@ -400,7 +398,7 @@ class Blissymbol:
 
     def clean_translation(self, translation):
         """
-        Returns the given list of translation definitions
+        Returns this list of translation definitions
         with spaces instead of underscores and no parenthesis
         phrase.
         ~
@@ -415,7 +413,7 @@ class Blissymbol:
 
     def clean_translations(self, translations):
         """
-        Returns the given dictionary of translations with
+        Returns this dictionary of translations with
         each translation cleaned, i.e. with spaces instead
         of underscores and no parenthesis phrase.
 
@@ -478,20 +476,20 @@ class Blissymbol:
         """
         Returns parenthetical(s) of this Blissymbol.
 
-        :return: str, given word's parenthetical phrase
+        :return: str, this word's parenthetical phrase
         """
         return self.paren_phrase
 
     def get_parens(self, word):
         """
-        Returns parenthetical(s) from the given word.
+        Returns parenthetical(s) from this word.
         ~
         Parenthetical begins at the first open parenthesis.
 
         e.g. get_parens("English_(language)") -> "(language)"
 
         :param word: str, word to get parenthetical from
-        :return: str, given word's parenthetical phrase
+        :return: str, this word's parenthetical phrase
         """
         idx = 0
         for char in word:
@@ -516,7 +514,7 @@ class Blissymbol:
 
     def remove_parens(self, word):
         """
-        Removes parenthetical(s) from the given word and
+        Removes parenthetical(s) from this word and
         returns the result.
         ~
         Parenthetical begins at the first open parenthesis.
@@ -524,7 +522,7 @@ class Blissymbol:
         e.g. get_parens("English_(language)") -> "English"
 
         :param word: str, word to get parenthetical from
-        :return: str, given word's parenthetical phrase
+        :return: str, this word's parenthetical phrase
         """
         return self.translator.remove_parens(word)
 
@@ -546,7 +544,7 @@ class Blissymbol:
 
     def set_language(self, language):
         """
-        Sets this Blissymbol's default language to given language.
+        Sets this Blissymbol's default language to this language.
         ~
         Default language should be set to whichever language the
         Blissymbol names are being entered in.
@@ -562,13 +560,13 @@ class Blissymbol:
     def get_translation(self, language=None):
         """
         If self.translations contains a translation in
-        given language, returns translations in that language.
+        this language, returns translations in that language.
         ~
         Otherwise, returns translations in this Blissymbol's
         native language.
 
         :param language: str, language to get translations in
-        :return: List[str], Blissymbol translations in given language
+        :return: List[str], Blissymbol translations in this language
         """
         try:
             return self.translations[language]
@@ -587,7 +585,7 @@ class Blissymbol:
 
     def set_img_filename(self, img_filename):
         """
-        Sets this Blissymbol's img_filename to given img_filename.
+        Sets this Blissymbol's img_filename to this img_filename.
         ~
         Assumes img_filename includes appropriate extension (.png).
 
@@ -599,7 +597,7 @@ class Blissymbol:
     def set_paren_phrase(self, paren_phrase):
         """
         Sets this Blissymbol's parenthesis phrase to
-        the given paren_phrase.
+        this paren_phrase.
 
         :param paren_phrase: str, phrase in parentheses
         :return: None
@@ -608,7 +606,7 @@ class Blissymbol:
 
     def init_pos(self, pos):
         """
-        Sets this Blissymbol's pos to given pos,
+        Sets this Blissymbol's pos to this pos,
         unless Blissymbol appears to be a different
         part of speech.
 
@@ -616,7 +614,7 @@ class Blissymbol:
         :return: None
         """
         if self.get_parens(self.get_bliss_name()) == "(to)":
-            # all verbs have (to) indicator
+            # all translate_verbs have (to) indicator
             self.pos = self.POS_COLOUR_CODE["RED"]
         elif pos is not None:
             try:
@@ -629,14 +627,14 @@ class Blissymbol:
 
     def init_pos_code(self, pos_code):
         """
-        Sets this Blissymbol's pos_code to given pos_code,
+        Sets this Blissymbol's pos_code to this pos_code,
         unless pos_code is not in POS_COLOUR_CODE.
 
         :param pos_code: str, this Blissymbol's part of speech colour code
         :return: None
         """
         if self.get_parens(self.get_bliss_name()) == "(to)":
-            # all verbs have (to) indicator
+            # all translate_verbs have (to) indicator
             self.pos_code = "RED"
         elif pos_code is not None:
             try:
@@ -738,7 +736,7 @@ class Blissymbol:
 
     def add_deriv_unicode(self, unicode):
         """
-        Adds given unicode str to self.deriv_unicode.
+        Adds this unicode str to self.deriv_unicode.
 
         :param unicode: str, unicode string
         :return: None
@@ -747,31 +745,31 @@ class Blissymbol:
 
     def add_unicode_to_bliss(self, uni, bliss):
         """
-        Adds the given unicode key to this Blissymbol's
+        Adds this unicode key to this Blissymbol's
         BlissTranslator's unicode-to-Blissymbol dict,
         with blissymbol name bliss as its value.
 
         :param uni: str, unicode name to add
-        :param bliss: str, name of blissymbol for given unicode
+        :param bliss: str, name of blissymbol for this unicode
         :return: None
         """
         self.translator.add_unicode_to_bliss(uni, bliss)
 
     def add_bliss_to_unicode(self, bliss, uni):
         """
-        Adds the given blissymbol key bliss to this Blissymbol's
+        Adds this blissymbol key bliss to this Blissymbol's
         BlissTranslator's Blissymbol-to-unicode dict,
         with unicode as its value.
 
         :param bliss: str, name of blissymbol to add
-        :param unicode: str, unicode name for given bliss
+        :param unicode: str, unicode name for this bliss
         :return: None
         """
         self.translator.add_bliss_to_unicode(bliss, uni)
 
     def add_bliss_and_unicode(self, bliss="", uni=""):
         """
-        Adds the given Blissymbol string bliss and its corresponding
+        Adds this Blissymbol string bliss and its corresponding
         unicode symbol unicode to bliss_to_unicode dict as well as
         unicode_to_bliss dict.
         ~
@@ -780,7 +778,7 @@ class Blissymbol:
         in the series.
 
         :param bliss: str, name of blissymbol to add
-        :param uni: str, unicode name for given bliss
+        :param uni: str, unicode name for this bliss
         :return: None
         """
         if bliss == "":
@@ -813,7 +811,7 @@ class Blissymbol:
         creates new unicode name and adds to encoding dicts accordingly.
 
         :param defn: str, word to find/add unicode
-        :param lang: str, given word's language
+        :param lang: str, this word's language
         :return: str, word's corresponding unicode name
         """
         if defn in self.translator.get_bliss_to_unicode():
@@ -913,7 +911,7 @@ class Blissymbol:
         Returns unicode name for this part of speech.
 
         :return: str, part-of-speech to get indicator name for
-        :return: str, Blissymbol indicator name for given pos
+        :return: str, Blissymbol indicator name for this pos
         """
         if pos in self.POS_COLOUR_CODE["BLUE"]:
             return "indicator thing"
@@ -965,7 +963,7 @@ class Blissymbol:
 
     def add_synset(self, synset):
         """
-        Adds given synset to this Blissymbol's synsets.
+        Adds this synset to this Blissymbol's synsets.
 
         :param synset: Synset, synset to add to synsets
         :return: None
@@ -974,7 +972,7 @@ class Blissymbol:
 
     def add_synsets(self, synsets):
         """
-        Updates this Blissymbol's synsets with given synsets.
+        Updates this Blissymbol's synsets with this synsets.
 
         :param synsets: List[Synset], synsets to add to synsets
         :return: None
@@ -1117,7 +1115,7 @@ class Blissymbol:
         return self.bliss_name == other.bliss_name
 
     def __hash__(self):
-        return hash(str(self))
+        return hash(self.bliss_name)
 
     def __str__(self):
         return self.bliss_name

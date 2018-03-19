@@ -113,7 +113,7 @@ def updatecache(filename, module_globals=None):
             return []
 
         for dirname in sys.path:
-            # When using imputil, sys.path may contain things other than
+            # When using imputil, sys.path may contain things translate_other than
             # strings; ignore them when it happens.
             try:
                 fullname = os.path.join(dirname, basename)

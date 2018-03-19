@@ -225,7 +225,7 @@ def addsitepackages(known_paths, sys_prefix=sys.prefix, exec_prefix=sys.exec_pre
                     sitedirs = [os.path.join("/Library/Python", sys.version[:3], "site-packages"),
                                 os.path.join(prefix, "Extras", "lib", "python")]
 
-                else: # any other Python distros on OSX work this way
+                else: # any translate_other Python distros on OSX work this way
                     sitedirs = [os.path.join(prefix, "lib",
                                              "python" + sys.version[:3], "site-packages")]
 
@@ -361,7 +361,7 @@ def addusersitepackages(known_paths):
 
 def setBEGINLIBPATH():
     """The OS/2 EMX port has optional extension modules that do double duty
-    as DLLs (and must use the .DLL file extension) for other extensions.
+    as DLLs (and must use the .DLL file extension) for translate_other extensions.
     The library search path needs to be amended so these will be found
     during module import.  Use BEGINLIBPATH so that these are at the start
     of the library search path.
@@ -629,7 +629,7 @@ def force_global_eggs_after_local_site_packages():
     Force easy_installed eggs in the global environment to get placed
     in sys.path after all packages inside the virtualenv.  This
     maintains the "least surprise" result that packages in the
-    virtualenv always mask global packages, never the other way
+    virtualenv always mask global packages, never the translate_other way
     around.
 
     """

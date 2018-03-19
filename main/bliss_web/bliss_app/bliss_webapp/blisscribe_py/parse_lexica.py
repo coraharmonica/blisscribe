@@ -59,31 +59,15 @@ PARSE_LEXICA:
 import os
 import json
 from openpyxl import load_workbook
-import re
 import blissymbols
-from blissymbols import Blissymbol, IMG_PATH, NEW_BLISSYMBOLS
+from blissymbols import Blissymbol, NEW_BLISSYMBOLS
 
 LAST_BLISS_ENCODING = blissymbols.LAST_BLISS_ENCODING
-BLISS_SUPPORTED_LANGUAGES = {"English",
-                             "Swedish",
-                             "Norwegian",
-                             "Finnish",
-                             "Hungarian",
-                             "German",
-                             "Dutch",
-                             "Afrikaans",
-                             "Russian",
-                             "Latvian",
-                             "Polish",
-                             "French",
-                             "Spanish",
-                             "Portuguese",
-                             "Italian",
-                             "Danish"}
 
 
 class LexiconParser:
     FILE_PATH = os.path.dirname(os.path.realpath(__file__))
+    DATA_PATH = FILE_PATH + "/resources/data/"
     LEXICA_PATH = FILE_PATH + "/resources/lexica/"
     LEXICON_PATH = LEXICA_PATH + "universal bliss lexicon.xlsx"
     LEXICON_COLS = ["BCI-AV#",
@@ -120,6 +104,22 @@ class LexiconParser:
                     "Italian",
                     "BCI-AV#",
                     "Danish"]
+    BLISS_LANGS = {"English",
+                   "Swedish",
+                   "Norwegian",
+                   "Finnish",
+                   "Hungarian",
+                   "German",
+                   "Dutch",
+                   "Afrikaans",
+                   "Russian",
+                   "Latvian",
+                   "Polish",
+                   "French",
+                   "Spanish",
+                   "Portuguese",
+                   "Italian",
+                   "Danish"}
 
     def __init__(self, translator):
         self.translator = translator
@@ -134,8 +134,8 @@ class LexiconParser:
         :param filename: str, name of .json file to dump to
         :return: None
         """
-        path = self.FILE_PATH + "/" + filename + ".json"
-        json.dump(data, open(path, 'w'), indent=4, sort_keys=True)
+        path = self.DATA_PATH + "/" + filename + ".json"
+        json.dump(data, open(path, 'w'), indent=1, sort_keys=True)
 
     def fetch_json(self, filename):
         """
@@ -144,8 +144,7 @@ class LexiconParser:
         :param filename: str, name of .json file to fetch
         :return: X, content of given .json file
         """
-        lexicon = json.load(open(self.translator.PATH + "/" + filename + ".json"))
-        return lexicon
+        return json.load(open(self.DATA_PATH + filename + ".json"))
 
     def fetch_bliss_lexicon(self):
         """
@@ -164,18 +163,11 @@ class LexiconParser:
 
         :return: None
         """
-        new_lexicon = dict()
-        bliss_dict = self.translator.get_eng_bliss_dict()
-
-        for entry in bliss_dict:
-            new_lexicon.setdefault(entry, list())
-            defns = bliss_dict[entry]
-            for blissymbol in defns:
-                bd = self.blissymbol_to_dict(blissymbol)
-                if bd is not None:
-                    new_lexicon[entry].append(bd)
-
-        self.dump_json(new_lexicon, "bliss_lexicon")
+        lexicon = self.translator.get_eng_bliss_dict()
+        lexicon = {entry: filter(lambda x: x is not None and len(x) > 0,
+                                 [self.blissymbol_to_dict(bliss) for bliss in lexicon[entry]])
+                   for entry in lexicon}
+        self.dump_json(lexicon, "bliss_lexicon")
 
     def refresh_bliss_encoding(self):
         """
@@ -201,7 +193,7 @@ class LexiconParser:
 
     def init_bliss_lexicon(self, language):
         """
-        Initializes a Blissymbols lexicon in the given language.
+        Initializes a Blissymbols lexicon in this language.
 
         :param language: str, desired Blissymbol lexicon language
         :return: dict, where...
@@ -217,14 +209,10 @@ class LexiconParser:
             for bliss_word in bliss_words:
                 blissymbol = self.dict_to_blissymbol(bliss_word)
                 if blissymbol is not None:
-                    if language != "English":
-                        lang_words = blissymbol.get_translation(language)
-                        for lang_word in lang_words:
-                            bliss_dict.setdefault(lang_word, set())
-                            bliss_dict[lang_word].add(blissymbol)
-                    else:
-                        bliss_dict.setdefault(entry, set())
-                        bliss_dict[entry].add(blissymbol)
+                    lang_words = blissymbol.get_translation(language)
+                    for lang_word in lang_words:
+                        bliss_dict.setdefault(lang_word, set())
+                        bliss_dict[lang_word].add(blissymbol)
 
         return bliss_dict
 
@@ -244,9 +232,22 @@ class LexiconParser:
 
         :return: dict, where...
             key (str) - unicode representation of a Blissymbol
-            val (List[str]) - words corresponding to given unicode
+            val (List[str]) - English words corresponding to given unicode
         """
         return self.fetch_json("bliss_decoding")
+
+    def init_blissnet(self):
+        """
+        Returns a unicode-to-synsets dictionary for mapping
+        Blissymbols to Wordnet.
+
+        :return: dict, where...
+            key (str) - unicode representation of a Blissymbol
+            val (List[Synset]) - Princeton synsets corresponding to given unicode
+        """
+        blissnet = self.fetch_json("blissnet")
+        blissnet = {uni: [self.translator.str_synset(bliss) for bliss in blissnet[uni]] for uni in blissnet}
+        return blissnet
 
     # MULTILINGUAL
     # ============
@@ -385,123 +386,6 @@ class LexiconParser:
 
         return defns
 
-    def write_bliss_encoding(self, unicode_keys=False):
-        """
-        Writes and returns a dict linking Blissymbol names to unicode values,
-        or, if unicode_keys=True, linking unicode keys to Blissymbol names.
-        ~
-        If unicode_keys is set to True, this method names the file's output
-        dictionary UNICODE_TO_BLISS.  Otherwise, its name is BLISS_TO_UNICODE.
-        ~
-        Output conforms to encoding suggested here:
-        http://std.dkuug.dk/JTC1/SC2/WG2/docs/n1866.pdf
-        ~
-        Used to update BLISS_TO_UNICODE and UNICODE_TO_BLISS as needed.
-
-        :param unicode_keys: bool, whether output dict keys are unicode
-        :return: dict, where...
-            key (str) - word definition (unicode if unicode_keys=True)
-            val (str) - unicode (word definition if unicode_keys=True)
-        """
-        defns = self.get_bliss_encoding()
-        encodings = {}
-
-        if unicode_keys:
-            title = "UNICODE_TO_BLISS"
-        else:
-            title = "BLISS_TO_UNICODE"
-
-        write_filename = self.FILE_PATH + "/bliss_encoding.py"
-        idx = "3200"
-
-        with open(write_filename, "a") as bliss_out:
-            bliss_out.write(title + " = {")
-
-            for defn in defns:
-                uni = "U+" + idx  # make unicode key
-
-                if unicode_keys:
-                    key = uni
-                    val = defn
-                else:
-                    key = defn
-                    val = uni
-
-                encoding = '\n    "' + key + '": ["' + val + '"],'
-                bliss_out.write(encoding)
-                encodings[key] = [val]
-
-                idx = int(idx, 16) + 1
-                idx = hex(idx)[2:]
-
-            bliss_out.write("\n    }\n\n")
-
-        global LAST_BLISS_ENCODING
-        LAST_BLISS_ENCODING = idx
-
-        return encodings
-
-    # ILI
-    # ===
-    def read_ili_mapping(self):
-        """
-        Reads plaintext file with mapping from Princeton WordNet
-        to ILI (Interlingual Language Index), a conceptual dictionary.
-        ~
-        Used for cross-lingual translation.
-
-        :return: List[ILIEntry], list of ILI definitions
-        """
-        defns = []
-        with open(self.LEXICA_PATH + "ili-wn-mapping.txt", "r") as ili:
-            lines = ili.readlines()[10:]
-            for defn in lines:
-                defns.append(self.clean_ili_defn(defn))
-        return defns
-
-    def write_ili_mapping(self, clean_defns):
-        """
-        Writes to plaintext file with mapping from Princeton WordNet
-        to ILI (Interlingual Language Index), a conceptual dictionary.
-        ~
-        Used for cross-lingual translation.
-
-        :param clean_defns: List[ILIEntry], list of word entries to write
-        :return: None
-        """
-        out = self.LEXICA_PATH + "ili-wn-mapping-cleaned.txt"
-        open(out, 'w').close()  # wipe file before writing
-
-        with open(out, "a") as ili:
-            for defn in clean_defns:
-                ili.write(str(defn) + "\n")
-
-    def read_write_ili_mapping(self):
-        """
-        Reads ILI mapping and writes cleaned definitions
-        to file.
-
-        :return: None
-        """
-        clean_defns = self.read_ili_mapping()
-        self.write_ili_mapping(clean_defns)
-
-    def clean_ili_defn(self, defn):
-        """
-        Cleans the input ILI definition line.
-
-        :param defn: str, line in ILI
-        :return: ILIEntry, an entry for a single ILI concept
-        """
-        idx = re.search(pattern="i[0-9]{1,8}", string=defn).group(0)
-        locn = re.search(pattern="[0-9]{8}-[a|n|r|s|v]", string=defn).group(0)
-        word = re.search(pattern="#\s.+", string=defn).group(0)
-        word = str(word[2:])
-        words = word.split(",")
-        words = [word.strip() for word in words]
-        entry = self.ili_dict.makeEntry(int(idx[1:]), str(locn), words)
-        return entry
-
     # WORDNET
     # =======
     def write_bliss_wordnet(self, bliss_dict):
@@ -536,7 +420,7 @@ class LexiconParser:
     def bliss_dict_to_wordnet(self, bliss_dict):
         """
         Returns a dictionary of Blissymbol word keys and synsets
-        from the given bliss_dict.
+        from this bliss_dict.
         ~
         N.B. Output will be most accurate with a multilingual
         Bliss dictionary.
@@ -562,7 +446,7 @@ class LexiconParser:
     def bliss_dict_to_encoding_wordnet(self, bliss_dict):
         """
         Returns a dictionary of Bliss unicodes and synsets
-        from the given bliss_dict.
+        from this bliss_dict.
         ~
         N.B. Output will be most accurate with a multilingual
         Bliss dictionary.
@@ -631,7 +515,7 @@ class LexiconParser:
 
         translations = {}
 
-        for language in BLISS_SUPPORTED_LANGUAGES:
+        for language in self.BLISS_LANGS:
             print("What is/are the translation(s) in " + language + "? ")
 
             try:
@@ -648,11 +532,59 @@ class LexiconParser:
                                 translations=translations, translator=self.translator)
         return blissymbol
 
+    # BLISS MANIPULATION
+    # ==================
+    def blissymbol_to_dict(self, blissymbol):
+        """
+        Returns a dict of this Blissymbol's initializing
+        parameters, i.e. its name, pos, derivation, and translations.
+
+        :param blissymbol: Blissymbol, symbol to turn to tuple
+        :return: dict, where...
+            key (str) - name of Blissymbol field
+            val (X) - corresponding value
+        """
+        return {u"name": blissymbol.get_bliss_name(),
+                u"pos": blissymbol.get_pos(),
+                u"derivation": blissymbol.get_derivation(),
+                u"translations": blissymbol.get_translations()}
+
+    def dict_to_blissymbol(self, d):
+        """
+        Returns this dict, d, as a Blissymbol.
+        ~
+        This method assumes d has keys named
+        "name", "pos", "derivation", and "translations",
+        and initializes a Blissymbol with its fields corresponding
+        to these keys.
+
+        :param d: dict, dictionary to turn into Blissymbol
+        :return: Blissymbol, d as a Blissymbol
+        """
+        name = d[u"name"]
+        pos = d[u"pos"]
+
+        try:
+            derivation = d[u"derivation"]
+        except KeyError:
+            derivation = u""
+        try:
+            translations = d[u"translations"]
+        except KeyError:
+            translations = {}
+
+        blissymbol = Blissymbol(name+u".png",
+                                pos,
+                                derivation,
+                                translations,
+                                self.translator)
+        return blissymbol
+
     # XLSX ENTRIES
     # ============
     def blissymbol_to_xlsx_entry(self, blissymbol):
         """
-        Converts the given Blissymbol to a list of
+        Converts this Blissymbol to a list of
         information constituting a Bliss lexicon entry.
         ~
         Must be in order of LEXICON_COLS.
@@ -747,285 +679,3 @@ class LexiconParser:
                     break
 
         book.save(self.LEXICON_PATH)
-
-    # XLSX PARSING
-    # ============
-    def get_img_filenames(self):
-        """
-        Reads the given XLS file for a cross-lingual Bliss
-        dictionary and returns a list of image filenames.
-
-        :param filename: str, name of XLS file
-        :return: List[str], image filenames
-        """
-        book = load_workbook(self.LEXICON_PATH)
-        sheet = book.worksheets[0]
-        img_col = 2
-
-        for col in sheet.iter_cols(min_col=img_col, max_col=img_col):
-            imgs = [str(row.value) + ".png" for row in col[1:]]
-            return imgs
-
-    def get_defns(self, language):
-        """
-        Returns a list of the given language's words
-        in the XLSX Bliss lexicon.
-
-        :param language: str, output list's desired language
-        :return: List[str], given language's Bliss words
-        """
-        assert language in BLISS_SUPPORTED_LANGUAGES
-
-        book = load_workbook(self.LEXICON_PATH)
-        sheet = book.worksheets[0]
-
-        defns = []
-
-        for col in sheet.iter_cols():
-            if col[0].value == language:
-                defns = [row.value for row in col[1:]]
-                break
-
-        if len(defns) == 0:
-            raise IOError(language + " is not in Blissymbolics lexicon.")
-
-        return defns
-
-    def get_parts_of_speech(self):
-        """
-        Returns an ordered list of all parts of speech
-        from the XLSX Bliss lexicon.
-
-        :return: List[str], list of parts of speech
-        """
-        book = load_workbook(self.LEXICON_PATH)
-        sheet = book.worksheets[0]
-        pos_col = 3
-
-        for col in sheet.iter_cols(min_col=pos_col, max_col=pos_col):
-            pos = [row.value for row in col[1:]]
-            return pos
-
-    def get_derivations(self):
-        """
-        Returns an ordered list of derivations from
-        the XLSX Bliss lexicon.
-
-        :return: List[str], list of derivations
-        """
-        book = load_workbook(self.LEXICON_PATH)
-        sheet = book.worksheets[0]
-        deriv_col = 4
-
-        for col in sheet.iter_cols(min_col=deriv_col, max_col=deriv_col):
-            derivations = [unicode.encode(row.value, 'ascii', errors='ignore') for row in col[1:]]
-            return derivations
-
-    def get_defn_words(self, defn):
-        """
-        Separates given defn by commas and returns
-        the resulting list.
-        ~
-        This method ensures that output meets
-        all criteria for being added to Blisscribe.
-
-        :param defn: str, Blissymbol definition
-        :return: List[str], defn's words separated by commas
-        """
-        words = []
-        if defn is not None:
-            if not self.is_old(defn):  # no outdated definitions
-                for word in defn.split(","):
-                    word = self.parse_alphabetic(word)
-                    if not self.is_indicator(word):
-                        word = self.strip_parens(word)
-                    if len(word) != 0:
-                        words.append(word)
-        return words
-
-    # HELPERS
-    # =======
-    def is_indicator(self, word):
-        """
-        Returns True if this Blissymbol word is an indicator.
-
-        :param word: str, Blissymbol word from bliss_dict
-        :return: bool, True if given word is an indicator
-        """
-        return word[:9] == "indicator"
-
-    def is_old(self, word):
-        """
-        Returns True if this Blissymbol word is marked OLD.
-
-        :param word: str, Blissymbol word from bliss_dict
-        :return: bool, True if given word is old
-        """
-        return word[-5:] == "(OLD)"
-
-    def is_letter(self, img_filename):
-        """
-        Returns True if given image filename suggests that its
-        corresponding Blissymbol is a letter of the alphabet.
-        ~
-        Checks if img_filename ends with "ercase" (for uppercase
-        or lowercase).
-        ~
-        Used for excluding alphabetic-only Bliss characters.
-
-        :param img_filename: str, image filename of a Blissymbol
-        :return: bool, whether given image is an alphabetic letter
-        """
-        return img_filename[-11:] == "ercase).png"
-
-    def strip_parens(self, word):
-        """
-        Strips parenthetical(s) from the given word.
-        ~
-        String cuts off just before first set of parentheses.
-
-        e.g. strip_parens("English_(language)") -> "English"
-
-        :param word: str, word to strip parentheticals from
-        :return: str, word with parentheticals stripped
-        """
-        new_word = []
-        remove = False
-
-        for char in word:
-            if remove == False and char != "(":
-                new_word.append(char)
-            elif char == "(":
-                remove = True
-            elif char == ")":
-                remove = False
-
-        new_word = ("".join(new_word)).strip()
-        return new_word
-
-    def parse_alphabetic(self, word):
-        """
-        Parses the given non-alphabetic word into an
-        alphabetic-only version of the word.
-
-        e.g. parse_alphabetic("English_(language)") -> "English (language)"
-
-        :param word: str, non-alphabetic word
-        :return: str, alphabetic version of input word
-        """
-        word = word.replace("_", " ")
-        word = word.replace("-", " ")
-        word = word.replace("!", "")
-        return word
-
-    # BLISS MANIPULATION
-    # ==================
-    def blissymbol_to_str(self, blissymbol):
-        """
-        Returns the given Blissymbol formatted as a string for
-        the bliss_lexicon file.
-
-        :param blissymbol: Blissymbol, blissymbol to turn to string
-        :return: (unicode) str, blissymbol as string
-        """
-        return self.translator.unicodize('("' +
-                                         blissymbol.get_bliss_name() + '", "' +
-                                         blissymbol.get_pos() + '", "' +
-                                         blissymbol.get_derivation() + '", ' +
-                                         self.dict_to_str(blissymbol.get_translations()) +
-                                         ')')
-
-    def blissymbol_to_dict(self, blissymbol):
-        """
-        Returns a dict of this Blissymbol's initializing
-        parameters, i.e. its name, pos, derivation, and translations.
-
-        :param blissymbol: Blissymbol, symbol to turn to tuple
-        :return: dict, where...
-            key (str) - name of Blissymbol field
-            val (X) - corresponding value
-        """
-        return {u"name": blissymbol.get_bliss_name(),
-                u"pos": blissymbol.get_pos(),
-                u"derivation": blissymbol.get_derivation(),
-                u"translations": blissymbol.get_translations()}
-
-    # DICT MANIPULATION
-    # =================
-    def bliss_dict_to_str(self, bliss_dict):
-        """
-        Returns the given dictionary with each of its keys and values
-        as strings.
-
-        :param bliss_dict: dict, input dictionary to turn to string
-        :return: (unicode) str, input dictionary turned to string
-        """
-        res = []
-
-        for key in sorted(bliss_dict.keys()):
-            val = bliss_dict[key]
-            if len(val) != 0:
-                res.append(u'\t"' + self.translator.unicodize(key) + u'": [')
-                for blissymbol in val:
-                    synsets = sorted(blissymbol.get_synsets())
-                    synsets = [str(synset) for synset in synsets]
-                    #items = sorted([str(blissymbol.get_synset()) for blissymbol in val])
-                    #items = [self.blissymbol_to_str(item) for item in val]
-                    res.append(u',\n\t\t'.join(synsets))
-                res.append(u"],\n")
-
-        return u"".join(res)
-
-    def bliss_dict_to_str_dict(self, bliss_dict):
-        """
-        Returns the given dictionary as the string it would be
-        written as in Python.
-
-        :param bliss_dict: dict, input dictionary to turn to string
-        :return: (unicode) str, input dictionary turned to string
-        """
-        res = [u"BLISS_LEXICON = {\n"]
-        res.append(self.bliss_dict_to_str(bliss_dict))
-        res.append(u"}")
-        return u"".join(res)
-
-    def dict_to_blissymbol(self, d):
-        """
-        Returns the given dict, d, as a Blissymbol.
-        ~
-        This method assumes d has keys named
-        "name", "pos", "derivation", and "translations",
-        and initializes a Blissymbol with its fields corresponding
-        to these keys.
-
-        :param d: dict, dictionary to turn into Blissymbol
-        :return: Blissymbol, d as a Blissymbol
-        """
-        name = d[u"name"]
-        pos = d[u"pos"]
-
-        try:
-            derivation = d[u"derivation"]
-        except KeyError:
-            derivation = u""
-        try:
-            translations = d[u"translations"]
-        except KeyError:
-            translations = {}
-
-        blissymbol = Blissymbol(name+u".png",
-                                pos,
-                                derivation,
-                                translations,
-                                self.translator)
-        return blissymbol
-
-    def print_dict(self, d):
-        """
-        Prints the given dictionary as if it were written in code.
-        Used for visualizing and copying dict contents.
-
-        :param d: dict, input dictionary to print
-        :return: None
-        """
-        print(self.encoding_dict_to_str(d))

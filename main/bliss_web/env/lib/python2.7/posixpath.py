@@ -37,7 +37,7 @@ altsep = None
 devnull = '/dev/null'
 
 # Normalize the case of a pathname.  Trivial in Posix, string.lower on Mac.
-# On MS-DOS this may also turn slashes into backslashes; however, other
+# On MS-DOS this may also turn slashes into backslashes; however, translate_other
 # normalizations (such as optimizing '../' away) are not allowed
 # (another function should be defined to do that).
 

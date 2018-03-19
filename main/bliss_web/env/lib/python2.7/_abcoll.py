@@ -144,7 +144,7 @@ class Set(Sized, Iterable, Container):
 
     To override the comparisons (presumably for speed, as the
     semantics are fixed), redefine __le__ and __ge__,
-    then the other operations will automatically follow suit.
+    then the translate_other operations will automatically follow suit.
     """
 
     def __le__(self, other):
@@ -288,7 +288,7 @@ class MutableSet(Set):
 
     To override the comparisons (presumably for speed, as the
     semantics are fixed), all you have to do is redefine __le__ and
-    then the other operations will automatically follow suit.
+    then the translate_other operations will automatically follow suit.
     """
 
     @abstractmethod
