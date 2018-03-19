@@ -20,6 +20,7 @@ BLISSLEARN:
 import os
 from sklearn.tree import DecisionTreeClassifier
 from random import shuffle
+from parts_of_speech import POS_FEATURE_DICT, POS_CODE_DICT, POS_ABBREVS_SORTED
 
 
 class BlissLearner:
@@ -30,7 +31,7 @@ class BlissLearner:
 
     def __init__(self, bliss_translator):
         self.translator = bliss_translator
-        self.bliss_lexicon = self.translator.eng_bliss_dict
+        self.bliss_lexicon = self.translator.get_eng_bliss_dict()
         self.classifier = DecisionTreeClassifier()
         self.questions = list()
         self.answers = list()
@@ -64,12 +65,17 @@ class BlissLearner:
         # percent on-target: 45.0088450847%
 
         for entry in self.bliss_lexicon:
-            blissymbols = self.bliss_lexicon[entry]
-            if blissymbols is not None:
-                blissymbols = sorted(blissymbols, key=lambda b: len(b.get_derivations()), reverse=True)
+            bliss_set = self.bliss_lexicon[entry]
+            if bliss_set is not None:
+                print entry, bliss_set
                 bs = self.translator.word_to_blissymbol(entry)
+                blissymbols = sorted(bliss_set, key=lambda b: len(b.get_derivations()), reverse=True)
+                if bs in bliss_set:
+                    blissymbols.remove(bs)
                 if bs is not None:
                     blissymbols.insert(0, bs)
+
+                print entry, "has the Blissymbols", blissymbols
 
                 for blissymbol in blissymbols:
                     synsets = blissymbol.get_synsets()
@@ -84,11 +90,13 @@ class BlissLearner:
                             pos_code = self.pos_to_int(pos)
                             wn_num = self.find_synset_id(synset.offset(), pos_code)
                             word_features = [wn_num, pos_code]
-                            if entry.lower() in common_words and entry in synset.lemma_names():
-                                self.add_question_answer(word_features, uni)
-                            elif word_features not in self.questions:
-                                test_answers.append(uni)
-                                test_questions.append(word_features)
+                            if entry.lower() in common_words:
+                                if entry in synset.lemma_names():
+                                    self.add_question_answer(word_features, uni)
+                                elif word_features not in self.questions and word_features not in test_questions:
+                                    test_answers.append(uni)
+                                    test_questions.append(word_features)
+                print
 
         for wn_num in samples:
             # convert human-readable data to machine-readable numbers
@@ -115,7 +123,8 @@ class BlissLearner:
                         synsets.insert(0, synset)
                         for synset in synsets:
                             if self.find_synset_id(synset.offset(), pos_code) == wn_num:
-                                if name.lower() in common_words: # and name in synset.lemma_names():
+                                if name.lower() in common_words and word_features not in test_questions:
+                                    # and name in synset.lemma_names():
                                     # self.add_question_answer(word_features, uni)
                                     test_answers.append(uni)
                                     test_questions.append(word_features)
@@ -183,7 +192,7 @@ class BlissLearner:
 
     def add_question_answer(self, question, answer):
         """
-        Adds the given question and answer to this BlissClassifier's
+        Adds this question and answer to this BlissClassifier's
         questions and answers respectively.
 
         :param question: tuple(int, int), synset's 9-digit ID and part-of-speech code
@@ -211,7 +220,7 @@ class BlissLearner:
     def train_classifier(self, questions, answers):
         """
         Refits this BlissLearner's classifier according to
-        given questions and answers.
+        these questions and answers.
         ~
         Allows updated learning with more examples.
 
@@ -227,7 +236,7 @@ class BlissLearner:
     def test_classifier(self, test_questions, test_answers):
         """
         Tests this BlissLearner's classifier according to
-        given questions and answers.
+        these questions and answers.
 
         :param test_questions: List[List[int,int]], list with lists of
             wordnet IDs and their pos codes
@@ -313,7 +322,7 @@ class BlissLearner:
         :param pos: str, single-character part-of-speech
         :return: int, pos's corresponding WordNet integer
         """
-        return self.translator.POS_FEATURE_DICT[pos]
+        return POS_FEATURE_DICT[pos]
 
     def int_to_pos(self, code):
         """
@@ -324,9 +333,9 @@ class BlissLearner:
         are both indexed at 3, this method returns "a" if given 3.
 
         :param pos: int, code corresponding to WordNet part-of-speech
-        :return: str, given code's single-character part-of-speech
+        :return: str, this code's single-character part-of-speech
         """
-        return self.translator.POS_CODE_DICT[code]
+        return POS_CODE_DICT[code]
 
     def get_synset_id(self, synset):
         """
@@ -339,7 +348,7 @@ class BlissLearner:
 
     def find_synset_id(self, offset, pos_code):
         """
-        Finds a synset ID for a synset with the given offset
+        Finds a synset ID for a synset with this offset
         and pos_code (in range(0,4)).
 
         :param offset: int, 7-digit offset of synset to find ID for
@@ -351,7 +360,7 @@ class BlissLearner:
     def find_id_synsets(self, id):
         """
         Returns a list of 2-tuples of synsets and their
-        parts of speech for the given synset ID.
+        parts of speech for this synset ID.
 
         :param id: int, a 9-digit Wordnet Synset ID
         :return: List[(str,str)], list of synsets
@@ -452,7 +461,7 @@ class BlissLearner:
 
     def str_to_unicode(self, string):
         """
-        Prefixes given string with "U+".
+        Prefixes this string with "U+".
         ~
         Used to convert classifier's unicode outputs to
         Blissymbol unicode keys.
@@ -464,7 +473,7 @@ class BlissLearner:
 
     def str_to_unicodes(self, string):
         """
-        Converts the given string to a list of unicodes.
+        Converts this string to a list of unicodes.
         ~
         e.g. str_to_unicodes("2573 3652") -> ["U+2573", "U+3652"]
 
@@ -476,7 +485,7 @@ class BlissLearner:
 
     def unicode_to_str(self, uni):
         """
-        Converts the given unicode to a string by removing "U+"
+        Converts this unicode to a string by removing "U+"
         from the beginning.
         ~
         e.g. unicode_to_str("U+2573") -> "2573"
@@ -488,7 +497,7 @@ class BlissLearner:
 
     def unicodes_to_str(self, unis):
         """
-        Converts the given list of unicodes to a string.
+        Converts this list of unicodes to a string.
         ~
         e.g. unicode_to_str(["U+2573", "U+3652"]) -> "2573 3652"
 
@@ -498,24 +507,10 @@ class BlissLearner:
         unis = [self.unicode_to_str(uni) for uni in unis]
         return " ".join(unis)
 
-    def clean_defn(self, defn):
-        """
-        Replaces input defn's underscores with spaces and
-        strips whitespace from ends.  Returns result.
-        ~
-        e.g. clean_defn("English language ") -> "English_language"
-
-        :param defn: str, word definition to clean
-        :return: str, cleaned word definition
-        """
-        new_defn = self.translator.lex_parser.parse_alphabetic(defn)
-        new_defn = self.translator.lex_parser.strip_parens(new_defn)
-        return new_defn
-
     def lookup_wordnet_entry(self, trans_word):
         """
         Performs and returns a lookup in self.wordnet_entries
-        for the given (lemma, pos) pair, where lemma is
+        for this (lemma, pos) pair, where lemma is
         the WordNet dictionary entry name and pos is the
         abbreviated part-of-speech tag.
         ~
@@ -529,8 +524,8 @@ class BlissLearner:
             r - Adverb
 
         :param lexeme: str, a lemma to lookup in WordNet
-        :param pos: str, the given lemma's pos tag
-        :return: List[int, str], the given word's WordNet word ID
+        :param pos: str, this lemma's pos tag
+        :return: List[int, str], this word's WordNet word ID
             and pos code
         """
         if trans_word.get_eng_lemma() is None:
@@ -545,12 +540,12 @@ class BlissLearner:
 
         pos = trans_word.get_pos()
         pos_abbrev = self.translator.abbreviate_tag(pos)
-        pos_code = self.translator.POS_FEATURE_DICT[pos_abbrev]
+        pos_code = POS_FEATURE_DICT[pos_abbrev]
 
         try:
             self.wordnet_entries[(lexeme, pos_abbrev)]
         except KeyError:
-            for pt_of_speech in self.translator.POS_ABBREVS_SORTED:
+            for pt_of_speech in POS_ABBREVS_SORTED:
                 try:
                     self.wordnet_entries[(lexeme, pt_of_speech)]
                 except KeyError:
@@ -558,7 +553,7 @@ class BlissLearner:
                     continue
                 else:
                     pos_abbrev = pt_of_speech
-                    pos_code = self.translator.POS_FEATURE_DICT[pos_abbrev]
+                    pos_code = POS_FEATURE_DICT[pos_abbrev]
                     word_id = self.wordnet_entries[(lexeme, pt_of_speech)][0]
                     new_pos = self.translator.unabbreviate_tag(pt_of_speech)
                     trans_word.set_pos(new_pos)
@@ -584,10 +579,10 @@ class BlissLearner:
     def predict_word(self, trans_word, debug=True):
         """
         Returns a list of Blissymbol derivations predicted to correspond
-        with the given trans_word.
+        with this trans_word.
 
         :param trans_word: TranslationWord, word to get derivations of
-        :return: List[str], Blissymbols for given trans_word
+        :return: List[str], Blissymbols for this trans_word
         """
         pair = self.lookup_wordnet_entry(trans_word)
 
@@ -610,14 +605,14 @@ class BlissLearner:
             except KeyError:
                 symbols = symbols[1:]
             else:
+                print symbols[0]
+                print bs
                 blissymbol = next(iter(bs))
                 blissymbol = blissymbol.get_bliss_name()
                 blissymbols.append(blissymbol)
                 continue
 
             for symbol in symbols:
-                symbol = self.clean_defn(symbol)
-
                 if symbol in trans_word.eng_bliss_dict:
                     blissymbol = trans_word.eng_bliss_dict[symbol][0]
                     blissymbol = blissymbol.get_bliss_name()

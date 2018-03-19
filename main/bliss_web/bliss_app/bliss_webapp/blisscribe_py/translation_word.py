@@ -23,10 +23,10 @@ class TranslationWord:
      - synonyms
      - native language
     """
-    def __init__(self, word, pos, translator, debug=False, language=None):
-        self.debug = debug
+    def __init__(self, word, pos, translator, language=None, debug=False):
         self.translator = translator
         self.language = self.translator.language if (language is None) else language
+        self.debug = debug
         self.word = self.translator.unicodize(word)
         self.pos = pos
         self.pos_abbrev = self.find_pos_abbrev()
@@ -62,7 +62,7 @@ class TranslationWord:
     def init_pos(self):
         """
         If language is not English, this method cross-references
-        this TranslationWord's pos with other likely parts of speech
+        this TranslationWord's pos with translate_other likely parts of speech
         to determine most likely part of speech.
 
         :return: None
@@ -268,8 +268,6 @@ class TranslationWord:
                               "Please try using a different synonym.\n")
                         continue
 
-        #derivations = [self.translator.word_to_blissymbol(derivation) #(next(iter(self.eng_bliss_dict[derivation]))).get_bliss_name()
-        #               for derivation in derivations]
         return self.translator.remove_duplicates(derivations)
 
     def reset_blissymbol(self, blissymbol):
@@ -292,7 +290,6 @@ class TranslationWord:
         """
         if self.blissymbol is None:
             if self.pos in blissymbol.get_parts_of_speech():
-                #if blissymbol.is_neutral():
                 self.blissymbol = blissymbol
 
     def set_blissymbols(self, blissymbols):
@@ -312,7 +309,7 @@ class TranslationWord:
 
     def caps_in_bliss_dict(self, word):
         """
-        If the given word with the first letter capitalized
+        If this word with the first letter capitalized
         is in the Bliss dictionary, return that word.
         Otherwise, return None.
 
@@ -384,7 +381,7 @@ class TranslationWord:
             self.find_synonyms()
 
             if self.blissymbol is None:
-                if self.blissymbols is not None:
+                if self.blissymbols is not None and len(self.blissymbols) != 0:
                     self.blissymbol = next(iter(self.blissymbols))
                 elif self.translator.is_word(self.word) and self.translator.classifier is not None:
                     self.find_blissymbol()
@@ -702,12 +699,30 @@ class TranslationWord:
 
     def find_synsets(self):
         """
-        Finds and returns this TranslationWord's synsets.
+        Returns a list of WordNet synsets for this TranslationWord.
+        ~
+        When this TranslationWord is English, find synsets using trans_word's
+        part-of-speech tag.  Else, find synsets in every part of speech.
 
-        :return: List[Synset], synset synonyms
+        WordNet lookup link here:
+        http://wordnetweb.princeton.edu/perl/webwn?s=&sub=Search+WordNet
+
+        :return: List[Synset], the word's synsets
         """
+        word = self.get_lemma()
         use_pos = (self.language == "English")
-        synsets = self.translator.lookup_trans_word_synsets(self, use_pos)
+        # use_pos=False for foreign languages until tagging improves
+
+        if use_pos:
+            pos = self.get_pos()
+            pos = self.translator.abbreviate_tag(pos)
+            synsets = self.translator.lookup_word_synsets(word, pos=pos, lang=self.translator.language)
+
+            if not self.translator.safe_translate:
+                synsets += self.translator.lookup_word_synsets(word, lang=self.translator.language)
+        else:
+            synsets = self.translator.lookup_word_synsets(word, lang=self.translator.language)
+
         self.add_synsets_lemmas(self.translator.get_synsets_lemmas(synsets))
         return synsets
 
@@ -766,7 +781,7 @@ class TranslationWord:
         Returns this TranslationWord's synset_id.
         ~
         N.B. TranslationWord's synset_id allows this word to be considered
-        synonymous with any other TranslationWord possessing the same synset_id.
+        synonymous with any translate_other TranslationWord possessing the same synset_id.
 
         :return: str, a 9-digit Wordnet Synset ID
         """

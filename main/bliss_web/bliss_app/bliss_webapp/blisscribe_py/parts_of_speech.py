@@ -1,0 +1,99 @@
+# coding: utf-8
+"""
+PARTS_OF_SPEECH:
+
+    Holds parts-of-speech and language codes for Blisscribe.
+"""
+
+# Penn Treebank parts-of-speech set
+PARTS_OF_SPEECH = {"CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
+                   "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$",
+                   "RB", "RBR", "RBS", "RP", "TO", "UH", "VB", "VBD", "VBG",
+                   "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"}
+# Penn Treebank parts-of-speech key
+POS_KEY = {"CC": "Coordinating conjunction",
+           "CD": "Cardinal number",
+           "DT": "Determiner",
+           "EX": "Existential there",
+           "FW": "Foreign word",
+           "IN": "Preposition or subordinating conjunction",
+           "JJ": "Adjective",
+           "JJR": "Adjective, comparative",
+           "JJS": "Adjective, superlative",
+           "LS": "List item marker",
+           "MD": "Modal",
+           "NN": "Noun, singular or mass",
+           "NNS": "Noun, plural",
+           "NNP": "Proper noun, singular",
+           "NNPS": "Proper noun, plural",
+           "PDT": "Predeterminer",
+           "POS": "Possessive ending",
+           "PRP": "Personal pronoun",
+           "PRP$": "Possessive pronoun",
+           "RB": "Adverb",
+           "RBR": "Adverb, comparative",
+           "RBS": "Adverb, superlative",
+           "RP": "Particle",
+           "SYM": "Symbol",
+           "TO": "to",
+           "UH": "Interjection",
+           "VB": "Verb, base form",
+           "VBD": "Verb, past tense",
+           "VBG": "Verb, gerund or present participle",
+           "VBN": "Verb, past participle",
+           "VBP": "Verb, non-3rd person singular present",
+           "VBZ": "Verb, 3rd person singular present",
+           "WDT": "Wh-determiner",
+           "WP": "Wh-pronoun",
+           "WP$": "Possessive wh-pronoun",
+           "WRB": "Wh-adverb"}
+POS_ABBREVS_SORTED = ["n", "v", "a", "s", "r"]  # sorted by likelihood of being Blissymbols
+POS_ABBREVS = {"JJ": "a", "JJS": "s", "NN": "n", "VB": "v", "RB": "r"}
+POS_UNABBREVS = {"a": "JJ", "s": "JJS", "n": "NN", "v": "VB", "r": "RB"}
+POS_NAMES = {"a": "ADJ", "s": "ADJ", "n": "NOUN", "v": "VERB", "r": "ADV"}
+POS_FEATURE_DICT = {"n": 1, "v": 2, "a": 3, "s": 3, "r": 4}
+POS_CODE_DICT = {1: "n", 2: "v", 3: "a", 4: "r"}
+LANG_CODES = {"Arabic": "arb",
+              "Bulgarian": 'bul',
+              "Catalan": 'cat',
+              "Danish": 'dan',
+              "Dutch": 'nld',
+              "German": 'deu',
+              "Greek": 'ell',
+              "English": 'eng',
+              "Basque": 'eus',
+              "Persian": 'fas',
+              "Finnish": 'fin',
+              "French": 'fra',
+              "Galician": 'glg',
+              "Hebrew": 'heb',
+              "Croatian": 'hrv',
+              "Indonesian": 'ind',
+              "Italian": 'ita',
+              "Japanese": 'jpn',
+              "Norwegian Nyorsk": 'nno',
+              "Norwegian Bokmal": 'nob',
+              "Polish": 'pol',
+              "Portuguese": 'por',
+              "Chinese": "qcn",
+              "Slovenian": 'slv',
+              "Spanish": 'spa',
+              "Swedish": 'swe',
+              "Thai": 'tha',
+              "Malay": 'zsm'}
+BLISS_SUPPORTED_LANGUAGES = {"English",
+                             "Swedish",
+                             "Norwegian",
+                             "Finnish",
+                             "Hungarian",
+                             "German",
+                             "Dutch",
+                             "Afrikaans",
+                             "Russian",
+                             "Latvian",
+                             "Polish",
+                             "French",
+                             "Spanish",
+                             "Portuguese",
+                             "Italian",
+                             "Danish"}

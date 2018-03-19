@@ -100,11 +100,3 @@ class TranslationForm(forms.ModelForm):
     def clean_field(self, field):
         assert field in self.fields
         return self.cleaned_data[field]
-        """
-        initial = self.fields[field].initial
-
-        if not self[field].html_name in self.data:
-            return self.fields[field].initial
-        else:
-            return self.cleaned_data[field]
-        """

@@ -83,7 +83,7 @@ class CodecInfo(tuple):
 
     # Private API to allow Python to blacklist the known non-Unicode
     # codecs in the standard library. A more general mechanism to
-    # reliably distinguish test encodings from other codecs will hopefully
+    # reliably distinguish test encodings from translate_other codecs will hopefully
     # be defined for Python 3.5
     #
     # See http://bugs.python.org/issue19619
@@ -396,7 +396,7 @@ class StreamWriter(Codec):
     def __getattr__(self, name,
                     getattr=getattr):
 
-        """ Inherit all other methods from the underlying stream.
+        """ Inherit all translate_other methods from the underlying stream.
         """
         return getattr(self.stream, name)
 
@@ -638,7 +638,7 @@ class StreamReader(Codec):
     def __getattr__(self, name,
                     getattr=getattr):
 
-        """ Inherit all other methods from the underlying stream.
+        """ Inherit all translate_other methods from the underlying stream.
         """
         return getattr(self.stream, name)
 
@@ -723,7 +723,7 @@ class StreamReaderWriter:
     def __getattr__(self, name,
                     getattr=getattr):
 
-        """ Inherit all other methods from the underlying stream.
+        """ Inherit all translate_other methods from the underlying stream.
         """
         return getattr(self.stream, name)
 
@@ -750,7 +750,7 @@ class StreamRecoder:
         combination) and then written to the stream using an instance
         of the provided Writer class.
 
-        In the other direction, data is read from the stream using a
+        In the translate_other direction, data is read from the stream using a
         Reader instance and then return encoded data to the caller.
 
     """
@@ -841,7 +841,7 @@ class StreamRecoder:
     def __getattr__(self, name,
                     getattr=getattr):
 
-        """ Inherit all other methods from the underlying stream.
+        """ Inherit all translate_other methods from the underlying stream.
         """
         return getattr(self.stream, name)
 

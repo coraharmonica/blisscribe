@@ -466,8 +466,8 @@ def _parse_localename(localename):
         code, modifier = code.split('@', 1)
         if modifier == 'euro' and '.' not in code:
             # Assume Latin-9 for @euro locales. This is bogus,
-            # since some systems may use other encodings for these
-            # locales. Also, we ignore other modifiers.
+            # since some systems may use translate_other encodings for these
+            # locales. Also, we ignore translate_other modifiers.
             return code, 'iso-8859-15'
 
     if '.' in code:
@@ -504,7 +504,7 @@ def getdefaultlocale(envvars=('LC_ALL', 'LC_CTYPE', 'LANG', 'LANGUAGE')):
         with the current locale setting we thus emulate the behavior
         in the way described above.
 
-        To maintain compatibility with other platforms, not only the
+        To maintain compatibility with translate_other platforms, not only the
         LANG variable is tested, but a list of variables given as
         envvars parameter. The first found to be defined will be
         used. envvars defaults to the search path used in GNU gettext;
@@ -527,7 +527,7 @@ def getdefaultlocale(envvars=('LC_ALL', 'LC_CTYPE', 'LANG', 'LANGUAGE')):
         if sys.platform == "win32" and code and code[:2] == "0x":
             # map windows language identifier to language name
             code = windows_locale.get(int(code, 0))
-        # ...add other platform-specific processing here, if
+        # ...add translate_other platform-specific processing here, if
         # necessary...
         return code, encoding
 
