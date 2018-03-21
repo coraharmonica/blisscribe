@@ -6,4 +6,4 @@ import blisscribe_py.parse_lexica
 
 
 LEX_PARSER = blisscribe_py.parse_lexica.LexiconParser()
-LEX_PARSER.readILIMapping()
+LEX_PARSER.read_ili_mapping()

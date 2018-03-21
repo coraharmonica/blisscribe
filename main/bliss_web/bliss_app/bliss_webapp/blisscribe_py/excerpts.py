@@ -6,11 +6,12 @@ EXCERPTS:
     and reading.
 """
 import os
-from nltk.corpus import gutenberg
+from nltk.corpus import gutenberg, brown #, reuters
 
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
 
-def pairTitlesTexts(titles, texts):
+
+def pair_titles_texts(titles, texts):
     """
     Initializes a dict with titles providing keys and
     texts providing values.
@@ -29,7 +30,7 @@ def pairTitlesTexts(titles, texts):
     return books
 
 
-def parsePlaintext(filename):
+def parse_plaintext(filename):
     """
     Parses plaintext file with given filename and returns a string representing
     its contents.
@@ -47,7 +48,7 @@ def parsePlaintext(filename):
     return "".join(contents)
 
 
-def parseExcerpts(filenames):
+def parse_excerpts(filenames):
     """
         Parses plaintext files with given filenames and returns a dictionary of words
         with corresponding image file links.
@@ -65,7 +66,7 @@ def parseExcerpts(filenames):
 
     for filename in filenames:
         title = filename[14:-4].replace("-", " ")
-        books[title] = parsePlaintext(filename)
+        books[title] = parse_plaintext(filename)
 
     return books
 
@@ -78,19 +79,24 @@ sample_texts = ["/sample texts/adams-hitchhiker's_guide.txt",
                 "/sample texts/exupery-petit_prince.txt",
                 "/sample texts/kafka-metamorphosis.txt",
                 "/sample texts/nabokov-lolita.txt",
+                "/sample texts/poe-raven.txt",
                 "/sample texts/pynchon-gravity's_rainbow.txt"]
-file_ids = [file_id for file_id in gutenberg.fileids()]
-titles = [file_id[:-4].replace("-", " ") for file_id in file_ids]
-texts = [" ".join(gutenberg.words(file_id)).split("]", 1)[1] for file_id in file_ids]
+brown_texts = {file_id: " ".join(brown.words(file_id)) for file_id in brown.fileids()}
+# remove Gutenberg header for analysis
+gutenberg_texts = {file_id[:-4].replace("-", " "): " ".join(gutenberg.words(file_id)).split("]", 1)[1]
+                   for file_id in gutenberg.fileids()}
+
 books = {}
-books.update(pairTitlesTexts(titles, texts))
-books.update(parseExcerpts(sample_texts))
+books.update(parse_excerpts(sample_texts))
+books.update(brown_texts)
+books.update(gutenberg_texts)
 
 
 # Fiction
 alice_in_wonderland = books["carroll alice"]
-alice_in_wonderland_polish = parsePlaintext("sample texts/alice_in_wonderland_polish.txt")
+alice_in_wonderland_polish = parse_plaintext("sample texts/alice_in_wonderland_polish.txt")
 hitchhikers_guide = books["adams hitchhiker's_guide"]
+metamorphosis = books["kafka metamorphosis"]
 moby_dick = books["melville moby_dick"]
 petit_prince = books["exupery petit_prince"]
 wizard_of_oz = books["baum wizard_of_oz"]
@@ -98,10 +104,10 @@ wizard_of_oz = books["baum wizard_of_oz"]
 blake_songs = books["blake poems"]
 leaves_of_grass = books["whitman leaves"]
 paradise_lost = books["milton paradise"]
+the_raven = books["poe raven"]
 # Scripture
 kjv = books["bible kjv"]
 # Theatre
 hamlet = books["shakespeare hamlet"]
 julius_caesar = books["shakespeare caesar"]
 macbeth = books["shakespeare macbeth"]
-

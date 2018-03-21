@@ -2,81 +2,51 @@
 """
 DEMO:
 
-    Used to demonstrate translation capabilities of
-    blisscribe_py.py BlissTranslator.translate().
+    Used to demo BlissTranslator.translate().
+
+    Also used to test functions whose output is hard
+    to test (e.g. translate() producing a PDF translation).
 
     Uncomment the calls to BlissTranslator's translate()
-    method below to translate Alice in Wonderland or
-    Hitchhiker's Guide to the Galaxy to Blissymbols.
+    method below to translate Alice in Wonderland,
+    Hitchhiker's Guide to the Galaxy, and more to Blissymbols.
 
-    A selection of defn texts from Project Gutenberg
+    A selection of texts from Project Gutenberg
     can be found in the excerpts module.  Additional
     texts are located as plaintext files in this
-    directory under the defn texts folder.
+    directory under the "sample texts" folder.
 
-    If the user wishes to supply their own texts, it is
-    recommended to place them in this directory or in the
-    defn texts folder, then call excerpts.parsePlaintext()
-    on the filepath relative to the main folder.
+    To use custom texts, place them in the sample texts folder,
+    then call excerpts.parse_plaintext() on the filename.
 """
-import blisscribe
+from blisscribe import *
 import excerpts
 
-#bt = blisscribe.BlissTranslator(language="Polish")
-#lp = blisscribe.LexiconParser(bt)
-#lp.writeBlissLexicon()
-#multi_dict = lp.getMultilingualBlissDict()
-#lp.writeBlissWordnetEncoding(lp.blissDictToEncodingWordnet(multi_dict))
 
+bt = BlissTranslator(language='English')
+bt.set_sub_all(True)                # add subtitles below all Blissymbols
+bt.set_fast_translate(True)         # translate words to Blissymbols immediately
+bt.set_translatables(other=True)    # translate all parts of speech to Blissymbols
+bt.set_translate_all(False)         # translate ALL words, taking user input if necessary
+bt.set_machine_translate(False)     # enable machine learning translations for unknown words
+bt.set_safe_translate(False)        # translate words with uncertain Blissymbols
 
-'''
-DefaultTranslator = blisscribe.BlissTranslator()  # defaults to English, Times New Roman, size 30
-DefaultTranslator.setSubAll(True)         # add Polish subtitles below all Blissymbols
-DefaultTranslator.chooseOtherPOS(True)    # translate all parts of speech possible to Blissymbols
-DefaultTranslator.setFastTranslate(True)  # translate Polish to Blissymbols immediately
-DefaultTranslator.setTranslateAll(True)
-#DefaultTranslator.translate(excerpts.kjv[:500], title="The Bible", title_page=False)
-#DefaultTranslator.translate(excerpts.leaves_of_grass[:500], title="Leaves of Grass", title_page=False)
-DefaultTranslator.translate(excerpts.hitchhikers_guide[:300], title="The Hitchhiker's Guide to the Galaxy")
-'''
+# bt.translate(excerpts.alice_in_wonderland[:500], title="Alice in Wonderland")
+# bt.translate(excerpts.hitchhikers_guide[:500], title="The Hitchhiker's Guide to the Galaxy")
+# bt.translate(excerpts.kjv[:500], title="The Bible")
+# bt.translate(excerpts.leaves_of_grass[:500], title="Leaves of Grass", title_page=False)
 
-CustomTranslator = blisscribe.BlissTranslator(language="English", font_path=blisscribe.BlissTranslator.SANS_FONT)
-CustomTranslator.setSubAll(True)
-CustomTranslator.chooseOtherPOS(True)
-CustomTranslator.setFastTranslate(True)
-CustomTranslator.setTranslateAll(True)
-CustomTranslator.chooseOtherPOS(True)
-CustomTranslator.setSafeTranslate(False)
-#CustomTranslator.lex_parser.writeBlissWordnet(CustomTranslator.getEngBlissDict())
-CustomTranslator.translate("Hi") #"Ich habe kein lust mehr, unser wir uns.")
+# Polish
+bt.set_language("Polish")
+bt.set_machine_translate(False)
+bt.set_safe_translate(True)
+# bt.translate(excerpts.alice_in_wonderland_polish[:500], title='Alicja w Krainie Czar\xc3\xb3w')
 
-'''
-# Polish translation
-CustomTranslator = blisscribe.BlissTranslator(language="Polish", font_path=blisscribe.BlissTranslator.SANS_FONT)
-CustomTranslator.setSubAll(True)         # add Polish subtitles below all Blissymbols
-CustomTranslator.chooseOtherPOS(True)    # translate all parts of speech possible to Blissymbols
-CustomTranslator.setFastTranslate(True)  # translate Polish to Blissymbols immediately
-CustomTranslator.setTranslateAll(True)
-#CustomTranslator.translate("Alicja", title='Alicja w Krainie Czar\xc3\xb3w')
-CustomTranslator.translate(excerpts.alice_in_wonderland_polish[:200], title='Alicja w Krainie Czar\xc3\xb3w')
+# French
+bt.set_language("French")
+# bt.translate(excerpts.petit_prince[:500], title="Le petit prince")
 
+# Spanish
+bt.set_language("Spanish")
+# bt.translate("el partido de futbol es esta noche", title="My translation")
 
-# French translation
-CustomTranslator = blisscribe.BlissTranslator(language="French", font_path=blisscribe.BlissTranslator.SANS_FONT)
-CustomTranslator.setSubAll(True)         # add Polish subtitles below all Blissymbols
-CustomTranslator.chooseOtherPOS(True)    # translate all parts of speech possible to Blissymbols
-CustomTranslator.setFastTranslate(True)  # translate Polish to Blissymbols immediately
-CustomTranslator.setTranslateAll(True)
-CustomTranslator.setSafeTranslate(False)
-CustomTranslator.chooseOtherPOS(True)
-CustomTranslator.translate(excerpts.petit_prince[100:200], title="Le petit prince")
-CustomTranslator.translate("ballon")
-
-CustomTranslator = blisscribe.BlissTranslator(language="English")
-CustomTranslator.chooseOtherPOS(True)
-CustomTranslator.setSubAll(True)
-CustomTranslator.setFastTranslate(True)
-CustomTranslator.setTranslateAll(True)
-CustomTranslator.translate("soccer", title="Test", title_page=False)
-'''
-#CustomTranslator.translate("el partido de futbol es esta noche", title="My translation")

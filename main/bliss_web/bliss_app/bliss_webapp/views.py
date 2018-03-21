@@ -47,7 +47,7 @@ class TranslatedPageView(FormView):
 
 
 def downloadPdf(request):
-    path = smart_str(helpers.FormTranslator.FILE_PATH + "/")  # + '/translation.pdf')
+    path = smart_str(helpers.FormTranslator.FILE_PATH + "/")
     form = TranslationForm(data=request.POST)
 
     if form.is_valid():
@@ -98,7 +98,7 @@ def getTranslationText(request):
         # populate form w/ user input
         return render(request, 'translated.html')
 
-    # if a GET (or any other method) we'll create a blank form
+    # if a GET (or any translate_other method) we'll create a blank form
     else:
         form = TranslationForm()
 
