@@ -14,7 +14,7 @@ IMG_PATH = PATH + "/symbols/png/full/"
 def equate_images(img1, img2):
     """
     Returns a 2-tuple of the given images but
-    set to the same size as each translate_other.
+    set to the same size as each other.
 
     :param img1: Image, first image to set equal in size
     :param img2: Image, second image to set equal in size
@@ -183,7 +183,7 @@ def get_trans_bliss_img(trans_word, max_width=None, max_height=None):
     font_size = trans_word.translator.font_size
 
     if not trans_word.has_blissymbol():
-        return get_word_img(trans_word.get_word(), font_path, font_size, max_height)
+        return get_word_img(trans_word.word, font_path, font_size, max_height)
     else:
         img = get_bliss_img(img_filename, max_width, max_height)
         if trans_word.is_plural_noun():
@@ -205,7 +205,7 @@ def get_subbed_bliss_img(trans_word, max_width=None, max_height=None, subs=True)
     :param subs: bool, whether to subtitle output image
     :return: Image, subtitled Blissymbol image
     """
-    word = trans_word.get_word()
+    word = trans_word.word
     word = trans_word.translator.unicodize(word)
     bliss_img = get_trans_bliss_img(trans_word, max_width, max_height)
     font_path = trans_word.translator.font_path

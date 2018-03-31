@@ -55,7 +55,7 @@ class ConceptAnalyzer:
         if len(text) == 0:
             return
 
-        bliss_dict = self.translator.get_eng_bliss_dict()
+        bliss_dict = self.translator.eng_bliss_dict
         width, height = 800, 600
         bg = Image.new("RGBA", (width, height), (255, 255, 255, 0))
         trans_words = self.translator.translate_to_transwords(text)

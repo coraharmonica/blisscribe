@@ -31,7 +31,7 @@ class BlissLearner:
 
     def __init__(self, bliss_translator):
         self.translator = bliss_translator
-        self.bliss_lexicon = self.translator.get_eng_bliss_dict()
+        self.bliss_lexicon = self.translator.eng_bliss_dict
         self.classifier = DecisionTreeClassifier()
         self.questions = list()
         self.answers = list()
@@ -69,7 +69,7 @@ class BlissLearner:
             if bliss_set is not None:
                 print entry, bliss_set
                 bs = self.translator.word_to_blissymbol(entry)
-                blissymbols = sorted(bliss_set, key=lambda b: len(b.get_derivations()), reverse=True)
+                blissymbols = sorted(bliss_set, key=lambda bs: len(bs.derivations), reverse=True)
                 if bs in bliss_set:
                     blissymbols.remove(bs)
                 if bs is not None:
@@ -78,9 +78,9 @@ class BlissLearner:
                 print entry, "has the Blissymbols", blissymbols
 
                 for blissymbol in blissymbols:
-                    synsets = blissymbol.get_synsets()
+                    synsets = blissymbol.synsets
                     if len(synsets) > 0:
-                        ss = blissymbol.get_synset()
+                        ss = blissymbol.synset
                         synsets = list(synsets)
                         synsets.insert(0, ss)
                         unis = blissymbol.get_deriv_unicode()
@@ -110,15 +110,15 @@ class BlissLearner:
                 trans_word = self.translator.make_translation_word(name, pos_unabbrev)
 
                 if trans_word.has_blissymbol():
-                    blissymbol = trans_word.get_blissymbol()
+                    blissymbol = trans_word.blissymbol
                     unis = blissymbol.get_deriv_unicode()
                     uni = self.unicodes_to_str(unis)
                     pos_code = self.pos_to_int(pos)
                     word_features = [wn_num, pos_code]
-                    synsets = blissymbol.get_synsets()
+                    synsets = blissymbol.synsets
 
                     if word_features not in self.questions and len(synsets) > 0:
-                        synset = blissymbol.get_synset()
+                        synset = blissymbol.synset
                         synsets = list(synsets)
                         synsets.insert(0, synset)
                         for synset in synsets:
@@ -528,17 +528,17 @@ class BlissLearner:
         :return: List[int, str], this word's WordNet word ID
             and pos code
         """
-        if trans_word.get_eng_lemma() is None:
+        if trans_word.eng_lemma is None:
             trans_word.init_eng_lemma(debug=True)
 
-        lexeme = trans_word.get_eng_lemma()
+        lexeme = trans_word.eng_lemma
 
         if lexeme not in self.wordnet_words:
             lexeme = lexeme.title()
             if lexeme not in self.wordnet_words:
                 return []
 
-        pos = trans_word.get_pos()
+        pos = trans_word.pos
         pos_abbrev = self.translator.abbreviate_tag(pos)
         pos_code = POS_FEATURE_DICT[pos_abbrev]
 
@@ -568,13 +568,24 @@ class BlissLearner:
                 else:
                     return []
         else:
-            word_id = trans_word.get_synset_id()
+            word_id = trans_word.synset_id
 
         if word_id is None:
             return []
         else:
             pair = [int(word_id), pos_code]
             return pair
+
+    def predict(self, pair):
+        """
+        Returns a string of Blissymbol unicodes predicted from
+        this BlissLearner's classifier with this Wordnet number
+        and word pair.
+
+        :param pair: List[int, str], WordNet number and word
+        :return: List[str], strings of Blissymbol unicodes
+        """
+        return self.classifier.predict([pair])
 
     def predict_word(self, trans_word, debug=True):
         """
@@ -588,79 +599,79 @@ class BlissLearner:
 
         if len(pair) == 0:
             return pair
+        else:
+            print(pair)
+            blissymbols = list()
+            prediction = self.predict(pair)
+            prediction = prediction[0]
+            unicodes = str(prediction).split(" ")
+            unicodes = ["U+" + uni for uni in unicodes if uni != ""]
 
-        lexeme = trans_word.get_eng_lemma()
-        blissymbols = list()
-
-        print(pair)
-        prediction = self.classifier.predict([pair])
-        prediction = prediction[0]
-        unicodes = str(prediction).split(" ")
-        unicodes = ["U+" + uni for uni in unicodes if uni != ""]
-
-        for uni in unicodes:
-            symbols = self.get_unicode_to_bliss()[uni]
-            try:
-                bs = trans_word.eng_bliss_dict[symbols[0]]
-            except KeyError:
-                symbols = symbols[1:]
-            else:
-                print symbols[0]
-                print bs
-                blissymbol = next(iter(bs))
-                blissymbol = blissymbol.get_bliss_name()
-                blissymbols.append(blissymbol)
-                continue
-
-            for symbol in symbols:
-                if symbol in trans_word.eng_bliss_dict:
-                    blissymbol = trans_word.eng_bliss_dict[symbol][0]
+            for uni in unicodes:
+                symbols = self.get_unicode_to_bliss()[uni]
+                try:
+                    bs = trans_word.eng_bliss_dict[symbols[0]]
+                except KeyError:
+                    symbols = symbols[1:]
+                else:
+                    print symbols[0]
+                    print bs
+                    blissymbol = next(iter(bs))
                     blissymbol = blissymbol.get_bliss_name()
+                    blissymbols.append(blissymbol)
+                    continue
 
-                    if debug:
-                        print("I'm about to translate the word " + lexeme +
-                              ", " + trans_word.get_pos() + " with the Blissymbol " + str(blissymbol) + ".  Is that ok?")
-                        answer = raw_input("Enter y for yes, n for no.  Enter s to skip to the next Blissymbol.\n")
+                for symbol in symbols:
+                    if symbol in trans_word.eng_bliss_dict:
+                        blissymbol = trans_word.eng_bliss_dict[symbol][0]
+                        blissymbol = blissymbol.get_bliss_name()
 
-                        if answer == "n":
-                            ans = raw_input("Enter y to translate this word to Blissymbols yourself, " +
-                                            "or n to choose not to translate it to Blissymbols.\n")
-                            if ans == "y":
-                                blissymbols = trans_word.add_new_derivations() #self.add_new_derivations(trans_word)
-                                break
+                        if debug:
+                            print("I'm about to translate the word " + trans_word.eng_lemma +
+                                  ", " + trans_word.pos + " with the Blissymbol " + str(blissymbol) + ".  Is that ok?")
+                            answer = raw_input("Enter y for yes, n for no.  Enter s to skip to the next Blissymbol.\n")
+
+                            if answer == "n":
+                                ans = raw_input("Enter y to translate this word to Blissymbols yourself, " +
+                                                "or n to choose not to translate it to Blissymbols.\n")
+                                if ans == "y":
+                                    blissymbols = trans_word.add_new_derivations() #self.add_new_derivations(trans_word)
+                                    break
+                                else:
+                                    return []
+
+                            elif answer == "s":
+                                continue
+
                             else:
-                                return []
+                                blissymbols.add(blissymbol)
 
-                        elif answer == "s":
-                            continue
+                        break
 
-                        else:
-                            blissymbols.add(blissymbol)
+            if debug:
+                print("I'm about to translate the word " + trans_word.eng_lemma +
+                      " with the Blissymbols " + str(blissymbols) + ".  Is that ok?")
+                answer = raw_input("Enter y for yes, n for no.\n")
 
-                    break
+                if answer == "n":
+                    blissymbols = trans_word.add_new_derivations() #self.add_new_derivations(trans_word)
+                    unicodes = []
+                    symbols = []
+                    for symbol in blissymbols:
+                        symbols += symbol.split(",")
 
-        if debug:
-            print("I'm about to translate the word " + lexeme +
-                  " with the Blissymbols " + str(blissymbols) + ".  Is that ok?")
-            answer = raw_input("Enter y for yes, n for no.\n")
-
-            if answer == "n":
-                blissymbols = trans_word.add_new_derivations() #self.add_new_derivations(trans_word)
-                unicodes = []
-
-                for symbol in blissymbols:
-                    symbols = symbol.split(",")
                     for symbol in symbols:
                         try:
-                            unicode = (self.get_bliss_to_unicode()[symbol])[0]
+                            unis = self.get_bliss_to_unicode()[symbol]
                         except KeyError:
                             continue
                         else:
-                            unicodes.append(self.unicode_to_str(unicode))
+                            uni = unis[0]
+                            unicodes.append(self.unicode_to_str(uni))
                             break
 
-                prediction = " ".join(unicodes)
+                    prediction = " ".join(unicodes)
 
-            self.add_question_answer(pair, prediction)
+                self.add_question_answer(pair, prediction)
 
-        return blissymbols
+            return blissymbols
