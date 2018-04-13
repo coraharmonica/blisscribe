@@ -18,7 +18,7 @@ class LanguageParser(WiktionaryParser):
         self.language = language
         self.url = self.url % self.language
         # --> alphabets
-        self.alphabets = self.fetch_alphabets()
+        self.alphabets = self.load_alphabets()
         self.alphabet = self.find_alphabet(self.language)
         # --> tokenizers
         self.word_tokenizer = None
@@ -32,66 +32,11 @@ class LanguageParser(WiktionaryParser):
         :return: None
         """
         if self.language != language:
-            self.refresh_json()
+            self.refresh_data()
             self.__init__(language)
 
     # LEXICA
     # ------
-    def init_lexicon(self, language=None, lim=None):
-        """
-        Returns a set of all words in this language, up to lim.
-        ~
-        If lim is None, returns all words.
-
-        :param language: str, language of lexicon to retrieve
-        :param lim: int, number of words in lexicon to retrieve
-        :return: List[str], words in LanguageParser's language
-        """
-        lang_code = self.get_lang_code(language)
-        words = list()
-
-        if lang_code is not None:
-            path = self.PATH + "/resources/frequency_words/content/2016/%s/%s_full.txt" % (lang_code, lang_code)
-
-            with open(path, 'r') as lexicon:
-                line_no = 0
-                for line in lexicon:
-                    word = line.split(" ", 1)[0]
-                    words.append(self.unicodize(word))
-                    if lim:
-                        if line_no > lim:
-                            break
-                        line_no += 1
-
-        return words
-
-    def add_lexicon(self, language, lexicon):
-        """
-        Adds the given lexicon to LEXICA under the given language.
-
-        :param language: str, language of lexicon
-        :param lexicon: List[str], all words in given language
-        :return: None
-        """
-        self.LEXICA[language] = lexicon
-
-    def find_lexicon(self, language, lim=100000):
-        """
-        Returns the lexicon for the given language.
-        ~
-        If no lexicon for this language exists, creates new
-        lexicon for language, adds to LEXICA, and returns the result.
-
-        :param language: str, language of lexicon
-        :return: List[str], all words in given language
-        """
-        try:
-            return self.LEXICA[language]
-        except KeyError:
-            lexicon = self.init_lexicon(language, lim)
-            self.add_lexicon(language, lexicon)
-            return lexicon
-
     def in_lexicon(self, word, language=None):
         """
         Returns True if this word is in this language's lexicon
@@ -280,12 +225,13 @@ class LanguageParser(WiktionaryParser):
         :return: List[str], all letters in given language's alphabet
         """
         language = self.verify_language(language)
-        alphabet = self.fetch_alphabet(language)
+        alphabet = self.load_alphabet(language)
 
         if len(alphabet) == 0:
             alphabet = self.init_alphabet(language)
             self.alphabets[language] = alphabet
 
+        self.refresh_alphabets()
         return sorted(alphabet)
 
     def valid_letter(self, letter):
@@ -314,19 +260,19 @@ class LanguageParser(WiktionaryParser):
             cells.extend(row.findAll("td")[-1].findAll("a"))
         return cells
 
-    def verify_word(self, word, language=None):
+    def word_in_alphabet(self, word, language=None):
         """
-        Returns True if given word contains only characters from
-        this LanguageParser's alphabet, False otherwise.
+        Returns True if this word contains only characters from
+        this language's alphabet, False otherwise.
 
-        :param word: str, word to verify whether in language
-        :param language: str, language to verify word with
+        :param word: str, word to verify whether in language alphabet
+        :param language: str, language of alphabet
         :return: bool, whether word contains only characters from language
         """
         language = self.verify_language(language)
         word_chars = set(word)
         alphabet = self.find_alphabet(language)
-        return len(word_chars.difference(alphabet)) == 0 and self.in_lexicon(word, language)
+        return len(word_chars.difference(alphabet)) == 0
 
     # TOKENIZERS
     # ----------
@@ -337,8 +283,26 @@ class LanguageParser(WiktionaryParser):
 
         :return: None
         """
+        self.init_word_tokenizer()
+        self.init_sent_tokenizer()
+
+    def init_word_tokenizer(self):
+        """
+        Initializes this LanguageParser's word_tokenizer if it
+        is None.
+
+        :return: None
+        """
         if self.word_tokenizer is None:
             self.word_tokenizer = WordPunctTokenizer()
+
+    def init_sent_tokenizer(self):
+        """
+        Initializes this LanguageParser's sent_tokenizer if it
+        is None.
+
+        :return: None
+        """
         if self.sent_tokenizer is None:
             self.sent_tokenizer = PunktSentenceTokenizer()
 
@@ -349,7 +313,8 @@ class LanguageParser(WiktionaryParser):
         :param words: str, string to tokenize by word
         :return: List[str], phrase tokenized by word
         """
-        self.init_tokenizers()
+        self.init_word_tokenizer()
+        words = self.unicodize(words)
         words = self.word_tokenizer.tokenize(words)
         return words
 
@@ -360,6 +325,8 @@ class LanguageParser(WiktionaryParser):
         :param sents: str, string to tokenize by sentence
         :return: List[str], phrase tokenized by sentence
         """
+        self.init_sent_tokenizer()
+        sents = self.unicodize(sents)
         sentences = self.sent_tokenizer.tokenize(sents)
         return sentences
 
@@ -370,6 +337,7 @@ class LanguageParser(WiktionaryParser):
         :param phrase: str, string to tokenize by sentence and word
         :return: List[str], phrase tokenized by sentence and word
         """
+        self.init_tokenizers()
         phrases = self.unicodize(phrase)
         sentences = self.tokenize_sents(phrases)
         phrases_tokens = [self.tokenize_words(sentence) for sentence in sentences]
@@ -377,15 +345,15 @@ class LanguageParser(WiktionaryParser):
 
     # JSON
     # ----
-    def fetch_alphabets(self):
+    def load_alphabets(self):
         """
         Returns a memoized dictionary of alphabets in every language.
 
         :return: dict(str, list), where str is language and list is alphabet
         """
-        return self.fetch_json("alphabets")
+        return self.load_json("alphabets")
 
-    def fetch_alphabet(self, language=None):
+    def load_alphabet(self, language=None):
         """
         Returns the memoized alphabet for this language.
 
@@ -394,7 +362,7 @@ class LanguageParser(WiktionaryParser):
         language = self.verify_language(language)
         return self.alphabets.setdefault(language, list())
 
-    def refresh_json(self):
+    def refresh_data(self):
         """
         Dumps this LanguageParser's data from...
             alphabets to alphabets.json, and
@@ -448,6 +416,7 @@ class LanguageParser(WiktionaryParser):
         :param poses: Set[str], parts-of-speech for output lemma
         :return: str, lemma for given word
         """
+        word = self.entry_word(word, language)
         lemmas = self.word_lemmas(word, language, pos)
         if len(lemmas) != 0:
             return lemmas[0]
@@ -473,24 +442,58 @@ class LanguageParser(WiktionaryParser):
             poses = self.PARTS_OF_SPEECH
 
         language = self.verify_language(language)
-        word = self.unicodize(self.entry_word(word, language))
+        word = self.unicodize(word)
+        inflections = self.find_word_inflections(word, language)
 
-        inflections = self.lookup_word_inflections(word, language)
         if inflections is not None:
             lemmas.add(word)
         else:
-            etym = self.find_word_inflections(word, language)
-            if etym is not None:
-                lemmas.add(word)
-            else:
-                stemwords = self.find_stemwords(word, language, poses)
-                lemmas.update(stemwords)
+            stemwords = self.find_stemwords(word, language, poses)
+            stemwords = self.filter_language_words(stemwords, language)
+            lemmas.update(stemwords)
 
-                if len(lemmas) == 0:
-                    headwords = self.find_headwords(word, language, poses)
-                    lemmas.update(headwords)
+            if len(lemmas) == 0:
+                headwords = self.find_headwords(word, language, poses)
+                headwords = self.filter_language_words(headwords, language)
+                lemmas.update(headwords)
 
-        return [lemma for lemma in lemmas.items() if self.verify_word(lemma, language)]
+        return lemmas.items()
+
+    def is_word_in_language(self, word, language=None):
+        """
+        Returns True if this word is in this language,
+        False otherwise.
+        ~
+        e.g. is_word_in_language("balloon", "English") -> True
+             is_word_in_language("ballon", "English") -> False
+             is_word_in_language("ballon", "French") -> True
+
+        :param word: str, word to check whether in language
+        :param language: str, language to check
+        :return: bool, whether word is in language
+        """
+        language = self.verify_language(language)
+        word_page = self.word_page(word)
+
+        if word_page is None:
+            lang_lexicon = self.find_lexicon(language)
+            return word in lang_lexicon
+        else:
+            return self.valid_page(word_page, language)
+
+    def filter_language_words(self, words, language=None):
+        """
+        Returns this list of words filtered to only include
+        words in this language's lexicon.
+        ~
+        e.g. filter_language_words(["balloon", "ballon"], "English") -> ["balloon"]
+             filter_language_words(["balloon", "ballon"], "French") -> ["ballon"]
+
+        :param words: List[str], list of words to filter by language
+        :param language: str, desired language of output words
+        :return: List[str], words only in this language
+        """
+        return [word for word in words if self.is_word_in_language(word, language)]
 
     def uninflect(self, word, language=None):
         """
@@ -508,7 +511,7 @@ class LanguageParser(WiktionaryParser):
                     if inflection == word:
                         return word_entry
         else:
-            return self.lemmatize(word)
+            return self.lemmatize(word, language=language)
 
     # IPAS
     # ----
@@ -560,6 +563,144 @@ class LanguageParser(WiktionaryParser):
                 ipas.append(ipa)
 
         return ipas
+
+    def find_headwords(self, word, language=None, poses=None):
+        """
+        Returns this word's head word from its Wiktionary entry
+        in this language for each part of speech in poses.
+        ~
+        N.B. A "head word" is the first item in the first sublist
+        under a word's part-of-speech heading:
+
+            e.g. "Noun": [["miles", None], ["plural of mile", "mile"]]
+                            ^^^^^
+                          head word
+
+        Part-of-speech entries contain only 1 head word but may
+        contain >=1 stem words.
+
+        :param word: str, word of Wiktionary entry to lookup
+        :param language: Optional[str], language of entry to lookup
+        :param poses: Optional[List], parts of speech to lookup
+        :return: List[str], given word's head words for this language
+        """
+        pos_entries = self.find_pos_entries(word, language, poses)
+        headwords = list()
+
+        for pos in pos_entries:
+            pos_entry = pos_entries[pos]
+            try:
+                headword = pos_entry[0][0]
+            except IndexError:
+                continue
+            else:
+                if headword is not None and headword in self.find_lexicon(language):
+                    headwords.append(headword)
+
+        return headwords
+
+    def find_stemwords(self, word, language=None, poses=None):
+        """
+        Returns this word's stem words from its Wiktionary entry
+        in this language.
+        ~
+        N.B. A "stem word" is the second item in all but the first sublist
+        under a word's part-of-speech heading:
+
+            e.g. "Noun": [["miles", None], ["plural of mile", "mile"]]
+                                                               ^^^^
+                                                             stem word
+
+        Entries may contain >=1 stem words but will only contain 1 head word.
+
+        :param word: str, word of Wiktionary entry to lookup
+        :param language: Optional[str], language of entry to lookup
+        :param poses: Optional[List], parts of speech to lookup
+        :return: List[str], given word's stem words for this language
+        """
+        pos_entries = self.find_pos_entries(word, language, poses)
+        stemwords = list()
+
+        for pos in pos_entries:
+            pos_entry = pos_entries[pos]
+            try:
+                stems = [entry[1] for entry in pos_entry[1:]
+                         if entry[1] is not None]
+            except IndexError:
+                continue
+            else:
+                stemwords += stems
+
+        return OrderedSet(stemwords).rank_items()
+
+    def find_english_translation(self, word, language=None):
+        """
+        Returns this word's translation from this language to English,
+        according to Wiktionary.
+
+        :param word: str, word to translate
+        :param language: str, language of word
+        :return: str, word's translation in English
+        """
+        language = self.verify_language(language)
+        word = self.unicodize(word)
+
+        if language != "English":
+            print "IN FINDING ENGLISH TRANSLATION"
+            translations = set()
+            pos_entries = self.find_pos_entries(word, language)
+            eng_entries = set()
+
+            print "\t", pos_entries
+            for pos in pos_entries:
+                entry = pos_entries[pos]
+                eng_entry = entry[1:]
+                eng_entries.update([e[0] for e in eng_entry])
+
+            for translation in translations:
+                translation = translation.replace(u"to", u"").strip()
+                if self.word_in_wiktionary(translation, "English"):
+                    return self.clean_parentheticals(translation)
+        else:
+            return word
+
+    def find_english_translations(self, word, language=None, pos=None):
+        """
+        Returns this word's translations from this language to English,
+        according to Wiktionary.
+
+        :param word: str, word to translate
+        :param language: str, language of word
+        :return: Set(str), word's translations in English
+        """
+        language = self.verify_language(language)
+        word = self.unicodize(word)
+        eng_translations = set()
+
+        if language != "English":
+            translations = set()
+            print "finding pos entries for", word
+            pos_entries = self.find_pos_entries(word, language, poses={pos})
+            if len(pos_entries) == 0:
+                pos_entries = self.find_pos_entries(word, language)
+            print "found pos entries for", word
+
+            print "\t", pos_entries
+            for pos_entry in pos_entries:
+                entry = pos_entries[pos_entry]
+                eng_entry = entry[1:]
+                translations.update([e[1] for e in eng_entry if e[1] is not None and e[1] != word])
+
+            print "\t", translations
+
+            for translation in translations:
+                translation = self.clean_parentheticals(translation.strip())
+                if self.word_in_wiktionary(translation, "English"):
+                    print "\t", translation, "is an English word"
+                    eng_translations.add(translation)
+
+            print
+        return eng_translations
 
     def find_word_ipas(self, word, language=None):
         """
@@ -619,6 +760,7 @@ class LanguageParser(WiktionaryParser):
         """
         language = self.verify_language(language)
         word_entry = self.find_wiktionary_entry(word, language)
+
         if word_entry is not None:
             poses = [sect for sect in word_entry
                      if sect in self.PARTS_OF_SPEECH]

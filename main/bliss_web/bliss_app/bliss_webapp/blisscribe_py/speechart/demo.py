@@ -15,7 +15,7 @@ img.save("out/en_word_chart.png")    # save chart to file
 
 dfa = MorphemeChart("Finnish")
 dfa.word_declension("nuo")  # adds nuo's declension to this dfa
-dfa.refresh_json()          # stores all changes from this DFA's data back to JSONs (in data)
+dfa.refresh_data()          # stores all changes from this DFA's data back to JSONs (in data)
 dfa.clear()                 # resets this DFA's states
 # fetch nearest homophones between languages
 dfa.nearest_homophone("naapuri", "English")

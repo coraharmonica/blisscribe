@@ -2,7 +2,7 @@
 """
 TEST:
 
-    Testing suite for PhonemeParser and derived classes.
+    Testing suite for WiktionaryParser and derived classes.
 """
 from phoneme_parser import *
 import unittest

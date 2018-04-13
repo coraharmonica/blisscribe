@@ -203,7 +203,7 @@ class PhonemeParser(LanguageParser):
             if ipa is not None:
                 ipas.add(ipa)
 
-        self.refresh_json()
+        self.refresh_data()
         return ipas
 
     def common_ipa_words(self, lim=50000):
@@ -258,7 +258,7 @@ class PhonemeParser(LanguageParser):
                     if only_top:
                         break
 
-        self.refresh_json()
+        self.refresh_data()
         return ipa_pairs
 
     # IPA/PHONEME MANIPULATION

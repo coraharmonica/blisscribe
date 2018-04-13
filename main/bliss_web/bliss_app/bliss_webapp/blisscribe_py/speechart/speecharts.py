@@ -81,6 +81,32 @@ class Chart(MorphemeParser):
         """
         self.init_states()
 
+    # DFA CLASS METHODS
+    # -----------------
+    @classmethod
+    def new_state(cls):
+        return
+
+    @classmethod
+    def add_success_state(cls, state):
+        return
+
+    @classmethod
+    def add_state_colour(cls, state, obj):
+        return
+
+    @classmethod
+    def state_destinations(cls, state):
+        return
+
+    @classmethod
+    def add_start_state(cls, state):
+        return
+
+    @classmethod
+    def transition(cls, state, transition):
+        return
+
 
 class Speechart(Chart):
     """
@@ -117,8 +143,18 @@ class Speechart(Chart):
         """
         self.success_states.setdefault(state, set())
         self.success_states[state].update(poses)
-        for pos in poses:
-            self.add_state_colour(state, pos)
+        self.add_state_colours(state, poses)
+
+    def add_success_states(self, states):
+        """
+        Adds these states as success states to this Speechart's
+        success_states.
+
+        :param states: List[int], states to add to success_states
+        :return: None
+        """
+        for state in states:
+            self.add_success_state(state)
 
     def add_state_colour(self, state, pos):
         """
@@ -146,6 +182,10 @@ class Speechart(Chart):
 
         self.state_colours[state] = colour
 
+    def add_state_colours(self, state, poses):
+        for pos in poses:
+            self.add_state_colour(state, pos)
+
     def state_destinations(self, state):
         """
         Returns a dictionary of all destination states for the given state.
@@ -165,14 +205,25 @@ class Speechart(Chart):
 
     def state_labels(self, state):
         """
-        Returns all outgoing state labels for this state.
+        Returns a dict of all outgoing state labels for this state.
 
         :param state: int, state in this Speechart
-        :return: dict(int, str), where int is state and str is destinations
+        :return: dict(int, str), where...
+            key (int) - outgoing state
+            val (str) - label for all destinations
         """
         destinations = self.state_destinations(state)
         labels = {dest: ", ".join(destinations[dest]) for dest in destinations}
         return labels
+
+    def label_states(self, label):
+        """
+        Returns a list of all states with this label.
+
+        :param label: Any, label for a state's destination
+        :return: List[int], all states with this label
+        """
+        return [self.transitions[t] for t in self.transitions if t[1] == label]
 
     def add_start_label(self, label):
         """
@@ -259,6 +310,14 @@ class Speechart(Chart):
                 break
         return curr_state
 
+    def transition_label(self, state=None):
+        labels = self.transitions_labels(state)
+
+        if len(labels) != 0:
+            return [", ".join(label) for label in labels.values()]
+        else:
+            return list()
+
     def transitions_labels(self, state=None):
         """
         Returns the set of all transition labels in this Chart.
@@ -266,7 +325,9 @@ class Speechart(Chart):
         If more than 1 label belongs to a transition, this method joins all
         labels with commas.
 
-        :return: List[str], new state after all chars transitions
+        :return: dict(tuple, set), where...
+            key (tuple(int, int)) - state-transition pair
+            val (Set(str)) - transition labels
         """
         labels = {}
 
@@ -278,7 +339,7 @@ class Speechart(Chart):
                 labels.setdefault(pair, set())
                 labels[pair].add(label)
 
-        return [", ".join(label) for label in labels.values()]
+        return labels
 
     # AESTHETICS
     # ----------
@@ -341,13 +402,26 @@ class Speechart(Chart):
 
         :return: int, text size
         """
-        transitions = self.transitions_labels()
-        return self.text_size(max(transitions,
-                                  key=lambda txt: self.text_size(txt)[0]))
+        transitions = self.transition_label()
+        if len(transitions) == 0:
+            return 0
+        else:
+            return self.text_size(max(transitions,
+                                      key=lambda txt: self.text_size(txt)[0]))
 
     # IMAGES
     # ------
     def empty_image(self):
+        """
+        Returns an invisible image with no dimensions.
+        ~
+        Used for building images off each other.
+
+        :return: Image, invisible placeholder image
+        """
+        return rectangle(0, 0, fill=None)
+
+    def placeholder_image(self):
         """
         Returns an invisible image of RADIUS * RADIUS dimensions.
         ~
@@ -384,10 +458,23 @@ class Speechart(Chart):
                            font=self.mini_font), img)
         return img
 
-    def connect_states(self, state1, state2, transition="", length=0, angle=0):
+    def state_arrow(self, length, angle, transition):
+        """
+        Returns an arrow image with this length and angle,
+        overlaid with this transition label.
+
+        :param length: int, length of arrow
+        :param angle: int[0,360), angle of arrow
+        :param transition: str, transition label
+        :return: Image, arrow with this length, angle, & transition label
+        """
+        return arrow(width=length, height=2, fill="lightgray",
+                     angle=angle, label=transition, font_size=self.FONT_SIZE, lang=self.chart_lang, font=self.font)
+
+    def connect_states(self, state1, state2, transition="", length=0, arrow=False, angle=0):
         """
         Connects state1 and state2 images with an arrow of given
-        length and angle, with transition_all overlaid on the arrow.
+        length and angle, with transition overlaid on the arrow.
         ~
         If length is None, set length to the larger of 50 and
         the length of transition_all's text image.
@@ -395,13 +482,13 @@ class Speechart(Chart):
         :param state1: Image, arrow's outgoing state
         :param state2: Image, arrow's incoming state
         :param transition: str, transition_all function from state1 to state2
-        :param length: int, length of arrow
+        :param length: int, length of arrow linking state1 and state2
+        :param arrow: bool, whether to link state1 and state2 with arrow
         :param angle: int[0,360), angle of arrow between state1 and state2
         :return: Image, state1 connected to state2 with an arrow
         """
-        arro = arrow(width=length, height=2, fill="lightgray",
-                     angle=angle, label=transition, font_size=self.FONT_SIZE, lang=self.chart_lang, font=self.font)
-        diff = length - arro.size[0]
+        arro = self.state_arrow(length, angle, transition)
+        diff = length - arro.size[0]  # padding to compensate for arrow angle
         padding = make_blank_img(int(diff), 1, alpha=0)
         arro = beside(padding, arro)
         state0 = make_blank_img(1, state2.size[1]/2, alpha=0)
@@ -422,6 +509,9 @@ class Speechart(Chart):
 
     # VISUALIZATION
     # -------------
+    def arrow_length(self):
+        return max(self.FONT_SIZE, self.get_text_size()[0])
+
     def visualize(self):
         """
         Visualizes all this Chart's transitions as an Image
@@ -430,7 +520,7 @@ class Speechart(Chart):
         :return: Image, image of this DFA
         """
         start = sorted(self.states)[0]
-        length = max(self.FONT_SIZE*2, self.get_text_size()[0])
+        length = self.arrow_length()
         dfa = self.visualize_state(start, length)
         dfa.show()
         return dfa
@@ -440,7 +530,8 @@ class Speechart(Chart):
         Visualizes the given state and its transitions as an Image
         and returns the image.
 
-        :param state: int, state to visualize
+        :param state: int, state to start visualization from
+        :param length: int, length of arrows between states
         :return: Image, image of this state and its transitions
         """
         destinations = self.state_destinations(state)
@@ -453,7 +544,6 @@ class Speechart(Chart):
             angle = apex / 2
             branch = state0
             labels = {dest: ", ".join(destinations[dest]) for dest in destinations}
-            #rel_len = length * max(1, int(len(labels)**(1.0/2)))
 
             if apex >= 180:
                 inc, apex, angle = 0, 0, 0
@@ -461,11 +551,30 @@ class Speechart(Chart):
             for label in sorted(labels):
                 msg = labels[label]
                 circ = self.visualize_state(label, length)
-                twig = self.connect_states(state0, circ, msg, angle=angle, length=length)
+                twig = self.connect_states(state0, circ, msg, angle=angle, length=length, arrow=True)
                 branch = above(branch, twig, align='left')
                 angle -= inc
 
-            dfa = self.connect_states(dfa, branch, length=0)
+            dfa = self.connect_states(dfa, branch, length=0, arrow=False)
+
+        return dfa
+
+    def visualize_label(self, label):
+        """
+        Visualizes the state(s) with this label and its transitions
+        as an Image and returns the image.
+
+        :param label: int, label of state to visualize
+        :return: Image, image of this state and its transitions
+        """
+        states = self.label_states(label)
+        dfa = self.placeholder_image()
+        length = self.arrow_length()
+
+        if len(states) != 0:
+            for state in states:
+                img = self.visualize_state(state, length)
+                dfa = above(dfa, img)
 
         return dfa
 
@@ -479,7 +588,7 @@ class Speechart(Chart):
         if title is None:
             title = self.language + " Language Chart"
         title = text(title, size=self.FONT_SIZE*2, font=self.title_font)
-        space = self.empty_image()
+        space = self.placeholder_image()
         legend = space
 
         for colour in sorted(self.RGB):
@@ -506,7 +615,7 @@ class Speechart(Chart):
 
 class LanguageChart(Speechart):
     """
-    A class for charting language data as DFAs.
+    A class for charting language data in a DFA.
     """
     def __init__(self, language):
         Speechart.__init__(self, language)
@@ -526,10 +635,10 @@ class LanguageChart(Speechart):
 
     def add_words(self, words):
         """
-        Adds the given space-delimited str words' characters
+        Adds this space-delimited str words' characters
         as states to this LanguageChart.
         ~
-        Adds the given words to success_states.
+        Adds these words to success_states.
 
         :param words: str, space-delimited words to add to DFA
         :return: None
@@ -567,18 +676,19 @@ class LanguageChart(Speechart):
         for sentence in sorted(sentence_tokens):
             self.add_sentence(sentence)
 
-    def add_word_pair(self, word_pair):
+    def add_word_pair(self, word, pos):
         """
-        Adds the given word-pos pair's characters as states to this Chart's dfa.
+        Adds this word-pos pair's characters as states to this Chart's dfa.
         ~
-        Adds the given word-pos pair to success_states.
+        Adds this word-pos pair to success_states.
 
-        :param words: tuple(str, Set(str)), word-pos pair to add to DFA
+        :param word: str, word to add to DFA with pos
+        :param pos: Set(str), parts of speech for this word
         :return: None
         """
-        word, pos = word_pair
+        poses = {pos} if type(pos) == str else set(pos)
         self.current_state = self.transition_all(self.current_state, self.unicodize(word))
-        self.add_success_state(self.current_state, {pos})
+        self.add_success_state(self.current_state, poses)
         self.current_state = 0
 
     def add_word_pairs(self, word_pairs):
@@ -591,8 +701,9 @@ class LanguageChart(Speechart):
         :return: None
         """
         for word_pair in sorted(word_pairs):
-            self.add_word_pair(word_pair)
-        self.refresh_json()
+            word, pos = word_pair
+            self.add_word_pair(word, pos)
+        self.refresh_data()
 
 
 class WordChart(LanguageChart):
@@ -656,16 +767,16 @@ class WordChart(LanguageChart):
         for sentence in sorted(sentence_tokens):
             self.add_sentence(sentence)
 
-    def add_word_pair(self, word_pair):
+    def add_word_pair(self, word, pos):
         """
         Adds the given word-pos pair's characters as states to this Chart's dfa.
         ~
         Adds the given word-pos pair to success_states.
 
-        :param words: tuple(str, Set(str)), word-pos pair to add to DFA
+        :param word: str, word to add to DFA with pos
+        :param pos: Set(str), part-of-speech for this word
         :return: None
         """
-        word, pos = word_pair
         self.current_state = self.transition_all(self.current_state, self.unicodize(word))
         self.add_success_state(self.current_state, {pos})
         self.current_state = 0
@@ -680,8 +791,9 @@ class WordChart(LanguageChart):
         :return: None
         """
         for word_pair in sorted(word_pairs):
-            self.add_word_pair(word_pair)
-        self.refresh_json()
+            word, pos = word_pair
+            self.add_word_pair(word, pos)
+        self.refresh_data()
 
     def transition_all(self, state, word):
         """
@@ -702,9 +814,45 @@ class WordChart(LanguageChart):
             if curr_state in self.start_states:
                 break
         poses = self.word_poses(word, self.language)
-        for pos in poses:
-            self.add_state_colour(curr_state, pos)
+        self.add_state_colours(curr_state, poses)
         return curr_state
+
+
+class LetterChart(LanguageChart):
+    """
+    A class for charting language letters in a DFA.
+    """
+    def __init__(self, language):
+        LanguageChart.__init__(self, language)
+
+    def add_word_pair(self, word, pos):
+        """
+        Adds this word-pos pair's characters as states to this Chart's dfa.
+        ~
+        Adds this word-pos pair to success_states.
+
+        :param word: str, word to add to DFA with pos
+        :param pos: Set(str), parts of speech for this word
+        :return: None
+        """
+        poses = {pos} if type(pos) == str else set(pos)
+        self.current_state = self.transition_all(self.current_state, self.unicodize(word))
+        self.add_success_state(self.current_state, poses)
+        self.current_state = 0
+
+    def add_word_pairs(self, word_pairs):
+        """
+        Adds the given word-pos pairs' characters as states to this Chart's dfa.
+        ~
+        Adds the given word-pos pairs to success_states.
+
+        :param words: Set(tuple(str, str)), word-pos pairs to add to DFA
+        :return: None
+        """
+        for word_pair in sorted(word_pairs):
+            word, pos = word_pair
+            self.add_word_pair(word, pos)
+        self.refresh_data()
 
 
 class MorphemeChart(LanguageChart):
@@ -725,9 +873,11 @@ class MorphemeChart(LanguageChart):
         pairs = []
         for morpheme in morphemes:
             poses = self.word_poses(morpheme, language)
-            for pos in poses:
-                pair = (morpheme, pos)
-                pairs.append(pair)
+            pair = (morpheme, poses)
+            pairs.append(pair)
+            #for pos in poses:
+            #    pair = (morpheme, pos)
+            #    pairs.append(pair)
         self.add_word_pairs(pairs)
 
     def transition_all(self, state, word):
@@ -851,7 +1001,7 @@ class SentenceChart(LanguageChart):
         Returns the result of the transition function from the given state
         with all words in sentence.
         ~
-        If the given state-word pair already exists, returns their output.
+        If the given state-sentence pair already exists, returns their output.
         Otherwise, creates a new transition pair from input state to a new
         state.
 
@@ -862,9 +1012,7 @@ class SentenceChart(LanguageChart):
         curr_state = state
 
         for i in range(len(sentence)):
-            repeat = True
-
-            while repeat:
+            while True:
                 word = sentence[i]
                 next_word = sentence[i+1] if i+1 < len(sentence) else ""
                 is_punct = self.contains_punct(word)
@@ -873,8 +1021,7 @@ class SentenceChart(LanguageChart):
                 if not is_punct:
                     curr_state = self.transition(curr_state, self.entry_word(word))
                     poses = self.word_poses(word)
-                    for pos in poses:
-                        self.add_state_colour(curr_state, pos)
+                    self.add_state_colours(curr_state, poses)
                     if is_end:
                         self.add_success_state(curr_state, set(poses))
 
@@ -886,6 +1033,6 @@ class SentenceChart(LanguageChart):
                         curr_state = 0
                         continue
 
-                repeat = False
+                break  # break if no continue up until end
 
         return curr_state

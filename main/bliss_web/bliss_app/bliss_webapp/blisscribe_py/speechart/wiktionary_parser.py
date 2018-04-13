@@ -10,7 +10,7 @@ import string
 import json
 import requests
 from BeautifulSoup import BeautifulSoup
-from ordered_set import OrderedSet
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.ordered_set import OrderedSet
 from ipa_symbols import *
 
 
@@ -19,61 +19,62 @@ class WiktionaryParser:
     A class for parsing Wiktionary pages.
     """
     PATH = os.path.dirname(os.path.realpath(__file__))
-    LANG_CODES = {u"Afrikaans": "af",
-                  u"Albanian": 'sq',
-                  u"Arabic": "ar",
-                  u"Armenian": "hy",
-                  u"Basque": 'eu',
-                  u"Bengali": "bn",
-                  u"Bosnian": 'bs',
-                  u"Breton": 'br',
-                  u"Bulgarian": 'bg',
-                  u"Catalan": 'ca',
-                  u"Chinese": "zh",
-                  u"Croatian": 'hr',
-                  u"Danish": 'da',
-                  u"Dutch": 'nl',
-                  u"English": 'en',
-                  u"Esperanto": 'eo',
-                  u"Georgian": 'ka',
-                  u"German": 'de',
-                  u"Greek": 'el',
-                  u"Finnish": 'fi',
-                  u"French": 'fr',
-                  u"Galician": 'gl',
-                  u"Hebrew": 'he',
-                  u"Hindi": 'hi',
-                  u"Hungarian": "hu",
-                  u"Icelandic": 'is',
-                  u"Indonesian": 'id',
-                  u"Italian": 'it',
-                  u"Japanese": 'ja',
-                  u"Kazakh": 'kk',
-                  u"Korean": 'ko',
-                  u"Latvian": "lv",
-                  u"Lithuanian": "lt",
-                  u"Macedonian": "mk",
-                  u"Malayan": "ml",
-                  u"Malay": "ms",
-                  u"Norwegian": 'no',
-                  u"Persian": 'fa',
-                  u"Polish": 'pl',
-                  u"Portuguese": 'pt',
-                  u"Romanian": 'ro',
-                  u"Russian": 'ru',
-                  u"Serbian": 'sr',
-                  u"Sinhala": 'si',
-                  u"Slovak": 'sk',
-                  u"Slovenian": 'sl',
-                  u"Spanish": 'es',
-                  u"Swedish": 'sv',
-                  u"Tamil": 'ta',
-                  u"Telugu": 'te',
-                  u"Thai": 'th',
-                  u"Tagalog": 'tl',
-                  u"Turkish": 'tr',
-                  u"Ukrainian": 'uk',
-                  u"Vietnamese": 'vi'}
+    LEXICA = {}
+    LANG_CODES = {u"Afrikaans": u"af",
+                  u"Albanian": u"sq",
+                  u"Arabic": u"ar",
+                  u"Armenian": u"hy",
+                  u"Basque": u"eu",
+                  u"Bengali": u"bn",
+                  u"Bosnian": u"bs",
+                  u"Breton": u"br",
+                  u"Bulgarian": u"bg",
+                  u"Catalan": u"ca",
+                  u"Chinese": u"zh",
+                  u"Croatian": u"hr",
+                  u"Danish": u"da",
+                  u"Dutch": u"nl",
+                  u"English": u"en",
+                  u"Esperanto": u"eo",
+                  u"Georgian": u"ka",
+                  u"German": u"de",
+                  u"Greek": u"el",
+                  u"Finnish": u"fi",
+                  u"French": u"fr",
+                  u"Galician": u"gl",
+                  u"Hebrew": u"he",
+                  u"Hindi": u"hi",
+                  u"Hungarian": u"hu",
+                  u"Icelandic": u"is",
+                  u"Indonesian": u"id",
+                  u"Italian": u"it",
+                  u"Japanese": u"ja",
+                  u"Kazakh": u"kk",
+                  u"Korean": u"ko",
+                  u"Latvian": u"lv",
+                  u"Lithuanian": u"lt",
+                  u"Macedonian": u"mk",
+                  u"Malayan": u"ml",
+                  u"Malay": u"ms",
+                  u"Norwegian": u"no",
+                  u"Persian": u"fa",
+                  u"Polish": u"pl",
+                  u"Portuguese": u"pt",
+                  u"Romanian": u"ro",
+                  u"Russian": u"ru",
+                  u"Serbian": u"sr",
+                  u"Sinhala": u"si",
+                  u"Slovak": u"sk",
+                  u"Slovenian": u"sl",
+                  u"Spanish": u"es",
+                  u"Swedish": u"sv",
+                  u"Tamil": u"ta",
+                  u"Telugu": u"te",
+                  u"Thai": u"th",
+                  u"Tagalog": u"tl",
+                  u"Turkish": u"tr",
+                  u"Ukrainian": u"uk",
+                  u"Vietnamese": u"vi"}
     PARTS_OF_SPEECH = {u"Noun", u"Verb", u"Adjective", u"Adverb", u"Preposition",
                        u"Conjunction", u"Interjection", u"Morpheme", u"Pronoun",
                        u"Phrase", u"Numeral", u"Particle", u"Article", u"Participle",
@@ -97,7 +98,7 @@ class WiktionaryParser:
         self.session = requests.session()
         self.url = self.WIKI_URL + self.END_URL
         self.language = None
-        self.wiktionary_entries = self.fetch_wiktionary_entries()
+        self.wiktionary_entries = self.load_wiktionary_entries()
 
         # REGEXES
         self.html_pattern = re.compile("(<.+?>|\n)") # used to include |\d
@@ -105,6 +106,34 @@ class WiktionaryParser:
         self.paren_pattern = re.compile("\([^\(]*?\)")
         self.deriv_pattern = re.compile('(\S+ ?([("]+.+[")]+)? ?\+\S* ?)+[^.]+ ?(\".+?\")?')
         self.space_pattern = re.compile("( )+")
+    def add_lexicon(self, language, lexicon):
+        """
+        Adds the given lexicon to LEXICA under the given language.
+
+        :param language: str, language of lexicon
+        :param lexicon: List[str], all words in given language
+        :return: None
+        """
+        self.LEXICA[language] = lexicon
+
+    def find_lexicon(self, language=None, lim=100000):
+        """
+        Returns the lexicon for the given language.
+        ~
+        If no lexicon for this language exists, creates new
+        lexicon for language, adds to LEXICA, and returns the result.
+
+        :param language: str, language of lexicon
+        :return: List[str], all words in given language
+        """
+        language = self.verify_language(language)
+
+        try:
+            return self.LEXICA[language]
+        except KeyError:
+            lexicon = self.init_lexicon(language, lim)
+            self.add_lexicon(language, lexicon)
+            return lexicon
 
     def verify_language(self, language):
         """
@@ -143,6 +172,34 @@ class WiktionaryParser:
         language = self.verify_language(language)
         return self.LANG_CODES.get(language, None)
 
+    def init_lexicon(self, language=None, lim=None):
+        """
+        Returns a set of all words in this language, up to lim.
+        ~
+        If lim is None, returns all words.
+
+        :param language: str, language of lexicon to retrieve
+        :param lim: int, number of words in lexicon to retrieve
+        :return: List[str], words in LanguageParser's language
+        """
+        lang_code = self.get_lang_code(language)
+        words = list()
+
+        if lang_code is not None:
+            path = self.PATH + "/resources/frequency_words/content/2016/%s/%s_full.txt" % (lang_code, lang_code)
+
+            with open(path, 'r') as lexicon:
+                line_no = 0
+                for line in lexicon:
+                    word = line.split(" ", 1)[0]
+                    words.append(self.unicodize(word))
+                    if lim:
+                        if line_no > lim:
+                            break
+                        line_no += 1
+
+        return words
+
     # JSON
     # ----
     def dump_json(self, data, filename):
@@ -156,17 +213,17 @@ class WiktionaryParser:
         path = self.PATH + "/resources/data/" + filename + ".json"
         json.dump(data, open(path, 'w'), indent=1, sort_keys=True, encoding='utf-8')
 
-    def fetch_json(self, filename):
+    def load_json(self, filename):
         """
         Returns a dictionary corresponding to the given JSON file.
 
-        :param filename: str, name of .json file to fetch
+        :param filename: str, name of .json file to load
         :return: X, content of given .json file
         """
         path = self.PATH + "/resources/data/" + filename + ".json"
         return json.load(open(path))
 
-    def fetch_wiktionary_entries(self):
+    def load_wiktionary_entries(self):
         """
         Returns a dictionary of memoized Wiktionary pages.
 
@@ -174,7 +231,7 @@ class WiktionaryParser:
             key (str) - language of word entry
             val (dict) - language's entry under word
         """
-        return self.fetch_json("wiktionary_entries")
+        return self.load_json("wiktionary_entries")
 
     def refresh_wiktionary_entries(self):
         """
@@ -200,12 +257,14 @@ class WiktionaryParser:
         nuwords = [word, word.lower(), word.title()]
 
         for nuword in nuwords:
-            try:
-                self.wiktionary_entries[nuword][language]
-            except KeyError:
-                continue
-            else:
+            if self.word_in_wiktionary(nuword, language):
                 return nuword
+            #try:
+            #    self.wiktionary_entries[nuword][language]
+            #except KeyError:
+            #    continue
+            #else:
+            #    return nuword
 
         return word
 
@@ -223,14 +282,12 @@ class WiktionaryParser:
         language = self.verify_language(language)
         for word in words:
             if word not in self.wiktionary_entries:
-                print word
-                print self.find_wiktionary_entry(word, language)
-                print
+                self.find_wiktionary_entry(word, language)
         return self.wiktionary_entries
 
     def add_wiktionary_entry(self, word, language=None):
         """
-        Adds a Wiktionary entry corresponding to the given word
+        Adds a Wiktionary entry corresponding to this word
         to this WiktionaryParser's wiktionary_entries.
 
         :param word: str, word of Wiktionary entry to add
@@ -243,10 +300,11 @@ class WiktionaryParser:
         language = self.verify_language(language)
         wikt_page = WiktionaryPage(word, language=language, parser=self)
         entries = wikt_page.entries
-        word = self.entry_word(word, language)
-        self.wiktionary_entries.setdefault(word, dict())
-        self.wiktionary_entries[word].update(entries)
-        return entries.get(language, entries)
+        if len(entries) != 0:
+            word = self.entry_word(word, language)
+            self.wiktionary_entries.setdefault(word, dict())
+            self.wiktionary_entries[word].update(entries)
+            return entries.get(language, None)
 
     def edit_wiktionary_entry(self, word, language=None, heading=None, content=None):
         """
@@ -262,7 +320,7 @@ class WiktionaryParser:
         word = self.unicodize(word)
         language = self.verify_language(language)
         entry = self.lookup_wiktionary_subentry(word, language)
-        heading_entry = entry.setdefault(heading, list())
+        entry.setdefault(heading, list())
 
         try:
             self.wiktionary_entries[word][language].setdefault(heading, list())
@@ -280,15 +338,6 @@ class WiktionaryParser:
         :return: bool, whether punctuation in this word or not
         """
         return any(char in word for char in "\n\t "+string.punctuation)
-
-    def is_punct(self, word):
-        """
-        Returns True if this word contains only punctuation characters.
-
-        :param word: str, word to check whether containing punctuation
-        :return: bool, whether punctuation in this word or not
-        """
-        return all(char in string.punctuation for char in word)
 
     def is_punct(self, word):
         """
@@ -317,15 +366,18 @@ class WiktionaryParser:
             key (str) - title of subentry heading (e.g. Etymology)
             val (list) - value(s) associated with subentry
         """
-        entry = self.lookup_wiktionary_entry(word, language)
-        if entry is not None:
-            return entry
+        if word is None:
+            return
         else:
-            entry = self.wiktionary_entries.get(word, dict())
-            entry = entry.get(language, None)
-            if entry is None and word is not None and not self.is_punct(word):
-                entry = self.add_wiktionary_entry(word, language)
-            return entry
+            entry = self.lookup_wiktionary_entry(word, language)
+            if entry is not None:
+                return entry
+            else:
+                entry = self.wiktionary_entries.get(word, dict())
+                entry = entry.get(language, None)
+                if entry is None and not self.is_punct(word):
+                    entry = self.add_wiktionary_entry(word, language)
+                return entry
 
     def lookup_wiktionary_entry(self, word, language=None):
         """
@@ -344,11 +396,11 @@ class WiktionaryParser:
         except KeyError:
             return
 
-    def find_wiktionary_subentry(self, word=None, language=None, heading=None):
+    def find_wiktionary_subentry(self, word, language=None, heading=None):
         """
         Returns the Wiktionary subentry for the given word, language and/or heading.
         ~
-        If word is not None, this method returns the sub-entry for this
+        If language is None, this method returns the sub-entry for this
         word.
         ~
         If language is not None, this method returns the sub-entry
@@ -368,7 +420,7 @@ class WiktionaryParser:
                           ["am , are , is ( present tense, all persons, plural and singular of wees , to be )", null],
                           ["Forms the perfect passive voice when followed by a past participle", null]]}
 
-        :param word: Optional[str], word of Wiktionary page to lookup
+        :param word: str, word of Wiktionary page to lookup
         :param language: Optional[str], language of entry to lookup
         :param heading: Optional[str], heading of subentry to lookup
         :return: Any, subentry corresponding to given word, language, &/or heading
@@ -382,7 +434,7 @@ class WiktionaryParser:
             return self.find_wiktionary_entry(word)
         else:
             entry = self.find_wiktionary_entry(word, language)
-            if heading is None:
+            if heading is None or entry is None:
                 return entry
             else:
                 section = entry.get(heading, None)
@@ -399,10 +451,10 @@ class WiktionaryParser:
         Looks up this word's subentry in wiktionary_entries with this language
         and heading.
 
-        :param word:
-        :param language:
-        :param heading:
-        :return:
+        :param word: str, word of Wiktionary page to lookup
+        :param language: Optional[str], language of entry to lookup
+        :param heading: Optional[str], heading of subentry to lookup
+        :return: Any, subentry corresponding to given word, language, &/or heading
         """
         try:
             entry = self.wiktionary_entries[word]
@@ -415,83 +467,31 @@ class WiktionaryParser:
         else:
             return entry
 
-    def find_headwords(self, word, language=None, poses=None):
+    def find_pos_entries(self, word, language, poses=None):
         """
-        Returns this word's head word from its Wiktionary entry
-        in this language for each part of speech in poses.
+        Returns this word's parts of speech in poses from its
+        Wiktionary entry in this language.
         ~
-        N.B. A "head word" is the first item in the first sublist
-        under a word's part-of-speech heading:
-
-            e.g. "Noun": [["miles", None], ["plural of mile", "mile"]]
-                            ^^^^^
-                          head word
-
-        Part-of-speech entries contain only 1 head word but may
-        contain >=1 stem words.
+        If poses is None, finds pos entries for all parts of speech.
 
         :param word: str, word of Wiktionary entry to lookup
-        :param language: Optional[str], language of entry to lookup
-        :return: List[str], given word's head words for this language
+        :param language: str, language of entry to lookup
+        :param poses: Optional[List], parts of speech to lookup
+        :return: List[str], word's parts of speech entries in this language
         """
         if poses is None:
             poses = self.PARTS_OF_SPEECH
 
         language = self.verify_language(language)
-        headwords = list()
         lang_entries = self.find_wiktionary_entry(word, language)
-
-        for heading in lang_entries:
-            if heading in poses:
-                pos_entry = lang_entries[heading]
-                try:
-                    headword = pos_entry[0][0]
-                except IndexError:
-                    continue
-                else:
-                    if headword is not None:
-                        headwords.append(headword)
-
-        return headwords
-
-    def find_stemwords(self, word, language=None, poses=None):
-        """
-        Returns this word's stem words from its Wiktionary entry
-        in this language.
-        ~
-        N.B. A "stem word" is the second item in all but the first sublist
-        under a word's part-of-speech heading:
-
-            e.g. "Noun": [["miles", None], ["plural of mile", "mile"]]
-                                                               ^^^^
-                                                             stem word
-
-        Entries may contain >=1 stem words but will only contain 1 head word.
-
-        :param word: str, word of Wiktionary entry to lookup
-        :param language: Optional[str], language of entry to lookup
-        :return: List[str], given word's stem words for this language
-        """
-        if poses is None:
-            poses = self.PARTS_OF_SPEECH
-
-        language = self.verify_language(language)
-        stemwords = list()
-        lang_entries = self.find_wiktionary_entry(word, language)
+        pos_entries = dict()
 
         if lang_entries is not None:
             for heading in lang_entries:
                 if heading in poses:
-                    pos_entries = lang_entries[heading]
-                    try:
-                        stems = [pos_entry[1] for pos_entry in pos_entries[1:]
-                                 if pos_entry[1] is not None]
-                    except IndexError:
-                        continue
-                    else:
-                        stemwords += stems
+                    pos_entries[heading] = lang_entries[heading]
 
-            return OrderedSet(stemwords).rank_items()
+        return pos_entries
 
     # PAGES
     # -----
@@ -526,7 +526,7 @@ class WiktionaryParser:
         """
         return self.url_page(self.word_url(word))
 
-    def valid_word_page(self, word, language=None):
+    def word_in_wiktionary(self, word, language=None):
         """
         Returns True if this word has a Wiktionary page,
         False otherwise.
@@ -567,7 +567,8 @@ class WiktionaryParser:
         :return: List[str], all languages for this word's Wiktionary entry
         """
         entry = self.find_wiktionary_entry(word)
-        return sorted(entry.keys())
+        if entry is not None:
+            return sorted(entry.keys())
 
     # PAGE PARSING
     # ------------
@@ -938,33 +939,32 @@ class WiktionaryPage:
             val (dict) - entry description
         """
         entries = dict()
-        if page is None:
-            return entries
 
-        entry_headers = {"h3", "h4", "h5"}
-        tags = page.findAll("span", attrs={"class": "mw-headline",
-                                           "id": lambda i: self.desired_header(i)})
+        if page is not None:
+            entry_headers = {"h3", "h4", "h5"}
+            tags = page.findAll("span", attrs={"class": "mw-headline",
+                                               "id": lambda i: self.desired_header(i)})
 
-        for tag in tags:
-            lang = self.header_lang(tag)
-            if lang == "":
-                continue
-            elif lang[:10] == "Navigation":
-                break
-            elif language is None or lang == language:
-                tag = tag.findParent(entry_headers)
-                heading = self.subtag(tag, stop_headers=entry_headers)
+            for tag in tags:
+                lang = self.header_lang(tag)
+                if language is None or lang == language:
+                    tag = tag.findParent(entry_headers)
+                    heading = self.subtag(tag, stop_headers=entry_headers)
 
-                if heading is not None:
-                    header_name = self.rename_header(self.header_text(tag))
-                    heading_entry = self.heading_entry(heading, header_name, lang)
+                    if heading is not None:
+                        header_name = self.rename_header(self.header_text(tag))
+                        heading_entry = self.heading_entry(heading, header_name, lang)
 
-                    if heading_entry is not None and len(heading_entry) != 0:
-                        entries.setdefault(lang, dict())
-                        entries[lang].setdefault(header_name, list())
-                        subentry = entries[lang][header_name] + heading_entry
-                        new_entry = OrderedSet(subentry).order_items()
-                        entries[lang][header_name] = new_entry
+                        if heading_entry is not None and len(heading_entry) != 0:
+                            entries.setdefault(lang, dict())
+                            entries[lang].setdefault(header_name, list())
+                            subentry = entries[lang][header_name] + heading_entry
+                            new_entry = OrderedSet(subentry).order_items()
+                            entries[lang][header_name] = new_entry
+                elif lang == "":
+                    continue
+                elif lang[:10] == "Navigation":
+                    break
 
         return entries
 
@@ -1040,7 +1040,14 @@ class WiktionaryPage:
         lemma_text = self.tag_text(lemma)
         return lemma_text
 
-    def tag_lemmas(self, tag):
+    def english_tag_lemmas(self, tag):
+        english_lexicon = self.parser.find_lexicon("English")
+        links = tag.findAll("a", attrs={"title": english_lexicon})
+        lemmas = [link.get("title") for link in links
+                  if "#" not in link.get("href") and link.parent.name == "li"]
+        return lemmas
+
+    def tag_lemmas(self, tag, language=None):
         """
         Returns all this HTML tag's lemmas, i.e. text
         from span with class=mention or class=form-of-definition-link.
@@ -1048,33 +1055,39 @@ class WiktionaryPage:
         Used for retrieving lemmas from parts-of-speech definitions.
 
         :param tag: Tag, BeautifulSoup HTML to extract lemma from
-        :return: str, lemma from given tag
+        :param language: str, language of lemmas
+        :return: List[str], lemmas from given tag
         """
+        language = self.parser.verify_language(language)
         lemmas = tag.findAll("span", attrs={"class": ["mention", "form-of-definition-link"]})
 
         if len(lemmas) == 0:
-            lemmas_text = list()
             tag_txt = tag.getText(" ")
+            lemmas_text = OrderedSet([])
+
             if len(tag_txt) != 0:
                 first_char = tag_txt[0]
                 if first_char.islower():
-                    lemmas_text = self.text_lemmas(tag_txt)
+                    lemmas_text.update(self.text_lemmas(tag_txt))
                 elif first_char == u"(":
                     txt = tag_txt.split(u")", 1)[-1]
-                    lemmas_text = self.text_lemmas(txt)
-        else:
-            lemmas_text = [self.tag_text(lemma) for lemma in lemmas]
+                    lemmas_text.update(self.text_lemmas(txt))
 
-        return lemmas_text
+                if language != "English" and tag.name != "strong":
+                    lemmas_text.update(self.english_tag_lemmas(tag))
+        else:
+            lemmas_text = OrderedSet([self.tag_text(lemma) for lemma in lemmas])
+
+        return lemmas_text.items()
 
     def text_lemmas(self, text):
         """
-        Returns all lemmas in this HTML tag's text.
+        Returns all lemmas in this text from an HTML tag.
         ~
         Used for retrieving lemmas from parts-of-speech definitions.
 
         :param text: str, BeautifulSoup HTML to extract lemma from
-        :return: str, lemma from given tag
+        :return: List[str], lemmas from text
         """
         split_text = re.split(u"[;,]", text)
         lemmas = list()
@@ -1084,7 +1097,7 @@ class WiktionaryPage:
                 lemmas.append(lemma)
         return lemmas
 
-    def pos_tag_definitions(self, pos_tag):
+    def pos_tag_definitions(self, pos_tag, language=None):
         """
         Returns this part-of-speech tag's definition-lemma pairs,
         with head word as the first item in the list and
@@ -1099,6 +1112,7 @@ class WiktionaryPage:
                  ("third-person singular present of be", "be")]
 
         :param pos_tag: Tag, HTML to retrieve pos definitions from
+        :param language: str, language of definitions
         :return: List[2-tuple], pos_tag's definition-lemma pairs
         """
         pairs = list()
@@ -1107,7 +1121,7 @@ class WiktionaryPage:
 
         for subtag in subtags:
             defn = self.tag_text(subtag)
-            lemmas = self.tag_lemmas(subtag)
+            lemmas = self.tag_lemmas(subtag, language)
             if defn != "" and len(lemmas) != 0:
                 for lemma in lemmas:
                     lemma = None if lemma is None or lemma == "" else self.parser.clean_parentheticals(lemma)
@@ -1161,10 +1175,10 @@ class WiktionaryPage:
             entry = self.parser.page_etymologies(content, language)
         elif header[:6] == "Pronun":
             entry = self.parser.page_ipas(content)
-        elif header in self.parser.PARTS_OF_SPEECH:
-            entry = self.pos_tag_definitions(content)
         elif header[:6] == "Inflec":
             entry = self.tag_inflections(content, language, simple=True)
+        elif header in self.parser.PARTS_OF_SPEECH:
+            entry = self.pos_tag_definitions(content, language)
         else:
             entry = list()
 

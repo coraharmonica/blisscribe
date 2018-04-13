@@ -1,19 +1,9 @@
 {
- "\n": [
-  "U+35c9", 
-  "U+3577"
- ], 
  " to indicate an hour": [
   "U+3586"
  ], 
  "%": [
   "U+43d1"
- ], 
- "-able": [
-  "U+35c9"
- ], 
- "-t": [
-  "U+35cb"
  ], 
  "0": [
   "U+3e4b", 
@@ -668,9 +658,6 @@
  "Hemulen": [
   "U+3921"
  ], 
- "Hitchhiker": [
-  "U+35db"
- ], 
  "Holland": [
   "U+3bcf"
  ], 
@@ -1028,9 +1015,6 @@
  "October": [
   "U+4547"
  ], 
- "Oh": [
-  "U+35cb"
- ], 
  "Old Testament": [
   "U+423a"
  ], 
@@ -1120,9 +1104,6 @@
  ], 
  "Rhenish": [
   "U+3477"
- ], 
- "Rickmansworth": [
-  "U+35da"
  ], 
  "Roman Catholic Church": [
   "U+3685"
@@ -3822,9 +3803,6 @@
  ], 
  "amazing": [
   "U+45da"
- ], 
- "amazingly": [
-  "U+35d1"
  ], 
  "amber": [
   "U+3b03"
@@ -6529,9 +6507,6 @@
  ], 
  "backwash": [
   "U+3244"
- ], 
- "backwaters": [
-  "U+35cb"
  ], 
  "bacon": [
   "U+359c"
@@ -11489,9 +11464,6 @@
  "cafeteria": [
   "U+4382"
  ], 
- "caf\u00e9": [
-  "U+35d9"
- ], 
  "cage": [
   "U+3c43"
  ], 
@@ -13165,9 +13137,6 @@
  ], 
  "charr": [
   "U+34ee"
- ], 
- "chart": [
-  "U+35ca"
  ], 
  "charter": [
   "U+3596"
@@ -17658,9 +17627,6 @@
  "cough": [
   "U+4279"
  ], 
- "could": [
-  "U+35c9"
- ], 
  "counsel": [
   "U+416a", 
   "U+416b"
@@ -19243,9 +19209,6 @@
  "cytosmear": [
   "U+36f5"
  ], 
- "d": [
-  "U+35d8"
- ], 
  "d.c.": [
   "U+428f"
  ], 
@@ -19312,12 +19275,6 @@
  ], 
  "dais": [
   "U+33d7"
- ], 
- "daisies": [
-  "U+35c9"
- ], 
- "daisy": [
-  "U+35c9"
  ], 
  "dalliance": [
   "U+36a5"
@@ -31279,9 +31236,6 @@
  "fortunate": [
   "U+3ca2"
  ], 
- "fortunately": [
-  "U+35c9"
- ], 
  "fortune": [
   "U+37e8"
  ], 
@@ -35693,10 +35647,9 @@
   "U+3583", 
   "U+358d", 
   "U+35d5", 
-  "U+3627", 
-  "U+3584"
+  "U+3627"
  ], 
- "harness_(horse)-(to)": [
+ "harness (horse)-(to)": [
   "U+42ec", 
   "U+358d", 
   "U+359c", 
@@ -35709,8 +35662,7 @@
   "U+35d4", 
   "U+35e7", 
   "U+3626", 
-  "U+3639", 
-  "U+3583"
+  "U+3639"
  ], 
  "harnessed": [
   "U+3ba5"
@@ -39434,9 +39386,6 @@
  "increasing": [
   "U+3a98"
  ], 
- "increasingly": [
-  "U+35d7"
- ], 
  "incredible": [
   "U+34ba"
  ], 
@@ -39695,95 +39644,86 @@
  "indicator-sized verticalline on midline": [
   "U+3521"
  ], 
- "indicator_(description_after_fact)": [
+ "indicator (description after fact)": [
   "U+3b11", 
   "U+3583", 
   "U+358e", 
   "U+35b6", 
   "U+35b7", 
   "U+3609", 
-  "U+365b", 
-  "U+35b8"
+  "U+365b"
  ], 
- "indicator_(future_conditional)": [
+ "indicator (future conditional)": [
   "U+3b0c", 
   "U+357e", 
   "U+3589", 
   "U+35b1", 
   "U+35b2", 
   "U+3604", 
-  "U+3656", 
-  "U+35b3"
+  "U+3656"
  ], 
- "indicator_(future_passive)": [
+ "indicator (future passive)": [
   "U+3b0f", 
   "U+3581", 
   "U+358c", 
   "U+35b4", 
   "U+35b5", 
   "U+3607", 
-  "U+3659", 
-  "U+35b6"
+  "U+3659"
  ], 
- "indicator_(future_passive_conditional)": [
+ "indicator (future passive conditional)": [
   "U+3b0b", 
   "U+357d", 
   "U+3588", 
   "U+35b0", 
   "U+35b1", 
   "U+3603", 
-  "U+3655", 
-  "U+35b2"
+  "U+3655"
  ], 
- "indicator_(past_conditional)": [
+ "indicator (past conditional)": [
   "U+3b10", 
   "U+3582", 
   "U+358d", 
   "U+35b5", 
   "U+35b6", 
   "U+3608", 
-  "U+365a", 
-  "U+35b7"
+  "U+365a"
  ], 
- "indicator_(past_passive)": [
+ "indicator (past passive)": [
   "U+3b0e", 
   "U+3580", 
   "U+358b", 
   "U+35b3", 
   "U+35b4", 
   "U+3606", 
-  "U+3658", 
-  "U+35b5"
+  "U+3658"
  ], 
- "indicator_(past_passive_conditional)": [
+ "indicator (past passive conditional)": [
   "U+3b0a", 
   "U+357c", 
   "U+3587", 
   "U+35af", 
   "U+35b0", 
   "U+3602", 
-  "U+3654", 
-  "U+35b1"
+  "U+3654"
  ], 
- "indicator_(present_passive_conditional)": [
+ "indicator (present passive conditional)": [
   "U+3b09", 
   "U+357b", 
   "U+3586", 
   "U+35ae", 
   "U+35af", 
   "U+3601", 
-  "U+3653", 
-  "U+35b0"
+  "U+3653"
  ], 
- "indicator_(things)": [
+ "indicator (things)": [
   "U+3b0d", 
   "U+357f", 
   "U+358a", 
   "U+35b2", 
   "U+35b3", 
   "U+3605", 
-  "U+3657", 
-  "U+35b4"
+  "U+3657"
  ], 
  "indicatory": [
   "U+32eb"
@@ -40028,8 +39968,7 @@
   "U+35b3", 
   "U+357c", 
   "U+35ce", 
-  "U+3620", 
-  "U+357d"
+  "U+3620"
  ], 
  "infected": [
   "U+43ca", 
@@ -40045,8 +39984,7 @@
   "U+35cb", 
   "U+35e9", 
   "U+361d", 
-  "U+363b", 
-  "U+357a"
+  "U+363b"
  ], 
  "infection": [
   "U+3b43"
@@ -40110,14 +40048,7 @@
   "U+3661", 
   "U+3663", 
   "U+366a", 
-  "U+366b", 
-  "U+357f", 
-  "U+3585", 
-  "U+3589", 
-  "U+35a4", 
-  "U+35be", 
-  "U+35c0", 
-  "U+35c8"
+  "U+366b"
  ], 
  "infective": [
   "U+4379"
@@ -40653,9 +40584,6 @@
  ], 
  "insight": [
   "U+3c32"
- ], 
- "insignificant": [
-  "U+35d0"
  ], 
  "insinuate": [
   "U+39dc"
@@ -41824,9 +41752,6 @@
  ], 
  "its": [
   "U+3aac"
- ], 
- "itself": [
-  "U+35ca"
  ], 
  "itsy-bitsy": [
   "U+36a4"
@@ -43030,13 +42955,7 @@
   "U+364f", 
   "U+3652", 
   "U+3667", 
-  "U+3669", 
-  "U+357e", 
-  "U+358c", 
-  "U+35a5", 
-  "U+35ac", 
-  "U+35c4", 
-  "U+35c6"
+  "U+3669"
  ], 
  "knitted": [
   "U+3672"
@@ -43553,9 +43472,6 @@
  ], 
  "large-minded": [
   "U+34db"
- ], 
- "largely": [
-  "U+35d3"
  ], 
  "largeness": [
   "U+3a47", 
@@ -44277,7 +44193,7 @@
  "let's": [
   "U+370d"
  ], 
- "let_us,let's": [
+ "let us,let's": [
   "U+3710", 
   "U+45bb", 
   "U+3579", 
@@ -44289,8 +44205,7 @@
   "U+35ca", 
   "U+35d1", 
   "U+361c", 
-  "U+3623", 
-  "U+3580"
+  "U+3623"
  ], 
  "lethal": [
   "U+36d6"
@@ -48069,9 +47984,6 @@
  "milliner": [
   "U+4074"
  ], 
- "million": [
-  "U+35cf"
- ], 
  "milliped": [
   "U+40fe"
  ], 
@@ -50039,7 +49951,7 @@
  "navigate airplane": [
   "U+3f05"
  ], 
- "navigate_airplane-(to)": [
+ "navigate airplane-(to)": [
   "U+3f06", 
   "U+3586", 
   "U+35b1", 
@@ -50047,8 +49959,7 @@
   "U+35c2", 
   "U+3587", 
   "U+3614", 
-  "U+3666", 
-  "U+35c3"
+  "U+3666"
  ], 
  "navigation": [
   "U+4289"
@@ -50665,9 +50576,6 @@
  ], 
  "niner": [
   "U+3569"
- ], 
- "ninety": [
-  "U+35ce"
  ], 
  "ninny": [
   "U+364f"
@@ -52811,9 +52719,6 @@
  "ottoman": [
   "U+35af"
  ], 
- "ought": [
-  "U+35c9"
- ], 
  "our": [
   "U+40f1"
  ], 
@@ -53447,9 +53352,6 @@
  ], 
  "ovum": [
   "U+3271"
- ], 
- "owe": [
-  "U+35ca"
  ], 
  "owing": [
   "U+3bf3"
@@ -62633,7 +62535,7 @@
  "resign": [
   "U+403e"
  ], 
- "resign,quit_(2)-(to)": [
+ "resign,quit (2)-(to)": [
   "U+403f", 
   "U+40e6", 
   "U+3588", 
@@ -62670,11 +62572,7 @@
   "U+3642", 
   "U+364a", 
   "U+364c", 
-  "U+3651", 
-  "U+357b", 
-  "U+3582", 
-  "U+35a9", 
-  "U+35ae"
+  "U+3651"
  ], 
  "resignation": [
   "U+3c54"
@@ -73866,8 +73764,7 @@
   "U+35b8", 
   "U+35ba", 
   "U+360c", 
-  "U+365e", 
-  "U+35bb"
+  "U+365e"
  ], 
  "sulfurous": [
   "U+39cc"
@@ -74969,9 +74866,6 @@
  "system": [
   "U+32d8", 
   "U+3681"
- ], 
- "t": [
-  "U+35d6"
  ], 
  "t-shirt": [
   "U+3f35"
@@ -76906,7 +76800,7 @@
  "tie whipping knot": [
   "U+44d5"
  ], 
- "tie,bind_together,lash-(to)": [
+ "tie,bind together,lash-(to)": [
   "U+37ec", 
   "U+3b30", 
   "U+452f", 
@@ -77019,13 +76913,7 @@
   "U+3664", 
   "U+3665", 
   "U+3668", 
-  "U+366c", 
-  "U+3588", 
-  "U+358a", 
-  "U+35a3", 
-  "U+35bf", 
-  "U+35c2", 
-  "U+35c5"
+  "U+366c"
  ], 
  "tie-in": [
   "U+3b9f"
@@ -80008,9 +79896,6 @@
  "umpire": [
   "U+40b6"
  ], 
- "un-": [
-  "U+35ca"
- ], 
  "unable": [
   "U+3385"
  ], 
@@ -80218,9 +80103,6 @@
  "unchanging": [
   "U+4113"
  ], 
- "uncharted": [
-  "U+35c9"
- ], 
  "uncheerful": [
   "U+3c77"
  ], 
@@ -80417,9 +80299,6 @@
  ], 
  "undefined": [
   "U+39b5"
- ], 
- "undeniable": [
-  "U+35c9"
  ], 
  "under": [
   "U+3492"
@@ -80757,9 +80636,6 @@
  "unfamiliarity": [
   "U+3a83"
  ], 
- "unfashionable": [
-  "U+35cc"
- ], 
  "unfastened": [
   "U+36bc"
  ], 
@@ -80938,7 +80814,7 @@
  "unharness": [
   "U+3fac"
  ], 
- "unharness_(horse)-(to)": [
+ "unharness (horse)-(to)": [
   "U+3fad", 
   "U+3587", 
   "U+3579", 
@@ -81452,9 +81328,6 @@
  ], 
  "unreformable": [
   "U+4218"
- ], 
- "unregarded": [
-  "U+35cd"
  ], 
  "unregenerate": [
   "U+4218"
@@ -84124,9 +83997,6 @@
  "washy": [
   "U+4003"
  ], 
- "wasn": [
-  "U+35d4"
- ], 
  "waspish": [
   "U+3e70"
  ], 
@@ -86628,11 +86498,5 @@
  ], 
  "zymosis": [
   "U+3b55"
- ], 
- "\u2014": [
-  "U+35d2"
- ], 
- "\u2019": [
-  "U+35d5"
  ]
 }

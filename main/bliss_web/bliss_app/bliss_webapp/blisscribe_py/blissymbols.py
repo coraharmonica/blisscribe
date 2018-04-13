@@ -8,7 +8,7 @@ BLISSYMBOLS:
 """
 from bliss_images import *
 
-LAST_BLISS_ENCODING = int("3576", 16)
+LAST_BLISS_ENCODING = int("3576", 16)  # hexadecimal unicode
 NEW_BLISSYMBOLS = []    # stores new Blissymbols from Blissymbol.make_new_blissymbol() for deletion
 
 
@@ -52,6 +52,10 @@ class Blissymbol:
                                  "RBR",
                                  "RBS",
                                  ]}
+    PUNCT_MAP = {",": u"comma",
+                 ".": u"period,point,full_stop,decimal_point",
+                 "?": u"question_mark",
+                 "!": u"exclamation_mark"}
 
     def __init__(self, img_filename=None, pos=None, derivation="", translations=None, translator=None):
         self.translator = translator
@@ -77,6 +81,37 @@ class Blissymbol:
         self.synsets = self.init_blissymbol_synsets()
         if self.valid_filename():
             self.translator.add_bliss_entry(self)
+
+    def bliss_image(self, max_width=None, max_height=None):
+        """
+        Returns the Image for this Blissymbol, with a
+        maximum width of max_width and maximum height of max_height.
+
+        :param max_width: Optional[int], maximum width of output image
+        :param max_height: Optional[int], maximum height of output image
+        :return: Image, image of this Blissymbol with given dimensions
+        """
+        return get_bliss_img(self.bliss_name, max_width=max_width, max_height=max_height)
+
+    def pluralize_image(self, img):
+        """
+        Returns this Blissymbol img with a plural indicator.
+
+        :param img: Image, Blissymbol image to pluralize
+        :param max_width: Optional[int], maximum width of output image
+        :param max_height: Optional[int], maximum height of output image
+        :return: Image, input image pluralized
+        """
+        plural = get_bliss_img("indicator_(plural)", img.size[0], img.size[1])
+        return overlay(img, plural)
+
+    def is_punct(self):
+        """
+        Returns True if this Blissymbol is a punctuation symbol.
+
+        :return: bool, whether this Blissymbol is punctuation
+        """
+        return self.bliss_name in self.PUNCT_MAP.values()
 
     def valid_filename(self):
         """
@@ -114,9 +149,45 @@ class Blissymbol:
                 print("couldn't open file: " + self.img_filename)
 
             if len(self.derivations) != 0:
-                self.make_new_blissymbol(self.derivations, self.img_filename, self.get_pos())
+                self.make_new_blissymbol(self.derivations, self.img_filename)
 
-    def make_new_blissymbol(self, derivations, filename, pos=""):
+    def count_indicators(self):
+        count = 0
+        for deriv in self.derivations:
+            if self.is_indicator(deriv):
+                count += 1
+        return count
+
+    def derivation_blissymbols(self):
+        """
+        Returns a list of Blissymbols for this Blissymbol's derivation.
+
+        :return: List[Blissymbol], this Blissymbol's derivative Blissymbols
+        """
+        bliss_derivatives = list()
+
+        if self.is_atom or len(self.derivations) == 1:
+            bliss_derivatives.append(self)
+            return bliss_derivatives
+        else:
+            for derivation in self.derivations:
+                print "deriv:\t", derivation
+                blissymbol = self.translator.word_to_blissymbol(derivation)
+
+                if blissymbol is None:  # if derivation has no characters, return this Blissymbol
+                    bliss_derivatives.append(self)
+                    return bliss_derivatives
+                else:
+                    print self
+                    bliss_derivatives += blissymbol.derivation_blissymbols()
+
+            if len(bliss_derivatives) == 0:
+                bliss_derivatives.append(self)
+
+            print self, ":\t", bliss_derivatives
+            return bliss_derivatives
+
+    def make_new_blissymbol(self, derivations, filename):
         """
         Given a list of derivations for a Blissymbol,
         combines derivations to make a new Blissymbol image
@@ -126,13 +197,13 @@ class Blissymbol:
 
         :param derivations: List[str], derivative Blissymbol(s)
         :param filename: str, filename to save Blissymbol under
-        :param pos: str, indicator Blissymbol to append at end of image
         :return: Image, new Blissymbol image from derivations
         """
         if filename is None:
             filename = self.img_filename
 
         bliss_imgs = []
+        indicators = []
         width = 0
         space = 2
 
@@ -144,18 +215,15 @@ class Blissymbol:
             else:
                 print("couldn't find Blissymbol derivation for " + derivation + "...")
                 continue
-            bliss_imgs.append(bliss_img)
-            width += bliss_img.size[0] + space
+            if self.is_indicator(derivation):
+                indicators.append(bliss_img)
+            else:
+                bliss_imgs.append(bliss_img)
+                width += bliss_img.size[0] + space
 
         if len(bliss_imgs) != 0:
             width -= space  # remove trailing whitespace
             height = max(bliss_imgs, key=lambda bw: bw.size[1]).size[1]
-
-            if len(pos) != 0:
-                indicator = self.pos_to_indicator(pos)
-                bliss_img = get_indicator_bliss_img(indicator)
-                width += space + bliss_img.size[0]
-                bliss_imgs.append(bliss_img)
 
             img = Image.new("RGBA", (width, height))
             curr_width = 0
@@ -163,6 +231,15 @@ class Blissymbol:
             for bliss_img in bliss_imgs:
                 img.paste(bliss_img, (curr_width, 0))
                 curr_width += space + bliss_img.size[0]
+
+            if len(indicators) != 0:
+                all_indicators = indicators[0]
+
+                for i in range(1, len(indicators)):
+                    indicator = indicators[i]
+                    all_indicators = beside(all_indicators, indicator)
+
+                img = overlay(all_indicators, img)
 
             filename = self.translator.deunicodize(filename)
             img_path = str(IMG_PATH + filename)
@@ -306,7 +383,7 @@ class Blissymbol:
                     continue
                 else:
                     d = d.strip()
-                    if d == "indicator":
+                    if self.is_indicator(d):
                         derivations.append(d + " (" + " ".join(derivs[start:end-1]) + ")")
                         start = end
                     elif d == "+":
@@ -419,8 +496,12 @@ class Blissymbol:
         :param translation: List[str], input translations to clean
         :return: List[str], cleaned translations
         """
-        translation = [self.remove_parens(self.clean_defn(t)) for t in translation]
-        return self.translator.remove_duplicates(translation)
+        clean_translation = []
+        for t in translation:
+            cleaned = self.remove_parens(self.clean_defn(t))
+            if len(cleaned) != 0 and cleaned not in clean_translation:
+                clean_translation.append(cleaned)
+        return clean_translation
 
     def clean_translations(self, translations):
         """
@@ -633,11 +714,11 @@ class Blissymbol:
             try:
                 self.POS_COLOUR_CODE[pos_code]
             except KeyError:
-                self.pos_code = self.find_pos_code(pos=pos_code)
+                self.pos_code = self.find_pos_colour(pos=pos_code)
             else:
                 self.pos_code = pos_code
 
-    def find_pos_code(self, pos):
+    def find_pos_colour(self, pos):
         """
         Given a pos, returns the corresponding pos colour code.
 
@@ -648,6 +729,16 @@ class Blissymbol:
         for colour in self.POS_COLOUR_CODE:
             if pos in self.POS_COLOUR_CODE[colour]:
                 return colour
+
+    @staticmethod
+    def find_colour_pos(colour):
+        """
+        Given a colour, returns the corresponding pos.
+
+        :param colour: str, a Blissymbol's part of speech colour
+        :return: List[str], parts of speech for the given colour
+        """
+        return Blissymbol.POS_COLOUR_CODE[colour]
 
     def get_is_atom(self):
         """
@@ -790,7 +881,7 @@ class Blissymbol:
         :param blissymbol: Blissymbol, entry to encoding/decoding dicts
         :return: None
         """
-        uni = blissymbol.get_unicode()
+        uni = blissymbol.unicode
 
         for bliss in blissymbol.get_translation("English"):
             self.add_bliss_and_unicode(bliss, uni)
@@ -844,6 +935,9 @@ class Blissymbol:
             synonyms += derivation.split(",")
         return synonyms
 
+    def is_indicator(self, blissname):
+        return blissname[:9] == "indicator"
+
     def clean_derivation_synonym(self, deriv_synonym):
         """
         Returns this Blissymbol's deriv_synonym cleaned.
@@ -851,7 +945,7 @@ class Blissymbol:
         :param deriv_synonym: str, synonym for a Blissymbol's derivation
         :return: str, derivation synonym cleaned
         """
-        if deriv_synonym[:9] == "indicator":
+        if self.is_indicator(deriv_synonym):
             deriv_synonym = deriv_synonym.replace("(", "")
             deriv_synonym = deriv_synonym.replace(")", "")
         deriv_synonym = deriv_synonym.replace("_", " ")
@@ -994,9 +1088,7 @@ class Blissymbol:
 
         :return: Set(Synset), this Blissymbol's Wordnet synsets
         """
-        synsets = self.translator.lookup_blissymbol_synsets(self)
-        if len(synsets) == 0:
-            synsets = list(self.find_blissymbol_synsets())
+        synsets = self.lookup_blissymbol_synsets(self)
         try:
             self.synset = synsets[0]
         except IndexError:
@@ -1014,6 +1106,21 @@ class Blissymbol:
             self.synset = self.synsets[0]
         except IndexError:
             return None
+
+    def lookup_blissymbol_synsets(self, blissymbol):
+        """
+        Returns a list of Wordnet Synsets corresponding to
+        this Blissymbol.
+
+        :param blissymbol: Blissymbol, blissymbol to lookup synset for
+        :return: List[Synset], synsets corresponding to blissymbol
+        """
+        if blissymbol.has_unicode():
+            uni = blissymbol.unicode
+            synsets = self.translator.lookup_blissnet(uni)
+            if synsets is not None:
+                return synsets
+        return []
 
     def find_blissymbol_synsets(self):
         """
@@ -1045,7 +1152,7 @@ class Blissymbol:
                     lang_synset = set()
 
                     for defn in translation:
-                        synset = self.translator.lookup_word_synsets(defn, pos, lang=lang)
+                        synset = self.translator.lookup_word_synsets(defn, pos, language=lang)
                         if synset is None:
                             lang = False
                             break
@@ -1077,6 +1184,9 @@ class Blissymbol:
             self.init_pos(pos)
 
         return synsets
+
+    def clean_bliss_name(self):
+        return self.bliss_name.replace("_", " ")
 
     def set_unicode(self, unicode):
         """
