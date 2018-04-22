@@ -58,6 +58,7 @@ PARSE_LEXICA:
 """
 import os
 import json
+import openpyxl
 from openpyxl import load_workbook
 import blissymbols
 from blissymbols import Blissymbol, NEW_BLISSYMBOLS
@@ -137,7 +138,7 @@ class LexiconParser:
         path = self.DATA_PATH + "/" + filename + ".json"
         json.dump(data, open(path, 'w'), indent=1, sort_keys=True)
 
-    def fetch_json(self, filename):
+    def load_json(self, filename):
         """
         Returns the official Blissymbols lexicon.
 
@@ -146,7 +147,7 @@ class LexiconParser:
         """
         return json.load(open(self.DATA_PATH + filename + ".json"))
 
-    def fetch_bliss_lexicon(self):
+    def load_bliss_lexicon(self):
         """
         Returns the official Blissymbols lexicon.
 
@@ -154,7 +155,59 @@ class LexiconParser:
             key (str) - Blissymbol word (in English)
             val (dict) - dict corresponding to Blissymbol word
         """
-        return self.fetch_json("bliss_lexicon")
+        return self.load_json("bliss_lexicon")
+
+    def load_all_blissymbols(self):
+        """
+        Returns a list of dictionaries for all Blissymbols.
+
+        :param language: str, desired Blissymbol lexicon language
+        :return: List[dict], where...
+            key (str) - words in given language
+            val (Set(Blissymbol)) - corresponding Blissymbols with
+                translations in language and English
+        """
+        return self.load_json("all_blissymbols")
+
+    def init_bliss_encoding(self):
+        """
+        Returns a Blissymbols-to-unicode encoding dictionary.
+        ~
+        Encoding conforms to suggestions here:
+        http://std.dkuug.dk/JTC1/SC2/WG2/docs/n1866.pdf
+
+        :return: dict, where...
+            key (str) - Blissymbol word (in English)
+            val (List[str]) - unicode representations of Blissymbol
+        """
+        return self.load_json("bliss_encoding")
+
+    def init_bliss_decoding(self):
+        """
+        Returns a unicode-to-Blissymbols decoding dictionary.
+        ~
+        Encoding conforms to suggestions here:
+        http://std.dkuug.dk/JTC1/SC2/WG2/docs/n1866.pdf
+
+        :return: dict, where...
+            key (str) - unicode representation of a Blissymbol
+            val (List[str]) - English words corresponding to given unicode
+        """
+        return self.load_json("bliss_decoding")
+
+    def init_blissnet(self):
+        """
+        Returns a unicode-to-synsets dictionary for mapping
+        Blissymbols to Wordnet.
+
+        :return: dict, where...
+            key (str) - unicode representation of a Blissymbol
+            val (List[Synset]) - Princeton synsets corresponding to given unicode
+        """
+        blissnet = self.load_json("blissnet")
+        blissnet = {uni: [self.translator.str_synset(synset_str) for synset_str in blissnet[uni]]
+                    for uni in blissnet}
+        return blissnet
 
     def refresh_bliss_lexicon(self):
         """
@@ -163,7 +216,7 @@ class LexiconParser:
 
         :return: None
         """
-        lexicon = self.translator.get_eng_bliss_dict()
+        lexicon = self.translator.find_bliss_dict("English")
         lexicon = {entry: filter(lambda x: x is not None and len(x) > 0,
                                  [self.blissymbol_to_dict(bliss) for bliss in lexicon[entry]])
                    for entry in lexicon}
@@ -199,55 +252,42 @@ class LexiconParser:
         :return: dict, where...
             key (str) - words in given language
             val (Set(Blissymbol)) - corresponding Blissymbols with
-                translations in given language and English
+                translations in language and English
         """
         bliss_dict = {}
-        lexicon = self.fetch_bliss_lexicon()
+        all_blissymbols = self.load_all_blissymbols()
+
+        for bliss in all_blissymbols:
+            blissymbol = self.dict_to_blissymbol(bliss)
+            lang_words = blissymbol.get_translation(language)
+
+            for lang_word in lang_words:
+                bliss_dict.setdefault(lang_word, set())
+                bliss_dict[lang_word].add(blissymbol)
+
+        return bliss_dict
+
+    def all_blissymbols(self):
+        """
+        Creates and returns a list of dictionaries for all Blissymbols.
+
+        :param language: str, desired Blissymbol lexicon language
+        :return: List[dict], where...
+            key (str) - words in given language
+            val (Set(Blissymbol)) - corresponding Blissymbols with
+                translations in language and English
+        """
+        all_blissymbols = []
+        lexicon = self.load_bliss_lexicon()
 
         for entry in lexicon:
             bliss_words = lexicon[entry]
             for bliss_word in bliss_words:
                 blissymbol = self.dict_to_blissymbol(bliss_word)
-                if blissymbol is not None:
-                    lang_words = blissymbol.get_translation(language)
-                    for lang_word in lang_words:
-                        bliss_dict.setdefault(lang_word, set())
-                        bliss_dict[lang_word].add(blissymbol)
+                if blissymbol is not None and bliss_word not in all_blissymbols:
+                    all_blissymbols.append(bliss_word)
 
-        return bliss_dict
-
-    def init_bliss_encoding(self):
-        """
-        Returns a Blissymbols-to-unicode encoding dictionary.
-
-        :return: dict, where...
-            key (str) - Blissymbol word (in English)
-            val (List[str]) - unicode representations of Blissymbol
-        """
-        return self.fetch_json("bliss_encoding")
-
-    def init_bliss_decoding(self):
-        """
-        Returns a unicode-to-Blissymbols decoding dictionary.
-
-        :return: dict, where...
-            key (str) - unicode representation of a Blissymbol
-            val (List[str]) - English words corresponding to given unicode
-        """
-        return self.fetch_json("bliss_decoding")
-
-    def init_blissnet(self):
-        """
-        Returns a unicode-to-synsets dictionary for mapping
-        Blissymbols to Wordnet.
-
-        :return: dict, where...
-            key (str) - unicode representation of a Blissymbol
-            val (List[Synset]) - Princeton synsets corresponding to given unicode
-        """
-        blissnet = self.fetch_json("blissnet")
-        blissnet = {uni: [self.translator.str_synset(bliss) for bliss in blissnet[uni]] for uni in blissnet}
-        return blissnet
+        return all_blissymbols
 
     # MULTILINGUAL
     # ============
@@ -359,64 +399,8 @@ class LexiconParser:
 
         return lexicon
 
-    # ENCODINGS
-    # =========
-    def get_bliss_encoding(self, filename=None):
-        """
-        Reads plaintext file with given filename and returns
-        a list of Blissymbol names.
-        ~
-        Output conforms to encoding suggested here:
-        http://std.dkuug.dk/JTC1/SC2/WG2/docs/n1866.pdf
-
-        :param filename: str, .txt file with Blissymbol names
-        :return: List[str], Blissymbol names
-        """
-        if filename is None:
-            filename = self.LEXICA_PATH + "blissymbol encoding.txt"
-        else:
-            filename = self.FILE_PATH + filename
-
-        defns = []
-
-        with open(filename, "rb") as bliss_in:
-            for bliss_name in bliss_in:
-                name = bliss_name[11:-1].lower()
-                defns.append(name)
-
-        return defns
-
     # WORDNET
     # =======
-    def write_bliss_wordnet(self, bliss_dict):
-        """
-        Writes mapping between Blissymbol words and
-        Synsets to plaintext file.
-
-        :param bliss_dict: dict, where...
-            key (str) - Blissymbol word in English
-            val (List[Synset]) - synsets associated with Blissymbol
-        :return: None
-        """
-        blissnet = self.bliss_dict_to_encoding_wordnet(bliss_dict)
-        self.write_bliss_wordnet_encoding(blissnet)
-
-    def write_bliss_wordnet_encoding(self, blissnet):
-        """
-        Writes mapping between Blissymbol unicodes and
-        Synsets to plaintext file.
-
-        :param blissnet: dict, where...
-            key (str) - Blissymbol's unicode representation
-            val (List[Synset]) - synsets associated with Blissymbol
-        :return: None
-        """
-        out = self.LEXICA_PATH + "blissnet.txt"
-
-        with open(out, "w") as wordnet:
-            wordnet.write(self.encoding_dict_to_str(blissnet))
-            wordnet.close()
-
     def bliss_dict_to_wordnet(self, bliss_dict):
         """
         Returns a dictionary of Blissymbol word keys and synsets
@@ -438,33 +422,7 @@ class LexiconParser:
         for word in bliss_dict:
             for blissymbol in bliss_dict[word]:
                 uni = blissymbol.get_unicode()
-                synsets = blissymbol.get_synsets()
-                wordnet[uni] = synsets
-
-        return wordnet
-
-    def bliss_dict_to_encoding_wordnet(self, bliss_dict):
-        """
-        Returns a dictionary of Bliss unicodes and synsets
-        from this bliss_dict.
-        ~
-        N.B. Output will be most accurate with a multilingual
-        Bliss dictionary.
-
-        :param bliss_dict: dict, where...
-            key (str) - Blissymbol word in English
-            val (List[Blissymbol]) - corresponding Blissymbols with
-                translations in all languages
-        :return: dict, where...
-            key (str) - Blissymbol's unicode representation
-            val (List[Synset]) - synsets associated with Blissymbol
-        """
-        wordnet = {}
-
-        for word in bliss_dict:
-            for blissymbol in bliss_dict[word]:
-                uni = blissymbol.get_unicode()
-                synsets = blissymbol.get_synsets()
+                synsets = blissymbol.synsets
                 wordnet[uni] = synsets
 
         return wordnet
@@ -482,7 +440,7 @@ class LexiconParser:
         try:
             return open(self.FILE_PATH + "/resources/omw_tabs/" +
                         "wn-cldr-" + lang_code + ".tab")
-        except Exception:
+        except IOError:
             return None
 
     def make_blissymbol(self):
@@ -534,6 +492,21 @@ class LexiconParser:
 
     # BLISS MANIPULATION
     # ==================
+    def blissymbol_entry(self, name, pos, derivation, translations):
+        """
+        Returns a dict of this Blissymbol's initializing
+        parameters, i.e. its name, pos, derivation, and translations.
+
+        :param blissymbol: Blissymbol, symbol to turn to tuple
+        :return: dict, where...
+            key (str) - name of Blissymbol field
+            val (X) - corresponding value
+        """
+        return {u"name": name,
+                u"pos": pos,
+                u"derivation": derivation,
+                u"translations": translations}
+
     def blissymbol_to_dict(self, blissymbol):
         """
         Returns a dict of this Blissymbol's initializing
@@ -544,7 +517,7 @@ class LexiconParser:
             key (str) - name of Blissymbol field
             val (X) - corresponding value
         """
-        return {u"name": blissymbol.get_bliss_name(),
+        return {u"name": blissymbol.bliss_name,
                 u"pos": blissymbol.get_pos(),
                 u"derivation": blissymbol.get_derivation(),
                 u"translations": blissymbol.get_translations()}
@@ -582,6 +555,60 @@ class LexiconParser:
 
     # XLSX ENTRIES
     # ============
+    def load_bliss_xlsx(self):
+        """
+        Loads a new Blissymbols lexicon from the
+        "universal bliss lexicon.xlsx" file.
+
+        :return: dict(str, list), where...
+            key (str) - English word
+            val (list) - list of dicts for word's Blissymbols
+        """
+        book = load_workbook(self.LEXICON_PATH)
+        sheet = book.worksheets[0]
+        bliss_dict = {}
+
+        def split_translation(entry): return [self.translator.deunderscore_word(e) for e in entry.split(",")]
+
+        for cells in sheet.iter_rows(min_row=2):
+            eng_cell = cells[1]
+            eng_word = eng_cell.value
+            eng_words = split_translation(eng_word)
+
+            pos_cell = cells[2]
+            pos_colour = pos_cell.value
+
+            derivs_cell = cells[3]
+            derivation = derivs_cell.value
+
+            translations_dict = {"English": eng_words}
+
+            for i in range(5, len(self.LEXICON_COLS), 2):
+                lang_cell = cells[i]
+                cell_language = self.LEXICON_COLS[i]
+                translation = lang_cell.value
+                translations = split_translation(translation) if translation is not None else list()
+                translation_dict = {cell_language: translations}
+                translations_dict.update(translation_dict)
+
+            bliss_poses = Blissymbol.find_colour_pos(pos_colour)
+            pos = self.translator.token_pos(eng_words[0])
+            pos_lst = [pos]
+            poses = list(set(bliss_poses).intersection(pos_lst))
+            if len(poses) == 0:
+                poses = bliss_poses
+            pos = poses[0]
+            entry = self.blissymbol_entry(eng_word, pos, derivation, translations_dict)
+
+            for word in eng_words:
+                word = self.translator.remove_parens(self.translator.deunderscore_word(word))
+                prev_entry = bliss_dict.setdefault(word, list())
+                prev_entry.append(entry)
+                bliss_dict[word] = prev_entry
+
+        self.dump_json(bliss_dict, "bliss_lexicon")
+        return bliss_dict
+
     def blissymbol_to_xlsx_entry(self, blissymbol):
         """
         Converts this Blissymbol to a list of
@@ -596,7 +623,7 @@ class LexiconParser:
         bci_col = self.LEXICON_COLS[0]
         pos_col = self.LEXICON_COLS[2]
         deriv_col = self.LEXICON_COLS[3]
-        uni = blissymbol.get_unicode() #[0]
+        uni = blissymbol.get_unicode()
         uni = uni[2:]
 
         for col in self.LEXICON_COLS:
@@ -679,3 +706,4 @@ class LexiconParser:
                     break
 
         book.save(self.LEXICON_PATH)
+

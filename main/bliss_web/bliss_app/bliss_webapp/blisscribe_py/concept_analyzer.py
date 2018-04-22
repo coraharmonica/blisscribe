@@ -55,7 +55,7 @@ class ConceptAnalyzer:
         if len(text) == 0:
             return
 
-        bliss_dict = self.translator.get_eng_bliss_dict()
+        bliss_dict = self.translator.eng_bliss_dict
         width, height = 800, 600
         bg = Image.new("RGBA", (width, height), (255, 255, 255, 0))
         trans_words = self.translator.translate_to_transwords(text)
@@ -123,8 +123,7 @@ class ConceptAnalyzer:
                     blissymbol = blissymbols.pop()
                     blissymbols.add(blissymbol)
 
-            img_filename = blissymbol.get_bliss_name()
-            img = self.translator.get_bliss_img(img_filename, int(img_w), int(img_w))
+            img = blissymbol.bliss_image(int(img_w), int(img_w))
             x_add = img.size[0] + space
 
             if highest_height is None:

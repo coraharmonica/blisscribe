@@ -8,7 +8,7 @@ BLISSYMBOLS:
 """
 from bliss_images import *
 
-LAST_BLISS_ENCODING = int("3576", 16)
+LAST_BLISS_ENCODING = int("3576", 16)  # hexadecimal unicode
 NEW_BLISSYMBOLS = []    # stores new Blissymbols from Blissymbol.make_new_blissymbol() for deletion
 
 
@@ -24,9 +24,8 @@ class Blissymbol:
                        "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$",
                        "RB", "RBR", "RBS", "RP", "TO", "UH", "VB", "VBD", "VBG",
                        "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"]
-    POS_COLOURS = ["RED", "YELLOW", "BLUE", "GREEN", "GRAY", "WHITE"]
     POS_COLOUR_CODE = {"GRAY": ["INDICATOR"],
-                       "WHITE": PARTS_OF_SPEECH,  # WHITE is catch-all translate_other parts of speech
+                       "WHITE": PARTS_OF_SPEECH,  # WHITE is catch-all for other parts of speech
                        "YELLOW": ["NN",
                                   "NNS",
                                   "NNP",
@@ -39,7 +38,7 @@ class Blissymbol:
                                "VBP",
                                "VBZ",
                                ],
-                       "BLUE": ["NN",  # personal (pro-)translate_nouns
+                       "BLUE": ["NN",  # personal (pro-)nouns
                                 "NNS",
                                 "NNP",
                                 "NNPS",
@@ -53,21 +52,25 @@ class Blissymbol:
                                  "RBR",
                                  "RBS",
                                  ]}
+    PUNCT_MAP = {",": u"comma",
+                 ".": u"period,point,full_stop,decimal_point",
+                 "?": u"question_mark",
+                 "!": u"exclamation_mark"}
 
     def __init__(self, img_filename=None, pos=None, derivation="", translations=None, translator=None):
         self.translator = translator
         self.img_filename = img_filename
+        self.bliss_name = self.img_filename[:-4]
         self.pos_code = pos
         self.init_pos_code(pos)
         self.pos = pos
         self.init_pos(pos)
-        self.paren_phrase = self.get_parens(self.get_bliss_name())
+        self.paren_phrase = self.get_parens(self.bliss_name)
         self.derivation = derivation
         self.is_atom = bool
         self.init_is_atom()
         self.derivations = self.find_derivations()
         self.check_img_filename()  # creates new blissymbol image from derivations if none exists
-        self.bliss_name = self.get_bliss_name()
         self.translations = self.clean_translations(translations)  # hold translations in different languages
         self.bliss_glyph = None
         self.unicode = str()
@@ -76,24 +79,64 @@ class Blissymbol:
         self.init_deriv_unicode()
         self.synset = None
         self.synsets = self.init_blissymbol_synsets()
-        self.translator.add_bliss_entry(self)
+        if self.valid_filename():
+            self.translator.add_bliss_entry(self)
 
-    def check_img_filename(self):
+    def bliss_image(self, max_width=None, max_height=None):
         """
-        Checks to see if this Blissymbol's img_filename
-        can be opened.
-        ~
-        If img_filename cannot be opened, attempts to create
-        a new image from this Blissymbol's derivations, and
-        saves this new image under img_filename.
+        Returns the Image for this Blissymbol, with a
+        maximum width of max_width and maximum height of max_height.
 
-        :return: None
+        :param max_width: Optional[int], maximum width of output image
+        :param max_height: Optional[int], maximum height of output image
+        :return: Image, image of this Blissymbol with given dimensions
+        """
+        return get_bliss_img(self.bliss_name, max_width=max_width, max_height=max_height)
+
+    def pluralize_image(self, img):
+        """
+        Returns this Blissymbol img with a plural indicator.
+
+        :param img: Image, Blissymbol image to pluralize
+        :param max_width: Optional[int], maximum width of output image
+        :param max_height: Optional[int], maximum height of output image
+        :return: Image, input image pluralized
+        """
+        plural = get_bliss_img("indicator_(plural)", img.size[0], img.size[1])
+        return overlay(img, plural)
+
+    def is_punct(self):
+        """
+        Returns True if this Blissymbol is a punctuation symbol.
+
+        :return: bool, whether this Blissymbol is punctuation
+        """
+        return self.bliss_name in self.PUNCT_MAP.values()
+
+    def valid_filename(self):
+        """
+        Returns True if this Blissymbol's img_filename can be opened,
+        False otherwise.
+
+        :return: bool, whether img_filename can be opened
         """
         try:
             open(IMG_PATH + self.img_filename)
         except IOError:
-            bliss_name = self.get_bliss_name()
-            for name in bliss_name.split(","):
+            return False
+        else:
+            return True
+
+    def check_img_filename(self):
+        """
+        If this Blissymbol's img_filename cannot be opened,
+        attempts to create a new image from this Blissymbol's derivations.
+        If successful, saves this new image as img_filename.
+
+        :return: None
+        """
+        if not self.valid_filename():
+            for name in self.bliss_name.split(","):
                 filename = name + ".png"
                 try:
                     open(IMG_PATH + filename)
@@ -104,10 +147,47 @@ class Blissymbol:
                     break
             else:
                 print("couldn't open file: " + self.img_filename)
-            derivs = self.derivations
-            self.make_new_blissymbol(derivs, self.img_filename, self.get_pos())
 
-    def make_new_blissymbol(self, derivations, filename, pos=""):
+            if len(self.derivations) != 0:
+                self.make_new_blissymbol(self.derivations, self.img_filename)
+
+    def count_indicators(self):
+        count = 0
+        for deriv in self.derivations:
+            if self.is_indicator(deriv):
+                count += 1
+        return count
+
+    def derivation_blissymbols(self):
+        """
+        Returns a list of Blissymbols for this Blissymbol's derivation.
+
+        :return: List[Blissymbol], this Blissymbol's derivative Blissymbols
+        """
+        bliss_derivatives = list()
+
+        if self.is_atom or len(self.derivations) == 1:
+            bliss_derivatives.append(self)
+            return bliss_derivatives
+        else:
+            for derivation in self.derivations:
+                print "deriv:\t", derivation
+                blissymbol = self.translator.word_to_blissymbol(derivation)
+
+                if blissymbol is None:  # if derivation has no characters, return this Blissymbol
+                    bliss_derivatives.append(self)
+                    return bliss_derivatives
+                else:
+                    print self
+                    bliss_derivatives += blissymbol.derivation_blissymbols()
+
+            if len(bliss_derivatives) == 0:
+                bliss_derivatives.append(self)
+
+            print self, ":\t", bliss_derivatives
+            return bliss_derivatives
+
+    def make_new_blissymbol(self, derivations, filename):
         """
         Given a list of derivations for a Blissymbol,
         combines derivations to make a new Blissymbol image
@@ -117,50 +197,57 @@ class Blissymbol:
 
         :param derivations: List[str], derivative Blissymbol(s)
         :param filename: str, filename to save Blissymbol under
-        :param pos: str, indicator Blissymbol to append at end of image
         :return: Image, new Blissymbol image from derivations
         """
         if filename is None:
             filename = self.img_filename
 
         bliss_imgs = []
+        indicators = []
         width = 0
         space = 2
 
         for derivation in derivations:
             blissymbol = self.translator.word_to_blissymbol(derivation)
             if blissymbol is not None:
-                bliss_name = blissymbol.get_bliss_name()
+                bliss_name = blissymbol.bliss_name
                 bliss_img = get_bliss_img(bliss_name)
             else:
                 print("couldn't find Blissymbol derivation for " + derivation + "...")
                 continue
-            bliss_imgs.append(bliss_img)
-            width += bliss_img.size[0] + space
+            if self.is_indicator(derivation):
+                indicators.append(bliss_img)
+            else:
+                bliss_imgs.append(bliss_img)
+                width += bliss_img.size[0] + space
 
-        width -= space  # remove whitespace
-        height = max(bliss_imgs, key=lambda bw: bw.size[1]).size[1]
+        if len(bliss_imgs) != 0:
+            width -= space  # remove trailing whitespace
+            height = max(bliss_imgs, key=lambda bw: bw.size[1]).size[1]
 
-        if len(pos) != 0 and len(bliss_imgs) != 0:
-            indicator = self.pos_to_indicator(pos)
-            bliss_img = get_indicator_bliss_img(indicator)
-            width += space + bliss_img.size[0]
-            bliss_imgs.append(bliss_img)
+            img = Image.new("RGBA", (width, height))
+            curr_width = 0
 
-        img = Image.new("RGBA", (width, height))
-        curr_width = 0
+            for bliss_img in bliss_imgs:
+                img.paste(bliss_img, (curr_width, 0))
+                curr_width += space + bliss_img.size[0]
 
-        for bliss_img in bliss_imgs:
-            img.paste(bliss_img, (curr_width, 0))
-            curr_width += space + bliss_img.size[0]
+            if len(indicators) != 0:
+                all_indicators = indicators[0]
 
-        filename = self.translator.deunicodize(filename)
-        img_path = str(IMG_PATH + filename)
-        img.save(img_path)
-        print("made new Blissymbol: " + filename)
-        print("with the derivations " + " ".join([d for d in derivations]))
-        NEW_BLISSYMBOLS.append(img_path)
-        return img
+                for i in range(1, len(indicators)):
+                    indicator = indicators[i]
+                    all_indicators = beside(all_indicators, indicator)
+
+                img = overlay(all_indicators, img)
+
+            filename = self.translator.deunicodize(filename)
+            img_path = str(IMG_PATH + filename)
+            img.save(img_path)
+            print("made new Blissymbol: " + filename)
+            print("with the derivations " + " ".join([d for d in derivations]))
+            NEW_BLISSYMBOLS.append(img_path)
+            return img
 
     def add_translation(self, language, translation):
         """
@@ -184,7 +271,7 @@ class Blissymbol:
 
     def add_translations(self, language, translations):
         """
-        Adds this translations to self.translations
+        Adds these translations to self.translations
         under this language.
 
         e.g. add_translation("Polish", ["kot", "kotka"]) ->
@@ -228,10 +315,11 @@ class Blissymbol:
         :return: List[str], list of this Blissymbol's derivations
         """
         if self.is_atom:
-            return [self.get_bliss_name()]
+            return [self.bliss_name]
         elif self.derivation == "":
             return []
         else:
+            # TODO: clean this up, a lot
             deriv = self.derivation
             deriv = deriv.replace("\n", "")
             deriv = deriv.replace(";", ":")
@@ -239,7 +327,6 @@ class Blissymbol:
             deriv = deriv.replace("  ", " ")
             derivs = deriv.split(":")
             deriv = derivs[0]
-            #deriv = self.get_parens(deriv)
 
             if deriv[0] == "(":
                 deriv = deriv[1:]
@@ -296,7 +383,7 @@ class Blissymbol:
                     continue
                 else:
                     d = d.strip()
-                    if d == "indicator":
+                    if self.is_indicator(d):
                         derivations.append(d + " (" + " ".join(derivs[start:end-1]) + ")")
                         start = end
                     elif d == "+":
@@ -317,20 +404,21 @@ class Blissymbol:
 
     def set_derivations(self, derivations):
         """
-        Sets this Blissymbol's derivations to this derivations.
+        Sets this Blissymbol's derivations to derivations.
 
         :param derivation: List[str], derivations of Blissymbol
         :return: None
         """
         self.derivations = derivations
 
-    def get_derivations(self):
+    def is_derivation(self, word):
         """
-        Returns this Blissymbol's derivations.
+        Returns True if this word is in this Blissymbol's derivations,
+        False otherwise.
 
         :return: List[str], derivations of Blissymbol
         """
-        return self.derivations
+        return word in self.derivations
 
     def get_subsymbols(self):
         """
@@ -345,7 +433,7 @@ class Blissymbol:
         """
         subderivations = []
 
-        for derivation in self.get_derivations():
+        for derivation in self.derivations:
             subderivation = self.find_subsymbols(derivation)
             subderivations += subderivation
 
@@ -371,14 +459,14 @@ class Blissymbol:
                 atoms.append(blissymbol)
                 return atoms
             else:
-                derivs = blissymbol.get_derivations()
+                derivs = blissymbol.derivations
 
                 if len(derivs) == 1:
                     atoms.append(blissymbol)
                     return atoms
                 else:
                     for deriv in derivs:
-                        if deriv not in blissymbol.get_derivations():
+                        if deriv not in blissymbol.derivations:
                             atoms += blissymbol.find_subsymbols(deriv)
                         else:
                             break
@@ -408,8 +496,12 @@ class Blissymbol:
         :param translation: List[str], input translations to clean
         :return: List[str], cleaned translations
         """
-        translation = [self.remove_parens(self.clean_defn(t)) for t in translation]
-        return self.translator.remove_duplicates(translation)
+        clean_translation = []
+        for t in translation:
+            cleaned = self.remove_parens(self.clean_defn(t))
+            if len(cleaned) != 0 and cleaned not in clean_translation:
+                clean_translation.append(cleaned)
+        return clean_translation
 
     def clean_translations(self, translations):
         """
@@ -427,15 +519,6 @@ class Blissymbol:
         languages = translations
         translations = {language: self.clean_translation(translations[language]) for language in languages}
         return translations
-
-    def get_bliss_name(self):
-        """
-        Return name of this Blissymbol's bliss image
-        file, without the filename extension.
-
-        :return: str, Blissymbol's image filename
-        """
-        return self.img_filename[:-4]
 
     def get_img_filename(self):
         """
@@ -469,16 +552,7 @@ class Blissymbol:
 
         :return: List[str], Blissymbol's parts-of-speech
         """
-        if self.pos is not None:
-            return self.pos
-
-    def get_paren_phrase(self):
-        """
-        Returns parenthetical(s) of this Blissymbol.
-
-        :return: str, this word's parenthetical phrase
-        """
-        return self.paren_phrase
+        return self.pos
 
     def get_parens(self, word):
         """
@@ -613,8 +687,8 @@ class Blissymbol:
         :param pos: str, this Blissymbol's part of speech
         :return: None
         """
-        if self.get_parens(self.get_bliss_name()) == "(to)":
-            # all translate_verbs have (to) indicator
+        if self.get_parens(self.bliss_name) == "(to)":
+            # all verbs have (to) indicator
             self.pos = self.POS_COLOUR_CODE["RED"]
         elif pos is not None:
             try:
@@ -633,28 +707,38 @@ class Blissymbol:
         :param pos_code: str, this Blissymbol's part of speech colour code
         :return: None
         """
-        if self.get_parens(self.get_bliss_name()) == "(to)":
-            # all translate_verbs have (to) indicator
+        if self.get_parens(self.bliss_name) == "(to)":
+            # all verbs have (to) indicator
             self.pos_code = "RED"
         elif pos_code is not None:
             try:
                 self.POS_COLOUR_CODE[pos_code]
             except KeyError:
-                self.pos_code = self.find_pos_code(pos=pos_code)
+                self.pos_code = self.find_pos_colour(pos=pos_code)
             else:
                 self.pos_code = pos_code
 
-    def find_pos_code(self, pos):
+    def find_pos_colour(self, pos):
         """
         Given a pos, returns the corresponding pos colour code.
 
         :param pos: str, this Blissymbol's part of speech
         :return: str, pos_code
         """
-        assert pos not in self.POS_COLOURS
-        for colour in self.POS_COLOURS:
+        assert pos not in self.POS_COLOUR_CODE
+        for colour in self.POS_COLOUR_CODE:
             if pos in self.POS_COLOUR_CODE[colour]:
                 return colour
+
+    @staticmethod
+    def find_colour_pos(colour):
+        """
+        Given a colour, returns the corresponding pos.
+
+        :param colour: str, a Blissymbol's part of speech colour
+        :return: List[str], parts of speech for the given colour
+        """
+        return Blissymbol.POS_COLOUR_CODE[colour]
 
     def get_is_atom(self):
         """
@@ -692,7 +776,7 @@ class Blissymbol:
         """
         derivations = self.derivation.lstrip("(").rstrip(")").split(":")  #self.derivation.split("-")
 
-        if len(derivations) == 1 and derivations[0] == self.get_bliss_name():
+        if len(derivations) == 1 and derivations[0] == self.bliss_name:
             return True
         elif derivations[0][:10] == "pictograph":
             return True
@@ -782,7 +866,7 @@ class Blissymbol:
         :return: None
         """
         if bliss == "":
-            bliss = self.get_bliss_name()
+            bliss = self.bliss_name
         if uni == "":
             uni = self.unicode
 
@@ -797,7 +881,7 @@ class Blissymbol:
         :param blissymbol: Blissymbol, entry to encoding/decoding dicts
         :return: None
         """
-        uni = blissymbol.get_unicode()
+        uni = blissymbol.unicode
 
         for bliss in blissymbol.get_translation("English"):
             self.add_bliss_and_unicode(bliss, uni)
@@ -839,6 +923,35 @@ class Blissymbol:
             uni = "U+" + uni
         return uni
 
+    def derivations_synonyms(self, derivations):
+        """
+        Returns a list of all Blissymbol derivations split by commas.
+
+        :param derivations: List[str], derivations for a Blissymbol
+        :return: List[str], derivations split by commas
+        """
+        synonyms = []
+        for derivation in derivations:
+            synonyms += derivation.split(",")
+        return synonyms
+
+    def is_indicator(self, blissname):
+        return blissname[:9] == "indicator"
+
+    def clean_derivation_synonym(self, deriv_synonym):
+        """
+        Returns this Blissymbol's deriv_synonym cleaned.
+
+        :param deriv_synonym: str, synonym for a Blissymbol's derivation
+        :return: str, derivation synonym cleaned
+        """
+        if self.is_indicator(deriv_synonym):
+            deriv_synonym = deriv_synonym.replace("(", "")
+            deriv_synonym = deriv_synonym.replace(")", "")
+        deriv_synonym = deriv_synonym.replace("_", " ")
+        deriv_synonym = self.remove_parens(deriv_synonym)
+        return deriv_synonym
+
     def find_deriv_unicode(self):
         """
         Returns a list of unicode strings corresponding to
@@ -851,38 +964,33 @@ class Blissymbol:
         :return: List[str], unicodes for this Blissymbol's
             derivations
         """
-        derivations = self.derivations
         deriv_unicode = set()
+        deriv_synonyms = self.derivations_synonyms(self.derivations)
+        unicodes = set()
 
-        for derivation in derivations:
-            unicodes = set()
-            for synonym in derivation.split(","):
-                if synonym[:9] == "indicator":
-                    synonym = synonym.replace("(", "")
-                    synonym = synonym.replace(")", "")
-                synonym = synonym.replace("_", " ")
-                synonym = self.remove_parens(synonym)
+        for deriv_synonym in deriv_synonyms:
+            synonym = self.clean_derivation_synonym(deriv_synonym)
+            if synonym in self.translator.get_bliss_to_unicode():
+                unis = self.translator.lookup_bliss_to_unicode(synonym)
+                unis = self.translator.remove_duplicates(unis)
 
-                if synonym in self.translator.get_bliss_to_unicode():
-                    unis = self.translator.lookup_bliss_to_unicode(synonym)
-                    unis = self.translator.remove_duplicates(unis)
-                    if len(unis) == 1:
-                        uni = unis[0]
-                        unicodes.add(uni)
-                        self.add_bliss_and_unicode(synonym, uni)
-                        break
-                    else:
-                        unis = set(unis)
-                        if len(unicodes) == 0:
-                            unicodes.update(unis)
-                        else:
-                            unicodes.intersection_update(unis)
-                            for uni in unis:
-                                self.add_bliss_and_unicode(synonym, uni)
-                else:
-                    uni = self.find_unicode(synonym)
+                if len(unis) == 1:
+                    uni = unis[0]
                     unicodes.add(uni)
                     self.add_bliss_and_unicode(synonym, uni)
+                    break
+                else:
+                    unis = set(unis)
+                    if len(unicodes) == 0:
+                        unicodes.update(unis)
+                    else:
+                        unicodes.intersection_update(unis)
+                        for uni in unis:
+                            self.add_bliss_and_unicode(synonym, uni)
+            else:
+                uni = self.find_unicode(synonym)
+                unicodes.add(uni)
+                self.add_bliss_and_unicode(synonym, uni)
 
             if len(deriv_unicode.intersection(unicodes)) > 0:
                 deriv_unicode.intersection_update(unicodes)
@@ -955,12 +1063,6 @@ class Blissymbol:
         """
         self.deriv_unicode = [self.unicode] if self.is_atom else self.find_deriv_unicode()
 
-    def get_synset(self):
-        return self.synset
-
-    def get_synsets(self):
-        return self.synsets
-
     def add_synset(self, synset):
         """
         Adds this synset to this Blissymbol's synsets.
@@ -986,14 +1088,11 @@ class Blissymbol:
 
         :return: Set(Synset), this Blissymbol's Wordnet synsets
         """
-        synsets = self.translator.lookup_blissymbol_synsets(self)
-        if len(synsets) == 0:
-            synsets = list(self.find_blissymbol_synsets())
+        synsets = self.lookup_blissymbol_synsets(self)
         try:
             self.synset = synsets[0]
         except IndexError:
             pass
-
         return set(synsets)
 
     def init_blissymbol_synset(self):
@@ -1008,6 +1107,21 @@ class Blissymbol:
         except IndexError:
             return None
 
+    def lookup_blissymbol_synsets(self, blissymbol):
+        """
+        Returns a list of Wordnet Synsets corresponding to
+        this Blissymbol.
+
+        :param blissymbol: Blissymbol, blissymbol to lookup synset for
+        :return: List[Synset], synsets corresponding to blissymbol
+        """
+        if blissymbol.has_unicode():
+            uni = blissymbol.unicode
+            synsets = self.translator.lookup_blissnet(uni)
+            if synsets is not None:
+                return synsets
+        return []
+
     def find_blissymbol_synsets(self):
         """
         Returns a list of English Wordnet synsets corresponding
@@ -1017,7 +1131,7 @@ class Blissymbol:
         """
         synsets = set()
         translations = self.get_translations()
-        word = self.get_bliss_name()
+        word = self.bliss_name
         word = word.replace("_", " ")
         words = word.split(",")
         pos = self.get_pos()
@@ -1038,7 +1152,7 @@ class Blissymbol:
                     lang_synset = set()
 
                     for defn in translation:
-                        synset = self.translator.lookup_word_synsets(defn, pos, lang=lang)
+                        synset = self.translator.lookup_word_synsets(defn, pos, language=lang)
                         if synset is None:
                             lang = False
                             break
@@ -1071,6 +1185,9 @@ class Blissymbol:
 
         return synsets
 
+    def clean_bliss_name(self):
+        return self.bliss_name.replace("_", " ")
+
     def set_unicode(self, unicode):
         """
         Sets this Blissymbol's unicode to unicodes.
@@ -1098,7 +1215,7 @@ class Blissymbol:
         pos = self.get_pos()
 
         if self.is_atom:
-            glyph.set_bliss_unit(self.get_bliss_name())
+            glyph.set_bliss_unit(self.bliss_name)
             return
         else:
             for derivn in self.derivations:
@@ -1130,8 +1247,70 @@ class BlissAlphabet:
     def __init__(self):
         pass
         #self.lex_parser = LexiconParser()
-        #self.bliss_atoms = self.lex_parser.getBlissAtomsDict(self.lex_parser.LEXICA_PATH +
-        #                                                 "blissymbol encoding.txt")
+        #self.bliss_atoms = self.lex_parser.init_blissnet()
+    
+    
+class BlissIndicator:
+    INDICATORS = {
+        # PARTS OF SPEECH
+        "verb": "indicator_(action)",
+        "noun": "indicator_(thing)",
+        "plural noun": "indicator_(things)",
+        "adverb": "indicator_(adverb)",
+        "plural": "indicator_(plural)",
+
+        # NOUNS
+        # --> definiteness
+        "definite": "indicator_(definite_form)",
+        "indefinite": "indicator_(indefinite_form)",
+        # --> possession
+        "possessive": "indicator_(possessive_form)",
+
+        # VERBS
+        # --> grammatical forms
+        "imperative": "indicator_(imperative_form)",
+        "imperfective": "indicator_(continuous_form)",
+        "imperfect": ["indicator_(past_action)", "indicator_(continuous_form)"],
+        # --> tense
+        "past": "indicator_(past_action)",
+        "present": "indicator_(present_action)",
+        "future": "indicator_(future_action)",
+        # --> conditional
+        "past conditional": "indicator_(past_conditional)",
+        "conditional": "indicator_(conditional)",
+        "future conditional": "indicator_(future_conditional)",
+        # --> active/passive
+        "active": "indicator_(active)",
+        "past passive": "indicator_(past_passive)",
+        "passive": "indicator_(passive)",
+        "future passive": "indicator_(future_passive)",
+        # --> passive conditional
+        "past passive conditional": "indicator_(past_passive_conditional)",
+        "present passive conditional": "indicator_(present_passive_conditional)",
+        "future passive conditional": "indicator_(future_passive_conditional)",
+        # --> participles
+        "past participle": "indicator_(past_participle_1)",
+        "present participle": "indicator_(present_participle)",
+
+        # ADJECTIVES
+        # "": "indicator_(description_before_fact)",
+        "adjective": "indicator_(description)",
+        # "": "indicator_(description_after_fact)",
+
+        # ASPECTS
+        # --> person
+        "first person": "indicator_(first_person)",
+        "second person": "indicator_(second_person)",
+        "third person": "indicator_(third_person)",
+        # --> gender
+        "diminutive": "indicator_(diminutive_form)",
+        "feminine": "indicator_(female)",
+        "neutral": "indicator_(neutral_form)",
+        "object": "indicator_(object_form)",
+
+        # BLISS-SPECIFIC
+        "combination": "indicator_(combine)"
+    }
 
 
 class BlissGlyph:

@@ -14,7 +14,7 @@ IMG_PATH = PATH + "/symbols/png/full/"
 def equate_images(img1, img2):
     """
     Returns a 2-tuple of the given images but
-    set to the same size as each translate_other.
+    set to the same size as each other.
 
     :param img1: Image, first image to set equal in size
     :param img2: Image, second image to set equal in size
@@ -133,7 +133,7 @@ def get_word_img(word, font_path, font_size, img_h):
     if word == "\n":
         return make_blank_img(1, img_h)
     else:
-        font = ImageFont.truetype(font=font_path, size=font_size)
+        font = make_font(font_path, font_size)
         img = make_blank_img(font.getsize(word)[0], img_h)
         sketch = ImageDraw.Draw(img)
         sketch.text((0, int(font_size*0.75)),
@@ -141,6 +141,20 @@ def get_word_img(word, font_path, font_size, img_h):
                     fill="black",
                     font=font)
         return trim_horizontal(img)
+
+
+def make_font(font_path, font_size):
+    """
+    Returns an ImageFont with given font_path and font_size.
+    ~
+    If font_path is invalid, returns an ImageFont using this
+    BlissTranslator's Arial font and font_size.
+
+    :param font_path: str, path to font file
+    :param font_size: int, desired font size
+    :return: ImageFont, font with given path and font size
+    """
+    return ImageFont.truetype(font_path, font_size)
 
 
 def get_bliss_img(bliss_name, max_width=None, max_height=None):
@@ -157,11 +171,12 @@ def get_bliss_img(bliss_name, max_width=None, max_height=None):
     :return: Image, image of input str's Blissymbol
     """
     img = Image.open(IMG_PATH + bliss_name + ".png")
-    if max_width is None:
-        max_width = img.size[0]
-    if max_height is None:
-        max_height = img.size[1]
-    img.thumbnail((max_width, max_height))
+    if max_width is not None or max_height is not None:
+        if max_width is None:
+            max_width = img.size[0]
+        if max_height is None:
+            max_height = img.size[1]
+        img.thumbnail((max_width, max_height))
     return img
 
 
@@ -178,14 +193,14 @@ def get_trans_bliss_img(trans_word, max_width=None, max_height=None):
     :param max_height: int, maximum height of Image (in pixels)
     :return: Image, image of input str's Blissymbol
     """
-    img_filename = trans_word.get_bliss_name()
     font_path = trans_word.translator.font_path
     font_size = trans_word.translator.font_size
 
     if not trans_word.has_blissymbol():
-        return get_word_img(trans_word.get_word(), font_path, font_size, max_height)
+        return get_word_img(trans_word.word, font_path, font_size, max_height)
     else:
-        img = get_bliss_img(img_filename, max_width, max_height)
+        blissymbol = trans_word.blissymbol
+        img = blissymbol.bliss_image(max_width, max_height)
         if trans_word.is_plural_noun():
             img = get_plural_img(img)
         return img
@@ -205,8 +220,7 @@ def get_subbed_bliss_img(trans_word, max_width=None, max_height=None, subs=True)
     :param subs: bool, whether to subtitle output image
     :return: Image, subtitled Blissymbol image
     """
-    word = trans_word.get_word()
-    word = trans_word.translator.unicodize(word)
+    word = trans_word.translator.unicodize(trans_word.word)
     bliss_img = get_trans_bliss_img(trans_word, max_width, max_height)
     font_path = trans_word.translator.font_path
     sub_size = trans_word.translator.subtitle_size()
@@ -223,21 +237,6 @@ def get_subbed_bliss_img(trans_word, max_width=None, max_height=None, subs=True)
     return img
 
 
-def get_indicator_bliss_img(indicator, max_width=None, max_height=None):
-    """
-    Returns the Blissymbol image corresponding to the
-    given Blissymbol indicator string.
-
-    :param indicator: str, Blissymbol indicator to get image of
-    :param max_width: int, maximum width of Image (in pixels)
-    :param max_height: int, maximum height of Image (in pixels)
-    :return: Image, input indicator Blissymbol image
-    """
-    indicator = indicator.replace(" ", "_(")
-    indicator += ")"
-    return get_bliss_img(indicator, max_width, max_height)
-
-
 def get_plural_img(img):
     """
     Returns the given Blissymbol image with the plural
@@ -246,7 +245,7 @@ def get_plural_img(img):
     :param img: Image, Blissymbol image to pluralize
     :return: Image, input image pluralized
     """
-    plural = get_indicator_bliss_img("indicator plural", img.size[0], img.size[1])
+    plural = get_bliss_img("indicator_(plural)", img.size[0], img.size[1])
     return overlay(img, plural)
 
 
