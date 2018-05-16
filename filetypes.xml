@@ -3,6 +3,7 @@
     <extensionMap>
       <mapping pattern=".hello_world.cc" type="C++" />
       <mapping ext="java" type="C++" />
+      <mapping pattern="sapowski-witcher_1_polish" type="PLAIN_TEXT" />
       <mapping pattern=".hello_world.cc.swp" type="PLAIN_TEXT" />
       <mapping pattern="rimbaud-saison_en_enfer" type="PLAIN_TEXT" />
       <mapping pattern="4" type="PLAIN_TEXT" />
