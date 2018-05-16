@@ -7,6 +7,7 @@
       <mapping pattern=".hello_world.cc.swp" type="PLAIN_TEXT" />
       <mapping pattern="rimbaud-saison_en_enfer" type="PLAIN_TEXT" />
       <mapping pattern="4" type="PLAIN_TEXT" />
+      <mapping pattern="lewis-chronicles_of_narnia" type="PLAIN_TEXT" />
       <mapping ext="ttl" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
