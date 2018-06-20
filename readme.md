@@ -10,7 +10,7 @@ To translate in Python, open the package in Python 2.7 and head to the  [blisscr
 
 <h3>Blisscribe on the Web</h3>
 
-To translate using the web interface, open the package in command line and cd to the [bliss_web folder] (https://github.com/coraharmonica/blisscribe/tree/master/main/bliss_web) through the main folder.  Run the following prompt:
+To translate using the web interface, open the package in command line and cd to the [bliss_web folder](https://github.com/coraharmonica/blisscribe/tree/master/main/bliss_web) through the main folder.  Run the following prompt:
 
 > source env/bin/activate
 
