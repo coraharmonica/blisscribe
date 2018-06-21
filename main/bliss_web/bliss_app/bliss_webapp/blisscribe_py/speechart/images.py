@@ -56,7 +56,7 @@ def overlay(front, back, equate=True):
     """
     Overlays front image on top of back image.
     ~
-    Preserves alpha values of both images.
+    Preserves opacity values of both images.
     ~
     If equate is set to True, equates both images in
     size before overlaying.  Otherwise, overlays
@@ -72,7 +72,7 @@ def overlay(front, back, equate=True):
         img = Image.alpha_composite(back, front)
     else:
         w, h = max(front.size[0], back.size[0]), max(front.size[1], back.size[1])
-        img = make_blank_img(w, h, alpha=0)
+        img = make_blank_img(w, h, opacity=0)
         front_x = w/2 - front.size[0]/2
         front_y = h/2 - front.size[1]/2
         back_x = w/2 - back.size[0]/2
@@ -86,14 +86,14 @@ def beside(left, right, align='bottom'):
     """
     Places left image beside right image.
     ~
-    Preserves alpha values of both images.
+    Preserves opacity values of both images.
     ~
     Align can be set to 'center', 'top', or 'bottom'.
 
     :param left: Image, image to place to left
     :param right: Image, image to place to right
     :param align: str, alignment of right image relative to left
-    :return: Image, foreground overlaid on background
+    :return: Image, left image beside right image
     """
     left, right = trim(left), trim(right)
     w, h = left.size[0] + right.size[0], max(left.size[1], right.size[1])
@@ -113,11 +113,33 @@ def beside(left, right, align='bottom'):
     return img
 
 
+def beside_all(imgs, align='bottom', space=0):
+    """
+    Places each image in imgs beside each other.
+    ~
+    Preserves opacity values of all images.
+    ~
+    Align can be set to 'center', 'top', or 'bottom'.
+
+    :param imgs: List[Image], images to place beside each other
+    :param align: str, alignment of images relative to each other
+    :param space: int, space between each image
+    :return: Image, imgs beside one another
+    """
+    final_img = make_blank_img(0, 0, opacity=0)
+    space_img = make_blank_img(space, space, opacity=0)
+    for img in imgs:
+        if space > 0:
+            final_img = beside(final_img, space_img, align=align)
+        final_img = beside(final_img, img, align=align)
+    return final_img
+
+
 def above(top, bottom, align='center'):
     """
     Places top image above bottom image.
     ~
-    Preserves alpha values of both images.
+    Preserves opacity values of both images.
 
     :param top: Image, image to place on top
     :param bottom: Image, image to place on bottom
@@ -144,18 +166,34 @@ def above(top, bottom, align='center'):
     return img
 
 
-def make_blank_img(x, y, colour=(255, 255, 255), alpha=255):
+def above_all(imgs, align='center'):
+    """
+    Places top image above bottom image.
+    ~
+    Preserves opacity values of both images.
+
+    :param imgs: List[Image], images to place on top of one another
+    :param align: str, alignment of images relative to each other
+    :return: Image, top image overlaid on bottom image
+    """
+    final_img = make_blank_img(0, 0)
+    for img in imgs:
+        final_img = above(final_img, img, align=align)
+    return final_img
+
+
+def make_blank_img(x, y, colour=(255, 255, 255), opacity=255):
     """
     Returns a blank image of dimensions x and y with optional
-    background colour and transparency (alpha) values.
+    background colour and opacity values.
 
     :param x: int, x-dimension of image
     :param y: int, y-dimension of image
     :param colour: tuple(int,int,int), RBG value for background colour
-    :param alpha: int[0,255], transparency value
+    :param opacity: int[0,255], opacity value
     :return: Image, blank image
     """
-    return Image.new("RGBA", (x, y), colour + (alpha,))
+    return Image.new("RGBA", (x, y), colour + (opacity,))
 
 
 def trim(img, bbox=None):
@@ -208,24 +246,24 @@ def trim_horizontal(img):
         return img
 
 
-def circle(width, height=None, fill='white', outline=None, alpha=0):
+def circle(width, height=None, fill='white', outline=None, opacity=0):
     height = width if height is None else height
-    img = make_blank_img(width, height, alpha=alpha)
+    img = make_blank_img(width, height, opacity=opacity)
     draw = ImageDraw.Draw(img)
     outline = fill if outline is None else outline
     draw.ellipse((0, 0, width-1, height-1), fill, outline)
     return img
 
 
-def rectangle(width, height, fill='white', outline=None, alpha=0):
-    img = make_blank_img(width, height, alpha=alpha)
+def rectangle(width, height, fill='white', outline=None, opacity=0):
+    img = make_blank_img(width, height, opacity=opacity)
     draw = ImageDraw.Draw(img)
     draw.rectangle((0, 0, width-1, height-1), fill, outline)
     return img
 
 
-def triangle(width, height, fill='white', vertical=True, outline=None, alpha=0):
-    img = make_blank_img(width, height, alpha=alpha)
+def triangle(width, height, fill='white', vertical=True, outline=None, opacity=0):
+    img = make_blank_img(width, height, opacity=opacity)
     draw = ImageDraw.Draw(img)
     outline = fill if outline is None else outline
     width, height = width-1, height-1
@@ -238,6 +276,44 @@ def triangle(width, height, fill='white', vertical=True, outline=None, alpha=0):
     draw.polygon(dims, fill, outline)
     return img
 
+def polygon(width, height, num_sides, fill='white', vertical=True, outline=None, opacity=0):
+    if num_sides > 2:
+        img = make_blank_img(width, height, opacity=opacity)
+        draw = ImageDraw.Draw(img)
+        outline = fill if outline is None else outline
+        width, height = width-1, height-1
+        min_w, max_w = sorted([0, width])
+        min_h, max_h = sorted([0, height])
+        mid_x = max_w/2
+        mid_y = max_h/2
+        if vertical:
+            num_mids = num_sides - 2 #max(0, (num_sides % 2) - 2)
+            # min_w, min_h
+            # max_w/(num_sides-1), max_h/(num_sides-1)
+            # max_w/(num_sides-1) * 2, max_h/(num_sides-1) * 2...
+            # max_w/(num_sides-1) * num_sides-1, max_h/(num_sides-1) * num_sides-1
+            # max_w/(num_sides-1) * 2, max_h/(num_sides-1)...
+            # max_w/(num_sides-1), max_h/(num_sides-1)
+            # max_w, max_h
+
+            # triangle: (0, 0), (width/2, height), (width, 0)
+            # square: (0,0), (0, width), (0, height), (width, height)
+            # pentagon:
+
+
+            dims = [(0, min_h), (width, min_h)]
+            if num_mids != 0:
+                # width, min_h
+                mid_tups = [(mid_x - max_w/(num_sides-i), mid_y - max_h/(num_sides-i)) if i < num_mids
+                            else (mid_x + max_w/(num_sides-num_mids-i), mid_y + max_h/(num_sides-num_mids-i))
+                            for i in range(1, num_mids)]
+                dims = dims[:1] + mid_tups + dims[-1:]
+                print dims
+        else:
+            dims = [(min_w, 0), (min_w, height), (max_w, height/(num_sides-1))]
+        draw.polygon(dims, fill, outline)
+        img.show()
+        return img
 
 def load_default_font(font_name="Arial Bold.ttf", size=12):
     font = "/Library/Fonts/%s" % font_name
@@ -261,22 +337,22 @@ def text_size(text, lang="English", size=12, font=None):
     return font.getsize(text)
 
 
-def text(message, lang="English", size=12, colour="black", bg_fill=(255,255,255), alpha=255, bg_alpha=0, font=None):
+def text_image(message, lang="English", size=12, colour="black", bg_fill=(255, 255, 255),
+               opacity=255, bg_opacity=0, font=None):
     if font is None:
         font = load_default_font(lang_font(lang), size=size)
     w, h = font.getsize(message)
-    img = make_blank_img(w, h, bg_fill, alpha=bg_alpha)
+    img = make_blank_img(w, h, bg_fill, opacity=bg_opacity)
     draw = ImageDraw.Draw(img)
-    draw.text((0, 0), message, fill=colour, font=font, alpha=alpha)
+    draw.text((0, 0), message, fill=colour, font=font, alpha=opacity)
     return img
 
 
 def arrow(width, height, fill='black', angle=0, label=None, align_label=False,
-          alpha=0, lang="English", font=None, font_size=0):
-    max_dim = max(width, height)
-    vertical = max_dim == height
+          opacity=0, lang="English", font=None, font_size=0):
+    vertical = width < height
     arrow_w, arrow_h = (3 * (width if vertical else height),) * 2  # width & height of arrowhead are 3 * stem width
-    arrowhead = triangle(arrow_w, arrow_h, fill, vertical, alpha=alpha)
+    arrowhead = triangle(arrow_w, arrow_h, fill, vertical, opacity=opacity)
     rect_w = abs(width - (arrow_w if not vertical else 0))
     rect_h = abs(height - (arrow_h if vertical else 0))
     stem = rectangle(rect_w, rect_h, fill)
@@ -291,12 +367,12 @@ def arrow(width, height, fill='black', angle=0, label=None, align_label=False,
         img = beside(left, right, align='center')
 
     if label is not None:
-        txt = text(label, lang, alpha=0, size=font_size, font=font)
+        txt = text_image(label, lang, opacity=0, size=font_size, font=font)
         if not align_label:
             img = trim(rotate(img, angle))
         img = overlay(txt, img)
 
-    if align_label:
+    if align_label or label is None:
         img = trim(rotate(img, angle))
 
     return img
@@ -314,7 +390,7 @@ def rotate(img, angle):
     if angle != 0:
         max_dim = max(img.size)
         img = overlay(img,
-                      make_blank_img(max_dim*2, max_dim*2, alpha=0)).rotate(angle)
+                      make_blank_img(max_dim * 2, max_dim * 2, opacity=0)).rotate(angle)
     return img
 
 
@@ -329,16 +405,16 @@ def venn_diagram(colours, diameter=100):
     :return: Image, input colours in overlapping diagram
     """
     circles = []
-    alpha = int(255.0 / len(colours))
+    opacity = int(255.0 / len(colours))
 
     for rgb in colours:
-        colour = rgb[:3] + (alpha,)
-        circ = circle(diameter, height=diameter*2, fill=colour, alpha=0)
+        colour = rgb[:3] + (opacity,)
+        circ = circle(diameter, height=diameter*2, fill=colour, opacity=0)
         circles.append(circ)
 
     fill = (255, 255, 255, 0)
-    diagram = rectangle(1, 1, fill=fill, alpha=255)
-    bg = rectangle(diameter/2, diameter/2, fill=fill, alpha=255)
+    diagram = rectangle(1, 1, fill=fill, opacity=255)
+    bg = rectangle(diameter / 2, diameter / 2, fill=fill, opacity=255)
     offset = int(360.0 / len(circles))
     angle = 0
 
@@ -362,18 +438,18 @@ def flower_diagram(colours, diameter=100):
     :return: Image, input images as Venn diagram
     """
     circles = []
-    alpha = int(255.0 / len(colours))
+    opacity = int(255.0 / len(colours))
 
     for rgb in colours:
-        colour = rgb[:3] + (alpha,)
-        circ = circle(diameter, fill=colour, alpha=0)
+        colour = rgb[:3] + (opacity,)
+        circ = circle(diameter, fill=colour, opacity=0)
         circles.append(circ)
 
     centre = circles[0]
     circles = circles[1:]
     fill = (255, 255, 255, 0)
     diagram = centre
-    bg = rectangle(int(diameter*1.1), int(diameter*1.1), fill=fill, alpha=255)
+    bg = rectangle(int(diameter*1.1), int(diameter*1.1), fill=fill, opacity=255)
     offset = int(360.0 / len(circles))
     angle = 0
 

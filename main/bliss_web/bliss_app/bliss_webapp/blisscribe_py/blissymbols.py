@@ -7,8 +7,8 @@ BLISSYMBOLS:
     by a user.
 """
 from bliss_images import *
+import re
 
-LAST_BLISS_ENCODING = int("3576", 16)  # hexadecimal unicode
 NEW_BLISSYMBOLS = []    # stores new Blissymbols from Blissymbol.make_new_blissymbol() for deletion
 
 
@@ -59,28 +59,42 @@ class Blissymbol:
 
     def __init__(self, img_filename=None, pos=None, derivation="", translations=None, translator=None):
         self.translator = translator
+        self.last_encoding = int(self.calc_last_unicode()[2:], 16)
         self.img_filename = img_filename
         self.bliss_name = self.img_filename[:-4]
         self.pos_code = pos
         self.init_pos_code(pos)
-        self.pos = pos
-        self.init_pos(pos)
+        self.pos = self.init_pos(pos)
         self.paren_phrase = self.get_parens(self.bliss_name)
         self.derivation = derivation
-        self.is_atom = bool
-        self.init_is_atom()
+        self.is_atom = self.find_is_atom()
         self.derivations = self.find_derivations()
         self.check_img_filename()  # creates new blissymbol image from derivations if none exists
         self.translations = self.clean_translations(translations)  # hold translations in different languages
         self.bliss_glyph = None
         self.unicode = str()
-        self.deriv_unicode = list()
-        self.init_unicode()
-        self.init_deriv_unicode()
+        self.unicode = self.init_unicode()
         self.synset = None
         self.synsets = self.init_blissymbol_synsets()
         if self.valid_filename():
             self.translator.add_bliss_entry(self)
+
+    def calc_last_unicode(self):
+        """
+        Returns the last unicode symbol in the official Blissymbols decoding.
+
+        :return: str, unicode for last Blissymbol decoded
+        """
+        return sorted(self.translator.get_unicode_to_bliss())[-1]
+
+    def set_pos(self, pos):
+        """
+        Sets this Blissymbol's parts of speech to pos.
+
+        :param pos: List[str], list of Penn Treebank parts of speech
+        :return: None
+        """
+        self.pos = pos
 
     def bliss_image(self, max_width=None, max_height=None):
         """
@@ -146,7 +160,7 @@ class Blissymbol:
                     self.img_filename = filename
                     break
             else:
-                print("couldn't open file: " + self.img_filename)
+                print("couldn't open file: " + self.img_filename + str(self.derivations))
 
             if len(self.derivations) != 0:
                 self.make_new_blissymbol(self.derivations, self.img_filename)
@@ -158,33 +172,46 @@ class Blissymbol:
                 count += 1
         return count
 
-    def derivation_blissymbols(self):
+    def derivation_blissymbols(self, blissymbol, atomic=True):
         """
         Returns a list of Blissymbols for this Blissymbol's derivation.
+        ~
+        If atomic is True, returns all atomic Blissymbols part of this
+        Blissymbol's derivation.  Otherwise, returns only this Blissymbol's
+        immediate derivations as Blissymbols.
+        ~
+        e.g. bs = Blissymbol("rabbit,hare.png", derivation="(rodent + ear)"])
 
+             derivation_blissymbols(bs, False) -> [Blissymbol("rodent"), Blissymbol("ear")]
+             derivation_blissymbols(bs, True) -> [Blissymbol("animal"), Blissymbol("teeth"), Blissymbol("ear")]
+
+        :param blissymbol: Blissymbol, to find derivative Blissymbols for
+        :param atomic: bool, whether to return only atomic Blissymbol derivations
         :return: List[Blissymbol], this Blissymbol's derivative Blissymbols
         """
         bliss_derivatives = list()
 
-        if self.is_atom or len(self.derivations) == 1:
-            bliss_derivatives.append(self)
+        if blissymbol.is_atom or len(blissymbol.derivations) == 1:
+            bliss_derivatives.append(blissymbol)
             return bliss_derivatives
         else:
-            for derivation in self.derivations:
-                print "deriv:\t", derivation
-                blissymbol = self.translator.word_to_blissymbol(derivation)
+            for derivation in blissymbol.derivations:
+                deriv_bliss = self.translator.word_to_blissymbol(derivation)
 
-                if blissymbol is None:  # if derivation has no characters, return this Blissymbol
-                    bliss_derivatives.append(self)
+                if deriv_bliss is None:  # if derivation has no characters, return this Blissymbol
+                    bliss_derivatives.append(deriv_bliss)
                     return bliss_derivatives
+                elif blissymbol == deriv_bliss or deriv_bliss in bliss_derivatives:
+                    continue
                 else:
-                    print self
-                    bliss_derivatives += blissymbol.derivation_blissymbols()
+                    if atomic:
+                        bliss_derivatives += self.derivation_blissymbols(deriv_bliss, atomic)
+                    else:
+                        bliss_derivatives.append(blissymbol)
 
             if len(bliss_derivatives) == 0:
-                bliss_derivatives.append(self)
+                bliss_derivatives.append(blissymbol)
 
-            print self, ":\t", bliss_derivatives
             return bliss_derivatives
 
     def make_new_blissymbol(self, derivations, filename):
@@ -207,15 +234,17 @@ class Blissymbol:
         width = 0
         space = 2
 
-        for derivation in derivations:
+        for derivation in self.derivations:
             blissymbol = self.translator.word_to_blissymbol(derivation)
+
             if blissymbol is not None:
                 bliss_name = blissymbol.bliss_name
                 bliss_img = get_bliss_img(bliss_name)
             else:
                 print("couldn't find Blissymbol derivation for " + derivation + "...")
                 continue
-            if self.is_indicator(derivation):
+
+            if blissymbol.is_indicator(blissymbol.bliss_name):
                 indicators.append(bliss_img)
             else:
                 bliss_imgs.append(bliss_img)
@@ -296,7 +325,7 @@ class Blissymbol:
 
         :return: str, this Blissymbol's source derivation
         """
-        return str(self.derivation)
+        return unicode(self.derivation)
 
     def set_derivation(self, derivation):
         """
@@ -314,93 +343,20 @@ class Blissymbol:
 
         :return: List[str], list of this Blissymbol's derivations
         """
-        if self.is_atom:
+        if self.bliss_name in self.translator.lex_parser.init_derivations():
+            return self.translator.lex_parser.init_derivations()[self.bliss_name]
+        elif self.is_atom:
             return [self.bliss_name]
         elif self.derivation == "":
             return []
         else:
-            # TODO: clean this up, a lot
-            deriv = self.derivation
-            deriv = deriv.replace("\n", "")
-            deriv = deriv.replace(";", ":")
-            deriv = deriv.replace("+", " + ")
-            deriv = deriv.replace("  ", " ")
-            derivs = deriv.split(":")
-            deriv = derivs[0]
-
-            if deriv[0] == "(":
-                deriv = deriv[1:]
-            else:
-                start = 0
-                in_parens = False
-                while deriv[start] != "(" or in_parens:
-                    try:
-                        deriv[start+1]
-                    except IndexError:
-                        start = None
-                        break
-                    else:
-                        if deriv[start] == "(" or deriv[start] == "[":
-                            in_parens = True
-                        elif in_parens and (deriv[start] == ")" or deriv[start] == "]"):
-                            in_parens = False
-                        elif in_parens and deriv[start] == ",":
-                            deriv = deriv[:start] + "@" + deriv[start+1:]
-                        start += 1
-                deriv = deriv[start:]
-
-            end = 0
-            in_parens = False
-            while (deriv[end] != ")" or in_parens) and deriv[end] != ":":
-                try:
-                    deriv[end+1]
-                except IndexError:
-                    end = None
-                    break
-                else:
-                    if deriv[end] == "(" or deriv[end] == "[":
-                        in_parens = True
-                    elif in_parens and (deriv[end] == ")" or deriv[end] == "]"):
-                        in_parens = False
-                    elif in_parens and deriv[end] == ",":
-                        deriv = deriv[:end] + "@" + deriv[end+1:]
-                    end += 1
-
-            deriv = deriv[:end]
-            deriv = deriv.replace("@", "")
-
-            derivs_itn = deriv.split(" ")
-            derivs = derivs_itn
-
-            derivations = []
-            start = 0
-            end = 1
-
-            for d in derivs_itn:
-                if d == ":" or d == "-":
-                    break
-                elif d == "":
-                    continue
-                else:
-                    d = d.strip()
-                    if self.is_indicator(d):
-                        derivations.append(d + " (" + " ".join(derivs[start:end-1]) + ")")
-                        start = end
-                    elif d == "+":
-                        blissymbol = " ".join(derivs[start:end-1])
-                        derivations.append(blissymbol)
-                        start = end
-                    elif (end+1)>len(derivs):
-                        derivs[end-1] = self.clean_defn(derivs[end - 1])
-                        blissymbol = " ".join(derivs[start:])
-                        if blissymbol[-2:] == "))":
-                            blissymbol = blissymbol[:-1]
-                        derivations.append(blissymbol)
-                    elif d != "":
-                        derivs[end-1] = self.clean_defn(derivs[end - 1])
-                    end += 1
-
-            return [d.strip() for d in derivations]
+            deriv = self.translator.extract_parens(self.derivation, starts={"("}, ends={")"})
+            if ":" in deriv:
+                deriv = deriv.split(":")[0]
+            deriv = self.translator.remove_parens(deriv, starts={"["}, ends={"]"})
+            derivations = [d.split(", ")[0].strip() for d in deriv.split(" + ")]
+            print "\t", self, "has derivations:\t", derivations
+            return derivations
 
     def set_derivations(self, derivations):
         """
@@ -498,7 +454,7 @@ class Blissymbol:
         """
         clean_translation = []
         for t in translation:
-            cleaned = self.remove_parens(self.clean_defn(t))
+            cleaned = self.clean_defn(t.split("(")[0])
             if len(cleaned) != 0 and cleaned not in clean_translation:
                 clean_translation.append(cleaned)
         return clean_translation
@@ -600,37 +556,6 @@ class Blissymbol:
         """
         return self.translator.remove_parens(word)
 
-    '''
-    GET/SET LANGUAGE FUNCTIONS
-    --------------------------
-    Intended for (future) Blissymbol creation solely in 1 language
-    (e.g. for "untranslatable" words).
-    
-    def get_language(self):
-        """
-        Returns this Blissymbol's language.
-        ~
-        N.B. Every Blissymbol's native language is English.
-
-        :return: str, this Blissymbol's language (English)
-        """
-        return str(self.language)
-
-    def set_language(self, language):
-        """
-        Sets this Blissymbol's default language to this language.
-        ~
-        Default language should be set to whichever language the
-        Blissymbol names are being entered in.
-        ~
-        N.B. Default language should always be English for now.
-
-        :param language: str, this Blissymbol's working language
-        :return: None
-        """
-        self.language = language
-    '''
-
     def get_translation(self, language=None):
         """
         If self.translations contains a translation in
@@ -685,19 +610,23 @@ class Blissymbol:
         part of speech.
 
         :param pos: str, this Blissymbol's part of speech
-        :return: None
+        :return: List[str], this Blissymbol's parts of speech
         """
+        poses = list()
+
         if self.get_parens(self.bliss_name) == "(to)":
             # all verbs have (to) indicator
-            self.pos = self.POS_COLOUR_CODE["RED"]
+            poses = self.POS_COLOUR_CODE["RED"]
         elif pos is not None:
             try:
-                self.pos = self.POS_COLOUR_CODE[pos]
+                poses = self.POS_COLOUR_CODE[pos]
             except KeyError:
                 if pos in self.PARTS_OF_SPEECH:
-                    self.pos = [pos]
+                    poses = [pos]
                 if len(pos) > 2:
-                    self.pos = [pos[:2]]
+                    poses = [pos[:2]]
+
+        return poses
 
     def init_pos_code(self, pos_code):
         """
@@ -750,19 +679,6 @@ class Blissymbol:
         """
         return self.is_atom
 
-    def init_is_atom(self):
-        """
-        Initializes this Blissymbol as atomic or not.
-        ~
-        is_atom is True when a Blissymbol is atomic, False otherwise.
-        ~
-        N.B. Only specified Blissymbols are atomic, all others are non-atomic.
-             All characters with derivations ending in "Character" are atomic.
-
-        :return: None
-        """
-        self.is_atom = self.find_is_atom()
-
     def find_is_atom(self):
         """
         Identifies whether this Blissymbol is atomic or not.
@@ -774,7 +690,7 @@ class Blissymbol:
 
         :return: bool, whether this Blissymbol is atomic
         """
-        derivations = self.derivation.lstrip("(").rstrip(")").split(":")  #self.derivation.split("-")
+        derivations = self.derivation.lstrip("(").rstrip(")").split(":")
 
         if len(derivations) == 1 and derivations[0] == self.bliss_name:
             return True
@@ -809,23 +725,14 @@ class Blissymbol:
         """
         return self.unicode
 
-    def get_deriv_unicode(self):
+    def get_deriv_unicode(self, atomic=True):
         """
         Returns a list of this Blissymbol's derivations' unicode
         identifiers.
 
         :return: List[str], this Blissymbol's derivations' unicode IDs
         """
-        return self.deriv_unicode
-
-    def add_deriv_unicode(self, unicode):
-        """
-        Adds this unicode str to self.deriv_unicode.
-
-        :param unicode: str, unicode string
-        :return: None
-        """
-        self.deriv_unicode.append(unicode)
+        return [self.unicode] if self.is_atom else self.find_deriv_unicode(atomic=atomic)
 
     def add_unicode_to_bliss(self, uni, bliss):
         """
@@ -850,6 +757,18 @@ class Blissymbol:
         :return: None
         """
         self.translator.add_bliss_to_unicode(bliss, uni)
+
+    def add_bliss_unicode(self, uni, bliss):
+        """
+        Adds this unicode key to this Blissymbol's
+        BlissTranslator's unicode-to-Blissymbol dict,
+        with blissymbol name bliss as its value.
+
+        :param uni: str, unicode name to add
+        :param bliss: str, name of blissymbol for this unicode
+        :return: None
+        """
+        self.translator.add_bliss_unicode(uni, bliss)
 
     def add_bliss_and_unicode(self, bliss="", uni=""):
         """
@@ -882,45 +801,23 @@ class Blissymbol:
         :return: None
         """
         uni = blissymbol.unicode
+        self.add_bliss_unicode(uni, blissymbol.bliss_name)
 
         for bliss in blissymbol.get_translation("English"):
             self.add_bliss_and_unicode(bliss, uni)
 
-    def find_unicode(self, defn, lang="English"):
+    def new_unicode(self):
         """
-        Given a word defn, finds and adds unicode names for defn
-        to this Blissymbol's unicode.
-        ~
-        If no unicode name for this defn or its derivations exists,
-        creates new unicode name and adds to encoding dicts accordingly.
+        Returns a new unicode name for a Blissymbol and
+        adds to encoding dicts accordingly.
 
-        :param defn: str, word to find/add unicode
-        :param lang: str, this word's language
-        :return: str, word's corresponding unicode name
+        :return: str, new unicode name
         """
-        if defn in self.translator.get_bliss_to_unicode():
-            uni = self.translator.lookup_bliss_to_unicode(defn)[0]
-        else:
-            if lang != "English":
-                # only add English translations as lemmas to bliss dict,
-                # since Blissymbols default language is English
-                synonyms = self.translations["English"]
-                unis = []
-                # add the same unicode definition for each synonym
-                for synonym in synonyms:
-                    if len(unis) == 0:
-                        unis = self.translator.lookup_bliss_to_unicode(synonym)
-
-                    if len(unis) != 0:
-                        uni = unis[0]
-                        return uni
-
-            global LAST_BLISS_ENCODING
-            LAST_BLISS_ENCODING += 1
-
-            uni = hex(LAST_BLISS_ENCODING)
-            uni = uni[2:]
-            uni = "U+" + uni
+        print "\tlast unicode:", hex(self.last_encoding)[2:]
+        self.last_encoding += 1
+        print "\tnew unicode:", hex(self.last_encoding)[2:]
+        uni = hex(self.last_encoding)
+        uni = "U+" + uni[2:]
         return uni
 
     def derivations_synonyms(self, derivations):
@@ -952,7 +849,7 @@ class Blissymbol:
         deriv_synonym = self.remove_parens(deriv_synonym)
         return deriv_synonym
 
-    def find_deriv_unicode(self):
+    def find_deriv_unicode(self, atomic=True):
         """
         Returns a list of unicode strings corresponding to
         the Blissymbol translations of this Blissymbol's
@@ -964,40 +861,7 @@ class Blissymbol:
         :return: List[str], unicodes for this Blissymbol's
             derivations
         """
-        deriv_unicode = set()
-        deriv_synonyms = self.derivations_synonyms(self.derivations)
-        unicodes = set()
-
-        for deriv_synonym in deriv_synonyms:
-            synonym = self.clean_derivation_synonym(deriv_synonym)
-            if synonym in self.translator.get_bliss_to_unicode():
-                unis = self.translator.lookup_bliss_to_unicode(synonym)
-                unis = self.translator.remove_duplicates(unis)
-
-                if len(unis) == 1:
-                    uni = unis[0]
-                    unicodes.add(uni)
-                    self.add_bliss_and_unicode(synonym, uni)
-                    break
-                else:
-                    unis = set(unis)
-                    if len(unicodes) == 0:
-                        unicodes.update(unis)
-                    else:
-                        unicodes.intersection_update(unis)
-                        for uni in unis:
-                            self.add_bliss_and_unicode(synonym, uni)
-            else:
-                uni = self.find_unicode(synonym)
-                unicodes.add(uni)
-                self.add_bliss_and_unicode(synonym, uni)
-
-            if len(deriv_unicode.intersection(unicodes)) > 0:
-                deriv_unicode.intersection_update(unicodes)
-            else:
-                deriv_unicode.update(unicodes)
-
-        return list(deriv_unicode)
+        return [db.unicode for db in self.derivation_blissymbols(atomic=atomic)]
 
     def get_unicode_pos(self):
         """
@@ -1042,26 +906,21 @@ class Blissymbol:
         Initializes this Blissymbol's unicode to
         its definition's unicode.
 
-        :return: None
+        :return: str, unicode for this Blissymbol
         """
-        translations = self.translations["English"]
+        unicodes = self.translator.init_bliss_unicode()
 
-        if len(translations) != 0:
-            translation = translations[0]
-            self.unicode = self.find_unicode(translation)
-            self.add_blissymbol_unicodes(self)
+        for u in unicodes:
+            blissname = unicodes[u]
+            if self.bliss_name == blissname:
+                uni = u
+                break
         else:
-            print("could not find unicode defn for " + self.bliss_name)
-            self.unicode = None
+            uni = self.new_unicode()
 
-    def init_deriv_unicode(self):
-        """
-        Automatically sets this Blissymbol's deriv_unicode to
-        its derivations' unicodes.
-
-        :return: None
-        """
-        self.deriv_unicode = [self.unicode] if self.is_atom else self.find_deriv_unicode()
+        self.set_unicode(uni)
+        self.add_blissymbol_unicodes(self)
+        return uni
 
     def add_synset(self, synset):
         """
@@ -1094,18 +953,6 @@ class Blissymbol:
         except IndexError:
             pass
         return set(synsets)
-
-    def init_blissymbol_synset(self):
-        """
-        Initializes the English Wordnet synset corresponding
-        to this Blissymbol.
-
-        :return: Synset, this Blissymbol's Wordnet synset
-        """
-        try:
-            self.synset = self.synsets[0]
-        except IndexError:
-            return None
 
     def lookup_blissymbol_synsets(self, blissymbol):
         """
@@ -1181,7 +1028,7 @@ class Blissymbol:
             self.synset = list(synsets)[0]
         if self.synset is not None:
             pos = self.synset.pos()
-            self.init_pos(pos)
+            self.set_pos(self.init_pos(pos))
 
         return synsets
 
@@ -1247,7 +1094,7 @@ class BlissAlphabet:
     def __init__(self):
         pass
         #self.lex_parser = LexiconParser()
-        #self.bliss_atoms = self.lex_parser.init_blissnet()
+        #self.bliss_atoms = self.lex_parser.init_blissymbols()
     
     
 class BlissIndicator:

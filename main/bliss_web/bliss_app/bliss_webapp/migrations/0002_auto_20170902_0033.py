@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='translationmodel',
             name='phrase',
-            field=models.TextField(default='Enter text here'),
+            field=models.TextField(default='Enter text_image here'),
         ),
         migrations.AddField(
             model_name='translationmodel',

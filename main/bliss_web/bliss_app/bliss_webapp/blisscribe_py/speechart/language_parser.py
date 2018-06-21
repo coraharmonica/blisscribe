@@ -330,17 +330,59 @@ class LanguageParser(WiktionaryParser):
         sentences = self.sent_tokenizer.tokenize(sents)
         return sentences
 
+    def tokenize_punct(self, text):
+        """
+        Returns a list of tokenized words from text separated
+        by punctuation.
+        ~
+        e.g. tokenize_punct("Hello, this is my friend, Molly") ->
+             [["Hello"], ["this", "is", "my", "friend"], ["Molly"]]
+
+        :param text: str, string to tokenize by word and split by punctuation
+        :return: List[List[str]], phrase separated by punctuation
+        """
+        self.init_sent_tokenizer()
+        text = self.unicodize(text)
+        words = self.tokenize_words(text)
+        sentences = list()
+        curr_sentence = list()
+
+        for word in words:
+            if self.is_punct(word) and word != u"'":
+                if len(curr_sentence) != 0:
+                    sentences.append(curr_sentence)
+                    curr_sentence = list()
+            else:
+                curr_sentence.append(word)
+
+        if len(curr_sentence) != 0:
+            sentences.append(curr_sentence)
+
+        return sentences
+
     def tokenize_words_sents(self, phrase):
         """
-        Returns a list of the words in the sentences in the given str phrase.
+        Returns a list of the words in the sentences in phrase.
 
         :param phrase: str, string to tokenize by sentence and word
         :return: List[str], phrase tokenized by sentence and word
         """
         self.init_tokenizers()
-        phrases = self.unicodize(phrase)
-        sentences = self.tokenize_sents(phrases)
+        phrase = self.unicodize(phrase)
+        sentences = self.tokenize_sents(phrase)
         phrases_tokens = [self.tokenize_words(sentence) for sentence in sentences]
+        return phrases_tokens
+
+    def tokenize_words_punct(self, phrase):
+        """
+        Returns a list of the words separated by punctuation in phrase.
+
+        :param phrase: str, string to tokenize by sentence and word
+        :return: List[str], phrase tokenized by punctuation and word
+        """
+        self.init_tokenizers()
+        phrase = self.unicodize(phrase)
+        phrases_tokens = self.tokenize_punct(phrase)
         return phrases_tokens
 
     # JSON
@@ -633,36 +675,21 @@ class LanguageParser(WiktionaryParser):
 
         return OrderedSet(stemwords).rank_items()
 
-    def find_english_translation(self, word, language=None):
+    def find_english_translation(self, word, language=None, pos=None):
         """
         Returns this word's translation from this language to English,
         according to Wiktionary.
 
         :param word: str, word to translate
         :param language: str, language of word
+        :param pos: str, part-of-speech of word
         :return: str, word's translation in English
         """
-        language = self.verify_language(language)
-        word = self.unicodize(word)
-
-        if language != "English":
-            print "IN FINDING ENGLISH TRANSLATION"
-            translations = set()
-            pos_entries = self.find_pos_entries(word, language)
-            eng_entries = set()
-
-            print "\t", pos_entries
-            for pos in pos_entries:
-                entry = pos_entries[pos]
-                eng_entry = entry[1:]
-                eng_entries.update([e[0] for e in eng_entry])
-
-            for translation in translations:
-                translation = translation.replace(u"to", u"").strip()
-                if self.word_in_wiktionary(translation, "English"):
-                    return self.clean_parentheticals(translation)
-        else:
-            return word
+        translations = self.find_english_translations(word, language, pos)
+        try:
+            return translations[0]
+        except IndexError:
+            return
 
     def find_english_translations(self, word, language=None, pos=None):
         """
@@ -671,14 +698,15 @@ class LanguageParser(WiktionaryParser):
 
         :param word: str, word to translate
         :param language: str, language of word
-        :return: Set(str), word's translations in English
+        :param pos: str, part-of-speech of word
+        :return: List[str], word's translations in English
         """
         language = self.verify_language(language)
         word = self.unicodize(word)
-        eng_translations = set()
+        eng_translations = OrderedSet([])
 
         if language != "English":
-            translations = set()
+            translations = OrderedSet([])
             print "finding pos entries for", word
             pos_entries = self.find_pos_entries(word, language, poses={pos})
             if len(pos_entries) == 0:
@@ -693,14 +721,14 @@ class LanguageParser(WiktionaryParser):
 
             print "\t", translations
 
-            for translation in translations:
+            for translation in translations.items():
                 translation = self.clean_parentheticals(translation.strip())
                 if self.word_in_wiktionary(translation, "English"):
                     print "\t", translation, "is an English word"
                     eng_translations.add(translation)
 
             print
-        return eng_translations
+        return eng_translations.items()
 
     def find_word_ipas(self, word, language=None):
         """
@@ -824,7 +852,6 @@ class LanguageParser(WiktionaryParser):
         if word_morphemes is not None:
             submorphemes = OrderedSet(word_morphemes)
             for morpheme in word_morphemes:
-                print morpheme
                 submorphemes.update(self.recursive_all_word_morphemes(morpheme))
         else:
             submorphemes = OrderedSet([])
@@ -867,8 +894,11 @@ class LanguageParser(WiktionaryParser):
         language = self.verify_language(language)
         morphemes = list()
         for word in words:
-            word_morphemes = self.all_word_morphemes(word, language)
-            morphemes += word_morphemes
+            if not self.is_punct(word):
+                word = self.entry_word(word, language)
+                word_morphemes = self.all_word_morphemes(word, language)
+                print "adding", word, "morphemes:", word_morphemes
+                morphemes += word_morphemes
         return morphemes
 
     def sentences_morphemes(self, sentences, language=None):
@@ -1147,3 +1177,4 @@ class LanguageParser(WiktionaryParser):
         """
         language = self.verify_language(language)
         return (self.WIKI_URL + self.END_URL + self.IPA_PATH) % (language, language)
+

@@ -2,7 +2,7 @@
 """
 BLISSCRIBE:
 
-    A Python module for translating text to Blissymbols.
+    A Python module for translating text_image to Blissymbols.
 
     All relevant parts-of-speech tags (used throughout)
     constitute the Penn Treebank parts of speech, whose
@@ -21,7 +21,7 @@ from fonts import *
 from punctuation import *
 from parts_of_speech import *
 from bliss_images import make_font, make_blank_img, get_word_img, trim, above, Image
-from parse_lexica import LexiconParser, Blissymbol, NEW_BLISSYMBOLS
+from lexicon_parser import LexiconParser, Blissymbol, NEW_BLISSYMBOLS
 from translation_word import TranslationWord
 from speechart.language_parser import LanguageParser
 from ordered_set import OrderedSet
@@ -29,7 +29,7 @@ from ordered_set import OrderedSet
 
 class BlissTranslator:
     """
-    A class for translating text in select languages to Blissymbols.
+    A class for translating text_image in select languages to Blissymbols.
     ~
     Currently supported languages:
         - English (default)
@@ -42,7 +42,7 @@ class BlissTranslator:
     ~
     Begin by initializing a BlissTranslator with a supported language.
     Pass a string in your chosen language to translate() for an output
-    PDF of the given text with Blissymbols.
+    PDF of the given text_image with Blissymbols.
     ~
     Use set_translatables() to set whether to translate nouns,
     verbs, adjectives, and/or other parts of speech.
@@ -53,7 +53,7 @@ class BlissTranslator:
     Contains methods for:
         1) selecting which parts of speech to translate
            --> set_translatables()
-        2) selecting whether to translate text to Blissymbols
+        2) selecting whether to translate text_image to Blissymbols
            immediately or gradually
            --> set_fast_translate()
         3) selecting font & font size for output PDF translations
@@ -81,13 +81,13 @@ class BlissTranslator:
         # Language
         self.bliss_dicts = dict()
         self.blissnet = None
+        self.bliss_unicode = None
         self.bliss_to_unicode = None
         self.unicode_to_bliss = None
         self.lexica = dict()
         self.language = str()
         self.lang_code = str()
         self.set_language(language)
-        self.all_lemma_names = set(wordnet.all_lemma_names(lang=self.lang_code))
         self.words_seen = dict()
         self.words_changed = dict()
         self.init_seen_changed()
@@ -127,7 +127,7 @@ class BlissTranslator:
         ~
         Returns this BlissTranslator's classifier.
 
-        :return: BlissClassifier, a text-to-Blissymbols classifier
+        :return: BlissClassifier, a text_image-to-Blissymbols classifier
         """
         if self.classifier is None:
             # import blisslearn HERE since django can't handle sklearn
@@ -167,11 +167,12 @@ class BlissTranslator:
         Returns this BlissTranslator's blissnet.
 
         :return: dict, where...
-            key (str) - unicode representation of a Blissymbol
-            val (List[Synset]) - Princeton synsets corresponding to given unicode
+            key (str) - unicode for Blissymbol with Synsets
+            val (List[Synset]) - PWN Synsets for given Blissymbol
         """
         if self.blissnet is None:
-            self.blissnet = self.lex_parser.init_blissnet()
+            blissnet = self.lex_parser.load_blissnet()
+            self.blissnet = {uni: self.strs_synsets(blissnet[uni]) for uni in blissnet}
         return self.blissnet
 
     def init_bliss_dicts(self):
@@ -181,10 +182,9 @@ class BlissTranslator:
 
         :return: None
         """
-        bliss_dict = self.find_bliss_dict(self.language)
-        eng_bliss_dict = self.find_bliss_dict("English")
-        self.add_bliss_dict(self.language, bliss_dict)
-        self.add_bliss_dict("English", eng_bliss_dict)
+        self.add_bliss_dict(self.language, dict())
+        self.add_bliss_dict("English", dict())
+        self.lex_parser.init_blissymbols()
 
     def init_tokenizer(self):
         """
@@ -259,7 +259,7 @@ class BlissTranslator:
             val (List[str]) - unicode Blissymbol codes (in hexadecimal)
         """
         if self.bliss_to_unicode is None:
-            self.bliss_to_unicode = self.lex_parser.init_bliss_encoding()
+            self.bliss_to_unicode = self.lex_parser.load_bliss_encoding()
         return self.bliss_to_unicode
 
     def init_unicode_to_bliss(self):
@@ -272,8 +272,21 @@ class BlissTranslator:
             val (List[str]) - list of Blissymbol names
         """
         if self.unicode_to_bliss is None:
-            self.unicode_to_bliss = self.lex_parser.init_bliss_decoding()
+            self.unicode_to_bliss = self.lex_parser.load_bliss_decoding()
         return self.unicode_to_bliss
+
+    def init_bliss_unicode(self):
+        """
+        Initializes this BlissTranslator's Blissymbols-to-unicode
+        encoding dictionary.
+
+        :return: dict, where...
+            key (str) - unicode for Blissymbol
+            val (str) - name of Blissymbol
+        """
+        if self.bliss_unicode is None:
+            self.bliss_unicode = self.lex_parser.load_bliss_unicode()
+        return self.bliss_unicode
 
     # SETTERS
     # -------
@@ -479,31 +492,44 @@ class BlissTranslator:
         """
         return self.init_unicode_to_bliss()
 
-    def lookup_bliss_to_unicode(self, blissname):
+    def unicode_to_blissymbol(self, uni):
         """
-        Returns this blissname's unicode ID.
+        Returns this unicode string's corresponding Blissymbol.
 
-        :param blissname: str, name of blissymbol to lookup
-        :return: List[str], unicode names for given bliss
+        :param uni: str, 4-character unicode for a Blissymbol
+        :return: Blissymbol, Blissymbol corresponding to uni
         """
-        try:
-            return self.init_bliss_to_unicode()[blissname]
-        except KeyError:
-            return []
+        blissword = self.lookup_bliss_unicode(uni)
+        if blissword is not None:
+            blissymbol = self.blissword_to_blissymbol(blissword)
+            return blissymbol
+
+    def lookup_bliss_to_unicode(self, blissword):
+        """
+        Returns this blissword's unicode ID.
+
+        :param blissword: str, word for Blissymbol to lookup
+        :return: List[str], unicode names for blissword
+        """
+        return self.init_bliss_to_unicode().get(blissword, list())
 
     def lookup_unicode_to_bliss(self, uni):
         """
-        Returns this unicode ID's corresponding blissymbol name.
+        Returns this unicode ID's corresponding Blissymbol word(s).
 
         :param uni: str, unicode name to lookup
-        :return: List[str], Blissymbol names for uni
+        :return: List[str], Blissymbol words for uni
         """
-        try:
-            defns = self.init_unicode_to_bliss()[uni]
-        except KeyError:
-            return []
-        else:
-            return defns
+        return self.init_unicode_to_bliss().get(uni, list())
+
+    def lookup_bliss_unicode(self, uni):
+        """
+        Returns this unicode ID's corresponding Blissymbol name.
+
+        :param uni: str, unicode name to lookup
+        :return: str, Blissymbol name for uni
+        """
+        return self.init_bliss_unicode().get(uni, None)
 
     def add_bliss_to_unicode(self, bliss, uni):
         """
@@ -537,8 +563,30 @@ class BlissTranslator:
         if bliss not in self.unicode_to_bliss[uni]:
             self.unicode_to_bliss[uni].append(bliss)
 
+    def add_bliss_unicode(self, uni, bliss):
+        """
+        Adds this unicode key to this Blissymbol's
+        BlissTranslator's unicode-to-Blissymbol dict,
+        with blissymbol name bliss as its value.
+
+        :param uni: str, unicode name to add
+        :param bliss: str, name of blissymbol for this unicode
+        :return: None
+        """
+        self.init_bliss_unicode()
+        if uni not in self.bliss_unicode:
+            self.bliss_unicode[uni] = bliss
+
     def add_bliss_dict(self, language, bliss_dict):
-        self.bliss_dicts[language] = bliss_dict
+        """
+        Adds this language as a key with this bliss_dict as
+        its value to this BlissTranslator's bliss_dicts.
+
+        :param language: str, language of bliss_dict
+        :param bliss_dict: dict, word-to-Blissymbol dictionary
+        :return: None
+        """
+        self.bliss_dicts.setdefault(language, bliss_dict)
 
     # SEEN/CHANGED
     # ------------
@@ -592,6 +640,7 @@ class BlissTranslator:
         """
         self.lex_parser.refresh_bliss_encoding()
         self.lex_parser.refresh_bliss_decoding()
+        self.lex_parser.refresh_bliss_unicode()
         self.lex_parser.refresh_bliss_lexicon()
 
     def clear_new_blissymbols(self):
@@ -630,7 +679,7 @@ class BlissTranslator:
         Blissymbol, with height as its translator's image_heights.
         ~
         If this TranslationWord's Blissymbol is None,
-        returns an Image with its word as text instead.
+        returns an Image with its word as text_image instead.
 
         :param trans_word: TranslationWord, word to render to Image
         :return: Image, image of input str's Blissymbol
@@ -657,7 +706,12 @@ class BlissTranslator:
         :param subs: bool, whether to subtitle output image
         :return: Image, subtitled Blissymbol image
         """
-        img = self.bliss_image(trans_word)
+        if trans_word.has_blissymbol():
+            img = self.bliss_image(trans_word)
+        else:
+            subs = False
+            img = self.word_image(trans_word, subs=False)
+
         subtitle = self.word_image(trans_word, subs)
         subtitle = trim(subtitle)
         if not subs:
@@ -947,12 +1001,12 @@ class BlissTranslator:
     # -------------------
     def unicodize(self, text):
         """
-        Returns this text in unicode.
+        Returns this text_image in unicode.
         ~
-        Ensures all text is in unicode for parsing.
+        Ensures all text_image is in unicode for parsing.
 
-        :param text: str (byte), text to return in unicode
-        :return: str (unicode), text in unicode
+        :param text: str (byte), text_image to return in unicode
+        :return: str (unicode), text_image in unicode
         """
         if text is not None:
             if not isinstance(text, unicode):
@@ -961,19 +1015,19 @@ class BlissTranslator:
 
     def deunicodize(self, text):
         """
-        Returns this text decoded from unicode.
+        Returns this text_image decoded from unicode.
         ~
-        Ensures all text is in bytes for printing.
+        Ensures all text_image is in bytes for printing.
 
-        :param text: str (unicode), text to decode from unicode
-        :return: str (byte), text in unicode
+        :param text: str (unicode), text_image to decode from unicode
+        :return: str (byte), text_image in unicode
         """
         if text is not None:
             if isinstance(text, unicode):
                 text = text.encode("utf-8")
         return text
 
-    def underscore_word(self, word):
+    def underscore(self, word):
         """
         Returns this word with spaces replaced by underscores.
 
@@ -982,7 +1036,7 @@ class BlissTranslator:
         """
         return word.strip().replace(" ", "_")
 
-    def deunderscore_word(self, word):
+    def deunderscore(self, word):
         """
         Returns this word with underscores replaced by spaces.
 
@@ -1012,20 +1066,20 @@ class BlissTranslator:
         """
         Returns a list of word tokens in phrase.
 
-        :param phrase: str, text with >=1 words
+        :param phrase: str, text_image with >=1 words
         :return: List[str], list of word tokens
         """
         return self.init_tokenizer().tokenize(phrase)
 
     def get_token_phrases(self, text):
         """
-        Returns a list of word tokens in text,
+        Returns a list of word tokens in text_image,
         with a newline in between each phrase.
 
         :param phrases: List[str], phrases to tokenize
         :return: List[str], list of word tokens
         """
-        phrases = text.split("\n")  # split text by newlines
+        phrases = text.split("\n")  # split text_image by newlines
         token_phrases = []
         for phrase in phrases:
             token_phrases.extend(self.get_token_phrase(phrase))
@@ -1230,7 +1284,7 @@ class BlissTranslator:
         :param word: str, word to see if punctuation
         :return: bool, whether word is punctuation
         """
-        return word in PUNCTUATION
+        return all(char in PUNCTUATION for char in word)
 
     def is_chosen_pos(self, pos):
         """
@@ -1303,9 +1357,9 @@ class BlissTranslator:
         """
         bliss_dict = self.bliss_dicts.get(language, None)
         if bliss_dict is None:
-            return self.lex_parser.init_bliss_lexicon(language)
-        else:
-            return bliss_dict
+            bliss_dict = self.lex_parser.init_bliss_lexicon(language)
+            self.add_bliss_dict(language, bliss_dict)
+        return bliss_dict
 
     def lookup_blissnet(self, uni):
         """
@@ -1367,29 +1421,75 @@ class BlissTranslator:
         return self.in_multi_bliss_dict(word, "English")
 
     @staticmethod
-    def remove_parens(word):
+    def remove_parens(word, starts={"(", "["}, ends={")", "]"}):
         """
         Removes parenthetical(s) from this word and
         returns the result.
         ~
         Parenthetical begins at the first open parenthesis.
 
-        e.g. get_parens("English_(language)") -> "English"
+        e.g. remove_parens("English_(language)") -> "English"
 
-        :param word: str, word to get parenthetical from
-        :return: str, given word's parenthetical phrase
+        :param word: str, word to remove parenthetical from
+        :return: str, word without parenthetical phrase
         """
         idx = 0
+        num_starts, start_idx = 0, 0
+
         for char in word:
-            if char != "(" and char != "[":
-                idx += 1
-            else:
-                word = word[:idx]
-                word = word.strip()
-                word = word.strip("_")
-                word = word.rstrip("-")
-                return word
+            if char in starts:
+                num_starts += 1
+                start_idx = idx
+            elif char in ends:
+                num_starts -= 1
+                if num_starts == 0:
+                    if idx+2 < len(word):
+                        stripped = word[:start_idx] + word[idx+1:]
+                    else:
+                        stripped = word[:start_idx]
+                    stripped = stripped.strip()
+                    stripped = stripped.strip("_")
+                    stripped = stripped.rstrip("-")
+                    return stripped
+            idx += 1
+
         return word
+
+    @staticmethod
+    def extract_parens(word, starts={"(", "["}, ends={")", "]"}):
+        """
+        Extracts first parenthetical from this word and
+        returns its contents.
+        ~
+        Parenthetical begins at the first open parenthesis.
+
+        e.g. extract_parens("English_(language)") -> "language"
+
+        :param word: str, word to extract parenthetical from
+        :return: str, word's parenthetical phrase
+        """
+        idx = 0
+        num_starts, start_idx = 0, 0
+
+        for char in word:
+            if char in starts:
+                if num_starts == 0:
+                    start_idx = idx
+                num_starts += 1
+            elif char in ends:
+                num_starts -= 1
+                if num_starts == 0:
+                    stripped = word[start_idx+1:idx]
+                    stripped = stripped.strip()
+                    stripped = stripped.strip("_")
+                    stripped = stripped.rstrip("-")
+                    return stripped
+            idx += 1
+        else:
+            if num_starts == 0:
+                return word
+            else:
+                return word[start_idx+1:]
 
     def lemmatize(self, word, pos=None, language="English"):
         """
@@ -1595,7 +1695,7 @@ class BlissTranslator:
             language as its language
             debug as its debug setting
 
-        :param word_token: str, a word token representing the word as found in text
+        :param word_token: str, a word token representing the word as found in text_image
         :param pos: str, this word token's (Penn Treebank) part-of-speech
         :param language: str, native language of given word token
         :param debug: bool, whether user will provide new inputs to TranslationWord
@@ -1660,13 +1760,13 @@ class BlissTranslator:
         :param word: str, word to lookup Blissymbol for
         :param language: str, word's native language
         :param pos: str, word's part of speech
-        :return: Blissymbol, a Blissymbol corresponding to this word
+        :return: Blissymbol, a Blissymbol for this word
         """
         if word is not None:
             if "," in word or "(" in word:
                 return self.blissword_to_blissymbol(word)
             else:
-                clean_word = self.deunderscore_word(word)
+                clean_word = self.deunderscore(word)
                 blissymbols = self.lookup_bliss_dict(clean_word, language)
 
                 if pos is not None and blissymbols is not None:
@@ -1718,8 +1818,67 @@ class BlissTranslator:
                     entry = {bliss for bliss in entry if pos in bliss.pos}
                 blissymbols.update(entry)
 
+        blissymbols = blissymbols.intersections()
         blissymbol = blissymbols[0] if len(blissymbols) != 0 else None
         return blissymbol
+
+    def synset_to_blissymbol(self, synset):
+        """
+        Returns the Blissymbol common to all this synset's lemma names.
+        ~
+        If synset has no Blissymbol, returns None.
+
+        :param synset: Synset, synset to lookup Blissymbol for
+        :return: Blissymbol, a Blissymbol for this synset
+        """
+        lemmas = self.synset_lemmas(synset, eng=True)
+        return self.words_to_blissymbol(lemmas, language="English", pos=self.synset_pos(synset))
+
+    def synsets_to_blissymbol(self, synsets):
+        """
+        Returns the Blissymbol common to all these synsets.
+        ~
+        If words have no Blissymbol, returns None.
+
+        :param synsets: List[Synset], synsets to lookup Blissymbol for
+        :return: Blissymbol, a Blissymbol for these synsets
+        """
+        if len(synsets) != 0:
+            lemmas = self.synsets_lemmas(synsets, eng=True)
+            return self.words_to_blissymbol(lemmas, language="English", pos=self.synset_pos(synsets[0]))
+
+    def blissymbol_to_synsets(self, blissymbol):
+        """
+        Return a list of PWN Synsets for this Blissymbol.
+
+        :param blissymbol: Blissymbol, to find Synsets for
+        :return: List[Synset], Synsets for blissymbol
+        """
+        synsets = OrderedSet([])
+        bliss_translations = blissymbol.translations
+
+        if len(bliss_translations) > 1:
+            for language in bliss_translations:
+                translations = bliss_translations[language]
+                if len(translations) != 0:
+                    word_synsets = self.lookup_words_synsets(translations, language=language, pos=blissymbol.get_pos())
+                    synsets.update(word_synsets)
+
+        return synsets.intersections()
+
+    def blissymbols_to_synsets(self, blissymbols):
+        """
+        Return a list of PWN Synsets for these Blissymbols.
+
+        :param blissymbols: List[Blissymbol], to find Synsets for
+        :return: List[Synset], Synsets for blissymbols
+        """
+        synsets = OrderedSet([])
+
+        for blissymbol in blissymbols:
+            synsets.update(self.blissymbol_to_synsets(blissymbol))
+
+        return synsets.intersections()
 
     def blissword_to_blissymbol(self, blissword):
         """
@@ -1730,7 +1889,7 @@ class BlissTranslator:
         :param blissword: str, comma-separated English word(s) for a Blissymbol
         :return: Blissymbol, Blissymbol for this blissword
         """
-        blissword = self.underscore_word(blissword)
+        blissword = self.underscore(blissword)
         bliss_dict = self.find_bliss_dict(self.language)
 
         for entry in bliss_dict:
@@ -1747,23 +1906,37 @@ class BlissTranslator:
         :param blissymbol: Blissymbol, entry to add
         :return: None
         """
+        languages = {self.language, "English"}
+        all_translations = blissymbol.get_translations()
+        for language in all_translations:
+            if language in languages:
+                translations = all_translations[language]
+                bliss_dict = self.find_bliss_dict(language)
+                for translation in translations:
+                    bliss_dict.setdefault(translation, set())
+                    bliss_dict[translation].add(blissymbol)
+        '''
         for language in self.bliss_dicts:
             bliss_dict = self.bliss_dicts[language]
             translations = blissymbol.get_translation(language)
             for translation in translations:
                 bliss_dict.setdefault(translation, set())
                 bliss_dict[translation].add(blissymbol)
+        '''
 
-    def remove_duplicates(self, items):
+    @staticmethod
+    def ordered_set(items):
+        return OrderedSet(items)
+
+    @staticmethod
+    def remove_duplicates(items):
         """
-        Deletes all duplicates from input list of items.
-        ~
-        Returns refreshed list.
+        Removes all duplicates from items list and returns new list.
 
         :param unicodes: List[X], list to delete duplicates from
         :return: List[X], list without duplicates
         """
-        return OrderedSet.remove_duplicates(items)
+        return OrderedSet(items).items()
 
     # SYNSETS
     # -------
@@ -1834,6 +2007,35 @@ class BlissTranslator:
                 synsets = wordnet.synsets(word, lang=lang_code)
             return synsets
 
+    def lookup_words_synsets(self, words, pos=None, language="English"):
+        """
+        Returns a list of Wordnet Synsets corresponding to this
+        word, part of speech (pos), and language.
+        ~
+        If lookup fails with this pos, returns this
+        word's Wordnet synsets for all parts of speech.
+
+        :param words: List[str], words to lookup synsets for
+        :param pos: str, part-of-speech for given word
+        :param language: str, language of word
+        :return: List[Synset], synsets for words, pos, and language
+        """
+        synsets = OrderedSet([])
+        lang = False
+
+        for word in words:
+            word_synsets = self.lookup_word_synsets(word, pos=pos, language=language)
+            if len(word_synsets) != 0:
+                if not lang:
+                    lang = True
+                    print "\t", language
+                print "\t\t", word, "has synsets:\n\t\t\t", word_synsets
+                synsets.update(word_synsets)
+
+        if lang:
+            print "\n"
+        return synsets.intersections()
+
     def str_synset(self, s):
         """
         Returns a Wordnet Synset for this string s, where s
@@ -1845,26 +2047,51 @@ class BlissTranslator:
         """
         return wordnet.synset(s)
 
-    def synset_lemmas(self, synset):
+    def strs_synsets(self, strs):
+        """
+        Returns a Wordnet Synset for this string s, where s
+        follows the regex "\w+\.[nvas]\.d{2}", or
+        "[word].[pos code].[sense number]".
+
+        :param strs: List[str], strings for Wordnet Synsets
+        :return: List[Synset], synsets for strs
+        """
+        return [self.str_synset(s) for s in strs]
+
+    def synset_pos(self, synset):
+        """
+        Returns this synset's Penn Treebank part of speech.
+
+        :param synset: Synset, WordNet synset
+        :return: str, synset's Penn Treebank part of speech
+        """
+        pos = synset.pos()
+        return self.unabbreviate_pos(pos)
+
+    def synset_lemmas(self, synset, eng=False):
         """
         Returns a list of this synset's lemma names.
 
         :param synset: Synset, WordNet synset
         :return: List[str], WordNet lemma names
         """
-        return synset.lemma_names(lang=self.lang_code)
+        if eng:
+            lang_code = "eng"
+        else:
+            lang_code = self.lang_code
+        return [self.deunderscore(ln) for ln in synset.lemma_names(lang=lang_code)]
 
-    def synsets_lemmas(self, synsets):
+    def synsets_lemmas(self, synsets, eng=False):
         """
         Returns a list of all these synsets' lemmas.
 
         :param synsets: List[Synset], synsets
         :return: List[str], lemmas for all synsets
         """
-        lemmas = []
+        lemmas = OrderedSet([])
         for synset in synsets:
-            lemmas.extend(self.synset_lemmas(synset))
-        return lemmas
+            lemmas.update(self.synset_lemmas(synset, eng=eng))
+        return lemmas.items()
 
     def translatable_synsets(self, synsets):
         """
@@ -1918,6 +2145,15 @@ class BlissTranslator:
         else:
             return
 
+    def str_synset_id(self, str_synset):
+        """
+        Returns the WordNet 3.0 synset ID for this synset string str_synset.
+
+        :param str_synset: str, for a Synset in WordNet
+        :return: str, WordNet synset ID for this str's synset
+        """
+        return self.synset_id(self.str_synset(str_synset))
+
     # TRANSLATOR
     # ==========
     def translate(self, phrase, title="translation", title_page=False, img_w=DIMS[0], img_h=DIMS[1]):
@@ -1931,7 +2167,7 @@ class BlissTranslator:
         ~
         Default image size is 816x1056px (standard PDF page).
 
-        :param phrase: str, text in BlissTranslator's native language
+        :param phrase: str, text_image in BlissTranslator's native language
         :param title: str, desired title for output PDF
         :param title_page: bool, whether to create title page
         :param img_w: int, desired width of PDF pages (in pixels)

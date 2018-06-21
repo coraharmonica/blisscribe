@@ -47,7 +47,7 @@ The special characters are:
     (?iLmsux) Set the I, L, M, S, U, or X flag for the RE (see below).
     (?:...)  Non-grouping version of regular parentheses.
     (?P<name>...) The substring matched by the group is accessible by name.
-    (?P=name)     Matches the text matched earlier by the group named name.
+    (?P=name)     Matches the text_image matched earlier by the group named name.
     (?#...)  A comment; ignored.
     (?=...)  Matches if ... matches next, but doesn't consume the string.
     (?!...)  Matches if ... doesn't match next.

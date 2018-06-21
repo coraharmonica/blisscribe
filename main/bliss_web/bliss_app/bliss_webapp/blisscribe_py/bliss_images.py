@@ -186,7 +186,7 @@ def get_trans_bliss_img(trans_word, max_width=None, max_height=None):
     Blissymbol, with width/height not exceeding max_width/max_height.
     ~
     If trans_word has no Blissymbol, this method returns an Image
-    with trans_word's word as text instead.
+    with trans_word's word as text_image instead.
 
     :param trans_word: TranslationWord, word to render to Image
     :param max_width: int, maximum width of Image (in pixels)

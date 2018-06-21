@@ -11,7 +11,7 @@ ILI:
 """
 import os
 import re
-from parse_lexica import LexiconParser
+from lexicon_parser import LexiconParser
 
 
 class ILIParser(LexiconParser):
