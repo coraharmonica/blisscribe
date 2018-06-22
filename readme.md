@@ -48,6 +48,20 @@ Blisscribe currently supports the following languages:
 
 Blisscribe also provides options for users to select which parts of speech to translate, including nouns, verbs, adjectives/adverbs, and/or all parts of speech.
 
+![nouns](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_nouns.png?raw=true)
+
+***
+
+![verbs](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_verbs.png?raw=true)
+
+***
+
+![adjs/advs](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_adjs.png?raw=true)
+
+***
+
+![other](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_other.png?raw=true)
+
 
 Blisscribe is currently maintained in Python 2.7, with (selective) 3.0 forward compatibility.
 To learn more about Blisscribe, visit the website:  blisscribe.tumblr.com
