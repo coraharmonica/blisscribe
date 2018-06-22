@@ -39,11 +39,11 @@ Blisscribe currently supports the following languages:
 - Danish
 
 
-![alice en p1 x=200 y=200](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/alice%20in%20wonderland%20en%20p1.png?raw=true)
+![alice en p1 x=200 y=200](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/alice%20en%20p1.png?raw=true)
 
 ***
 
-![alice pl p1](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/alice%20in%20wonderland%20pl%20p1.png?raw=true)
+![alice pl p1](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/alice%20pl%20p1.png?raw=true)
 
 
 Blisscribe also provides options for users to select which parts of speech to translate, including nouns, verbs, adjectives/adverbs, and/or all parts of speech.
