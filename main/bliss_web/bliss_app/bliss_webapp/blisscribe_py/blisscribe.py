@@ -20,7 +20,7 @@ from fpdf import FPDF
 from fonts import *
 from punctuation import *
 from parts_of_speech import *
-from bliss_images import make_font, make_blank_img, get_word_img, trim, above, Image
+from bliss_images import make_font, make_blank_img, get_word_img, trim, above, beside, overlay, Image
 from lexicon_parser import LexiconParser, Blissymbol, NEW_BLISSYMBOLS
 from translation_word import TranslationWord
 from speechart.language_parser import LanguageParser
@@ -177,14 +177,22 @@ class BlissTranslator:
 
     def init_bliss_dicts(self):
         """
-        Initializes this BlissTranslator's bliss_dict in
-        its native language and its eng_bliss_dict in English.
+        Initializes this BlissTranslator's bliss_dicts in
+        its native language and in English.
+        ~
+        N.B. bliss_dicts are initialized empty but will be
+             filled with Blissymbols in lex_parser.init_blissymbols.
 
         :return: None
         """
-        self.add_bliss_dict(self.language, dict())
-        self.add_bliss_dict("English", dict())
+        self.bliss_dicts.setdefault(self.language, dict())
+        self.bliss_dicts.setdefault("English", dict())
         self.lex_parser.init_blissymbols()
+        lang_bliss_dict = self.lex_parser.init_bliss_lexicon(self.language)
+        eng_bliss_dict = lang_bliss_dict if self.language == "English" \
+            else self.lex_parser.init_bliss_lexicon("English")
+        self.add_bliss_dict(bliss_dict=lang_bliss_dict, language=self.language, sub=True)
+        self.add_bliss_dict(bliss_dict=eng_bliss_dict, language="English", sub=True)
 
     def init_tokenizer(self):
         """
@@ -336,7 +344,7 @@ class BlissTranslator:
         Setting sub_all to False will produce subtitles only
         under new words translated to Blissymbols.
         ~
-        Sets subtitle settings for this BlissTranslator's
+        Sets subtitle setting for this BlissTranslator's
         translate() method.
 
         :param sub_all: bool, whether to subtitle all words
@@ -450,23 +458,20 @@ class BlissTranslator:
         :param other: bool, True to translate all other parts of speech
         :return: None
         """
-        if other:  # adds all parts of speech
-            self.chosen_pos = PARTS_OF_SPEECH
-        else:
-            self.chosen_pos = set()
+        self.chosen_pos = set()
+        noun_codes = set(WIKTIONARY_POS_KEY["Noun"])
+        verb_codes = set(WIKTIONARY_POS_KEY["Verb"])
+        adj_codes = set(WIKTIONARY_POS_KEY["Adjective"] + WIKTIONARY_POS_KEY["Adverb"])
+        other_codes = PARTS_OF_SPEECH.difference(noun_codes.union(verb_codes.union(adj_codes)))
 
-            if nouns:
-                self.chosen_pos.add("NN")
-                self.chosen_pos.add("NNS")
-            if verbs:
-                self.chosen_pos.add("VB")
-                self.chosen_pos.add("VBD")
-                self.chosen_pos.add("VBG")
-                self.chosen_pos.add("VBN")
-            if adjs:
-                self.chosen_pos.add("JJ")
-                self.chosen_pos.add("JJR")
-                self.chosen_pos.add("JJS")
+        if nouns:
+            self.chosen_pos.update(noun_codes)
+        if verbs:
+            self.chosen_pos.update(verb_codes)
+        if adjs:
+            self.chosen_pos.update(adj_codes)
+        if other:
+            self.chosen_pos.update(other_codes)
 
     # BLISS CONVERSIONS
     # -----------------
@@ -577,16 +582,22 @@ class BlissTranslator:
         if uni not in self.bliss_unicode:
             self.bliss_unicode[uni] = bliss
 
-    def add_bliss_dict(self, language, bliss_dict):
+    def add_bliss_dict(self, language, bliss_dict, sub=False):
         """
         Adds this language as a key with this bliss_dict as
         its value to this BlissTranslator's bliss_dicts.
+        ~
+        If sub is True, substitutes existing dictionary with bliss_dict.
 
         :param language: str, language of bliss_dict
         :param bliss_dict: dict, word-to-Blissymbol dictionary
+        :param sub: bool, whether to substitute bliss_dict for existing dict
         :return: None
         """
-        self.bliss_dicts.setdefault(language, bliss_dict)
+        if sub:
+            self.bliss_dicts[language] = bliss_dict
+        else:
+            self.bliss_dicts.setdefault(language, bliss_dict)
 
     # SEEN/CHANGED
     # ------------
@@ -1294,11 +1305,11 @@ class BlissTranslator:
         :param pos: str, part-of-speech tag
         :return: bool, whether to translate pos
         """
-        if self.lang_code != "eng":
-            # FIXME: translate all words in non-English langs until better foreign tagging
-            return True
-        else:
-            return pos in self.chosen_pos
+        #if self.lang_code != "eng":
+        #    # FIXME: translate all words in non-English langs until better foreign tagging
+        #    return True
+        #else:
+        return pos in self.chosen_pos
 
     def is_word(self, word):
         """
@@ -1658,10 +1669,13 @@ class BlissTranslator:
         :param trans_word: TranslationWord, word whether to translate
         :return: bool, whether trans_word should be translated
         """
-        if trans_word.has_blissymbol():
-            return True
-        elif self.is_chosen_pos(trans_word.pos):
-            return self.is_translatable(trans_word)
+        is_chosen_pos = self.is_chosen_pos(trans_word.pos)
+
+        if is_chosen_pos:
+            if trans_word.has_blissymbol():
+                return True
+            else:
+                return self.is_translatable(trans_word)
         else:
             return False
 
@@ -2219,22 +2233,98 @@ class BlissTranslator:
 
         for trans_word in trans_words:
             lemma = trans_word.lemma
+            print trans_word.lemma, trans_word.pos
 
             if lemma == "\n":
                 imgs.append(None)
             else:
-                can_translate = self.should_translate(trans_word) or self.translate_now(trans_word)
-                subs = self.sub_all or not self.is_changed(lemma)
+                can_translate = self.should_translate(trans_word) and self.translate_now(trans_word)
                 if can_translate:
-                    if subs:
-                        self.add_changed(lemma)
-                    else:
-                        self.add_seen(lemma)
-                img = self.subbed_bliss_image(trans_word, subs=subs)
+                    subs = self.sub_all or not self.is_changed(lemma)
+                    self.add_changed(lemma) if subs else self.add_seen(lemma)
+                    img = self.subbed_bliss_image(trans_word, subs=subs)
+                else:
+                    img = self.word_image(trans_word, subs=False)
                 imgs.append(img)
 
         self.init_seen_changed()
         return imgs
+
+    def images_to_lines(self, images, w=DIMS[0], init_indent=True):
+        space = self.get_space_size()
+        indent = self.font_size
+
+        lines = list()
+        blank_line = make_blank_img(x=w, y=self.image_heights())
+        add_line = lambda l: lines.append(overlay(l, blank_line))
+        new_line = lambda: blank_line.copy()
+        line = new_line()
+
+        x = indent if init_indent else self.get_min_space()
+        inc_x = lambda img: x + img.size[0] + space
+        y = 0
+
+        for image in images:
+            if image is None:
+                # start new paragraph
+                add_line(line)
+                line = new_line()
+                x = indent
+            else:
+                # continue on current line until...
+                if inc_x(image) > w:
+                    # x > pdf width
+                    x = 0
+                    add_line(line)
+                    line = new_line()
+
+                line.paste(image, (x, y))
+                x = inc_x(image)
+
+        if line != blank_line:
+            add_line(line)
+
+        return lines
+
+    def lines_to_pages(self, lines, h=DIMS[1]):
+        """
+        Pastes each line Image in lines to a list of pages and
+        returns the list.
+
+        :param lines: List[Image], lines on pages (in order)
+        :param h: int, desired height of each page (in pixels)
+        :return: List[Image], pages with images pasted
+        """
+        if len(lines) != 0:
+            pages = list()
+            new_page = lambda: make_blank_img(0, 0)
+            line1 = lines[0]
+            fill_page = lambda p: above(p, make_blank_img(line1.size[0], h-line1.size[1]))
+            page = new_page()
+
+            y = 0
+            inc_y = lambda: y + int(self.image_heights()*1.5)
+
+            for line in lines:
+                if line is None:
+                    continue
+                else:
+                    # continue on current page until...
+                    if inc_y() > h:
+                        # y > pdf height
+                        page = fill_page(page)
+                        pages.append(page)
+                        page = new_page()
+                        y = 0
+                    else:
+                        page = above(page, line)
+
+            if page != new_page():
+                page = fill_page(page)
+                pages.append(page)
+
+            blank_page = make_blank_img(page.size[0], h)
+            return [overlay(page, blank_page) for page in pages]
 
     def images_to_pages(self, images, w=DIMS[0], h=DIMS[1]):
         """
@@ -2283,9 +2373,8 @@ class BlissTranslator:
 
     def pages_to_pdf(self, pages, title):
         """
-        Pastes each page in pages to a PDF.
-        ~
-        Saves the PDF to /out/ under this title.
+        Pastes each page in pages to a PDF and
+        saves the PDF to /out/ under this title.
 
         :param pages: List[Image], pages with images pasted (in order)
         :param title: str, desired title for output PDF
