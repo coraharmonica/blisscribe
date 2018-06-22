@@ -200,7 +200,7 @@ class LexiconParser:
         :return: List[Blissymbol], all Blissymbols from Blissymbol lexicon
         """
         if self.blissymbols is None:
-            self.blissymbols = self.load_all_blissymbols()
+            self.blissymbols = self.all_blissymbols()
         return self.blissymbols
 
     # BCI-BLISSNAME MAP
@@ -445,7 +445,7 @@ class LexiconParser:
             val (Set(Blissymbol)) - Blissymbols for word
         """
         bliss_dict = {}
-        all_blissymbols = self.init_blissymbols()
+        all_blissymbols = self.all_blissymbols()
 
         for blissymbol in all_blissymbols:
             lang_words = blissymbol.get_translation(language)

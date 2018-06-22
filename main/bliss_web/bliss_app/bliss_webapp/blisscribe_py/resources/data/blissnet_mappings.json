@@ -12822,13 +12822,6 @@
   "chicken_coop.n.01"
  ], 
  "her": [
-  "he.n.02", 
-  "up.v.01", 
-  "soundly.r.01", 
-  "voice.n.05", 
-  "up.v.01", 
-  "soundly.r.01", 
-  "voice.n.05"
  ], 
  "herb": [
   "herb.n.02"
@@ -12863,12 +12856,6 @@
   "sardine.n.02"
  ], 
  "hers": [
-  "up.v.01", 
-  "soundly.r.01", 
-  "voice.n.05", 
-  "up.v.01", 
-  "soundly.r.01", 
-  "voice.n.05"
  ], 
  "heterosexual": [
   "heterosexual.a.01"
@@ -12974,12 +12961,6 @@
   "rent.v.04"
  ], 
  "his": [
-  "up.v.01", 
-  "soundly.r.01", 
-  "voice.n.05", 
-  "up.v.01", 
-  "soundly.r.01", 
-  "voice.n.05"
  ], 
  "hiss": [
   "hiss.v.01", 
@@ -26071,10 +26052,10 @@
   "thanksgiving.n.01"
  ], 
  "that": [
-  "such.s.01", 
-  "world_health_organization.n.01", 
-  "merely.r.01", 
-  "entirely.r.02", 
+  "such.s.01",
+  "world_health_organization.n.01",
+  "merely.r.01",
+  "entirely.r.02",
   "equally.r.01"
  ], 
  "that (conj)": [
@@ -26111,76 +26092,28 @@
   "larceny.n.01"
  ], 
  "their": [
-  "sus.n.01", 
-  "up.v.01", 
-  "sus.n.01", 
-  "hog.n.03", 
-  "up.v.01", 
-  "sus.n.01", 
-  "hog.n.03", 
-  "up.v.01", 
-  "sus.n.01", 
-  "hog.n.03"
  ], 
  "theirs-": [
-  "sus.n.01", 
-  "up.v.01", 
-  "sus.n.01", 
-  "hog.n.03", 
-  "up.v.01", 
-  "sus.n.01", 
-  "hog.n.03", 
-  "up.v.01", 
-  "sus.n.01", 
-  "hog.n.03"
  ], 
  "theirs-(feminine plural)": [
-  "up.v.01", 
-  "sus.n.01", 
-  "hog.n.03"
  ], 
  "theirs-(indefinite)": [
-  "sus.n.01"
  ], 
  "theirs-(masculine plural)": [
-  "up.v.01", 
-  "sus.n.01", 
-  "hog.n.03"
  ], 
  "theirs-(persons)": [
-  "up.v.01", 
-  "sus.n.01", 
-  "hog.n.03"
  ], 
  "them": [
-  "nebraska.n.01", 
-  "northeast.n.01", 
-  "neon.n.01", 
-  "he.n.02", 
-  "he.n.02", 
-  "he.n.02"
  ], 
  "themselves-": [
-  "nebraska.n.01", 
-  "northeast.n.01", 
-  "neon.n.01", 
-  "he.n.02", 
-  "he.n.02", 
-  "he.n.02"
  ], 
  "themselves-(feminine plural)": [
-  "he.n.02"
  ], 
  "themselves-(indefinite)": [
-  "nebraska.n.01", 
-  "northeast.n.01", 
-  "neon.n.01"
  ], 
  "themselves-(masculine plural)": [
-  "he.n.02"
  ], 
  "themselves-(persons)": [
-  "he.n.02"
  ], 
  "then": [
   "then.r.01", 
@@ -26230,12 +26163,6 @@
  "these": [
    ], 
  "they": [
-  "nebraska.n.01", 
-  "northeast.n.01", 
-  "neon.n.01", 
-  "he.n.02", 
-  "he.n.02", 
-  "he.n.02"
  ], 
  "thick": [
   "thick.a.01", 
@@ -26276,9 +26203,6 @@
   "thirsty.a.02"
  ], 
  "this": [
-  "east.n.01", 
-  "christian_era.n.01", 
-  "sexual_activity.n.01"
  ], 
  "those": [
   "judgment.n.03", 
@@ -29034,9 +28958,6 @@
   "yolk.n.02"
  ], 
  "you": [
-  "quill.n.04", 
-  "quill.n.01"
-  "thousand.n.01"
  ],
  "you are welcome": [
   "welcome.v.02",
@@ -29060,27 +28981,16 @@
   "child.n.02"
  ],
  "your": [
-  "era.n.01",
-  "era.n.01",
-  "era.n.01"
  ],
  "yours-": [
-  "era.n.01",
-  "era.n.01",
-  "era.n.01"
  ],
  "yours-(feminine plural)": [
-  "era.n.01"
  ],
  "yours-(masculine plural)": [
-  "era.n.01"
  ],
  "yours-(plural)": [
-  "era.n.01"
  ],
  "yourself": [
-  "quill.n.04",
-  "quill.n.01",
   ],
  "yourselves-": [
    ],
