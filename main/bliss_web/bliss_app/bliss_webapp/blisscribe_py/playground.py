@@ -11,6 +11,7 @@ DEMO:
 #from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.blisschart import BlissChart
 from blisscribe import *
 
+
 bt = BlissTranslator(language="English")
 
 
@@ -18,7 +19,6 @@ bt = BlissTranslator(language="English")
 bt.set_fast_translate(True)
 bt.set_safe_translate(False)
 bt.set_sub_all(True)
-
 
 bt.set_translatables(nouns=True, verbs=False, adjs=False, other=False)
 bt.save_images(bt.images_to_lines(bt.translate_to_images("The quick brown fox jumps over the lazy dog")))

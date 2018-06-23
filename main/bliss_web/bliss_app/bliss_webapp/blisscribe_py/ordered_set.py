@@ -124,7 +124,8 @@ class OrderedSet:
             items = self.all_items
         items_set = self.remove_duplicates(items)
         counts = self.frequency_counts()
-        items_set = [i for i in items_set if counts.get(i, 0) > min_ct and (counts.get(i, 0) < max_ct or max_ct is None)]
+        items_set = [i for i in items_set if (min_ct is None or counts.get(i, 0) > min_ct) and
+                     (max_ct is None or counts.get(i, 0) < max_ct)]
         return sorted(items_set, key=lambda i: counts[i], reverse=True)
 
     def rank_items(self, items=None):

@@ -273,7 +273,7 @@ class Blissymbol:
 
                 img = overlay(all_indicators, img)
 
-            filename = self.translator.deunicodize(filename)
+            #filename = self.translator.deunicodize(filename)
             img_path = str(IMG_PATH + filename)
             img.save(img_path)
             print("made new Blissymbol: " + filename)
@@ -322,23 +322,6 @@ class Blissymbol:
             for translation in translations:
                 self.add_translation(language, translation)
 
-    def get_derivation(self):
-        """
-        Returns this Blissymbol's source derivation as a string.
-
-        :return: str, this Blissymbol's source derivation
-        """
-        return unicode(self.derivation)
-
-    def set_derivation(self, derivation):
-        """
-        Sets this Blissymbol's derivation to this derivation.
-
-        :param derivation: str, derivation of Blissymbol
-        :return: None
-        """
-        self.derivation = derivation
-
     def find_derivations(self):
         """
         Returns a list of the Blissymbols from which this
@@ -358,17 +341,8 @@ class Blissymbol:
                 deriv = deriv.split(":")[0]
             deriv = self.translator.remove_parens(deriv, starts={"["}, ends={"]"})
             derivations = [d.split(", ")[0].strip() for d in deriv.split(" + ")]
-            print "\t", self, "has derivations:\t", derivations
+            print("\t", self, "has derivations:\t", derivations)
             return derivations
-
-    def set_derivations(self, derivations):
-        """
-        Sets this Blissymbol's derivations to derivations.
-
-        :param derivation: List[str], derivations of Blissymbol
-        :return: None
-        """
-        self.derivations = derivations
 
     def is_derivation(self, word):
         """
@@ -414,7 +388,7 @@ class Blissymbol:
         if blissymbol is None:
             return atoms
         else:
-            if blissymbol.get_is_atom():
+            if blissymbol.is_atom:
                 atoms.append(blissymbol)
                 return atoms
             else:
@@ -479,22 +453,6 @@ class Blissymbol:
         translations = {language: self.clean_translation(translations[language]) for language in languages}
         return translations
 
-    def get_img_filename(self):
-        """
-        Returns image filename associated with this Blissymbol.
-
-        :return: str, this Blissymbol's image filename
-        """
-        return self.img_filename
-
-    def get_pos_code(self):
-        """
-        Return this Blissymbol's part-of-speech colour code.
-
-        :return: str, Blissymbol's part-of-speech colour code
-        """
-        return self.pos_code
-
     def get_pos(self):
         """
         Return first part-of-speech in this Blissymbol's
@@ -504,14 +462,6 @@ class Blissymbol:
         """
         if self.pos is not None:
             return self.pos[0]
-
-    def get_parts_of_speech(self):
-        """
-        Return this Blissymbol's parts-of-speech list.
-
-        :return: List[str], Blissymbol's parts-of-speech
-        """
-        return self.pos
 
     def get_parens(self, word):
         """
@@ -570,41 +520,7 @@ class Blissymbol:
         :param language: str, language to get translations in
         :return: List[str], Blissymbol translations in this language
         """
-        try:
-            return self.translations[language]
-        except KeyError:
-            return []
-
-    def get_translations(self):
-        """
-        Returns this Blissymbol's translations dict.
-
-        :return: dict, where...
-            key (str) - language name (in English)
-            val (List[str]) - Blissymbol translations in English
-        """
-        return self.translations
-
-    def set_img_filename(self, img_filename):
-        """
-        Sets this Blissymbol's img_filename to this img_filename.
-        ~
-        Assumes img_filename includes appropriate extension (.png).
-
-        :param img_filename: str, image filename (ending in .png)
-        :return: None
-        """
-        self.img_filename = img_filename
-
-    def set_paren_phrase(self, paren_phrase):
-        """
-        Sets this Blissymbol's parenthesis phrase to
-        this paren_phrase.
-
-        :param paren_phrase: str, phrase in parentheses
-        :return: None
-        """
-        self.paren_phrase = paren_phrase
+        return self.translations.get(language, list())
 
     def init_pos(self, pos):
         """
@@ -672,16 +588,6 @@ class Blissymbol:
         """
         return Blissymbol.POS_COLOUR_CODE[colour]
 
-    def get_is_atom(self):
-        """
-        Returns whether this Blissymbol is atomic.
-        ~
-        is_atom is True when a Blissymbol is atomic, False otherwise.
-
-        :return: bool, whether this Blissymbol is atomic
-        """
-        return self.is_atom
-
     def find_is_atom(self):
         """
         Identifies whether this Blissymbol is atomic or not.
@@ -707,26 +613,9 @@ class Blissymbol:
         if is_character:
             derivation = "".join(derivations[:-1])
             derivation = derivation.strip()
-            self.set_derivation(derivation)
+            self.derivation = derivation
 
         return is_character
-
-    def set_is_atom(self, is_atom):
-        """
-        Sets this Blissymbol's is_atom value to is_atom.
-
-        :param is_atom: bool, whether this Blissymbol is atomic
-        :return: None
-        """
-        self.is_atom = is_atom
-
-    def get_unicode(self):
-        """
-        Returns this Blissymbol's unique unicode identifier.
-
-        :return: str, this Blissymbol's unicode ID
-        """
-        return self.unicode
 
     def get_deriv_unicode(self, atomic=True):
         """
@@ -816,9 +705,9 @@ class Blissymbol:
 
         :return: str, new unicode name
         """
-        print "\tlast unicode:", hex(self.last_encoding)[2:]
+        print("\tlast unicode:", hex(self.last_encoding)[2:])
         self.last_encoding += 1
-        print "\tnew unicode:", hex(self.last_encoding)[2:]
+        print("\tnew unicode:", hex(self.last_encoding)[2:])
         uni = hex(self.last_encoding)
         uni = "U+" + uni[2:]
         return uni
@@ -921,7 +810,7 @@ class Blissymbol:
         else:
             uni = self.new_unicode()
 
-        self.set_unicode(uni)
+        self.unicode = uni
         self.add_blissymbol_unicodes(self)
         return uni
 
@@ -1006,7 +895,7 @@ class Blissymbol:
         :return: Set[Synset], this Blissymbol's Wordnet synsets
         """
         synsets = set()
-        translations = self.get_translations()
+        translations = self.translations
         word = self.bliss_name
         word = word.replace("_", " ")
         words = word.split(",")
@@ -1057,24 +946,12 @@ class Blissymbol:
             self.synset = list(synsets)[0]
         if self.synset is not None:
             pos = self.synset.pos()
-            self.set_pos(self.init_pos(pos))
+            self.pos = self.init_pos(pos)
 
         return synsets
 
     def clean_bliss_name(self):
         return self.bliss_name.replace("_", " ")
-
-    def set_unicode(self, unicode):
-        """
-        Sets this Blissymbol's unicode to unicodes.
-        ~
-        Each unicode str in unicodes follow the regex:
-            U+[A-F|0-9]{4}
-
-        :param unicodes: str, list of unicodes
-        :return: None
-        """
-        self.unicode = unicode
 
     def set_bliss_glyph(self):
         """

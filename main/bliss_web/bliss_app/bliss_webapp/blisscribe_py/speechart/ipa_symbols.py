@@ -5,7 +5,6 @@ IPA_SYMBOLS:
     Stores classes for categorizing IPA symbols.
 """
 from ipas import *
-from enum import Enum
 
 
 class IPASymbol:
@@ -580,8 +579,12 @@ IPADIACRITICS = {
     u"ˢ": IPADiacritic(u"ˢ", is_affricate=False),   # geminate following consonant
 }
 
-IPALETTERS = dict(IPACONSONANTS.items() + IPAVOWELS.items() + SEMIVOWELS.items())
+IPALETTERS = IPACONSONANTS.copy()
+IPALETTERS.update(IPAVOWELS)
+IPALETTERS.update(SEMIVOWELS)
 
-IPASYMBOLS = dict(IPALETTERS.items() + IPADIACRITICS.items())
+IPASYMBOLS = IPALETTERS.copy()
+IPASYMBOLS.update(IPADIACRITICS)
 
-ALLSYMBOLS = dict(IPASYMBOLS.items() + ALL_SYMBOLS.items())
+ALLSYMBOLS = IPASYMBOLS.copy()
+ALLSYMBOLS.update(ALL_SYMBOLS)

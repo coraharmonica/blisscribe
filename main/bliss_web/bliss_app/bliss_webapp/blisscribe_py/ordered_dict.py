@@ -1,5 +1,4 @@
 # coding: utf-8
-from ordered_set import OrderedSet
 
 
 class OrderedDict:
@@ -90,18 +89,18 @@ class OrderedDict:
 
     def union(self, other):
         """
-        Returns the union OrderedSet of this OrderedSet and another, other.
+        Returns the union OrderedDict of this OrderedDict and another, other.
 
-        :param other: OrderedSet(X), set to unify with this set
-        :return: OrderedSet(X), union OrderedSet of self and other
+        :param other: OrderedDict(X), set to unify with this set
+        :return: OrderedDict(X), union OrderedDict of self and other
         """
         self.update(other)
         return self
 
     def pop(self, idx=None):
         """
-        Removes the given item from this OrderedSet and returns
-        the modified OrderedSet.
+        Removes the given item from this OrderedDict and returns
+        the modified OrderedDict.
         ~
         If no item is specified, this method removes the most
         frequent item (i.e., at items index 0) instead.
@@ -109,7 +108,7 @@ class OrderedDict:
         If item is not found, does not throw error.
 
         :param idx: int, index of item to remove from items
-        :return: OrderedSet(X), ordered set with item removed
+        :return: OrderedDict(X), ordered set with item removed
         """
         if idx < len(self.items()):
             if idx is None:
@@ -162,11 +161,11 @@ class OrderedDict:
 
     def frequency_counts(self):
         """
-        Returns a dictionary of all items in this OrderedSet
+        Returns a dictionary of all items in this OrderedDict
         and their frequencies.
 
         :return: dict, where...
-            key (X) - item in OrderedSet
+            key (X) - item in OrderedDict
             val (int) - # occurrences of item
         """
         return {i: self.items_list.count(i) for i in self.items_dict}
@@ -199,15 +198,13 @@ class OrderedDict:
             else:
                 final_dict[item] = val
 
-        #final_dict = {e: OrderedSet(final_dict[e]).items() for e in final_dict
-        #              if type(final_dict[e]) == list}
         self.items_dict = final_dict
 
     def intersections(self):
         """
-        Returns a set of the most common items in this OrderedSet.
+        Returns a set of the most common items in this OrderedDict.
 
-        :return: List[X], items in OrderedSet occurring the most
+        :return: List[X], items in OrderedDict occurring the most
         """
         counts = self.frequency_counts()
         max_intersection = max(counts.values()) if len(counts) != 0 else 0
@@ -227,7 +224,7 @@ class OrderedDict:
         return len(self.items_dict)
 
     def __str__(self):
-        return str(self.items_dict) #str(self.items())
+        return str(self.items_dict)
 
     def __repr__(self):
         return repr(self.items_dict)

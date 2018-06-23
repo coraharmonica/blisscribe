@@ -9,8 +9,8 @@ import re
 import string
 import json
 import requests
-from BeautifulSoup import BeautifulSoup
-from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.ordered_set import OrderedSet
+from bs4 import BeautifulSoup
+from ordered_set import OrderedSet
 from ipa_symbols import *
 
 
@@ -195,7 +195,7 @@ class WiktionaryParser:
                 line_no = 0
                 for line in lexicon:
                     word = line.split(" ", 1)[0]
-                    words.append(self.unicodize(word))
+                    words.append(str(word))
                     if lim:
                         if line_no > lim:
                             break
@@ -214,7 +214,7 @@ class WiktionaryParser:
         :return: None
         """
         path = self.PATH + "/resources/data/" + filename + ".json"
-        json.dump(data, open(path, 'w'), indent=1, sort_keys=True, encoding='utf-8')
+        json.dump(data, open(path, 'w'), indent=1, sort_keys=True)
 
     def load_json(self, filename):
         """
@@ -278,8 +278,6 @@ class WiktionaryParser:
         """
         language = self.verify_language(language)
         for word in words:
-            # if word not in self.wiktionary_entries:
-            #    print "adding", word, "to wikt"
             self.find_wiktionary_entry(word, language)
         return self.wiktionary_entries
 
@@ -294,13 +292,13 @@ class WiktionaryParser:
             key (str) - title of subentry heading (e.g. Etymology)
             val (list) - value(s) associated with subentry
         """
-        word = self.unicodize(word)
+        word = str(word)
         language = self.verify_language(language)
         wikt_page = WiktionaryPage(word, language=language, parser=self)
         entries = wikt_page.entries
         if len(entries) != 0:
             word = self.entry_word(word, language)
-        self.wiktionary_entries.setdefault(word, dict())
+        self.wiktionary_entries.setdefault(word, {language: dict()})
         self.wiktionary_entries[word].update(entries)
         return entries.get(language, None)
 
@@ -315,9 +313,11 @@ class WiktionaryParser:
         :param content: List[str], content to add to entry
         :return: None
         """
-        word = self.unicodize(word)
+        word = str(word)
         language = self.verify_language(language)
         entry = self.lookup_wiktionary_subentry(word, language)
+        if entry is None:
+            entry = dict()
         entry.setdefault(heading, list())
 
         try:
@@ -374,7 +374,7 @@ class WiktionaryParser:
                 entry = self.wiktionary_entries.get(word, dict())
                 entry = entry.get(language, None)
                 if entry is None and not self.is_punct(word):
-                    print "adding", word, "to wikt"
+                    print("adding " + word + " to wikt")
                     entry = self.add_wiktionary_entry(word, language)
                 return entry
 
@@ -512,7 +512,7 @@ class WiktionaryParser:
         """
         response = self.session.get(url)
         html = response.text
-        parsed = BeautifulSoup(html)
+        parsed = BeautifulSoup(html, "lxml")
         return parsed
 
     def word_page(self, word):
@@ -649,7 +649,7 @@ class WiktionaryParser:
         :param tags: List[Tag], BeautifulSoup Tags to join
         :return: Tag, tags joined into 1 page
         """
-        return BeautifulSoup("\n".join([str(tag) for tag in tags]))
+        return BeautifulSoup("\n".join([str(tag) for tag in tags]), "lxml")
 
     def soupify_siblings(self, tag, start_headers=set(), stop_headers=set()):
         """
@@ -667,7 +667,7 @@ class WiktionaryParser:
     # ----------------------
     def clean_text(self, text):
         """
-        Returns the given text_image in unicode without HTML characters
+        Returns the given text in unicode without HTML characters
         and with regular spacing.
         ~
         e.g. clean_text(" hi , how  are you ? ") -> u"hi, how are you?"
@@ -675,14 +675,14 @@ class WiktionaryParser:
         :param text: str, string to clean
         :return: unicode, cleaned unicode string
         """
-        return self.unicodize(self.clean_spaces(re.sub("&\S{3,10};", " ", str(text))))
+        return self.clean_spaces(re.sub("&\S{3,10};", " ", str(text)))
 
     def clean_punct(self, text):
         """
-        Cleans the spacing around punctuation in the given text_image.
+        Cleans the spacing around punctuation in the given text.
 
-        :param text: str, text_image to clean punctuation spacing for
-        :return: str, text_image with clean punctuation spacing
+        :param text: str, text to clean punctuation spacing for
+        :return: str, text with clean punctuation spacing
         """
         return text.replace(u" ,", u",").replace(u"( ", u"(").replace(u" )", u")")
 
@@ -824,34 +824,6 @@ class WiktionaryParser:
         """
         return "".join([c for c in ipa if c not in IPADIACRITICS])
 
-    def unicodize(self, text):
-        """
-        Returns the given text_image in unicode.
-        ~
-        Ensures all text_image is in unicode for parsing.
-
-        :param text: str, text_image to decode to unicode
-        :return: unicode, text_image in unicode
-        """
-        if text is not None:
-            if not isinstance(text, unicode):
-                text = text.decode("utf-8")
-        return text
-
-    def deunicodize(self, text):
-        """
-        Returns the given text_image decoded from unicode.
-        ~
-        Ensures all text_image is in bytes for printing.
-
-        :param text: unicode, text_image to encode to bytes
-        :return: str, text_image in bytes
-        """
-        if text is not None:
-            if isinstance(text, unicode):
-                text = text.encode("utf-8")
-        return text
-
     def fill_list(self, lst, limit, item=None):
         """
         Adds item to given list until it reaches length limit.
@@ -979,13 +951,13 @@ class WiktionaryPage:
 
     def header_text(self, header):
         """
-        Returns the given Wiktionary header's text_image, with
+        Returns the given Wiktionary header's text, with
         [edit] stripped from the end.
 
-        :param header: Tag, HTML header to extract text_image from
-        :return: str, Wiktionary header's text_image
+        :param header: Tag, HTML header to extract text from
+        :return: str, Wiktionary header's text
         """
-        text = getattr(header, 'text_image', '')
+        text = getattr(header, 'text', '')
         return self.parser.clean_header(text)
 
     def header_lang(self, heading):
@@ -1008,6 +980,7 @@ class WiktionaryPage:
         :param stop_headers: Set(str), headers to end new tag at
         :return: Tag, this Tag's contents from start_headers up to stop_headers
         """
+        print("SUBTAGGING", tag)
         if tag is None:
             return
         else:
@@ -1015,10 +988,10 @@ class WiktionaryPage:
 
     def tag_text(self, tag):
         """
-        Returns the given Wiktionary HTML tag's text_image.
+        Returns the given Wiktionary HTML tag's text.
 
-        :param tag: Tag, BeautifulSoup tag in HTML containing text_image
-        :return: str, this Tag's text_image
+        :param tag: Tag, BeautifulSoup tag in HTML containing text
+        :return: str, this Tag's text
         """
         if tag is None:
             return
@@ -1027,7 +1000,7 @@ class WiktionaryPage:
 
     def tag_lemma(self, tag):
         """
-        Returns this HTML tag's first lemma, i.e. text_image
+        Returns this HTML tag's first lemma, i.e. text
         from span with class=mention or class=form-of-definition-link.
         ~
         Used for retrieving lemmas from parts-of-speech definitions.
@@ -1048,7 +1021,7 @@ class WiktionaryPage:
 
     def tag_lemmas(self, tag, language=None):
         """
-        Returns all this HTML tag's lemmas, i.e. text_image
+        Returns all this HTML tag's lemmas, i.e. text
         from span with class=mention or class=form-of-definition-link.
         ~
         Used for retrieving lemmas from parts-of-speech definitions.
@@ -1081,12 +1054,12 @@ class WiktionaryPage:
 
     def text_lemmas(self, text):
         """
-        Returns all lemmas in this text_image from an HTML tag.
+        Returns all lemmas in this text from an HTML tag.
         ~
         Used for retrieving lemmas from parts-of-speech definitions.
 
         :param text: str, BeautifulSoup HTML to extract lemma from
-        :return: List[str], lemmas from text_image
+        :return: List[str], lemmas from text
         """
         split_text = re.split(u"[;,]", text)
         lemmas = list()
@@ -1170,6 +1143,7 @@ class WiktionaryPage:
         :param language: str, language of heading content
         :return: list, parsed entry content
         """
+        print("HEADER FOUND:", header)
         if header[:4] == "Etym":
             entry = self.parser.page_etymologies(content, language)
         elif header[:6] == "Pronun":
@@ -1318,7 +1292,7 @@ class WiktionaryTable:
         :param col: Tag, BeautifulSoup Tag for column in table
         :return: bool, whether this column is empty
         """
-        return self.cell_rowspan(col) >= self.num_rows and col.get("text_image") is None
+        return self.cell_rowspan(col) >= self.num_rows and col.get("text") is None
 
     def cell_rowspan(self, cell):
         """
@@ -1344,10 +1318,10 @@ class WiktionaryTable:
 
     def content_text(self, spans):
         """
-        Returns a newline-joined str of text_image for all content in spans.
+        Returns a newline-joined str of text for all content in spans.
 
         :param spans: List[Tag], HTML tags for content in a cell
-        :return: str, text_image from content in spans
+        :return: str, text from content in spans
         """
         spans_text = [self.wikt_page.tag_text(span) for span in spans
                       if self.contains_content(span)]
@@ -1356,10 +1330,10 @@ class WiktionaryTable:
 
     def cell_text(self, cell):
         """
-        Returns the given cell (from a table)'s text_image.
+        Returns the given cell (from a table)'s text.
 
         :param cell: Tag, BeautifulSoup tag for cell in HTML table
-        :return: str, given cell's text_image
+        :return: str, given cell's text
         """
         try:
             self.wikt_page.parser.remove_sublists(cell)
@@ -1682,12 +1656,12 @@ class WiktionaryTable:
         """
         for d in sorted(inflection):
             value = inflection[d]
-            print d, ":"
+            print(d + ":")
 
             for val in sorted(value):
-                print "\t", val
+                print("\t" + val)
                 v = value[val]
-                print "\t\t", "\n\t\t".join(v)
+                print("\t\t" + "\n\t\t".join(v))
 
     def visualize_inflections(self, inflections):
         """
@@ -1708,8 +1682,8 @@ class WiktionaryTable:
             col_intro = " "*int(col_width * 1.25)
             col_space = " "*col_width
 
-            print "Inflections:\n"
-            print bold + col_intro + col_space.join([str(i) for i in range(max_col + 1)]) + end_bold
+            print("Inflections:\n")
+            print(bold + col_intro + col_space.join([str(i) for i in range(max_col + 1)]) + end_bold)
 
             for coord in sorted(inflections):
                 x, y = coord
@@ -1717,12 +1691,12 @@ class WiktionaryTable:
                 text = self.wikt_page.parser.clean_text(val.getText(" "))
                 offset = col_width - len(text)
                 if y == 0:
-                    print
-                    print bold + str(coord[0]).zfill(row_digits) + end_bold + col_space,
+                    print()
+                    print(bold + str(coord[0]).zfill(row_digits) + end_bold + col_space)
 
                 is_header = self.is_header(val)
                 if is_header:
                     text = bold + text + end_bold
-                print text + (" " * offset),
-            print
+                print(text + (" " * offset))
+            print()
 

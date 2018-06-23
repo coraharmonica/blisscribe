@@ -185,7 +185,7 @@ class ConceptAnalyzer:
                 break
 
             novel = novels[title]
-            print novel
+            print(novel)
             phrases = novel.split(".")
 
             for c in range(len(phrases)):
@@ -196,7 +196,7 @@ class ConceptAnalyzer:
                     w = words[i].lower()
                     if w == word:
                         contexts.append(phrase)
-                        print phrase
+                        print(phrase)
             idx += 1
 
         return contexts
@@ -212,6 +212,6 @@ class ConceptAnalyzer:
         """
         contexts = self.fetch_all_contexts(word, cap=500)
         text = "\n".join(contexts)
-        print text
+        print(text)
         self.draw_concept_cloud(text, word)
 

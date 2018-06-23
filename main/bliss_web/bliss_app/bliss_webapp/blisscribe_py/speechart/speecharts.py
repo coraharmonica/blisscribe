@@ -17,8 +17,8 @@ SPEECHARTS:
     which words follow them (PREDICTIVELY)?  Extrapolate from there for semantics.
 """
 from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.ordered_set import OrderedSet
-from morpheme_parser import MorphemeParser
-from images import *
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.morpheme_parser import MorphemeParser
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.images import *
 from random import shuffle
 from nltk import pos_tag
 
@@ -30,7 +30,7 @@ class Chart(MorphemeParser):
     Contains constants and declares variables without initializing them.
     """
     RADIUS = 24
-    FONT_SIZE = RADIUS / 2
+    FONT_SIZE = RADIUS // 2
 
     POS_ABBREVS = ["CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
                    "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$",
@@ -87,7 +87,7 @@ class Chart(MorphemeParser):
 
     def init_fonts(self):
         self.font = load_default_font(lang_font(self.chart_lang), size=self.FONT_SIZE)
-        self.mini_font = load_default_font(lang_font("English"), size=self.FONT_SIZE/2)
+        self.mini_font = load_default_font(lang_font("English"), size=self.FONT_SIZE//2)
         self.title_font = load_default_font(lang_font("English"), size=self.FONT_SIZE*2)
 
     def labels(self):
@@ -404,7 +404,7 @@ class Speechart(Chart):
         """
         curr_state = state
         for char in chars:
-            curr_state = self.transition(curr_state, self.unicodize(char))
+            curr_state = self.transition(curr_state, str(char))
             if curr_state in self.start_states:
                 break
         return curr_state
@@ -486,20 +486,20 @@ class Speechart(Chart):
 
     def text_size(self, txt):
         """
-        Returns this text_image's pixel size in this Speechart's
+        Returns this text's pixel size in this Speechart's
         font and FONT_SIZE.
 
-        :param txt: str, text_image to return
-        :return: tuple(int, int), width & height of input text_image
+        :param txt: str, text to return
+        :return: tuple(int, int), width & height of input text
         """
         return text_size(txt, self.language, self.FONT_SIZE, self.font)
 
     def get_text_size(self):
         """
-        Returns a text_image size appropriate for the largest transition label
+        Returns a text size appropriate for the largest transition label
         in this Speechart.
 
-        :return: int, text_image size
+        :return: int, text size
         """
         transitions = self.transition_label()
         if len(transitions) == 0:
@@ -528,7 +528,7 @@ class Speechart(Chart):
 
         :return: Image, invisible placeholder image
         """
-        return rectangle(self.RADIUS/2, self.RADIUS/2, fill=None)
+        return rectangle(self.RADIUS//2, self.RADIUS//2, fill=None)
 
     def state_circle(self, state_num):
         """
@@ -553,7 +553,7 @@ class Speechart(Chart):
         else:
             img = overlay(text_image(str(state_num),
                                      lang=self.language,
-                                     size=self.FONT_SIZE/2,
+                                     size=self.FONT_SIZE//2,
                                      opacity=0,
                                      font=self.mini_font), img)
             return img
@@ -579,7 +579,7 @@ class Speechart(Chart):
         length and angle, with transition overlaid on the arrow.
         ~
         If length is None, set length to the larger of 50 and
-        the length of transition_all's text_image image.
+        the length of transition_all's text image.
 
         :param state1: Image, arrow's outgoing state
         :param state2: Image, arrow's incoming state
@@ -594,7 +594,7 @@ class Speechart(Chart):
         pad_w, pad_h = (1, max(1, int(diff))) if vertical else (max(1, int(diff)), 1)
         padding = make_blank_img(pad_w, pad_h, opacity=0)
         arro = fn2(padding, arro)
-        state0 = make_blank_img(1, state2.size[1] / 2, opacity=0)
+        state0 = make_blank_img(1, state2.size[1]//2, opacity=0)
 
         if angle > 0:
             align1, align2 = 'bottom', 'top'
@@ -644,7 +644,7 @@ class Speechart(Chart):
             state0 = make_blank_img(0, 0, opacity=0)
             inc = 5
             apex = (len(outs) - 1) * inc
-            angle = apex / 2
+            angle = apex//2
             branch = state0
             labels = {dest: ", ".join(outs[dest]) for dest in outs}
 
@@ -698,7 +698,7 @@ class Speechart(Chart):
         for colour in sorted(self.RGB):
             label = text_image(colour, size=self.FONT_SIZE, font=self.font)
             rgb = self.RGB[colour]
-            state = circle(self.RADIUS/2, fill=rgb, outline='gray')
+            state = circle(self.RADIUS//2, fill=rgb, outline='gray')
             line = beside(state, space, align='center')
             line = beside(line, label, align='center')
             legend = above(legend, line, align='left')
@@ -930,20 +930,21 @@ class LanguageChart(Speechart):
         befores = sorted(before_set, key=lambda b: incomings.count(b), reverse=True)
         afters = sorted(after_set, key=lambda a: outgoings.count(a), reverse=True)
 
-        print "\n", state, "\n\nincoming:\n\n\t",
+        print("\n", state, "\n\nincoming:\n\n\t", end=" ")
 
         for i in range(len(befores)):
             before_state = befores[i]
             freq = incomings.count(before_state)
-            print "\n{idx:<5}\t{freq:<5}\t{before:<20}... {label}".format(idx=i, before=before_state, label=state, freq=freq)
+            print("\n{idx:<5}\t{freq:<5}\t{before:<20}... {label}".format(idx=i,
+                                                                          before=before_state, label=state, freq=freq))
 
-        print "\n\noutgoing:\n\n\t",
+        print("\n\noutgoing:\n\n\t", end=" ")
 
         for i in range(len(afters)):
             after_state = afters[i]
             freq = outgoings.count(after_state)
-            print "\n{idx:<5}\t{freq:<5}\t{label} ...{after:>20}".format(idx=i, after=after_state, label=state, freq=freq)
-
+            print("\n{idx:<5}\t{freq:<5}\t{label} ...{after:>20}".format(idx=i,
+                                                                         after=after_state, label=state, freq=freq))
         return (befores, afters)
 
     def label_synonym(self, label):
@@ -975,14 +976,14 @@ class LanguageChart(Speechart):
         for label_in in label_ins:
             if label_in not in in_labels_seen:
                 in_labels_seen.add(label_in)
-                print "INCOMING LABEL:\t", label_in
-                print "\toutgoing labels:"
+                print("INCOMING LABEL:\t", label_in)
+                print("\toutgoing labels:")
                 # check each incoming label's outgoing labels
                 outgoings = set(self.label_outgoing_labels(label_in))
 
                 for outgoing_label in outgoings:
                     if outgoing_label != label and outgoing_label != label_in and outgoing_label not in out_labels_seen:
-                        print "\t\t", outgoing_label
+                        print("\t\t", outgoing_label)
                         out_labels_seen.add(outgoing_label)
                         # check each outgoing label's incoming labels and
                         # compare them to THIS label's incoming labels
@@ -995,21 +996,21 @@ class LanguageChart(Speechart):
                             synonym_ins = out_ins
                             synonym_outs = outgoings
                             synonym_score = calc_crossover(synonym_ins, synonym_outs)
-                            print "\t\tNEW SYNONYM:\t", synonym_label, synonym_score
+                            print("\t\tNEW SYNONYM:\t", synonym_label, synonym_score)
                         else:
-                            print "\t\told synonym:\t", synonym_label, synonym_score
+                            print("\t\told synonym:\t", synonym_label, synonym_score)
 
         for label_out in label_outs:
             if label_out not in out_labels_seen:
                 out_labels_seen.add(label_out)
-                print "OUTGOING LABEL:\t", label_out
-                print "\tincoming labels:"
+                print("OUTGOING LABEL:\t", label_out)
+                print("\tincoming labels:")
                 # check each outgoing label's incoming labels
                 incomings = set(self.label_incoming_labels(label_out))
 
                 for incoming_label in incomings:
                     if incoming_label != label and incoming_label != label_out and incoming_label not in in_labels_seen:
-                        print "\t\t", incoming_label
+                        print("\t\t", incoming_label)
                         in_labels_seen.add(incoming_label)
                         # check each incoming label's outgoing labels and
                         # compare them to THIS label's outgoing labels
@@ -1022,9 +1023,9 @@ class LanguageChart(Speechart):
                             synonym_ins = incomings
                             synonym_outs = in_outs
                             synonym_score = calc_crossover(synonym_ins, synonym_outs)
-                            print "\t\tNEW SYNONYM:\t", synonym_label, synonym_score
+                            print("\t\tNEW SYNONYM:\t", synonym_label, synonym_score)
                         else:
-                            print "\t\told synonym:\t", synonym_label, synonym_score
+                            print("\t\told synonym:\t", synonym_label, synonym_score)
 
         return synonym_label
 
@@ -1079,7 +1080,7 @@ class LanguageChart(Speechart):
 
                         if syn_meets_threshold or syn_equal:
                             synonym_labels.append(syn_label)
-                            print "ADDING SYNONYM:\t", syn_label
+                            print("ADDING SYNONYM:\t", syn_label)
                             loops = 0
                         elif out_score > syn_out_score or (syn_score > syn_in_score + syn_out_score):
                             synonym_labels = [syn_label]
@@ -1087,15 +1088,15 @@ class LanguageChart(Speechart):
                             syn_in_score = in_score
                             syn_out_score = out_score
                             loops = 0
-                            print "NEW SYNONYM:\t", syn_label, "\t\tscore:\t", synonym_score
+                            print("NEW SYNONYM:\t", syn_label, "\t\tscore:\t", synonym_score)
 
-                print "loop #", loops
+                print("loop #", loops)
                 loops += 1
                 ins_outs = len(label_ins) + len(label_outs)
 
                 if (ins_outs > 0 and (float(synonym_score) / ins_outs) >= threshold) or \
                         loops > (len(syn_labels) / 10.0):
-                    print "FINAL SYNONYMS:\t", synonym_labels, "\t\tscore:\t", synonym_score
+                    print("FINAL SYNONYMS:\t", synonym_labels, "\t\tscore:\t", synonym_score)
                     break
 
         if synonym_score > 20:
@@ -1154,7 +1155,7 @@ class LanguageChart(Speechart):
         :param sentences: str, sentences to add to DFA
         :return: None
         """
-        sentences = self.unicodize(sentences)
+        sentences = str(sentences)
         sentence_tokens = self.tokenize_words_sents(sentences)
         for sentence in sorted(sentence_tokens):
             self.add_sentence(sentence)
@@ -1170,7 +1171,7 @@ class LanguageChart(Speechart):
         :return: None
         """
         poses = {pos} if type(pos) == str else set(pos)
-        self.current_state = self.transition_all(self.current_state, self.unicodize(word))
+        self.current_state = self.transition_all(self.current_state, str(word))
         self.add_success_state(self.current_state, poses)
         self.current_state = 0
 
@@ -1260,7 +1261,7 @@ class WordChart(LanguageChart):
         :param pos: Set(str), part-of-speech for this word
         :return: None
         """
-        self.current_state = self.transition_all(self.current_state, self.unicodize(word))
+        self.current_state = self.transition_all(self.current_state, str(word))
         self.add_success_state(self.current_state, {pos})
         self.current_state = 0
 
@@ -1293,7 +1294,7 @@ class WordChart(LanguageChart):
         """
         curr_state = state
         for char in word:
-            curr_state = self.transition(curr_state, self.unicodize(char))
+            curr_state = self.transition(curr_state, str(char))
             if curr_state in self.start_states:
                 break
         poses = self.word_poses(word, self.language)
@@ -1319,7 +1320,7 @@ class LetterChart(LanguageChart):
         :return: None
         """
         poses = {pos} if type(pos) == str else set(pos)
-        self.current_state = self.transition_all(self.current_state, self.unicodize(word))
+        self.current_state = self.transition_all(self.current_state, str(word))
         self.add_success_state(self.current_state, poses)
         self.current_state = 0
 
@@ -1382,7 +1383,7 @@ class MorphemeChart(LanguageChart):
         if len(morphemes) != 0:
             self.add_start_state(morphemes[0])
             for morpheme in morphemes:
-                curr_state = self.transition(curr_state, self.unicodize(morpheme))
+                curr_state = self.transition(curr_state, str(morpheme))
                 if curr_state in self.start_states:
                     break
             poses = self.word_poses(word, self.language)
@@ -1476,7 +1477,7 @@ class SentenceChart(LanguageChart):
             max_states = list()
 
             for curr_state in curr_states:
-                print "current state:\t", curr_state
+                print("current state:\t", curr_state)
                 state_words = self.state_outgoing_labels(curr_state).values()
                 if len(state_words) > len(max_states):
                     max_states = state_words
@@ -1502,10 +1503,10 @@ class SentenceChart(LanguageChart):
                     else:
                         state_word = max_states[0]
 
-                print "state words:\t", max_states
-                print "state word: \t", state_word
+                print("state words:\t", max_states)
+                print("state word: \t", state_word)
                 words.append(state_word)
-                print "words now:  \t", words
+                print("words now:  \t", words)
                 outgoings = self.state_outgoing_states(curr_state)
                 curr_states = outgoings.keys()
             else:
@@ -1517,7 +1518,7 @@ class SentenceChart(LanguageChart):
             if len(words) != 0:
                 words[0] = words[0].title()
             sentence = " ".join(words) + "."
-            print sentence
+            print(sentence)
             return sentence
 
     def add_text(self, text, factorial=False):
@@ -1578,7 +1579,7 @@ class SentenceChart(LanguageChart):
 
         for i in range(len(sentences)):
             sentence = sentences[i]
-            print sentence
+            print(sentence)
             # sentence = [self.entry_word(word) for word in sentence]
             self.add_sentence(sentence, factorial=factorial)
 
@@ -1602,7 +1603,7 @@ class SentenceChart(LanguageChart):
             while True:
                 word = sentence[i]
                 pos = poses[i][1]
-                print "\t", word, ":", pos
+                print("\t", word, ":", pos)
                 next_word = sentence[i+1] if i+1 < len(sentence) else ""
                 is_punct = self.contains_punct(word)
                 is_end = u"." in next_word or u"!" in next_word or u"?" in next_word or u"," in next_word
@@ -1643,9 +1644,9 @@ class StemChart(SentenceChart):
         ins = self.label_incoming_states(label)
         outs = self.label_outgoing_states(label)
 
-        print "label:", label
-        print "\tins:", ins
-        print "\touts:", outs
+        print("label:", label)
+        print("\tins:", ins)
+        print("\touts:", outs)
 
         dfa = self.state_circle(-1)  # empty circle
         state0 = make_blank_img(0, 0, opacity=0)
@@ -1654,7 +1655,7 @@ class StemChart(SentenceChart):
 
         if len(outs) != 0:
             apex = (len(outs) - 1) * angle_inc
-            angle = apex / 2
+            angle = apex//2
             branch = state0
             #labels = set()
             #for out in outs:
@@ -1678,7 +1679,7 @@ class StemChart(SentenceChart):
 
         if len(ins) != 0:
             apex = (len(ins) - 1) * angle_inc
-            angle = apex / 2
+            angle = apex//2
             branch = state0
             #labels = set()
             #for i in ins:
@@ -1706,9 +1707,9 @@ class StemChart(SentenceChart):
     def visualize_state(self, state, length):
         ins = self.state_incoming_states(state)
         outs = self.state_outgoing_states(state)
-        print "state", state
-        print "ins:", ins
-        print "outs:", outs
+        print("state", state)
+        print("ins:", ins)
+        print("outs:", outs)
 
         dfa = self.state_circle(state)
 
@@ -1716,7 +1717,7 @@ class StemChart(SentenceChart):
             state0 = make_blank_img(0, 0, opacity=0)
             inc = 5
             apex = (len(outs) - 1) * inc
-            angle = apex / 2
+            angle = apex//2
             branch = state0
             labels = {out: ", ".join(outs[out]) for out in outs}
 
@@ -1739,7 +1740,7 @@ class StemChart(SentenceChart):
             state0 = make_blank_img(0, 0, opacity=0)
             inc = 5
             apex = (len(outs) - 1) * inc
-            angle = apex / 2
+            angle = apex//2
             branch = state0
             labels = {i: ", ".join(ins[i]) for i in ins}
 

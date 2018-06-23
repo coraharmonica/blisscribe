@@ -26,24 +26,24 @@ def equate_images(img1, img2):
         bg = Image.new(mode='RGBA', size=bg_size, color=(255, 255, 255, 0))
 
         if img1.size == bg_size:
-            x = w1/2 - w2/2
-            y = h1/2 - h2/2
+            x = w1//2 - w2//2
+            y = h1//2 - h2//2
             bg.paste(img2, (x, y))
             img2 = bg
         elif img2.size == bg_size:
-            x = w2/2 - w1/2
-            y = h2/2 - h1/2
+            x = w2//2 - w1//2
+            y = h2//2 - h1//2
             bg.paste(img1, (x, y))
             img1 = bg
         else:
             bg_img1 = bg
             bg_img2 = bg_img1.copy()
-            x_mid = bg_size[0]/2
-            y_mid = bg_size[1]/2
-            x1 = x_mid - img1.size[0]/2
-            y1 = y_mid - img1.size[1]/2
-            x2 = x_mid - img2.size[0]/2
-            y2 = y_mid - img2.size[1]/2
+            x_mid = bg_size[0]//2
+            y_mid = bg_size[1]//2
+            x1 = x_mid - img1.size[0]//2
+            y1 = y_mid - img1.size[1]//2
+            x2 = x_mid - img2.size[0]//2
+            y2 = y_mid - img2.size[1]//2
             bg_img1.paste(img1, (x1, y1))
             bg_img2.paste(img2, (x2, y2))
             img1 = bg_img1
@@ -73,10 +73,10 @@ def overlay(front, back, equate=True):
     else:
         w, h = max(front.size[0], back.size[0]), max(front.size[1], back.size[1])
         img = make_blank_img(w, h, opacity=0)
-        front_x = w/2 - front.size[0]/2
-        front_y = h/2 - front.size[1]/2
-        back_x = w/2 - back.size[0]/2
-        back_y = h/2 - back.size[1]/2
+        front_x = w//2 - front.size[0]//2
+        front_y = h//2 - front.size[1]//2
+        back_x = w//2 - back.size[0]//2
+        back_y = h//2 - back.size[1]//2
         img.paste(back, (back_x, back_y))
         img.paste(front, (front_x, front_y))
     return img
@@ -105,8 +105,8 @@ def beside(left, right, align='bottom'):
         ly = h - left.size[1]
         ry = h - right.size[1]
     else:  # center or otherwise
-        ly = (h/2 - left.size[1]/2)
-        ry = (h/2 - right.size[1]/2)
+        ly = (h//2 - left.size[1]//2)
+        ry = (h//2 - right.size[1]//2)
 
     img.paste(left, (0, ly))
     img.paste(right, (left.size[0], ry))
@@ -158,8 +158,8 @@ def above(top, bottom, align='center'):
         x1 = w - top_w
         x2 = w - bottom_w
     else:
-        x1 = w/2 - top_w/2
-        x2 = w/2 - bottom_w/2
+        x1 = w//2 - top_w//2
+        x2 = w//2 - bottom_w//2
 
     img.paste(top, (x1, 0))
     img.paste(bottom, (x2, top.size[1]))
@@ -270,9 +270,9 @@ def triangle(width, height, fill='white', vertical=True, outline=None, opacity=0
     min_w, max_w = sorted([0, width])
     min_h, max_h = sorted([0, height])
     if vertical:
-        dims = [(0, min_h), (width/2, max_h), (width, min_h)]
+        dims = [(0, min_h), (width//2, max_h), (width, min_h)]
     else:
-        dims = [(min_w, 0), (min_w, height), (max_w, height/2)]
+        dims = [(min_w, 0), (min_w, height), (max_w, height//2)]
     draw.polygon(dims, fill, outline)
     return img
 
@@ -284,8 +284,8 @@ def polygon(width, height, num_sides, fill='white', vertical=True, outline=None,
         width, height = width-1, height-1
         min_w, max_w = sorted([0, width])
         min_h, max_h = sorted([0, height])
-        mid_x = max_w/2
-        mid_y = max_h/2
+        mid_x = max_w//2
+        mid_y = max_h//2
         if vertical:
             num_mids = num_sides - 2 #max(0, (num_sides % 2) - 2)
             # min_w, min_h
@@ -296,7 +296,7 @@ def polygon(width, height, num_sides, fill='white', vertical=True, outline=None,
             # max_w/(num_sides-1), max_h/(num_sides-1)
             # max_w, max_h
 
-            # triangle: (0, 0), (width/2, height), (width, 0)
+            # triangle: (0, 0), (width//2, height), (width, 0)
             # square: (0,0), (0, width), (0, height), (width, height)
             # pentagon:
 
@@ -308,7 +308,7 @@ def polygon(width, height, num_sides, fill='white', vertical=True, outline=None,
                             else (mid_x + max_w/(num_sides-num_mids-i), mid_y + max_h/(num_sides-num_mids-i))
                             for i in range(1, num_mids)]
                 dims = dims[:1] + mid_tups + dims[-1:]
-                print dims
+                print(dims)
         else:
             dims = [(min_w, 0), (min_w, height), (max_w, height/(num_sides-1))]
         draw.polygon(dims, fill, outline)
@@ -316,7 +316,7 @@ def polygon(width, height, num_sides, fill='white', vertical=True, outline=None,
         return img
 
 def load_default_font(font_name="Arial Bold.ttf", size=12):
-    font = "/Library/Fonts/%s" % font_name
+    font = "/Library/Fonts/{}".format(font_name)
     return ImageFont.truetype(font=font, size=size)
 
 
@@ -414,7 +414,7 @@ def venn_diagram(colours, diameter=100):
 
     fill = (255, 255, 255, 0)
     diagram = rectangle(1, 1, fill=fill, opacity=255)
-    bg = rectangle(diameter / 2, diameter / 2, fill=fill, opacity=255)
+    bg = rectangle(diameter//2, diameter//2, fill=fill, opacity=255)
     offset = int(360.0 / len(circles))
     angle = 0
 

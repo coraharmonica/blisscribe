@@ -23,61 +23,61 @@ from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.ordered_dict import Ord
 
 class LanguageLearner:
     PATH = os.path.dirname(os.path.realpath(__file__))
-    LANG_CODES = {u"Afrikaans": u"af",
-                  u"Albanian": u"sq",
-                  u"Arabic": u"ar",
-                  u"Armenian": u"hy",
-                  u"Basque": u"eu",
-                  u"Bengali": u"bn",
-                  u"Bosnian": u"bs",
-                  u"Breton": u"br",
-                  u"Bulgarian": u"bg",
-                  u"Catalan": u"ca",
-                  u"Chinese": u"zh",
-                  u"Croatian": u"hr",
-                  u"Danish": u"da",
-                  u"Dutch": u"nl",
-                  u"English": u"en",
-                  u"Esperanto": u"eo",
-                  u"Georgian": u"ka",
-                  u"German": u"de",
-                  u"Greek": u"el",
-                  u"Finnish": u"fi",
-                  u"French": u"fr",
-                  u"Galician": u"gl",
-                  u"Hebrew": u"he",
-                  u"Hindi": u"hi",
-                  u"Hungarian": u"hu",
-                  u"Icelandic": u"is",
-                  u"Indonesian": u"id",
-                  u"Italian": u"it",
-                  u"Japanese": u"ja",
-                  u"Kazakh": u"kk",
-                  u"Korean": u"ko",
-                  u"Latvian": u"lv",
-                  u"Lithuanian": u"lt",
-                  u"Macedonian": u"mk",
-                  u"Malayan": u"ml",
-                  u"Malay": u"ms",
-                  u"Norwegian": u"no",
-                  u"Persian": u"fa",
-                  u"Polish": u"pl",
-                  u"Portuguese": u"pt",
-                  u"Romanian": u"ro",
-                  u"Russian": u"ru",
-                  u"Serbian": u"sr",
-                  u"Sinhala": u"si",
-                  u"Slovak": u"sk",
-                  u"Slovenian": u"sl",
-                  u"Spanish": u"es",
-                  u"Swedish": u"sv",
-                  u"Tamil": u"ta",
-                  u"Telugu": u"te",
-                  u"Thai": u"th",
-                  u"Tagalog": u"tl",
-                  u"Turkish": u"tr",
-                  u"Ukrainian": u"uk",
-                  u"Vietnamese": u"vi"}
+    LANG_CODES = {"Afrikaans": "af",
+                  "Albanian": "sq",
+                  "Arabic": "ar",
+                  "Armenian": "hy",
+                  "Basque": "eu",
+                  "Bengali": "bn",
+                  "Bosnian": "bs",
+                  "Breton": "br",
+                  "Bulgarian": "bg",
+                  "Catalan": "ca",
+                  "Chinese": "zh",
+                  "Croatian": "hr",
+                  "Danish": "da",
+                  "Dutch": "nl",
+                  "English": "en",
+                  "Esperanto": "eo",
+                  "Georgian": "ka",
+                  "German": "de",
+                  "Greek": "el",
+                  "Finnish": "fi",
+                  "French": "fr",
+                  "Galician": "gl",
+                  "Hebrew": "he",
+                  "Hindi": "hi",
+                  "Hungarian": "hu",
+                  "Icelandic": "is",
+                  "Indonesian": "id",
+                  "Italian": "it",
+                  "Japanese": "ja",
+                  "Kazakh": "kk",
+                  "Korean": "ko",
+                  "Latvian": "lv",
+                  "Lithuanian": "lt",
+                  "Macedonian": "mk",
+                  "Malayan": "ml",
+                  "Malay": "ms",
+                  "Norwegian": "no",
+                  "Persian": "fa",
+                  "Polish": "pl",
+                  "Portuguese": "pt",
+                  "Romanian": "ro",
+                  "Russian": "ru",
+                  "Serbian": "sr",
+                  "Sinhala": "si",
+                  "Slovak": "sk",
+                  "Slovenian": "sl",
+                  "Spanish": "es",
+                  "Swedish": "sv",
+                  "Tamil": "ta",
+                  "Telugu": "te",
+                  "Thai": "th",
+                  "Tagalog": "tl",
+                  "Turkish": "tr",
+                  "Ukrainian": "uk",
+                  "Vietnamese": "vi"}
 
     def __init__(self):
         self.connections = dict()
@@ -137,7 +137,7 @@ class LanguageLearner:
             line_no = 0
             for line in fifty_k:
                 word = line.split(" ", 1)[0]
-                word = self.unicodize(word)
+                #word = self.unicodize(word)
                 words.append(word)
                 if line_no > lim:
                     break
@@ -213,11 +213,7 @@ class LanguageLearner:
         :param text: str, text to remove punctuation from
         :return: str, text with all punctuation removed
         """
-        return re.sub(ur"[^ \w\-']+", "", text)
-
-        return re.sub(ur"{^'}\p{P}+", "", text)
-
-        return u"".join(char for char in text if char not in string.punctuation+"\n" or char == u"'")
+        return re.sub("[^ \w\-']+", "", text)
 
     def crossmatch(self, matches, langs):
         """
@@ -239,9 +235,6 @@ class LanguageLearner:
         """
         # first treat it as if there's only 2 matches!  go slowly cora : )
         matches_sentences = [self.tokenize_sentences(self.tokenize_words(m)) for m in matches]
-        #matches_sentences = [self.tokenize_words(m) for m in matches]
-        #matches_sentences = [ms for ms in matches_sentences if not self.is_punct(ms)]
-        #print "matches_sentences:", matches_sentences
         all_matches = dict()
 
         for i in range(len(matches_sentences)):
@@ -253,17 +246,15 @@ class LanguageLearner:
                 if len(match_sentence) != 0:
                     match_sentence = [ms for ms in match_sentence if not self.is_punct(ms)]
                     before_after = self.words_before_after(match_sentence)
-                    #print lang, ":", match_sentence, "\n\t", before_after
-                    #raw_input("NOT GOING ON UNTIL YOU SAY SO")
                     lang_matches.update(before_after)
 
             all_matches[lang] = lang_matches
 
-        print all_matches
-        raw_input("NOT GOING ON UNTIL YOU SAY SO")
+        print(all_matches)
+        input("NOT GOING ON UNTIL YOU SAY SO")
         translation_dicts = dict()
         lang_words = dict()
-        print "MATCHES BEFORE:", matches
+        print("MATCHES BEFORE:", matches)
 
         '''
         for i in range(len(matches)):
@@ -294,23 +285,8 @@ class LanguageLearner:
                         translation_dicts[lang][lang_synonym].setdefault(trans_lang, list())
                         translation_dicts[lang][lang_synonym][trans_lang].append(synonym)
         '''
-
-        print "MATCHES AFTER:", matches
+        print("MATCHES AFTER:", matches)
         return translation_dicts
-
-    def unicodize(self, text):
-        """
-        Returns this text_image in unicode.
-        ~
-        Ensures all text_image is in unicode for parsing.
-
-        :param text: str (byte), text_image to return in unicode
-        :return: str (unicode), text_image in unicode
-        """
-        if text is not None:
-            if not isinstance(text, unicode):
-                text = text.decode("utf-8")
-        return text
 
     def tokenize_words(self, text):
         """
@@ -323,7 +299,7 @@ class LanguageLearner:
         :return: List[str], words in text
         """
         self.init_tokenizer()
-        text = self.unicodize(text)
+        #text = self.unicodize(text)
         words = self.word_tokenizer.tokenize(text)
         return self.recapitalize_words(words)
 
@@ -360,7 +336,7 @@ class LanguageLearner:
         """
         if type(text) != list:
             words = list()
-            text = self.unicodize(text)
+            #text = self.unicodize(text)
 
             while len(text) != 0:
                 word = ""
@@ -370,7 +346,7 @@ class LanguageLearner:
                     is_clitic = char == "'" and (text[idx - 1] not in string.punctuation + " ") \
                                 and (text[idx + 1] not in string.punctuation + " ")
 
-                    if char in u" \n\t" or (char in string.punctuation and not is_clitic):
+                    if char in " \n\t" or (char in string.punctuation and not is_clitic):
                         if idx == 0:
                             idx += 1
                             continue
@@ -382,7 +358,7 @@ class LanguageLearner:
 
                 if len(word) != 0:
                     #print "new word:", word
-                    words.append(word.strip(u"'"))
+                    words.append(word.strip("'"))
 
                 text = text[idx + 1:]  # skip to next word
 
@@ -482,7 +458,7 @@ class LanguageLearner:
         res = dict()
         for word in befores:
             before = befores[word]
-            print word, before
+            print(word, before)
             entry = sorted(set(before), key=lambda b: before.count(b), reverse=True)
             res[word] = entry #[e for e in entry if before.count(e) > 1]
 
@@ -531,7 +507,7 @@ class LanguageLearner:
         res = dict()
         for word in afters:
             after = afters[word]
-            print word, after
+            print(word, after)
             entry = (sorted(set(after), key=lambda a: afters[word].count(a), reverse=True))
             res[word] = entry #[e for e in entry if after.count(e) > 1]
 
@@ -555,8 +531,6 @@ class LanguageLearner:
         """
         befores = self.words_before(words, n_gram=n_gram)
         afters = self.words_after(words, n_gram=n_gram)
-        #befores = {before: [b for b in befores[before] if before in afters.get(b, [])] for before in befores}
-        #afters = {after: [a for a in afters[after] if after in befores.get(a, [])] for after in afters}
         befores_afters = {word: (befores.get(word, list()), afters.get(word, list())) for word in words}
         return befores_afters
 
@@ -578,7 +552,7 @@ class LanguageLearner:
             shared_words.update(word_sent)
 
         freqs = shared_words.frequency_counts()
-        print "WORD FREQUENCIES", freqs
+        print("WORD FREQUENCIES", freqs)
         for word_freq in freqs:
             freq = freqs[word_freq]
             # does word occur more in these sentences than all sentences?
@@ -633,7 +607,7 @@ class LanguageLearner:
                 synonym1 = synonyms_lst[i1]
 
                 if synonym1 in synonyms_left:
-                    print "FINDING CATEGORY FOR", synonym1.upper()
+                    print("FINDING CATEGORY FOR", synonym1.upper())
                     synonyms1 = synonyms_dict[synonym1]
                     category_syns = OrderedSet([])
 
@@ -653,13 +627,13 @@ class LanguageLearner:
                     category = [c for c in category_syns.items(min_ct=1)
                                 if not any([c in v for v in categories.values()])]
 
-                    print "\t", synonym1, "appears synonymous with", category
+                    print("\t", synonym1, "appears synonymous with", category)
 
                     if len(category) != 0:
                         loops = 0
                         categories[len(categories)] = category
 
-                    print "\n", len(synonyms_left), "words left to categorize\n\n"
+                    print("\n", len(synonyms_left), "words left to categorize\n\n")
 
             loops += 1
 
@@ -679,7 +653,7 @@ class LanguageLearner:
         :param words: bool, whether to find ngrams of words or chars
         :return: List[str], ngrams in text of given length
         """
-        text = self.unicodize(text)
+        #text = self.unicodize(text)
         iter_text = filter(lambda w: not self.is_punct(w), self.tokenize_words(text)) if words else text
         ngrams = dict()
 
@@ -699,21 +673,21 @@ class LanguageLearner:
                 except IndexError:
                     break
                 else:
-                    ngram = u" ".join(w) if words else w
-                    print ngram
+                    ngram = " ".join(w) if words else w
+                    print(ngram)
 
                     if ngram not in ngrams:
                         nfreq = text.count(ngram)
-                        prev_ngram = u" ".join(iter_text[i:i+curr_len-1])
+                        prev_ngram = " ".join(iter_text[i:i+curr_len-1])
 
                         if nfreq > 1 and nfreq >= text.count(prev_ngram) * 0.75:  #(length is not None or nfreq > curr_freq):
                             curr_freq = nfreq
-                            print "HERE!", ngram, prev_ngram, length
+                            print("HERE!", ngram, prev_ngram, length)
                             if length is not None:
                                 ngrams[ngram] = curr_freq
                             curr_len += 1
                         else:
-                            print "THERE!", ngram, prev_ngram, length, curr_freq
+                            print("THERE!", ngram, prev_ngram, length, curr_freq)
                             if len(prev_ngram) > 1 and curr_freq is not None:
                                 ngrams[ngram] = curr_freq
                             break
@@ -741,9 +715,8 @@ class LanguageLearner:
             sents = filter(lambda s: len(s) == i, sorted_sents)
             if len(sents) != 0:
                 for sent in sents:
-                    print sent
+                    print(sent)
                 token_sentences[i] = sents
-                #raw_input("CONTINUE?")
 
         return token_sentences
 
@@ -765,7 +738,7 @@ class LanguageLearner:
             word = start
             sentence = [word.title()]
         else:
-            sentence = start_word.split(u" ")
+            sentence = start_word.split(" ")
             word = sentence[-1]
 
         try_idx = 0
@@ -784,13 +757,13 @@ class LanguageLearner:
                         word = common_words[try_idx]
                         sentence = [word.title()]
                     else:
-                        sentence = start_word.split(u" ")
+                        sentence = start_word.split(" ")
                         word = sentence[-1]
             else:
                 sentence.append(word)
-                print sentence
+                print(sentence)
 
-        return u" ".join(sentence) + "."
+        return " ".join(sentence) + "."
 
     def texts_synonyms(self, texts, language=None, lim=1000):
         """
@@ -806,8 +779,8 @@ class LanguageLearner:
             key (str) - word from text
             val (List[str]) - word(s) from text with same context as key word
         """
-        words = self.tokenize_words(u"\n\n".join([self.unicodize(txt) for txt in texts]))
-        print "calculating word synonyms..."
+        words = self.tokenize_words("\n\n".join(texts))
+        print("calculating word synonyms...")
         return self.words_synonyms(words, language=language, lim=lim)
 
     def word_synonyms(self, word, before_after):
@@ -831,7 +804,7 @@ class LanguageLearner:
         if len(befores) != 0 and len(afters) != 0:
             max_in_crossover = 0.15  # >15% match
             max_out_crossover = 0.15
-            print "\n\nFINDING SYNONYMS FOR", word.upper()
+            print("\n\nFINDING SYNONYMS FOR", word.upper())
 
             for word2 in before_after:
                 if word2 != word:
@@ -852,10 +825,10 @@ class LanguageLearner:
                         else:
                             continue
 
-            print "\t", word.upper(), "is synonymous with:", best_fits
-            print "\t", "with crossover scores:", max_in_crossover, max_out_crossover
+            print("\t", word.upper(), "is synonymous with:", best_fits)
+            print("\t", "with crossover scores:", max_in_crossover, max_out_crossover)
         else:
-            print "\t", word.upper(), "is not synonymous with anything"
+            print("\t", word.upper(), "is not synonymous with anything")
 
         return best_fits
 
@@ -875,7 +848,7 @@ class LanguageLearner:
             val (tuple(list, list)) - words coming before and after key word
         """
         before_after = self.words_before_after(words)
-        print "BEFORE/AFTER:", before_after
+        print("BEFORE/AFTER:", before_after)
         return self.before_after_synonyms(before_after, language, lim)
 
     def before_after_synonyms(self, before_after, language=None, lim=20000):
@@ -918,13 +891,13 @@ class LanguageLearner:
 
         for word in iter_lst:
             if word in before_after:
-                print "FINDING SYNONYMS FOR", word.upper()
+                print("FINDING SYNONYMS FOR", word.upper())
                 best_fits = self.word_synonyms(word, before_after)
 
                 if len(best_fits) != 0:
                     synonyms[word] = best_fits
-                    print "\tsynonyms:", best_fits
-                print "\n"
+                    print("\tsynonyms:", best_fits)
+                print("\n")
 
         cross_synonyms = dict()
 
@@ -969,10 +942,10 @@ class LanguageLearner:
 
         for i in range(0, len(top_words)/20):
             top_word = top_words[i]
-            print "\n\n\n\nTOP WORD #", i+1, ":\t", top_word
+            print("\n\n\n\nTOP WORD #", i+1, ":\t", top_word)
             synonyms = self.label_synonyms(top_word, threshold=threshold)
             if synonyms is not None:
-                print synonyms
+                print(synonyms)
                 synonyms_dict.setdefault(top_word, list())
                 synonyms_dict[top_word].extend(synonyms)
                 for synonym in synonyms:
@@ -1048,7 +1021,7 @@ class LanguageLearner:
                     except IndexError:
                         continue
                     else:
-                        #print u"\nMatch number", num_matches, "for", w1, u"\n\tlanguage 1:", w1_idx, u"\n\tlanguage 2:", w2_idx
+                        #print "\nMatch number", num_matches, "for", w1, "\n\tlanguage 1:", w1_idx, "\n\tlanguage 2:", w2_idx
                         sum_squares += (w1_idx - w2_idx)**2
 
             return sum_squares  # / num_matches
@@ -1086,23 +1059,23 @@ class LanguageLearner:
             else:
                 seen.add(word2)
 
-            print "\ncomparing", word1, "to", word2, "..."
+            print("\ncomparing", word1, "to", word2, "...")
             match = self.word_difference(word1, word2, text1, text2, contains1)
 
             if min_match is None or match < min_match:
                 min_match = match
                 translation = word2
-                print word2, "is best match so far"
+                print(word2, "is best match so far")
                 if min_match == 0:
                     break
 
         if intervene:
-            print translation, "means", word1
-            ans = raw_input("If this is untrue, enter the true translation. Otherwise, press enter. "
+            print(translation, "means", word1)
+            ans = input("If this is untrue, enter the true translation. Otherwise, press enter. "
                             "If this word is untranslatable, enter 'u'.")
             if len(ans) != 0:
                 if ans == 'u':
-                    return u""
+                    return ""
                 else:
                     return ans
 
@@ -1141,7 +1114,7 @@ class LanguageLearner:
         text1, text2 = self.tokenize_words(text1), self.tokenize_words(text2)
         commonalities = OrderedSet([])
         last_end = 0
-        print u"\nTriangulating translation for...", word1
+        print("\nTriangulating translation for...", word1)
 
         for i in range(len(text1)):
             word = text1[i]
@@ -1150,19 +1123,19 @@ class LanguageLearner:
                 minus = 1
                 plus = 1
 
-                prev_word = text1[i-minus] if i-minus >= 0 else u""
-                next_word = text1[i+plus] if i+plus < len(text1) else u""
+                prev_word = text1[i-minus] if i-minus >= 0 else ""
+                next_word = text1[i+plus] if i+plus < len(text1) else ""
 
                 while prev_word not in translations and i-minus >= 0:
                     minus += 1
-                    prev_word = text1[i-minus] if i-minus >= 0 else u""
+                    prev_word = text1[i-minus] if i-minus >= 0 else ""
 
                 while next_word not in translations and i+plus < len(text1):
                     plus += 1
-                    next_word = text1[i+plus] if i+plus < len(text1) else u""
+                    next_word = text1[i+plus] if i+plus < len(text1) else ""
 
-                prev_translations = translations[prev_word] if prev_word != u"" else u""
-                next_translations = translations[next_word] if next_word != u"" else u""
+                prev_translations = translations[prev_word] if prev_word != "" else ""
+                next_translations = translations[next_word] if next_word != "" else ""
 
                 start_idx = None
                 end_idx = None
@@ -1179,7 +1152,7 @@ class LanguageLearner:
                             break
 
                 section = text2[start_idx:end_idx]
-                print u"section containing translation:", section
+                print("section containing translation:", section)
                 commonalities.update(section)
 
         min_ct = text1.count(word1)
@@ -1195,7 +1168,7 @@ class LanguageLearner:
         else:
             res = commonalities.items()
 
-        print "   result:", res
+        print("   result:", res)
         return res
 
     def words_translations(self, text1, text2):
@@ -1244,8 +1217,8 @@ class LanguageLearner:
                         triangulation = self.triangulate_translation(word, text1, text2, new_translations)
                         match = matches[min_match]
                         translation = list()
-                        print "\ntriangulation for", word, ":\t", triangulation
-                        print "       lookup for", word, ":\t", match
+                        print("\ntriangulation for", word, ":\t", triangulation)
+                        print("       lookup for", word, ":\t", match)
 
                         if len(triangulation) > 5:
                             translation = match
@@ -1256,7 +1229,7 @@ class LanguageLearner:
                                 if t in triangulation and t in match and t not in translation:
                                     translation.append(t)
 
-                        print "  translation for", word, ":\t", translation
+                        print("  translation for", word, ":\t", translation)
 
                         if len(translation) != 0:
                             translations.setdefault(word, list())
@@ -1265,9 +1238,9 @@ class LanguageLearner:
                             words_translated.update(translation)
             min_match += 1
 
-        print "\nFINAL TRANSLATION:", translations
-        print "\nMATCH SUM:", match_sum
-        print
+        print("\nFINAL TRANSLATION:", translations)
+        print("\nMATCH SUM:", match_sum)
+        print()
         return translations
 
     def word_freqs(self, words):
@@ -1299,7 +1272,7 @@ class LanguageLearner:
             key (str) - word in this text
             val (dict) - empty dict for translations in other languages
         """
-        words = self.remove_punct(text).split(u" ")
+        words = self.remove_punct(text).split(" ")
         return {word: dict() for word in words}
 
     def text_breakpoints(self, text):

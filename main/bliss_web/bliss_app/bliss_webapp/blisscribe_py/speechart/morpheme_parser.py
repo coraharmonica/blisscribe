@@ -5,7 +5,7 @@ MORPHEME_PARSER:
     Contains MorphemeParser class for parsing morpheme data
     in a given language from Wiktionary.
 """
-from phoneme_parser import *
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.phoneme_parser import *
 
 
 class MorphemeParser(PhonemeParser):
@@ -134,8 +134,8 @@ class MorphemeParser(PhonemeParser):
         ~
         e.g. break_syllable("wszech") -> ("wsz", "e", "ch")
 
-        :param syllable: (unicode) str, syllable to break
-        :return: tuple((all unicode) str, str, str), the given
+        :param syllable: str, syllable to break
+        :return: tuple(str, str, str), the given
             syllable's onset, rhyme, and coda, respectively
         """
         onset = ""
@@ -174,8 +174,8 @@ class MorphemeParser(PhonemeParser):
                                                      ("m", "o", "c"),
                                                      ("n", "y", "")]
 
-        :param syllable: (unicode) str, syllable to break
-        :return: List[tuple((all unicode)] str, str, str), the given
+        :param syllable: str, syllable to break
+        :return: List[tuple(str, str, str)], the given
             word's syllables' onsets, rhymes, and codas, respectively
         """
         return [self.break_word_syllable(syllable) for syllable in self.split_word_syllables(word)]
@@ -187,8 +187,8 @@ class MorphemeParser(PhonemeParser):
         ~
         e.g. split_word_syllables("wszechmocny") -> ["wszech", "moc", "ny"]
 
-        :param word: (unicode) str, word to break into syllables
-        :return: List[(unicode) str], list of given word's syllables
+        :param word: str, word to break into syllables
+        :return: List[str], list of given word's syllables
         """
         syllables = []
         onset, rhyme, coda = "", "", ""
@@ -228,8 +228,8 @@ class MorphemeParser(PhonemeParser):
         ~
         e.g. break_syllable(u"lat͡ɕ") -> (u"l", u"a", u"t͡ɕ")
 
-        :param syllable: (unicode) str, syllable to break
-        :return: tuple((all unicode) str, str, str), the given
+        :param syllable: str, syllable to break
+        :return: tuple(str, str, str), the given
             syllable's onset, rhyme, and coda, respectively
         """
         onset = ""
@@ -271,9 +271,9 @@ class MorphemeParser(PhonemeParser):
                                               ("b", "a", ""),
                                               ("l", "a", "t͡ɕ")]
 
-        :param ipa: (unicode) str, IPA word to break into constituents
+        :param ipa: str, IPA word to break into constituents
         :param use_syllables: bool, whether to break syllables with IPA markers
-        :return: List[tuple((all unicode) str, str, str)], the given
+        :return: List[tuple(str, str, str)], the given
             syllables' onsets, rhymes, and codas, respectively
         """
         return [self.break_syllable(syllable)
@@ -293,14 +293,14 @@ class MorphemeParser(PhonemeParser):
         e.g. extract_syllable("ɔˈba.lat͡ɕ", 2) -> ("l", "a", "t͡ɕ")
              extract_syllable("ɔbalat͡ɕ", 2, use_syllables=False) -> ("l", "a", "t͡ɕ")
 
-        :param ipa: (unicode) str, IPA word to retrieve syllable of at idx
+        :param ipa: str, IPA word to retrieve syllable of at idx
         :param idx: int, index of syllable to retrieve from IPA word's syllables
         :param use_syllables: bool, whether to calculate phonemes with ipa's syllables
-        :return: tuple((all unicode) str, str, str), this ipa
+        :return: tuple(str, str, str), this ipa
             syllable's onset, rhyme, and coda, respectively
         """
         syllables = self.split_syllables(ipa, use_syllables)
-        print ipa, "'s syllables:", syllables
+        print(ipa, "'s syllables:", syllables)
         try:
             syllable = syllables[idx]
         except IndexError:
@@ -316,9 +316,9 @@ class MorphemeParser(PhonemeParser):
         ~
         e.g. remove_syllable("ɔˈba.lat͡ɕ", 2) -> "ɔ.lat͡ɕ"
 
-        :param ipa: (unicode) str, IPA word to remove syllable at idx
+        :param ipa: str, IPA word to remove syllable at idx
         :param idx: int, syllable to remove from IPA word
-        :return: (unicode) str, given ipa without syllable at idx
+        :return: str, given ipa without syllable at idx
         """
         syllables = self.split_syllables(ipa)
         syllables.pop(idx)
@@ -332,9 +332,9 @@ class MorphemeParser(PhonemeParser):
         e.g. split_syllables("ɔˈba.lat͡ɕ") -> ["ɔ", "ba", "lat͡ɕ"]
              split_syllables("ɔˈba.lat͡ɕ", use_syllables=False) -> ["ɔ", "ba", "lat͡ɕ"]
 
-        :param ipa: (unicode) str, IPA word to break into syllables
+        :param ipa: str, IPA word to break into syllables
         :param use_syllables: bool, whether to calculate phonemes with ipa's syllables
-        :return: List[(unicode) str], list of given ipa's syllables
+        :return: List[str], list of given ipa's syllables
         """
         if len(ipa) == 0:
             return
@@ -367,9 +367,9 @@ class MorphemeParser(PhonemeParser):
         e.g. next_syllable("ɔˈba.lat͡ɕ") -> ("ɔ", "ba.lat͡ɕ")
              next_syllable("ɔˈba.lat͡ɕ", remove=False) -> "ɔ"
 
-        :param ipa: (unicode) str, IPA word to return next syllable of
+        :param ipa: str, IPA word to return next syllable of
         :param remove: bool, whether to return ipa with syllable removed
-        :return: tuple((both unicode) str, str), ipa's next syllable and rest of IPA
+        :return: tuple(str, str), ipa's next syllable and rest of IPA
         """
         ipa = self.clean_ipa(ipa)
         syllable = []

@@ -57,7 +57,8 @@ DIACRITICS = {
     u"̀": u"\u0300",     # low tone
     u"̏": u"\u030f"}     # extra low tone
 
-SYMBOLS = dict(DIACRITICS.items() + AFFRICATES.items())
+SYMBOLS = DIACRITICS.copy()
+SYMBOLS.update(AFFRICATES) #dict(DIACRITICS.items() + AFFRICATES.items())
 
 VOWELS = {
     # FRONT VOWELS

@@ -4,7 +4,7 @@ IPA_PARSER:
 
     Contains PhonemeParser class for parsing IPA pronunciation data.
 """
-from language_parser import *
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.language_parser import *
 
 
 class PhonemeParser(LanguageParser):
@@ -123,7 +123,7 @@ class PhonemeParser(LanguageParser):
         If ipa1 is closer to ipa than ipa2,
         return ipa1.  Otherwise, return ipa2.
 
-        :param ipa: unicode, IPA homophones are trying to be like
+        :param ipa: str, IPA homophones are trying to be like
         :param ipa1: str, first IPA to compare to ipa
         :param ipa2: str, second IPA to compare to ipa
         :return: str, closest homophone to IPA from ipa1 and ipa2
@@ -142,14 +142,14 @@ class PhonemeParser(LanguageParser):
             sim1 += self.same_ipas(ipa, ipa1)
             sim2 += self.same_ipas(ipa, ipa2)
 
-            print ipa, "vs", ipa1, ":\t", sim1
-            print ipa, "vs", ipa2, ":\t", sim2
+            print(ipa, "vs", ipa1, ":\t", sim1)
+            print(ipa, "vs", ipa2, ":\t", sim2)
 
             if sim1 >= sim2:
-                print "winner:", ipa1
+                print("winner:", ipa1)
                 return ipa1
             else:
-                print "winner:", ipa2
+                print("winner:", ipa2)
                 return ipa2
 
     def same_ipas(self, ipa1, ipa2):
@@ -281,7 +281,7 @@ class PhonemeParser(LanguageParser):
         """
         Transcribes the words in the given set of words to IPAWords.
 
-        :param words: Set(unicode), set of word definitions
+        :param words: Set(str), set of word definitions
         :param language: str, language of words
         :return: Set(IPAWord), IPAWords corresponding to given definitions
         """
@@ -372,10 +372,10 @@ class PhonemeParser(LanguageParser):
         ~
         e.g. next_phoneme("ɔˈba.lat͡ɕ") -> ("ɔ", "balat͡ɕ")
 
-        :param ipa: unicode, IPA word to return next phoneme of
+        :param ipa: str, IPA word to return next phoneme of
         :param remove: bool, whether to return ipa with vowels removed
         :param use_syllables: bool, whether to calculate next phoneme with ipa's syllables
-        :return: tuple((both unicode) str, str), IPA's first phoneme and rest of IPA
+        :return: tuple(str, str), IPA's first phoneme and rest of IPA
         """
         phoneme = str()  # next phoneme so far
 
@@ -426,7 +426,7 @@ class PhonemeParser(LanguageParser):
         ~
         N.B. chars can be multiple letters long.
 
-        :param chars: unicode, character(s) to determine whether vowel
+        :param chars: str, character(s) to determine whether vowel
         :return: bool, whether given character(s) are a vowel
         """
         if chars in self.phoneme_dict:
@@ -441,7 +441,7 @@ class PhonemeParser(LanguageParser):
         ~
         N.B. chars can be multiple letters long.
 
-        :param chars: unicode, character(s) to determine whether consonant
+        :param chars: str, character(s) to determine whether consonant
         :return: bool, whether given character(s) are a consonant
         """
         if chars in self.phoneme_dict:
@@ -456,7 +456,7 @@ class PhonemeParser(LanguageParser):
         ~
         N.B. chars can be multiple letters long.
 
-        :param chars: unicode, character(s) to determine whether phoneme
+        :param chars: str, character(s) to determine whether phoneme
         :return: bool, whether given character(s) are a phoneme
         """
         return chars in self.phoneme_dict
@@ -468,7 +468,7 @@ class PhonemeParser(LanguageParser):
         ~
         Returns None if this symbol is not an IPA letter.
 
-        :param ipa: unicode, IPA symbol to determine whether vowel
+        :param ipa: str, IPA symbol to determine whether vowel
         :return: bool, whether given IPA symbol is a vowel
         """
         try:
@@ -492,7 +492,7 @@ class PhonemeParser(LanguageParser):
         ~
         Returns None if this symbol is not an IPA letter.
 
-        :param ipa: unicode, IPA symbol to determine whether vowel
+        :param ipa: str, IPA symbol to determine whether vowel
         :return: bool, whether given IPA symbol is a vowel
         """
         try:
@@ -507,7 +507,7 @@ class PhonemeParser(LanguageParser):
         Returns True if the given IPA symbol is a phoneme in the
         IPA or in this PhonemeParser's language, False otherwise.
 
-        :param ipa: unicode, IPA symbol to determine whether phoneme
+        :param ipa: str, IPA symbol to determine whether phoneme
         :return: bool, whether given IPA symbol is a phoneme
         """
         for phoneme in self.phoneme_dict:
@@ -557,8 +557,8 @@ class PhonemeParser(LanguageParser):
         """
         Returns the given IPA pronunciation with stress marks removed.
 
-        :param ipa: unicode, IPA to remove stress marks from
-        :return: unicode, ipa with stress marks removed
+        :param ipa: str, IPA to remove stress marks from
+        :return: str, ipa with stress marks removed
         """
         return re.sub(u"[" + self.STRESS_MARKS + u"]", u"", ipa)
 
@@ -567,8 +567,8 @@ class PhonemeParser(LanguageParser):
         Returns the given IPA pronunciation with all stress marks
         replaced with periods.
 
-        :param ipa: unicode, IPA to replace stress marks with periods
-        :return: unicode, ipa with stress marks replaced with periods
+        :param ipa: str, IPA to replace stress marks with periods
+        :return: str, ipa with stress marks replaced with periods
         """
         restressed = re.sub(u"[" + self.STRESS_MARKS + u"]", u".", ipa)
         return restressed.strip(u".")
@@ -732,7 +732,7 @@ class IPAWord:
         :return: str, first string of vowels in phrase
         """
         pre_vowels = True
-        vowels = unicode(u"")
+        vowels = ""
         char_idx = 0
 
         for char in phrase:
@@ -772,7 +772,7 @@ class IPAWord:
               phrase with consonants removed
         """
         pre_consonants = True
-        consonants = unicode()
+        consonants = ""
         char_idx = 0
 
         for char in phrase:
@@ -813,13 +813,13 @@ class IPAWord:
         e.g. find_vowels("twɔk", remove=False) -> "ɔ"
              find_vowels("twɔk", remove=True) -> ("ɔ", "k")
 
-        :param ipa: (unicode) str, IPA to extract vowels from
+        :param ipa: str, IPA to extract vowels from
         :param remove: bool, whether to return phrase with vowels removed
-        :return: (unicode) str, first string of vowels in IPA
+        :return: str, first string of vowels in IPA
         """
         ipa = self.parser.restress(ipa)
         pre_vowels = True
-        vowels = unicode()
+        vowels = ""
         sym_idx = 0
 
         for sym in ipa:
@@ -855,13 +855,13 @@ class IPAWord:
         e.g. find_consonants("twɔk", remove=False) -> "tw"
              find_consonants("twɔk", remove=True) -> ("tw", "ɔk")
 
-        :param ipa: (unicode) str, IPA to extract consonants from
+        :param ipa: str, IPA to extract consonants from
         :param remove: bool, whether to return phrase with consonants removed
-        :return: (unicode) str, first string of consonants in IPA
+        :return: str, first string of consonants in IPA
         """
         ipa = self.parser.restress(ipa)
         pre_consonants = True
-        consonants = unicode()
+        consonants = ""
         sym_idx = 0
 
         for sym in ipa:
@@ -902,10 +902,10 @@ class IPAWord:
         e.g. cat = IPAWord("cat", "Noun", "kæt", PhonemeParser("English"))
              cat.find_letter_phonemes() -> ["c", "a", "t"]
 
-             text_image = IPAWord("text_image", "Noun", "tɛkst", PhonemeParser("English"))
-             text_image.find_letter_phonemes() -> ["t", "e", "x", "t"]
+             text = IPAWord("text", "Noun", "tɛkst", PhonemeParser("English"))
+             text.find_letter_phonemes() -> ["t", "e", "x", "t"]
 
-        :return: List[(unicode) str], this IPAWord's letter phonemes
+        :return: List[(str) str], this IPAWord's letter phonemes
         """
         cleaned_ipa = self.get_cleaned_ipa()
         phonemes = []
@@ -933,8 +933,8 @@ class IPAWord:
         ~
         Assumes ipas contains no consonants.
 
-        :param ipas: (unicode) str, IPA to break into a list of vowels
-        :return: List[(unicode) str], IPA broken into vowels
+        :param ipas: str, IPA to break into a list of vowels
+        :return: List[(str) str], IPA broken into vowels
         """
         phonemes = []
         ipas_iter = iter(range(len(ipas)))
@@ -979,8 +979,8 @@ class IPAWord:
         ~
         Assumes ipas contains no vowels.
 
-        :param ipas: (unicode) str, IPA to break into a list of consonants
-        :return: List[(unicode) str], IPA broken into consonants
+        :param ipas: str, IPA to break into a list of consonants
+        :return: List[(str) str], IPA broken into consonants
         """
         phonemes = []
         ipas_iter = iter(range(len(ipas)))
@@ -1019,19 +1019,19 @@ class IPAWord:
 
     def find_ipa_phonemes(self, ipa, use_syllables=True):
         """
-        Returns this IPAWord's phonemes as a list of IPA unicode strings.
+        Returns this IPAWord's phonemes as a list of IPA strings.
         ~
         Phonemes are calculated from this IPAWord's self.ipa.
         ~
         e.g. cat = IPAWord("cat", "Noun", "kæt", PhonemeParser("English"))
              cat.find_ipa_phonemes() -> ["k", "æ", "t"]
 
-             text_image = IPAWord("text_image", "Noun", "tɛkst", PhonemeParser("English"))
-             text_image.find_ipa_phonemes() -> ["t", "ɛ", "ks", "t"]
+             text = IPAWord("text", "Noun", "tɛkst", PhonemeParser("English"))
+             text.find_ipa_phonemes() -> ["t", "ɛ", "ks", "t"]
 
-        :param ipa: (unicode) str, IPA to find phonemes of
+        :param ipa: str, IPA to find phonemes of
         :param use_syllables: bool, whether to calculate phonemes with ipa's syllables
-        :return: List[(unicode) str], this IPAWord's phonemes in IPA
+        :return: List[(str) str], this IPAWord's phonemes in IPA
         """
         if len(ipa) == 0:
             return []
@@ -1054,8 +1054,8 @@ class IPAWord:
         ~
         N.B. For now, this method only works with 1-syllable words.
 
-        :param word: (unicode) str, word to add phonemes of
-        :param ipa: (unicode) str, IPA corresponding to word
+        :param word: str, word to add phonemes of
+        :param ipa: str, IPA corresponding to word
         :return: None
         """
         parts = self.parser.break_syllable(ipa)
@@ -1106,8 +1106,8 @@ class IPAWord:
         ~
         N.B. This method is for words with >1 syllable.
 
-        :param word: (unicode) str, word to add phonemes of
-        :param ipa: (unicode) str, IPA corresponding to word
+        :param word: str, word to add phonemes of
+        :param ipa: str, IPA corresponding to word
         :return: None
         """
         broken_syllables = self.parser.break_syllables(ipa, use_syllables=True)
@@ -1139,8 +1139,8 @@ class IPAWord:
         ~
         Phonemes are calculated from this IPAWord's self.ipa_phonemes.
 
-        :param word: (unicode) str, word to return phoneme dictionary for
-        :param ipa: (unicode) str, IPA corresponding to word
+        :param word: str, word to return phoneme dictionary for
+        :param ipa: str, IPA corresponding to word
         :return: dict, where...
             key (str) - >=1 letters in a native language alphabet
             val (OrderedSet(str)) - list of >=1 IPA symbols corresponding to key
@@ -1174,8 +1174,8 @@ class IPAWord:
         ~
         Used to sort easy from difficult words.
 
-        :param word: (unicode) str, word to determine whether difficult
-        :param ipas: List[(unicode) str], IPAs of word to determine whether difficult
+        :param word: str, word to determine whether difficult
+        :param ipas: List[(str) str], IPAs of word to determine whether difficult
         :return: bool, whether given word-ipas pair is difficult to phonemize
         """
         return len(word) != len(ipas) or any(len(sym) > 1 for sym in ipas)
@@ -1194,8 +1194,8 @@ class IPAWord:
         Used to determine the difficulty of translating
         this word-ipas pair for sorting.
 
-        :param word: (unicode) str, word to determine difficulty of
-        :param ipas: List[(unicode) str], word's IPA pronunciations to score
+        :param word: str, word to determine difficulty of
+        :param ipas: List[(str) str], word's IPA pronunciations to score
         :return: int, number representing differences between word and ipas
         """
         word = self.word if word is None else word
@@ -1212,8 +1212,8 @@ class IPAWord:
         This method does not account for primary/secondary stresses
         and thus only adds a period (".") to show stress.
 
-        :param ipa: (unicode) str, IPA to add syllable marks to
-        :return: (unicode) str, IPA with syllable marks added
+        :param ipa: str, IPA to add syllable marks to
+        :return: str, IPA with syllable marks added
         """
         syllables = []
         next_ipa = ipa
@@ -1232,8 +1232,8 @@ class IPAWord:
         ~
         False converts to integer 0 which ensures no overlap between bool vs int outputs.
 
-        :param word: (unicode) str, word to count whether syllables equal to IPA
-        :param ipa: (unicode) str, IPA to count whether syllables equal to word
+        :param word: str, word to count whether syllables equal to IPA
+        :param ipa: str, IPA to count whether syllables equal to word
         :return: int or bool, syllables in word and ipa if equal, False otherwise
         """
         word_syllables = self.count_word_syllables(word)
@@ -1256,9 +1256,9 @@ class IPAWord:
         This method was designed to correct Wiktionary IPA entries which have no
         syllable marks added as yet.
 
-        :param word: (unicode) str, word to check whether syllables equal to IPA
-        :param ipa: (unicode) str, IPA to check whether syllables equal to word
-        :return: (unicode) str, input ipa containing same number of syllables as word
+        :param word: str, word to check whether syllables equal to IPA
+        :param ipa: str, IPA to check whether syllables equal to word
+        :return: str, input ipa containing same number of syllables as word
         """
         num_syllables = self.equal_word_ipa_syllables(word, ipa)
 
@@ -1280,9 +1280,9 @@ class IPAWord:
         This method was designed to correct Wiktionary IPA entries which have no
         syllable marks added as yet.
 
-        :param word: (unicode) str, word to check whether syllables equal to IPA
-        :param ipa: (unicode) str, IPA to check whether syllables equal to word
-        :return: (unicode) str, input ipa containing same number of syllables as word
+        :param word: str, word to check whether syllables equal to IPA
+        :param ipa: str, IPA to check whether syllables equal to word
+        :return: str, input ipa containing same number of syllables as word
         """
         ipa = self.parser.clean_ipa(ipa)
         return self.add_syllables(ipa)
@@ -1294,7 +1294,7 @@ class IPAWord:
         N.B. More precisely, this method returns the number of
         syllables implied by the number of stress marks in the given ipa.
 
-        :param ipa: (unicode) str, IPA to count stress marks of
+        :param ipa: str, IPA to count stress marks of
         :return: int, number of stress marks in word with given IPA
         """
         periods = ipa.count(u".")
@@ -1307,7 +1307,7 @@ class IPAWord:
         """
         Returns number of syllables in the given IPA.
 
-        :param ipa: (unicode) str, IPA to count syllables of
+        :param ipa: str, IPA to count syllables of
         :return: int, number of syllables in word with given IPA
         """
         syllables = 0
@@ -1424,8 +1424,8 @@ class IPAWord:
         """
         Removes syllable markers (i.e., '.', a period) from given IPA.
 
-        :param ipa: (unicode) str, IPA pronunciation to remove syllable markers from
-        :return: (unicode) str, IPA pronunciation with syllable markers removed
+        :param ipa: str, IPA pronunciation to remove syllable markers from
+        :return: str, IPA pronunciation with syllable markers removed
         """
         return re.sub(u"\.", u"", ipa)
 

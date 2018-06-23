@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # bliss_webapp/models.py
-from __future__ import unicode_literals
 from django.db import models
 import chosen
 
@@ -9,6 +8,7 @@ class TranslationModel(models.Model):
     class Meta:
         db_tablespace = 'tables'
 
+    app_label = 'bliss_webapp'
     phrase = models.TextField()
     title = models.CharField(max_length=50)
     title_page = models.BooleanField(default=False)

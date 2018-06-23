@@ -11,12 +11,25 @@ BLISSCRIBE:
     These can also be found in the top-level docstring of parse_lexica.
 """
 import os
+import sys
 import collections
 from nltk.tag import pos_tag
 from nltk.corpus import wordnet
-from pattern import text
-from pattern.text import en, es, fr, de, it, nl
+from pattern3 import text
+from pattern3.text import en, es, fr, de, it, nl
 from fpdf import FPDF
+
+'''
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.fonts import *
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.punctuation import *
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.parts_of_speech import *
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.bliss_images import make_font, make_blank_img, get_word_img, trim, above, beside, overlay, Image
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.lexicon_parser import LexiconParser, Blissymbol, NEW_BLISSYMBOLS
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.translation_word import TranslationWord
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.language_parser import LanguageParser
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.ordered_set import OrderedSet
+'''
+
 from fonts import *
 from punctuation import *
 from parts_of_speech import *
@@ -63,6 +76,7 @@ class BlissTranslator:
            --> set_sub_all()
     """
     PATH = os.path.dirname(os.path.realpath(__file__))
+    sys.path.append(PATH)
     DEFAULT_LANG = "English"
     DIMS = (816, 1056)
 
@@ -1010,34 +1024,6 @@ class BlissTranslator:
 
     # LANGUAGE PROCESSING
     # -------------------
-    def unicodize(self, text):
-        """
-        Returns this text_image in unicode.
-        ~
-        Ensures all text_image is in unicode for parsing.
-
-        :param text: str (byte), text_image to return in unicode
-        :return: str (unicode), text_image in unicode
-        """
-        if text is not None:
-            if not isinstance(text, unicode):
-                text = text.decode("utf-8")
-        return text
-
-    def deunicodize(self, text):
-        """
-        Returns this text_image decoded from unicode.
-        ~
-        Ensures all text_image is in bytes for printing.
-
-        :param text: str (unicode), text_image to decode from unicode
-        :return: str (byte), text_image in unicode
-        """
-        if text is not None:
-            if isinstance(text, unicode):
-                text = text.encode("utf-8")
-        return text
-
     def underscore(self, word):
         """
         Returns this word with spaces replaced by underscores.
@@ -1942,7 +1928,7 @@ class BlissTranslator:
         :return: None
         """
         languages = {self.language, "English"}
-        all_translations = blissymbol.get_translations()
+        all_translations = blissymbol.translations
         for language in all_translations:
             if language in languages:
                 translations = all_translations[language]
@@ -2056,19 +2042,12 @@ class BlissTranslator:
         :return: List[Synset], synsets for words, pos, and language
         """
         synsets = OrderedSet([])
-        lang = False
 
         for word in words:
             word_synsets = self.lookup_word_synsets(word, pos=pos, language=language)
             if len(word_synsets) != 0:
-                if not lang:
-                    lang = True
-                    print "\t", language
-                print "\t\t", word, "has synsets:\n\t\t\t", word_synsets
                 synsets.update(word_synsets)
 
-        if lang:
-            print "\n"
         return synsets.intersections()
 
     def str_synset(self, s):
@@ -2222,7 +2201,7 @@ class BlissTranslator:
         :param img_h: int, desired height of PDF pages (in pixels)
         :return: None
         """
-        title, phrase = self.unicodize(title), self.unicodize(phrase)
+        title, phrase = str(title), str(phrase)
         images = self.translate_to_images(phrase)
         pages = self.images_to_pages(images, img_w, img_h)
 
@@ -2267,7 +2246,6 @@ class BlissTranslator:
 
         for trans_word in trans_words:
             lemma = trans_word.lemma
-            print trans_word.lemma, trans_word.pos
 
             if lemma == "\n":
                 imgs.append(None)
@@ -2428,7 +2406,7 @@ class BlissTranslator:
             key (str) - name of Blissymbol
             val (int) - number of occurrences in translation
         """
-        phrase = self.unicodize(phrase)
+        phrase = str(phrase)
         trans_words = self.translate_to_transwords(phrase)
         return self.analyze_trans_word_concepts(trans_words)
 

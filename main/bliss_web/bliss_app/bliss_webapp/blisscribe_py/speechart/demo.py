@@ -4,7 +4,7 @@ DEMO:
 
     Used for demoing MorphemeParser, MorphemeChart, and more.
 """
-from speecharts import *
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.speecharts import *
 
 
 # construct a MorphemeChart to create a DFA for words in your desired language
@@ -12,6 +12,7 @@ dfa = MorphemeChart("English")
 dfa.add_words("hello there my friend how are you today")
 img = dfa.chart()
 img.save("out/en_word_chart.png")    # save chart to file
+dfa.refresh_data()
 
 dfa = MorphemeChart("Finnish")
 dfa.word_declension("nuo")  # adds nuo's declension to this dfa
@@ -20,7 +21,9 @@ dfa.clear()                 # resets this DFA's states
 # fetch nearest homophones between languages
 dfa.nearest_homophone("naapuri", "English")
 dfa.nearest_homophone("kuulu", "English")
+dfa.refresh_data()
 
+'''
 # supports chart visualization in many languages
 dfa = MorphemeChart("Chinese")
 dfa.add_states(lim=500)
@@ -33,4 +36,4 @@ dfa.chart("Korean Morpheme Chart")
 dfa = PhonemeChart("Japanese")
 dfa.add_states(lim=500)
 dfa.chart("Japanese Phoneme Chart")
-
+'''

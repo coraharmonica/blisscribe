@@ -5,7 +5,8 @@ PLAYGROUND:
     Used for playing around with whatever I want.  (Not for GitHub.)
 """
 #from speecharts import *
-from language_learner.language_learner import LanguageLearner
+from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.language_learner.language_learner \
+    import LanguageLearner
 import main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.excerpts as excerpts
 
 
@@ -20,7 +21,7 @@ ll = LanguageLearner()
 #print ll.crossmatch([lil_prince, petit_prince], ["English", "French"])
 #print ll.text_synonyms(petit_prince, language="French")
 #ll.learn_sentences(lil_prince)
-print ll.find_ngrams("\n\n".join([excerpts.alice_in_wonderland, lil_prince]))
+print(ll.find_ngrams("\n\n".join([excerpts.alice_in_wonderland, lil_prince])))
 #print ll.find_ngrams("\n".join([lil_prince, excerpts.alice_in_wonderland]))
 #print ll.classify_text(lil_prince, language="English") #ll.text_synonyms(lil_prince, language="English")
 

@@ -576,7 +576,7 @@ class BlissClassifier:
                 try:
                     self.wordnet_entries[(lemma, pos)]
                 except KeyError:
-                    print("word " + self.translator.deunicodize(lemma) + ", " + str(pos) + " not in dict")
+                    print("word " + lemma + ", " + str(pos) + " not in dict")
                     continue
                 else:
                     return pos

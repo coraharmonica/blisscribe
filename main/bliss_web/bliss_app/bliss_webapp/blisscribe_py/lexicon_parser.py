@@ -58,10 +58,8 @@ PARSE_LEXICA:
 """
 import os
 import json
-import openpyxl
 from openpyxl import load_workbook
-import blissymbols
-from blissymbols import Blissymbol, NEW_BLISSYMBOLS
+from blissymbols import Blissymbol, NEW_BLISSYMBOLS  #main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.
 
 
 class LexiconParser:
@@ -235,8 +233,8 @@ class LexiconParser:
         bci_mapping = dict()
 
         for entry in bliss_dict:
-            bci_av = int(entry[u"BCI-AV"])
-            name = entry[u"name"]
+            bci_av = int(entry["BCI-AV"])
+            name = entry["name"]
             bci_mapping[bci_av] = name
 
         self.dump_json(bci_mapping, 'bci-av_mapping')
@@ -472,7 +470,7 @@ class LexiconParser:
 
         for blissymbol in all_blissymbols:
             bliss_dict = self.blissymbol_to_dict(blissymbol)
-            bliss_dict[u"BCI-AV"] = int(bci_map[blissymbol.bliss_name])
+            bliss_dict["BCI-AV"] = int(bci_map[blissymbol.bliss_name])
             eng_words = blissymbol.get_translation("English")
             for eng_word in eng_words:
                 bliss_lexicon.setdefault(eng_word, list())
@@ -489,8 +487,8 @@ class LexiconParser:
         :return: None
         """
         lexicon = self.translator.find_bliss_dict("English")
-        lexicon = {entry: filter(lambda x: x is not None and len(x) > 0,
-                                 [self.blissymbol_to_dict(bliss) for bliss in lexicon[entry]])
+        lexicon = {entry: list(filter(lambda x: x is not None and len(x) > 0,
+                                 [self.blissymbol_to_dict(bliss) for bliss in lexicon[entry]]))
                    for entry in lexicon}
         self.dump_json(lexicon, "bliss_lexicon")
 
@@ -560,8 +558,6 @@ class LexiconParser:
                             if underscored_word == bliss_name:
                                 bliss_names.append(name)
 
-
-                print(bliss_names)
                 if len(bliss_names) != 0:
                     unicodes[hex_uni] = bliss_names[0]
             uni += 1
@@ -638,11 +634,11 @@ class LexiconParser:
 
         for blissymbol in all_blissymbols:
             synsets = self.translator.blissymbol_to_synsets(blissymbol)
-            print blissymbol, "has synsets:\n\t", synsets, "\n"
+            print(blissymbol, "has synsets:\n\t", synsets, "\n")
             if len(synsets) != 0:
                 '''
                 if len(synsets) >= 3:
-                    valids = raw_input("That's " + str(len(synsets)) + " synsets.  "
+                    valids = input("That's " + str(len(synsets)) + " synsets.  "
                                        "Write the indices of the best ones, or N if none exist.\n")
                     if len(valids) != 0:
                         if valids == "N":
@@ -654,6 +650,15 @@ class LexiconParser:
 
         self.write_blissnet(blissnet)
         return blissnet
+
+    def write_blissnet(self, blissnet):
+        json_blissnet = dict()
+
+        for blissymbol in blissnet:
+            synsets = blissnet[blissymbol]
+            json_blissnet[blissymbol.unicode] = [s.name() for s in synsets]
+
+        self.dump_json(json_blissnet, "blissnet")
 
     # BLISSWORDNET
     # ------------
@@ -999,7 +1004,7 @@ class LexiconParser:
 
         for word in bliss_dict:
             for blissymbol in bliss_dict[word]:
-                uni = blissymbol.get_unicode()
+                uni = blissymbol.unicode
                 synsets = blissymbol.synsets
                 wordnet[uni] = synsets
 
@@ -1029,7 +1034,7 @@ class LexiconParser:
 
         :return: Blissymbol, represents 1 Bliss lexical entry
         """
-        bliss_name = raw_input("What do you call your new Blissymbol? ")
+        bliss_name = input("What do you call your new Blissymbol? ")
         bliss_filename = bliss_name + ".png"
         print("Which part of speech is this? ")
         code = Blissymbol.POS_COLOUR_CODE
@@ -1037,9 +1042,9 @@ class LexiconParser:
         for pos in code:
             print(str(pos) + ":\t" + str(code[pos]))
 
-        pos = raw_input("")
+        pos = input("")
         print("Which atomic Blissymbols is this made of? ")
-        derivations = raw_input("Separate them by commas: ")
+        derivations = input("Separate them by commas: ")
         derivations = derivations.split(",")
         derivs = ""
         derivs += "("
@@ -1057,7 +1062,7 @@ class LexiconParser:
             print("What is/are the translation(s) in " + language + "? ")
 
             try:
-                translation = raw_input("Separate by commas if necessary: ")
+                translation = input("Separate by commas if necessary: ")
             except SyntaxError:
                 continue
             else:
@@ -1084,11 +1089,11 @@ class LexiconParser:
             key (str) - name of Blissymbol field
             val (X) - corresponding value
         """
-        return {u"name": name,
-                u"pos": pos,
-                u"BCI-AV": num,
-                u"derivation": derivation,
-                u"translations": translations}
+        return {"name": name,
+                "pos": pos,
+                "BCI-AV": num,
+                "derivation": derivation,
+                "translations": translations}
 
     def blissymbol_to_dict(self, blissymbol):
         """
@@ -1100,11 +1105,11 @@ class LexiconParser:
             key (str) - name of Blissymbol field
             val (X) - corresponding value
         """
-        return {u"name": blissymbol.bliss_name,
-                u"pos": blissymbol.get_pos(),
-                u"BCI-AV": blissymbol.bci_num,
-                u"derivation": blissymbol.get_derivation(),
-                u"translations": blissymbol.get_translations()}
+        return {"name": blissymbol.bliss_name,
+                "pos": blissymbol.get_pos(),
+                "BCI-AV": blissymbol.bci_num,
+                "derivation": blissymbol.derivation,
+                "translations": blissymbol.translations}
 
     def dict_to_blissymbol(self, d):
         """
@@ -1118,15 +1123,15 @@ class LexiconParser:
         :param d: dict, dictionary to turn into Blissymbol
         :return: Blissymbol, d as a Blissymbol
         """
-        name = d[u"name"]
+        name = d["name"]
 
         if name[-7:-1] != "ercase" and name[-4:-1] != "OLD":
-            blissymbol = Blissymbol(name+u".png",
-                                    d[u"pos"],
-                                    d.get(u"derivation", u""),
-                                    d.get(u"translations", dict()),
+            blissymbol = Blissymbol(name+".png",
+                                    d["pos"],
+                                    d.get("derivation", ""),
+                                    d.get("translations", dict()),
                                     self.translator,
-                                    num=d[u"BCI-AV"])
+                                    num=d["BCI-AV"])
             return blissymbol
 
     # XLSX ENTRIES
@@ -1175,7 +1180,7 @@ class LexiconParser:
             pos = poses[0]
             entry = self.blissymbol_entry(eng_word, pos, derivation, translations_dict)
             bci_num = cells[0].value
-            entry[u"BCI-AV"] = bci_num
+            entry["BCI-AV"] = bci_num
             bliss_dicts.append(entry)
 
         self.dump_json(bliss_dicts, "all_blissymbols")
@@ -1195,7 +1200,7 @@ class LexiconParser:
         bci_col = self.LEXICON_COLS[0]
         pos_col = self.LEXICON_COLS[2]
         deriv_col = self.LEXICON_COLS[3]
-        uni = blissymbol.get_unicode()
+        uni = blissymbol.unicode
         uni = uni[2:]
 
         for col in self.LEXICON_COLS:
@@ -1204,11 +1209,11 @@ class LexiconParser:
             elif col == pos_col:
                 row.append(blissymbol.pos_to_int())
             elif col == deriv_col:
-                row.append(blissymbol.get_derivation())
+                row.append(blissymbol.derivation)
             else:
                 translations = blissymbol.get_translation(col)
-                translations = u",".join(translations)
-                translations = self.translator.deunicodize(translations)
+                translations = ",".join(translations)
+                #translations = self.translator.deunicodize(translations)
                 row.append(translations)
 
         return row
@@ -1226,7 +1231,7 @@ class LexiconParser:
         if not blissymbol:
             blissymbol = self.make_blissymbol()
 
-        print("making new Blissymbol entry for " + str(blissymbol))
+        print("making new Blissymbol entry for", str(blissymbol))
         bliss_entry = self.blissymbol_to_xlsx_entry(blissymbol)
 
         book = load_workbook(self.LEXICON_PATH)
@@ -1242,7 +1247,7 @@ class LexiconParser:
         :param bliss_entry: Blissymbol, entry to add to Bliss lexicon
         :return: None
         """
-        print("extending entry for ", blissymbol.get_bliss_name())
+        print("extending entry for", blissymbol.get_bliss_name())
         book = load_workbook(self.LEXICON_PATH)
         sheet = book.worksheets[0]
         start_row = sheet.min_row
@@ -1255,8 +1260,8 @@ class LexiconParser:
             for synonym in eng_words:
                 synonym = synonym.strip()
                 if synonym == blissymbol.get_bliss_name():
-                    print("found English Blissymbol synonym: ", eng_word)
-                    translations = blissymbol.get_translations()
+                    print("found English Blissymbol synonym:", eng_word)
+                    translations = blissymbol.translations
                     for language in translations:
                         defns = translations[language]
                         if len(defns) != 0:
@@ -1266,15 +1271,15 @@ class LexiconParser:
                             if edit.value is None:
                                 edit.value = ""
                             else:
-                                edit.value = self.translator.unicodize(edit.value)
+                                edit.value = str(edit.value)
                             values = []
                             for defn in defns:
-                                values = edit.value.split(u",")
+                                values = edit.value.split(",")
                                 if defn not in values:
                                     values.append(defn)
                             values = self.translator.remove_duplicates(values)
                             edit.value = ",".join(values)
-                            print(u"edited " + language + u" to be " + edit.value)
+                            print("edited", language, "to be", edit.value)
                     break
 
         book.save(self.LEXICON_PATH)

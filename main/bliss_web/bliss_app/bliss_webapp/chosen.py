@@ -9,7 +9,7 @@ LANGS = blisscribe_py.blisscribe.BlissTranslator.SUPPORTED_LANGS
 SUPPORTED_LANGS = [(lang, lang) for lang in LANGS]
 
 '''
-import blisscribe_py.blisscribe
+import blisscribe
 
 ROMAN_FONT = "/Library/Fonts/Times New Roman.ttf"
 SANS_FONT = "/Library/Fonts/Arial.ttf"

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # bliss_webapp/forms.py
-from __future__ import unicode_literals
 from django import forms
 import models
 import chosen

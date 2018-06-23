@@ -28,7 +28,7 @@ class TranslationWord:
         self.translator = translator
         self.language = self.translator.language if language is None else language
         self.debug = debug
-        self.word = self.translator.unicodize(word)
+        self.word = word #self.translator.unicodize(word)
         self.pos = pos
         self.lemma = self.find_lemma(self.word, self.language, self.pos)
         self.blissymbol = None
@@ -298,7 +298,7 @@ class TranslationWord:
         :return: None
         """
         if self.blissymbol is None:
-            if self.pos in blissymbol.get_parts_of_speech():
+            if self.pos in blissymbol.pos:
                 self.blissymbol = blissymbol
 
     def init_blissymbol(self):
@@ -467,7 +467,7 @@ class TranslationWord:
         :return: str, this Blissymbol's image filename
         """
         if self.blissymbol:
-            return self.translator.unicodize(self.blissymbol.img_filename)
+            return self.blissymbol.img_filename
 
     def find_lemma(self, word, language, pos):
         """

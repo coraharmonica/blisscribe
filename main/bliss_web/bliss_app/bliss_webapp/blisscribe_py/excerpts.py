@@ -6,7 +6,7 @@ EXCERPTS:
     and reading.
 """
 import os
-from nltk.corpus import gutenberg, brown #, reuters
+from nltk.corpus import gutenberg, brown
 
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -45,7 +45,7 @@ def parse_plaintext(filename):
         for line in text:
             contents.append(line)
 
-    return "".join(contents)
+    return "".join([str(c) for c in contents])
 
 
 def parse_excerpts(filenames):
@@ -193,7 +193,7 @@ multilingual_texts = {"eng": [alice_in_wonderland, little_prince, wizard_of_oz, 
                               phantom_tollbooth, wrinkle_in_time, chronicles_of_narnia,
                               hitchhikers_guide, metamorphosis_english, heart_of_darkness,
                               the_raven, blake_songs, frost_poem, leaves_of_grass, paradise_lost,
-                              hamlet, julius_caesar, macbeth, kjv] + lord_of_the_rings + gutenberg_texts.values(),
+                              hamlet, julius_caesar, macbeth, kjv] + lord_of_the_rings + list(gutenberg_texts.values()),
                       "fin": [ievan_polkka],
                       "fra": [alice_in_wonderland_french, petit_prince, saison_en_enfer],
                       "deu": [metamorphosis_german, little_prince_german],

@@ -30,24 +30,24 @@ def equate_images(img1, img2):
         bg = Image.new(mode='RGBA', size=bg_size, color=(255, 255, 255, 0))
 
         if img1.size == bg_size:
-            x = w1/2 - w2/2
-            y = h1/2 - h2/2
+            x = w1//2 - w2//2
+            y = h1//2 - h2//2
             bg.paste(img2, (x, y))
             img2 = bg
         elif img2.size == bg_size:
-            x = w2/2 - w1/2
-            y = h2/2 - h1/2
+            x = w2//2 - w1//2
+            y = h2//2 - h1//2
             bg.paste(img1, (x, y))
             img1 = bg
         else:
             bg_img1 = bg
             bg_img2 = bg_img1.copy()
-            x_mid = bg_size[0]/2
-            y_mid = bg_size[1]/2
-            x1 = x_mid - img1.size[0]/2
-            y1 = y_mid - img1.size[1]/2
-            x2 = x_mid - img2.size[0]/2
-            y2 = y_mid - img2.size[1]/2
+            x_mid = bg_size[0]//2
+            y_mid = bg_size[1]//2
+            x1 = x_mid - img1.size[0]//2
+            y1 = y_mid - img1.size[1]//2
+            x2 = x_mid - img2.size[0]//2
+            y2 = y_mid - img2.size[1]//2
             bg_img1.paste(img1, (x1, y1))
             bg_img2.paste(img2, (x2, y2))
             img1 = bg_img1
@@ -102,8 +102,8 @@ def above(top, bottom):
     bottom_w, bottom_h = bottom.size
     w, h = max(top_w, bottom_w), top_h + bottom_h
     img = Image.new(mode="RGBA", size=(w, h))
-    img.paste(top, (w/2 - top_w/2, 0))
-    img.paste(bottom, (w/2 - bottom_w/2, top.size[1]))
+    img.paste(top, (w//2 - top_w//2, 0))
+    img.paste(bottom, (w//2 - bottom_w//2, top.size[1]))
     return img
 
 
@@ -220,11 +220,11 @@ def get_subbed_bliss_img(trans_word, max_width=None, max_height=None, subs=True)
     :param subs: bool, whether to subtitle output image
     :return: Image, subtitled Blissymbol image
     """
-    word = trans_word.translator.unicodize(trans_word.word)
     bliss_img = get_trans_bliss_img(trans_word, max_width, max_height)
     font_path = trans_word.translator.font_path
     sub_size = trans_word.translator.subtitle_size()
     img_h = trans_word.translator.image_heights()
+    word = trans_word.word
     text = get_word_img(word.upper(), font_path, sub_size, img_h)
     text = trim(text)
 
