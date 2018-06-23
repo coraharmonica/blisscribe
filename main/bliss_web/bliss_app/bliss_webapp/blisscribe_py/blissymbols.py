@@ -19,6 +19,8 @@ class Blissymbol:
     - part of speech
     - a derivation
     - translation(s) in each language
+    - a BlissTranslator
+    - a BCI-AV# (initialize as 0 if creating a new Blissymbol)
     """
     PARTS_OF_SPEECH = ["CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS",
                        "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$",
@@ -57,11 +59,12 @@ class Blissymbol:
                  "?": u"question_mark",
                  "!": u"exclamation_mark"}
 
-    def __init__(self, img_filename=None, pos=None, derivation="", translations=None, translator=None):
+    def __init__(self, img_filename=None, pos=None, derivation="", translations=None, translator=None, num=None):
         self.translator = translator
         self.last_encoding = int(self.calc_last_unicode()[2:], 16)
         self.img_filename = img_filename
         self.bliss_name = self.img_filename[:-4]
+        self.bci_num = self.init_bci_num(num)
         self.pos_code = pos
         self.init_pos_code(pos)
         self.pos = self.init_pos(pos)
@@ -921,6 +924,32 @@ class Blissymbol:
         self.set_unicode(uni)
         self.add_blissymbol_unicodes(self)
         return uni
+
+    def init_bci_num(self, bci_num):
+        """
+        Returns the appropriate BCI-AV# for this Blissymbol.
+        ~
+        If this bci_num is not None, returns bci_num.
+        Otherwise, returns the BCI-AV# for a Blissymbol with the
+        same bliss_name as this Blissymbol.  If none exist,
+        returns None.
+
+        :return: Optional[int], this Blissymbol's BCI-AV# (None if nonexistent)
+        """
+        if bci_num is None:
+            return self.find_bci_num()
+        else:
+            return bci_num
+
+    def find_bci_num(self):
+        """
+        Returns the BCI-AV# for a Blissymbol with the same
+        bliss_name as this Blissymbol.  If none exist,
+        returns None.
+
+        :return: Optional[int], this Blissymbol's BCI-AV# (None if nonexistent)
+        """
+        return self.translator.find_blissymbol_bci_num(self)
 
     def add_synset(self, synset):
         """

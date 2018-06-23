@@ -1401,6 +1401,9 @@ class BlissTranslator:
         """
         return self.lexica.get(language, None)
 
+    def all_synsets(self):
+        return wordnet.all_synsets()
+
     def in_wordnet(self, word, language):
         """
         Returns True if word in WordNet,
@@ -1717,21 +1720,23 @@ class BlissTranslator:
         """
         return TranslationWord(word=word_token, pos=pos, translator=self, language=language, debug=debug)
 
-    def make_blissymbol(self, img_filename, pos, derivation, translations=None):
+    def make_blissymbol(self, img_filename, pos, derivation, translations=None, num=0):
         """
         Returns a new Blissymbol with...
             img_filename as its English image filename (ending in .png)
             pos as its part-of-speech
             derivation as its list of Blissymbol derivations
+            num as its BCI-AV#
 
         :param img_filename: str, the image filename for this Blissymbol
-        :param pos: str, this word token's (Penn Treebank) part-of-speech
+        :param pos: str, this Blissymbol's (Penn Treebank) part-of-speech
         :param derivation: str, this Blissymbol's derivation, of the form:
             "(d(1) + d(2) + ... + d(n))"
             where d(1) to d(n) are derivative bliss names
         :param translations: dict, where...
             key (str) - language of Blissymbol translation
             val (List[str]) - Blissymbol's translations in language
+        :param num: int, this Blissymbol's BCI-AV#
         :return: Blissymbol, a new Blissymbol with the this fields
         """
         if translations is not None:
@@ -1744,7 +1749,8 @@ class BlissTranslator:
                           pos=pos,
                           derivation=derivation,
                           translations=translations,
-                          translator=self)
+                          translator=self,
+                          num=num)
 
     def fetch_bliss_name(self, word, language="English"):
         """
@@ -1860,6 +1866,21 @@ class BlissTranslator:
         if len(synsets) != 0:
             lemmas = self.synsets_lemmas(synsets, eng=True)
             return self.words_to_blissymbol(lemmas, language="English", pos=self.synset_pos(synsets[0]))
+
+    def find_blissymbol_bci_num(self, blissymbol):
+        """
+        Returns the BCI-AV# for a Blissymbol with the same
+        bliss_name as given blissymbol.  If none exist,
+        returns None.
+
+        :param blissymbol: Blissymbol, to find BCI-AV# for
+        :return: Optional[int], Blissymbol's BCI-AV# (None if nonexistent)
+        """
+        if blissymbol.bci_num is None:
+            self.lex_parser.init_blissymbols()
+            for bs in self.lex_parser.blissymbols:
+                if bs.bliss_name == blissymbol.bliss_name:
+                    return bs.bci_num
 
     def blissymbol_to_synsets(self, blissymbol):
         """
@@ -2146,16 +2167,29 @@ class BlissTranslator:
 
     def synset_id(self, synset):
         """
-        Returns the synset ID for this Synset.
+        Returns the 9-digit synset ID for this Synset,
+        consisting of its part-of-speech number followed by
+        its sense-key.
 
         :param synset: Synset, synset to find ID for
         :return: int, a 9-digit WordNet Synset ID
         """
         if synset is not None:
-            offset = synset.offset()
             pos_code = POS_FEATURE_DICT[synset.pos()]
-            full_synset = str(pos_code) + str(offset).zfill(8)
+            full_synset = str(pos_code) + self.synset_sensekey(synset)
             return int(full_synset)
+        else:
+            return
+
+    def synset_sensekey(self, synset):
+        """
+        Returns the 8-digit sense-key string for this Synset.
+
+        :param synset: Synset, synset to find ID for
+        :return: str, a 8-digit WordNet Synset sense-key
+        """
+        if synset is not None:
+            return str(synset.offset()).zfill(8)
         else:
             return
 

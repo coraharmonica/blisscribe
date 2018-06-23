@@ -235,8 +235,8 @@ class LexiconParser:
         bci_mapping = dict()
 
         for entry in bliss_dict:
-            bci_av = int(entry[u"BCI-AV#"])
-            name = entry["name"]
+            bci_av = int(entry[u"BCI-AV"])
+            name = entry[u"name"]
             bci_mapping[bci_av] = name
 
         self.dump_json(bci_mapping, 'bci-av_mapping')
@@ -466,19 +466,19 @@ class LexiconParser:
             val (List[dict]) - Blissymbol dictionaries for this word
         """
         all_blissymbols = self.init_blissymbols()
-        bci_map = self.load_json("bci-av_mapping")
+        bci_map = self.load_json("bci_blissname_map")
         bci_map = {v: k for k, v in bci_map.items()}
         bliss_lexicon = dict()
 
         for blissymbol in all_blissymbols:
             bliss_dict = self.blissymbol_to_dict(blissymbol)
-            bliss_dict[u"BCI-AV#"] = int(bci_map[blissymbol.bliss_name])
+            bliss_dict[u"BCI-AV"] = int(bci_map[blissymbol.bliss_name])
             eng_words = blissymbol.get_translation("English")
             for eng_word in eng_words:
                 bliss_lexicon.setdefault(eng_word, list())
                 bliss_lexicon[eng_word].append(bliss_dict)
 
-        self.dump_json(bliss_lexicon, "bliss_lexicon")
+        self.dump_json(bliss_lexicon, "bliss_lexicon_new")
         return bliss_lexicon
 
     def refresh_bliss_lexicon(self):
@@ -723,7 +723,7 @@ class LexiconParser:
             key (str) - WordNet 3.0 synset ID number
             val (str) - corresponding WordNet 3.1 synset ID number
         """
-        wn30_wn31_txt = open(self.WORDNET_PATH + "wn30map31.txt")
+        wn30_wn31_txt = self.load_wn30_map_wn31()
         wn30_wn31_map = dict()
 
         for line in wn30_wn31_txt.readlines():
@@ -737,6 +737,22 @@ class LexiconParser:
 
         self.dump_json(wn30_wn31_map, "wn30map31")
         return wn30_wn31_map
+
+    def convert_wn30_31(self, sensekey, wn30_in=True):
+        """
+        Translates this sensekey from WordNet 3.0 to 3.1
+        if wn30_in is True.  Otherwise, translates from WN
+        3.1 to 3.0.
+
+        :param sensekey: str, 8-digit sense-key for a synset in WN 3.0/3.1
+        :param wn30_in: bool, whether to translate from 3.0 to 3.1
+        :return: str, 8-digit sense-key for a synset in WN 3.1/3.0
+        """
+        wn_map = self.load_wn30_map_wn31()
+        if not wn30_in:
+            wn_map = {v: k for k,v in wn_map.items()}
+        return wn_map.get(sensekey, None)
+
 
     # MULTILINGUAL
     # ============
@@ -848,19 +864,85 @@ class LexiconParser:
 
         return lexicon
 
+
     # WORDNET
     # =======
-    def bci_id_wordnet(self, wn_version=3.0):
+    def bliss_wordnet_mapping(self, bliss_keys=True, bliss_attr='gloss', wn_attr='name',
+                              wn_30=True, title='bliss_wordnet_mapping'):
         """
-        Returns a dict mapping Blissymbol BCI_AV# to WordNet 3.0 or 3.1 synset ID #,
+        Returns a dict mapping between Blissymbols and WordNet and dumps it to
+        /resources/data/[title].json.
+
+        :param bliss_keys: bool, True if Blissymbols should be keys in map, False if values
+        :param bliss_attr: str, which
+            MUST be one of:
+                'gloss' - Blissymbol's gloss, AKA its "bliss-name" (e.g. "cat,feline_(animal),felid")
+                'unicode' - Blissymbol's unicode representation (e.g. "U+349b")
+                'number' - Blissymbol's BCI-AV# (e.g. 12383)
+        :param wn_attr: str,
+            MUST be one of:
+                'sense-key' - Synset's gloss, AKA its "bliss-name" (e.g. "cat,feline_(animal),felid")
+                'name' - Synset's first lemma, pos, and sense number (e.g. "cat.n.01")
+                'lemma_names' - Synset's lemmas' names (e.g. ["cat", "feline", "felid"])
+        :param wn_30: bool,
+        :param title: str, name of JSON file to dump mapping to
+        :return: dict(X, Y), Blissymbols mapped to Synsets OR Synsets mapped to Blissymbols
+        """
+        all_blissymbols = self.init_blissymbols()
+        bliss_wn_map = dict()
+
+        def transform_bliss(bs):
+            if bliss_attr == 'unicode':
+                return bs.unicode
+            elif bliss_attr == 'number':
+                return bs.bci_num
+            else:
+                try:
+                    return getattr(bs, bliss_attr)
+                except AttributeError:
+                    return bs.bliss_name
+
+        def transform_synset(s):
+            if wn_attr == 'sense-key':
+                self.translator.synset_id()
+                synset_30 = str(s.offset()).zfill(8)
+                if not wn_30:
+                    return self.convert_wn30_31(synset_30, wn30_in=True)
+                else:
+                    return synset_30
+            else:
+                try:
+                    return getattr(s, wn_attr)
+                except AttributeError:
+                    return s.name()
+
+        for blissymbol in all_blissymbols:
+            synsets = self.translator.blissymbol_to_synsets(blissymbol)
+            if len(synsets) != 0:
+                trans_bliss = transform_bliss(blissymbol)
+                trans_synsets = [transform_synset(ss) for ss in synsets]
+                if bliss_keys:
+                    bliss_wn_map[trans_bliss] = trans_synsets
+                else:
+                    for trans_synset in trans_synsets:
+                        bliss_wn_map.setdefault(trans_synset, list()).append(trans_bliss)
+
+        self.dump_json(bliss_wn_map, filename=title)
+        return bliss_wn_map
+
+    def blissnum_sensekey_mapping(self, wn_version=3.0):
+        """
+        Returns a dict mapping Blissymbol BCI_AV# to WordNet 3.0 or 3.1 synset sense-key,
         and dumps it to bci_blissnet_3.0/3.1 JSON.
         ~
         Synset id # corresponds to WordNet version specified in wn_version (either 3.0 or 3.1).
+        ~
+        N.B. WordNet sense-keys are 8-digit strings (can start with 0) of numbers
 
         :param wn_version: float, version of WordNet to use (3.0 or 3.1)
         :return: dict(int, list), where...
             key (int) - BCI_AV# for a Blissymbol
-            val (List[str]) - synset ID #s for this Blissymbol
+            val (List[str]) - synset sense-key for this Blissymbol
         """
         bci_blissnet = self.load_bci_blissnet()
         blissnet_30 = dict()
@@ -879,6 +961,23 @@ class LexiconParser:
                            for bci, ids30 in blissnet_30.items()}
             self.dump_json(blissnet_31, "bci_blissnet_3.1")
             return blissnet_31
+
+    def synset_sensekey_mapping(self):
+        """
+        Maps WordNet 3.0 synsets to sense-keys.
+
+        :return: dict(str, str)
+        """
+        synsets = self.translator.all_synsets()
+        mapping = dict()
+
+        for synset in synsets:
+            str_synset = synset.name()
+            sense_key = str(synset.offset()).zfill(8)
+            mapping[str_synset] = sense_key
+
+        self.dump_json(mapping, "synset_sense-key_mapping")
+        return mapping
 
     def bliss_dict_to_wordnet(self, bliss_dict):
         """
@@ -968,21 +1067,26 @@ class LexiconParser:
             translations[language].append(translation)
 
         blissymbol = Blissymbol(img_filename=bliss_filename, pos=pos, derivation=derivs,
-                                translations=translations, translator=self.translator)
+                                translations=translations, translator=self.translator, num=0)
         return blissymbol
 
-    def blissymbol_entry(self, name, pos, derivation, translations):
+    def blissymbol_entry(self, name, pos, num, derivation, translations):
         """
-        Returns a dict of this Blissymbol's initializing
-        parameters, i.e. its name, pos, derivation, and translations.
+        Returns a dict of these inputs as a Blissymbol's initializing parameters,
+        i.e., its name, pos, BCI-AV#, derivation, and translations.
 
-        :param blissymbol: Blissymbol, symbol to turn to tuple
+        :param name: str, Blissymbol's name
+        :param pos: str, Blissymbol's part-of-speech
+        :param num: str, Blissymbol's BCI-AV#
+        :param derivation: str, Blissymbol's derivation
+        :param translations: dict(str, list), languages and translations of Blissymbol
         :return: dict, where...
             key (str) - name of Blissymbol field
             val (X) - corresponding value
         """
         return {u"name": name,
                 u"pos": pos,
+                u"BCI-AV": num,
                 u"derivation": derivation,
                 u"translations": translations}
 
@@ -998,6 +1102,7 @@ class LexiconParser:
         """
         return {u"name": blissymbol.bliss_name,
                 u"pos": blissymbol.get_pos(),
+                u"BCI-AV": blissymbol.bci_num,
                 u"derivation": blissymbol.get_derivation(),
                 u"translations": blissymbol.get_translations()}
 
@@ -1020,7 +1125,8 @@ class LexiconParser:
                                     d[u"pos"],
                                     d.get(u"derivation", u""),
                                     d.get(u"translations", dict()),
-                                    self.translator)
+                                    self.translator,
+                                    num=d[u"BCI-AV"])
             return blissymbol
 
     # XLSX ENTRIES
@@ -1069,7 +1175,7 @@ class LexiconParser:
             pos = poses[0]
             entry = self.blissymbol_entry(eng_word, pos, derivation, translations_dict)
             bci_num = cells[0].value
-            entry[u"BCI-AV#"] = bci_num
+            entry[u"BCI-AV"] = bci_num
             bliss_dicts.append(entry)
 
         self.dump_json(bliss_dicts, "all_blissymbols")
