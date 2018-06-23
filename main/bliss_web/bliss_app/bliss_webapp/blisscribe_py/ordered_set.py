@@ -1,24 +1,24 @@
 # coding: utf-8
 
 
-class OrderedSet():
+class OrderedSet:
     """
     A List-Set hybrid class for holding ordered
     sequences of items with no duplicates.
+
+    :param items: List[X], items to create ordered set for
     """
     def __init__(self, items=list()):
         self.items_set = set(items)
-        #set.__init__(self, items)
         self.all_items = items
-        self.frequency_counts = {i: items.count(i) for i in self.all_items}
 
-    def items(self):
+    def items(self, min_ct=None, max_ct=None):
         """
         Returns a list of items ordered by frequency with no duplicates.
 
         :return: List[X], list ordered by frequency
         """
-        return self.rank(self.all_items)
+        return self.rank(self.all_items, min_ct=min_ct, max_ct=max_ct)
 
     def get_items_set(self):
         """
@@ -66,7 +66,7 @@ class OrderedSet():
         self.update(other)
         return self
 
-    def pop(self, item=None):
+    def pop(self, idx=None):
         """
         Removes the given item from this OrderedSet and returns
         the modified OrderedSet.
@@ -74,15 +74,16 @@ class OrderedSet():
         If no item is specified, this method removes the most
         frequent item (i.e., at items index 0) instead.
         ~
-        If given item is not found, this method returns itself.
+        If item is not found, does not throw error.
 
+        :param idx: int, index of item to remove from items
         :return: OrderedSet(X), ordered set with item removed
         """
-        if len(self.items()) > 0:
-            if item is None:
+        if idx < len(self.items()):
+            if idx is None:
                 self.remove(self.items()[0])
             else:
-                self.remove(item)
+                self.remove(self.items()[idx])
 
         return self
 
@@ -91,22 +92,13 @@ class OrderedSet():
         Removes this item from items.
         ~
         Removes all instances of item from:
-        0) items
         1) all_items
         2) items_set
-        3) frequency_counts
 
         :param idx: X, item to remove from items
         """
-        try:
-            idx = self.items().index(item)
-        except ValueError:
-            return
-        else:
-            self.all_items = [i for i in self.all_items if i != item]
-            self.items_set.difference_update(set(item))
-            self.frequency_counts.pop(item, "")
-            del self.items()[idx]
+        self.all_items = [i for i in self.all_items if i != item]
+        self.items_set.remove(item)
 
     def update(self, other):
         """
@@ -120,7 +112,7 @@ class OrderedSet():
         else:
             self.add_items(other)
 
-    def rank(self, items=None):
+    def rank(self, items=None, min_ct=None, max_ct=None):
         """
         Ranks this OrderedSet's all_items by frequency, removing duplicates.
         ~
@@ -131,7 +123,9 @@ class OrderedSet():
         if items is None:
             items = self.all_items
         items_set = self.remove_duplicates(items)
-        return sorted(items_set, key=lambda i: self.frequency_counts[i], reverse=True)
+        counts = self.frequency_counts()
+        items_set = [i for i in items_set if counts.get(i, 0) > min_ct and (counts.get(i, 0) < max_ct or max_ct is None)]
+        return sorted(items_set, key=lambda i: counts[i], reverse=True)
 
     def rank_items(self, items=None):
         """
@@ -151,7 +145,6 @@ class OrderedSet():
         for item in items:
             seen.setdefault(item, 0)
             seen[item] += 1
-            self.inc_frequency(item)
 
         items_set = self.remove_duplicates(items)
         return sorted(items_set, key=lambda i: seen[i], reverse=True)
@@ -171,42 +164,34 @@ class OrderedSet():
             items = self.all_items
         return self.remove_duplicates(items)
 
-    def inc_frequency(self, item):
+    def frequency_counts(self):
         """
-        Increases the frequency of the given item in
-        frequency_counts by 1.
-        ~
-        If this item is not in frequency_counts yet,
-        this method adds an entry for this item.
+        Returns a dictionary of all items in this OrderedSet
+        and their frequencies.
 
-        :param item: X, item of same type as others in items
-        :return: None
+        :return: dict, where...
+            key (X) - item in OrderedSet
+            val (int) - # occurrences of item
         """
-        self.frequency_counts.setdefault(item, int())
-        self.frequency_counts[item] += 1
+        return {i: self.all_items.count(i) for i in self.items_set}
 
     def add(self, item):
         """
         Adds the given item to this OrderedSet.
         ~
-        1) Adds item to list of all items, all_items.
-        2) Adds item to items_set.
-        3) Updates frequency count of item in frequency_counts.
+        Adds item to all_items and items_set.
 
         :param item: str, item to add to all_items
         :return: None
         """
         self.all_items.append(item)
         self.items_set.add(item)
-        self.inc_frequency(item)
 
     def add_items(self, items):
         """
         Adds given items to this OrderedSet.
         ~
-        1) Adds each item to all_items,
-        2) Adds each item to items_set,
-        2) Updates frequency count of each item in frequency_counts.
+        Adds each item to all_items and items_set.
 
         :param items: List[str], items to add to all_items
         :return: None
@@ -214,13 +199,49 @@ class OrderedSet():
         for item in items:
             self.add(item)
 
+    def intersections(self):
+        """
+        Returns a set of the most common items in this OrderedSet.
+
+        :return: List[X], items in OrderedSet occurring the most
+        """
+        counts = self.frequency_counts()
+        max_intersection = max(counts.values()) if len(counts) != 0 else 0
+        items = self.remove_duplicates(self.all_items)
+        return [i for i in items if counts[i] == max_intersection]
+
+    def intersection(self, other):
+        """
+        Returns the set intersection of this OrderedSet and another Iterable.
+
+        :param other: Iterable[Hashable], iterable to intersect with
+        :return: Set(X), items common to self and other
+        """
+        return self.items_set.intersection(other)
+
+    def intersection_update(self, other):
+        """
+        Makes this OrderedSet the intersection of self and other.
+
+        :param other: Iterable[Hashable], iterable to intersect with
+        :return: None
+        """
+        intersection = self.intersection(other)
+        self.__init__(list(intersection))
+
     def __iter__(self):
         return iter(self.items())
 
     def __len__(self):
-        return len(self.items())
+        return len(self.items_set) #len(self.items())
 
     def __getitem__(self, index):
         return self.items()[index]
+
+    def __str__(self):
+        return str(self.items())
+
+    def __repr__(self):
+        return str(self)
 
 

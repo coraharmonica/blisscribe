@@ -215,7 +215,7 @@ class PhonemeParser(LanguageParser):
         :param lim: int, lim <= 50000, number of words to retrieve
         :return: Set(IPAWord), common IPAWords in this PhonemeParser's language
         """
-        words = self.common_words(lim)
+        words = self.common_words(language=self.language, lim=lim)
         transcriptions = self.words_ipawords(words)
         return transcriptions
 
@@ -241,6 +241,7 @@ class PhonemeParser(LanguageParser):
         If top is True, this method only adds the top IPA pronunciation
         for each word to the list.  Otherwise, adds all IPA pronunciations.
 
+        :param language: str, language of ipa pairs
         :param lim: int, lim <= 50000, number of ipa pairs to retrieve
         :param only_top: bool, whether to output only top IPAs or all IPAs
         :return: Set(tuple(str,str)), common ipa pairs in MorphemeParser's language
@@ -268,6 +269,7 @@ class PhonemeParser(LanguageParser):
         Returns the given word as an IPAWord.
 
         :param word: str, word to turn into IPAWord
+        :param language: str, language of word
         :return: IPAWord, IPAWord corresponding to given word
         """
         language = self.verify_language(language)
@@ -280,6 +282,7 @@ class PhonemeParser(LanguageParser):
         Transcribes the words in the given set of words to IPAWords.
 
         :param words: Set(unicode), set of word definitions
+        :param language: str, language of words
         :return: Set(IPAWord), IPAWords corresponding to given definitions
         """
         language = self.verify_language(language)
@@ -899,8 +902,8 @@ class IPAWord:
         e.g. cat = IPAWord("cat", "Noun", "kæt", PhonemeParser("English"))
              cat.find_letter_phonemes() -> ["c", "a", "t"]
 
-             text = IPAWord("text", "Noun", "tɛkst", PhonemeParser("English"))
-             text.find_letter_phonemes() -> ["t", "e", "x", "t"]
+             text_image = IPAWord("text_image", "Noun", "tɛkst", PhonemeParser("English"))
+             text_image.find_letter_phonemes() -> ["t", "e", "x", "t"]
 
         :return: List[(unicode) str], this IPAWord's letter phonemes
         """
@@ -1023,8 +1026,8 @@ class IPAWord:
         e.g. cat = IPAWord("cat", "Noun", "kæt", PhonemeParser("English"))
              cat.find_ipa_phonemes() -> ["k", "æ", "t"]
 
-             text = IPAWord("text", "Noun", "tɛkst", PhonemeParser("English"))
-             text.find_ipa_phonemes() -> ["t", "ɛ", "ks", "t"]
+             text_image = IPAWord("text_image", "Noun", "tɛkst", PhonemeParser("English"))
+             text_image.find_ipa_phonemes() -> ["t", "ɛ", "ks", "t"]
 
         :param ipa: (unicode) str, IPA to find phonemes of
         :param use_syllables: bool, whether to calculate phonemes with ipa's syllables

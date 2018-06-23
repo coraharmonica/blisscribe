@@ -3,7 +3,7 @@
 CONCEPT_ANALYZER:
 
     Used for representing and drawing concept cloud images
-    using a text's most prominent Blissymbols.
+    using a text_image's most prominent Blissymbols.
 """
 from string import zfill
 from numpy import log
@@ -37,17 +37,17 @@ class ConceptAnalyzer:
 
     def draw_concept_cloud(self, text, title=u"concept cloud", cap=None):
         """
-        Draws a concept cloud image for text in this ConceptAnalyzer's language
+        Draws a concept cloud image for text_image in this ConceptAnalyzer's language
         and saves it under this title.
         ~
         By default cap is set to None, so this function draws all concepts
-        in this text until their frequency drops below the 10th percentile.
+        in this text_image until their frequency drops below the 10th percentile.
         Users can opt to set cap to a custom maximum number of concepts to draw.
         ~
         Returns None.
 
-        :param text: str, text to draw concept cloud for
-        :param language: str, native language of text
+        :param text: str, text_image to draw concept cloud for
+        :param language: str, native language of text_image
         :param title: str, title to save image as
         :param cap: bool, option to cap number of concepts drawn
         :return: None

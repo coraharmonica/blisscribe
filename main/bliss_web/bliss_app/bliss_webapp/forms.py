@@ -15,8 +15,8 @@ class TranslationForm(forms.ModelForm):
                   'fast_translate', 'sub_all', 'page_nums']
 
     phrase = forms.CharField(
-        label="text to translate: ",
-        initial="write up to 10000 characters of text here...",
+        label="text_image to translate: ",
+        initial="write up to 10000 characters of text_image here...",
         required=False,
         max_length=10000,
         widget=forms.Textarea(attrs={'rows': '10', 'cols': '100'})

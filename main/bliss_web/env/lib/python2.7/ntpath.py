@@ -59,7 +59,7 @@ def isabs(s):
     return s != '' and s[:1] in '/\\'
 
 
-# Join two (or more) paths.
+# Join two (or more) prev_paths.
 def join(path, *paths):
     """Join two or more pathname components, inserting "\\" as needed."""
     result_drive, result_path = splitdrive(path)
@@ -134,7 +134,7 @@ def splitdrive(p):
             return p[:2], p[2:]
     return '', p
 
-# Parse UNC paths
+# Parse UNC prev_paths
 def splitunc(p):
     """Split a pathname into UNC mount point and relative path specifiers.
 
@@ -273,7 +273,7 @@ def walk(top, func, arg):
             walk(name, func, arg)
 
 
-# Expand paths beginning with '~' or '~user'.
+# Expand prev_paths beginning with '~' or '~user'.
 # '~' means $HOME; '~user' means that user's home directory.
 # If the path doesn't begin with '~', or if the user or $HOME is unknown,
 # the path is returned unchanged (leaving error reporting to whatever
@@ -311,7 +311,7 @@ def expanduser(path):
     return userhome + path[i:]
 
 
-# Expand paths containing shell variable substitutions.
+# Expand prev_paths containing shell variable substitutions.
 # The following rules apply:
 #       - no expansion within single quotes
 #       - '$$' is translated into '$'
@@ -417,9 +417,9 @@ def normpath(path):
     # Preserve unicode (if path is unicode)
     backslash, dot = (u'\\', u'.') if isinstance(path, _unicode) else ('\\', '.')
     if path.startswith(('\\\\.\\', '\\\\?\\')):
-        # in the case of paths with these prefixes:
+        # in the case of prev_paths with these prefixes:
         # \\.\ -> device names
-        # \\?\ -> literal paths
+        # \\?\ -> literal prev_paths
         # do not do any normalization, but return the path unchanged
         return path
     path = path.replace("/", "\\")
@@ -518,7 +518,7 @@ def relpath(path, start=curdir):
     path_is_unc, path_prefix, path_list = _abspath_split(path)
 
     if path_is_unc ^ start_is_unc:
-        raise ValueError("Cannot mix UNC and non-UNC paths (%s and %s)"
+        raise ValueError("Cannot mix UNC and non-UNC prev_paths (%s and %s)"
                                                             % (path, start))
     if path_prefix.lower() != start_prefix.lower():
         if path_is_unc:

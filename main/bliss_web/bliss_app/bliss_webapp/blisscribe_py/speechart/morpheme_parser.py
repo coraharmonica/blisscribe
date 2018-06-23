@@ -226,7 +226,7 @@ class MorphemeParser(PhonemeParser):
             2) The set of vowels is called the RHYME.
             3) The second set of consonants is called the CODA.
         ~
-        e.g. break_syllable("lat͡ɕ") -> ("l", "a", "t͡ɕ")
+        e.g. break_syllable(u"lat͡ɕ") -> (u"l", u"a", u"t͡ɕ")
 
         :param syllable: (unicode) str, syllable to break
         :return: tuple((all unicode) str, str, str), the given
@@ -241,6 +241,7 @@ class MorphemeParser(PhonemeParser):
         while len(next_syllable) != 0:
             next_phoneme, next_syllable = self.next_phoneme(next_syllable)
             is_vowel = self.is_ipa_vowel(next_phoneme)
+
             if pre_rhyme:
                 if is_vowel:
                     pre_rhyme = False
@@ -285,16 +286,21 @@ class MorphemeParser(PhonemeParser):
         If the index is out of bounds, this method returns a
         3-tuple of all empty strings.
         ~
+        If use_syllables is True, uses built-in syllable identifiers
+        (e.g. "ˈ", ".") in this ipa to guide syllable demarcation.
+        Else, uses vowel and consonant clusters.
+        ~
         e.g. extract_syllable("ɔˈba.lat͡ɕ", 2) -> ("l", "a", "t͡ɕ")
-             extract_syllable("ɔbalat͡ɕ", 2, False) -> ("l", "a", "t͡ɕ")
+             extract_syllable("ɔbalat͡ɕ", 2, use_syllables=False) -> ("l", "a", "t͡ɕ")
 
-        :param ipa: (unicode) str, IPA word to return syllable at idx
-        :param idx: int, syllable to retrieve from IPA word
+        :param ipa: (unicode) str, IPA word to retrieve syllable of at idx
+        :param idx: int, index of syllable to retrieve from IPA word's syllables
         :param use_syllables: bool, whether to calculate phonemes with ipa's syllables
-        :return: tuple((all unicode) str, str, str), the given
-            syllable's onsets, rhymes, and codas, respectively
+        :return: tuple((all unicode) str, str, str), this ipa
+            syllable's onset, rhyme, and coda, respectively
         """
         syllables = self.split_syllables(ipa, use_syllables)
+        print ipa, "'s syllables:", syllables
         try:
             syllable = syllables[idx]
         except IndexError:

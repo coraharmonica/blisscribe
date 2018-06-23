@@ -87,7 +87,7 @@ class CodecInfo(tuple):
     # be defined for Python 3.5
     #
     # See http://bugs.python.org/issue19619
-    _is_text_encoding = True # Assume codecs are text encodings by default
+    _is_text_encoding = True # Assume codecs are text_image encodings by default
 
     def __new__(cls, encode, decode, streamreader=None, streamwriter=None,
         incrementalencoder=None, incrementaldecoder=None, name=None,

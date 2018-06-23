@@ -31,7 +31,7 @@ class BlissClassifier:
 
     def __init__(self, bliss_translator):
         self.translator = bliss_translator
-        self.bliss_lexicon = self.translator.eng_bliss_dict
+        self.blissymbols = self.translator.lex_parser.blissymbols
         self.classifier = DecisionTreeClassifier()
         self.questions = list()
         self.answers = list()
@@ -50,6 +50,7 @@ class BlissClassifier:
         samples = self.wordnet_indices
         test_questions, test_answers = list(), list()
         common_words = self.read_common_words()
+        all_blissymbols = self.blissymbols
         print("initializing Bliss classifier...")
 
         # percent on-target: 0.0%
@@ -63,71 +64,26 @@ class BlissClassifier:
         # percent on-target: 40.9489916963%
         # percent on-target: 44.6297700278%
         # percent on-target: 45.0088450847%
+        # percent on-target: 62.2127313402%
 
-        for entry in self.bliss_lexicon:
-            bliss_set = self.bliss_lexicon[entry]
-            if bliss_set is not None:
-                print entry, bliss_set
-                bs = self.translator.word_to_blissymbol(entry)
-                blissymbols = sorted(bliss_set, key=lambda bs: len(bs.derivations), reverse=True)
-                if bs in bliss_set:
-                    blissymbols.remove(bs)
-                if bs is not None:
-                    blissymbols.insert(0, bs)
+        for blissymbol in all_blissymbols:
+            if not blissymbol.is_atom:
+                synsets = blissymbol.synsets
+                unis = blissymbol.get_deriv_unicode()
+                uni = self.unicodes_to_str(unis)
+                eng_lemmas = set(blissymbol.get_translation("English"))
 
-                print entry, "has the Blissymbols", blissymbols
-
-                for blissymbol in blissymbols:
-                    synsets = blissymbol.synsets
-                    if len(synsets) > 0:
-                        ss = blissymbol.synset
-                        synsets = list(synsets)
-                        synsets.insert(0, ss)
-                        unis = blissymbol.get_deriv_unicode()
-                        uni = self.unicodes_to_str(unis)
-                        for synset in synsets:
-                            pos = synset.pos()
-                            pos_code = self.pos_to_int(pos)
-                            wn_num = self.synset_id(synset)
-                            word_features = [wn_num, pos_code]
-                            if entry.lower() in common_words:
-                                if entry in synset.lemma_names():
-                                    self.add_question_answer(word_features, uni)
-                                elif word_features not in self.questions and word_features not in test_questions:
-                                    test_answers.append(uni)
-                                    test_questions.append(word_features)
-                print
-
-        for wn_num in samples:
-            # convert human-readable data to machine-readable numbers
-            defns = samples[wn_num]
-            shuffle(defns)  # shuffle defns for random order
-
-            for defn in defns:  # iterate thru each Wordnet definition
-                name = defn[0]
-                pos = defn[1]
-                pos_unabbrev = self.translator.unabbreviate_pos(pos)
-                trans_word = self.translator.make_translation_word(name, pos_unabbrev)
-
-                if trans_word.has_blissymbol():
-                    blissymbol = trans_word.blissymbol
-                    unis = blissymbol.get_deriv_unicode()
-                    uni = self.unicodes_to_str(unis)
-                    pos_code = self.pos_to_int(pos)
+                for synset in synsets:
+                    pos_code = self.pos_to_int(synset.pos())
+                    wn_num = self.synset_id(synset)
                     word_features = [wn_num, pos_code]
-                    synsets = blissymbol.synsets
+                    intersection = eng_lemmas.intersection(synset.lemma_names())
 
-                    if word_features not in self.questions and len(synsets) > 0:
-                        synset = blissymbol.synset
-                        synsets = list(synsets)
-                        synsets.insert(0, synset)
-                        for synset in synsets:
-                            if self.synset_id(synset) == wn_num:
-                                if name.lower() in common_words and word_features not in test_questions:
-                                    # and name in synset.lemma_names():
-                                    # self.add_question_answer(word_features, uni)
-                                    test_answers.append(uni)
-                                    test_questions.append(word_features)
+                    if len(intersection) != 0:
+                        self.add_question_answer(word_features, uni)
+                    elif word_features not in test_questions and word_features not in self.questions:
+                        test_questions.append(word_features)
+                        test_answers.append(uni)
 
         train_questions, train_answers = self.questions, self.answers
         test_questions, test_answers = test_questions, test_answers
@@ -164,7 +120,7 @@ class BlissClassifier:
                 q_word = self.find_id_synsets(qa[0][0])[0]
                 q_pos = self.int_to_pos(qa[0][1])
 
-                ans_desc = ("/".join(self.translator.lookup_unicode_to_bliss(self.str_to_unicode(ans)))
+                ans_desc = ("/".join(self.translator.lookup_unicode_to_bliss(self.hex_to_unicode(ans)))
                             for ans in qa[1].split(" "))
                 ans_desc = " + ".join(ans_desc)
 
@@ -182,7 +138,7 @@ class BlissClassifier:
         :param cap: int, maximum number of common words to output
         :return: Set(str), most common words in English
         """
-        path = self.translator.PATH + "/resources/frequency_words/content/2016/en/en_50k.txt"
+        path = self.translator.PATH + "/speechart/resources/frequency_words/content/2016/en/en_50k.txt"
         with open(path, "r") as words:
             common_words = set()
             idx = 0
@@ -294,17 +250,18 @@ class BlissClassifier:
 
             # format answers & guesses from unicode to Bliss words
             answers = ans.split(" ")
-            new_ans = self.unicodes_blisswords(answers)
-            ans = " ".join(new_ans)
+            ans_unis = self.hexes_unicodes(answers)
+            new_ans = self.unicodes_blisswords(ans_unis)
+            ans = " + ".join(new_ans)
 
             guesses = guess.split(" ")
-            new_guess = self.unicodes_blisswords(guesses)
-            guess = " ".join(new_guess)
+            guess_unis = self.hexes_unicodes(guesses)
+            new_guess = self.unicodes_blisswords(guess_unis)
+            guess = " + ".join(new_guess)
 
             q = self.wordnet_indices[q[0]]
             q = q[0][0]
-            print('question:\t{:<30s}\nanswer:  \t{:<40s}\nguess:   \t{:<40s}'.format(q, ans, guess))
-            print("")
+            print('question:\t{:<30s}\nanswer:  \t{:<40s}\nguess:   \t{:<40s}\n'.format(q, ans, guess))
 
     def unicode_blissword(self, uni):
         """
@@ -314,15 +271,24 @@ class BlissClassifier:
         :param uni: str, unicode string for a Blissymbol
         :return: str, name of Blissymbol for uni
         """
-        uni = self.str_to_unicode(uni)
         defns = self.translator.lookup_unicode_to_bliss(uni)
 
         if len(defns) != 0:
             defn = defns[0]
-            clean_defn = self.translator.underscore_word(defn)
+            clean_defn = self.translator.underscore(defn)
             return clean_defn
         else:
             return
+
+    def hexes_unicodes(self, hexes):
+        """
+        Returns the names of the Blissymbols corresponding to
+        each unicode str in unis.
+
+        :param hexes: List[str], list of hexadecimal strings
+        :return: List[str], list of unicode strings
+        """
+        return [self.hex_to_unicode(h) for h in hexes]
 
     def unicodes_blisswords(self, unis):
         """
@@ -430,7 +396,6 @@ class BlissClassifier:
                 synset = synset[2:-3]
                 info = synset.split(",")
                 id = info[0]
-                #id = id[2:]
                 name = info[2]
                 name = name[1:-1]
                 pos = info[3]
@@ -475,7 +440,7 @@ class BlissClassifier:
     def get_unicode_to_bliss(self):
         return self.translator.get_unicode_to_bliss()
 
-    def str_to_unicode(self, string):
+    def hex_to_unicode(self, string):
         """
         Prefixes this string with "U+".
         ~
@@ -496,7 +461,7 @@ class BlissClassifier:
         :param string: str, string to convert to list of unicodes
         :return: List[str], unicode strings
         """
-        unis = [self.str_to_unicode(uni) for uni in string.split(" ")]
+        unis = [self.hex_to_unicode(uni) for uni in string.split(" ")]
         return unis
 
     def unicode_to_str(self, uni):

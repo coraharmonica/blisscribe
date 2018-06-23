@@ -118,9 +118,9 @@ def removeduppaths():
     L = []
     known_paths = set()
     for dir in sys.path:
-        # Filter out duplicate paths (on case-insensitive file systems also
-        # if they only differ in case); turn relative paths into absolute
-        # paths.
+        # Filter out duplicate prev_paths (on case-insensitive file systems also
+        # if they only differ in case); turn relative prev_paths into absolute
+        # prev_paths.
         dir, dircase = makepath(dir)
         if not dircase in known_paths:
             L.append(dir)
@@ -406,7 +406,7 @@ def setquit():
 
 
 class _Printer(object):
-    """interactive prompt objects for printing the license text, a list of
+    """interactive prompt objects for printing the license text_image, a list of
     contributors and the copyright notice."""
 
     MAXLINES = 23
@@ -444,7 +444,7 @@ class _Printer(object):
         if len(self.__lines) <= self.MAXLINES:
             return "\n".join(self.__lines)
         else:
-            return "Type %s() to see the full %s text" % ((self.__name,)*2)
+            return "Type %s() to see the full %s text_image" % ((self.__name,)*2)
 
     def __call__(self):
         self.__setup()
