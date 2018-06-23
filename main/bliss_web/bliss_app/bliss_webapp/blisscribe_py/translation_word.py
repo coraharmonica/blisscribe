@@ -449,7 +449,8 @@ class TranslationWord:
             blissymbol = self.translator.make_blissymbol(img_filename=img_filename + ".png",
                                                          pos=self.pos,
                                                          derivation=derivation,
-                                                         translations=translations)
+                                                         translations=translations,
+                                                         num=0)
             blissymbol.add_synsets(self.synsets)
             self.reset_blissymbol(blissymbol)
             self.translator.add_bliss_entry(self.blissymbol)

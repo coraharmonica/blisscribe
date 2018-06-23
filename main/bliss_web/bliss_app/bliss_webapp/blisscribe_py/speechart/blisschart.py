@@ -67,7 +67,7 @@ class BlissChart(speecharts.LanguageChart):
         blissword = Blissymbol.PUNCT_MAP.get(punct, None)
 
         if blissword is not None:
-            blissymbol = self.translator.make_blissymbol(blissword+".png", pos="WHITE", derivation="")
+            blissymbol = self.translator.make_blissymbol(blissword+".png", pos="WHITE", derivation="", num=None)
             return blissymbol
         else:
             return
