@@ -39,28 +39,28 @@ Blisscribe currently supports the following languages:
 - Danish
 
 
-![alice en sample](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/alice%20en%20sample.png?raw=true)
+![alice en sample](https://github.com/coraharmonica/blisscribe/blob/master/bliss_online/bliss_webapp/blisscribe_py/sample%20translations/alice%20en%20sample.png?raw=true)
 
 ***
 
-![alice pl sample](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/alice%20pl%20sample.png?raw=true)
+![alice pl sample](https://github.com/coraharmonica/blisscribe/blob/master/bliss_online/bliss_webapp/blisscribe_py/sample%20translations/alice%20pl%20sample.png?raw=true)
 
 
 Blisscribe also provides options for users to select which parts of speech to translate, including nouns, verbs, adjectives/adverbs, and/or all parts of speech.
 
-![nouns](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_nouns.png?raw=true)
+![nouns](https://github.com/coraharmonica/blisscribe/blob/master/bliss_online/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_nouns.png?raw=true)
 
 ***
 
-![verbs](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_verbs.png?raw=true)
+![verbs](https://github.com/coraharmonica/blisscribe/blob/master/bliss_online/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_verbs.png?raw=true)
 
 ***
 
-![adjs/advs](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_adjs.png?raw=true)
+![adjs/advs](https://github.com/coraharmonica/blisscribe/blob/master/bliss_online/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_adjs.png?raw=true)
 
 ***
 
-![other](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_other.png?raw=true)
+![other](https://github.com/coraharmonica/blisscribe/blob/master/bliss_online/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_other.png?raw=true)
 
 
 Blisscribe is currently maintained in Python 3.6 (as of 06/22/2018), with backwards compatibility for Python 2.7 and above.
