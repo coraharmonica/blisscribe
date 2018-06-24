@@ -6,7 +6,7 @@ After downloading Blisscribe, you can translate either from Python or a web inte
 
 <h3>Blisscribe in Python</h3>
 
-To translate in Python, open the package in Python 3.6 and head to the  [blisscribe_py folder](https://github.com/coraharmonica/blisscribe/tree/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py), located under main/bliss_web/bliss_webapp.  From here you can edit the demo.py file to run a demo.  The out folder also holds sample and output translations.
+To translate in Python, open the package in Python 2.7 or above and head to the  [blisscribe_py folder](https://github.com/coraharmonica/blisscribe/tree/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py), located under main/bliss_web/bliss_webapp.  From here you can edit the demo.py file to run a demo.  The out folder also holds sample and output translations.
 
 <h3>Blisscribe on the Web</h3>
 
@@ -63,5 +63,5 @@ Blisscribe also provides options for users to select which parts of speech to tr
 ![other](https://github.com/coraharmonica/blisscribe/blob/master/main/bliss_web/bliss_app/bliss_webapp/blisscribe_py/sample%20translations/quickbrownfox_other.png?raw=true)
 
 
-Blisscribe is currently maintained in Python 3.6 (as of 06/22/2018).
+Blisscribe is currently maintained in Python 3.6 (as of 06/22/2018), with backwards compatibility for Python 2.7 and above.
 To learn more about Blisscribe, visit the website:  blisscribe.tumblr.com.  You can also contact me through Blisscribe at blisscribe [at] gmail [dot] com.
