@@ -1,0 +1,99 @@
+<!-- bliss_webapp/templates/translate.html -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="icon"
+              href="https://raw.githubusercontent.com/coraharmonica/blisscribe/master/bliss_online/bliss_webapp/templates/images/favicon.ico">
+        <meta charset="UTF-8">
+        <title>Translate &nbsp;𐍈&nbsp; Blisscribe</title>
+        <style>
+            body {
+                background-image: url("https://raw.githubusercontent.com/coraharmonica/blisscribe/master/main/bliss_web/bliss_app/bliss_webapp/templates/images/bliss_tile_more_liter.jpeg");
+                background-size: 100px 100px;
+                font-family: helvetica;
+                font-size: 1em;
+                padding: 0px 0 0px 0;
+                }
+            * {
+                font-weight: normal;
+                }
+            textarea {
+                width: 99%;
+                height: 200px;
+                }
+            body.translate {
+                padding: 0px 30% 0px 30%;
+                }
+            ul {
+                line-height: 200%;
+                padding: 0px 25px 0px 25px;
+                }
+            a {
+                font-family: Arial Rounded MT Bold;
+                text_image-decoration: none;
+                color: dimgrey;
+                }
+            a.bottom {
+                display: block;
+                text_image-align: center;
+                padding: 100px 0px 0px 0px;
+                }
+            h1 {
+                font-family: Arial Rounded MT Bold;
+                text_image-align: center;
+                font-size: 1em;
+                line-height: 150%;
+                padding: 0 0 0 0;
+                }
+            h2 {
+                font-family: Arial Rounded MT Bold;
+                font-size: 2em;
+                }
+            h3 {
+                font-family: Arial Rounded MT Bold;
+                font-size: 1.5em;
+                }
+        </style>
+    </head>
+
+    <div class="header" id="header" align="center">
+        <img src="https://raw.githubusercontent.com/coraharmonica/blisscribe/master/bliss_online/bliss_webapp/templates/images/blisscribe_icon.jpg"
+             alt="Blisscribe"
+             style="padding:20px 0px 20px 0px; width:200px; height:200px;">
+        <h1>
+            <font size="100">Blisscribe</font>
+            <br>
+            <a href="/info/">info</a>
+            &nbsp;𐍈&nbsp;
+            <a href="/translate/">translate</a>
+        </h1>
+    </div>
+    <br>
+
+    <body class="translate">
+        <div id='translate' style="font-family:arial;background:#ffffff;border:1px solid #f7f7f7;">
+            <form action="/translated/" method="post">
+                {% csrf_token %}
+                <ul class="TranslationForm" style="list-style:none;line-height:200%;">
+                    <li>{{ form.phrase.label}}</li>
+                    <li id="phrase" class="str">{{ form.phrase }}</li>
+                    <li id="title" class="str">{{ form.title.label }} {{ form.title }}</li>
+                    <li id="title_page" class="bool">{{ form.title_page.label }} {{ form.title_page }}</li>
+                    <li id="lang" class="str">{{ form.lang.label }} {{ form.lang }}</li>
+                    <li id="font_fam" class="str">{{ form.font_fam.label }} {{ form.font_fam }}</li>
+                    <li id="font_size" class="int">{{ form.font_size.label }} {{ form.font_size }}</li>
+                    <li id="nouns" class="bool">{{ form.nouns.label }} {{ form.nouns }}</li>
+                    <li id="verbs" class="bool">{{ form.verbs.label }} {{ form.verbs }}</li>
+                    <li id="adjs" class="bool">{{ form.adjs.label }} {{ form.adjs }}</li>
+                    <li id="other" class="bool">{{ form.other.label }} {{ form.other }}</li>
+                    <li id="fast_translate" class="bool">{{ form.fast_translate.label }} {{ form.fast_translate }}</li>
+                    <li id="sub_all" class="bool">{{ form.sub_all.label }} {{ form.sub_all }}</li>
+                    <li id="page_nums" class="bool">{{ form.page_nums.label }} {{ form.page_nums }}</li>
+                    <li id="submit" class="input"><input type="submit" value="download pdf"/></li>
+                </ul>
+            </form>
+        </div>
+    </body>
+
+    <a href="/" class='bottom'>home</a>
+</html>
