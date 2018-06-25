@@ -10,7 +10,7 @@ Ensure you're working in Python 2.7 or above.  You can setup Blisscribe either t
 
 <h3>Command Line</h3>
 
-Ensure you've installed virtualenv.  Open blisscribe in command line and cd to the [bliss_online folder], where the env folder is located.  Enter the command:
+Ensure you've installed virtualenv.  Open blisscribe in command line and cd to the [bliss_online folder](https://github.com/coraharmonica/blisscribe/tree/master/bliss_online), where the env folder is located.  Enter the command:
 
 > source env/bin/activate
 
