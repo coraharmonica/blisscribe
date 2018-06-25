@@ -3,30 +3,23 @@
 Blisscribe is a translator designed for visual reading, allowing you to input text and receive a PDF with selected words replaced with Blissymbols.
 
 
-<h3>Setup</h3>
-
+<h2>Setup</h2>
 
 Ensure you're working in Python 2.7 or above.  You can setup Blisscribe either through command line or Python.
 
 
-<h4> Command Line <h4>
-
+<h3>Command Line</h3>
 
 Ensure you've installed virtualenv.  Open blisscribe in command line and cd to the [bliss_online folder], where the env folder is located.  Enter the command:
 
-
 > source env/bin/activate
-
 
 If successful, your command line prompt should now begin with (env).
 
 
-
-<h4> Python <h4>
-
+<h3>Python</h3>
 
 Blisscribe depends on the following libraries:
-
 
 - nltk
 - pattern3
@@ -38,11 +31,10 @@ Blisscribe depends on the following libraries:
 - scikit-learn
 - requests
 
-
 Ensure you have these all installed to your Python interpreter to run Blisscribe smoothly.
 
 
-<h4>Translation</h4>
+<h2>Translation</h2>
 
 After setting up Blisscribe, you can translate either from command line, Python, or online.
 
