@@ -19,7 +19,9 @@ If successful, your command line prompt should now begin with (env).
 
 <h4> Python <h4>
 
+
 Blisscribe depends on the following libraries:
+
 
 - nltk
 - pattern3
@@ -30,6 +32,7 @@ Blisscribe depends on the following libraries:
 - openpyxl
 - scikit-learn
 - requests
+
 
 Ensure you have these all installed to your Python interpreter to run Blisscribe smoothly.
 
