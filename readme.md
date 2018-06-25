@@ -5,16 +5,21 @@ Blisscribe is a translator designed for visual reading, allowing you to input te
 
 <h3>Setup</h3>
 
+
 Ensure you're working in Python 2.7 or above.  You can setup Blisscribe either through command line or Python.
 
 
 <h4> Command Line <h4>
 
+
 Ensure you've installed virtualenv.  Open blisscribe in command line and cd to the [bliss_online folder], where the env folder is located.  Enter the command:
+
 
 > source env/bin/activate
 
+
 If successful, your command line prompt should now begin with (env).
+
 
 
 <h4> Python <h4>
