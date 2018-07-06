@@ -5,7 +5,7 @@ TRANSLATION_WORD:
     A class for representing a word-in-translation as
     part of a BlissTranslator.
 """
-from .bliss_images import *
+from images import *
 
 
 class TranslationWord:
@@ -28,7 +28,7 @@ class TranslationWord:
         self.translator = translator
         self.language = self.translator.language if language is None else language
         self.debug = debug
-        self.word = word #self.translator.unicodize(word)
+        self.word = word
         self.pos = pos
         self.lemma = self.find_lemma(self.word, self.language, self.pos)
         self.blissymbol = None
@@ -46,7 +46,7 @@ class TranslationWord:
 
         :return: None
         """
-        if self.translator.language != "English":
+        if self.translator.language != "English" and not self.translator.is_nonalpha(self.lemma):
             self.get_multilingual_pos()
 
     def init_lang_parser(self):
@@ -75,6 +75,26 @@ class TranslationWord:
                     eng_lemmas = self.find_english_translations(self.lemma, self.pos)
 
             self.eng_lemmas = eng_lemmas
+
+    def image(self):
+        """
+        Returns a thumbnail Image of this TranslationWord's
+        Blissymbol, with height as its translator's image_heights.
+        ~
+        If this TranslationWord's Blissymbol is None,
+        returns an Image with its word as text_image instead.
+
+        :return: Image, image of this TW's Blissymbol
+        """
+        height = self.translator.image_heights()
+
+        if not self.has_blissymbol():
+            return self.translator.trans_word_image(self, height)
+        else:
+            img = self.blissymbol.image(max_height=height)
+            if self.is_plural_noun():
+                img = self.blissymbol.pluralize_image(img)
+            return img
 
     def find_pos_abbrev(self):
         """
@@ -182,7 +202,7 @@ class TranslationWord:
         :return: str, TW's Blissymbol's name
         """
         if self.blissymbol is not None:
-            return self.blissymbol.get_bliss_name()
+            return self.blissymbol.bliss_name
         else:
             return ""
 
@@ -220,7 +240,7 @@ class TranslationWord:
         while keep_going:
             print("Please enter the correct Blissymbol derivation(s) for " +
                   eng_lemma + ", each separated by a comma and a space. ")
-            user_deriv = str(raw_input(""))
+            user_deriv = str(input(""))
 
             if len(user_deriv) == 0:
                 print(eng_lemma + " will not be translated.\n")
@@ -275,7 +295,7 @@ class TranslationWord:
         blissymbol = self.translator.word_to_blissymbol(word)
 
         if blissymbol is not None:
-            return blissymbol.get_bliss_name()
+            return blissymbol.bliss_name
         else:
             return
 
@@ -415,7 +435,7 @@ class TranslationWord:
         print(self.language + u": " + self.lemma)
         print("If the above is the true lemma for " + self.word + ", press enter." +
               "\nOtherwise, enter " + self.word + "'s true lemma.")
-        ans = str(raw_input(""))
+        ans = str(input(""))
 
         if ans != "":
             self.lemma = ans
@@ -512,18 +532,24 @@ class TranslationWord:
         :param wikt: bool, whether to search Wiktionary for translations if no synsets found
         :return: List[str], word's English translations
         """
-        synsets = self.translator.lookup_word_synsets(word, language=self.language, pos=pos)
-        eng_translations = self.translator.synsets_lemmas(synsets, eng=True)
+        #synsets = self.translator.lookup_word_synsets(word, language=self.language, pos=pos)
+        #eng_translations = self.translator.synsets_lemmas(synsets, eng=True)
+        eng_lemmas = list()
 
-        if len(eng_translations) != 0:
-            return self.translator.remove_duplicates(eng_translations)
-        elif wikt:
+        #if len(eng_translations) != 0:
+        #    return self.translator.remove_duplicates(eng_translations)
+        if wikt:
             lang_parser = self.init_lang_parser()
             wikt_pos = self.translator.convert_pos_to_wikt(pos)
-            eng_lemmas = lang_parser.find_english_translations(word, language=self.language, pos=wikt_pos)
-            return eng_lemmas
+            eng_lemmas = lang_parser.find_english_translations(word, pos=wikt_pos, language=self.language)
+            #return eng_lemmas
 
-        return list()
+        if len(eng_lemmas) == 0:
+            synsets = self.translator.lookup_word_synsets(word, language=self.language, pos=pos)
+            eng_translations = self.translator.synsets_lemmas(synsets, eng=True)
+            eng_lemmas = self.translator.remove_duplicates(eng_translations)
+
+        return eng_lemmas
 
     def add_eng_lemma(self, eng_lemma):
         """
@@ -600,10 +626,11 @@ class TranslationWord:
 
         :return: str, string representation of this Blissymbol
         """
-        return "word:\t\t" + (self.word).encode('ascii', 'replace') + "\n" + \
+        return "word:\t\t" + str(self.word) + "\n" + \
                "pos:\t\t" + self.pos + "\n" + \
-               "lemma:\t\t" + (self.lemma).encode('ascii', 'replace') + "\n" + \
-               "bliss:\t\t" + (self.get_bliss_name()).encode('ascii', 'replace') + "\n"
+               "lemma:\t\t" + str(self.lemma) + "\n" + \
+               "eng lemmas:\t\t" + str("    ".join(self.eng_lemmas) if self.eng_lemmas is not None else "") + "\n" + \
+               "bliss:\t\t" + str(self.get_bliss_name()) + "\n"
 
     __repr__ = __str__
 

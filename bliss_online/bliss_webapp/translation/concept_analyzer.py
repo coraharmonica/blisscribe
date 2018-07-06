@@ -6,7 +6,7 @@ CONCEPT_ANALYZER:
     using a text_image's most prominent Blissymbols.
 """
 from numpy import log
-from bliss_images import *
+from images import *
 from excerpts import books as novels
 
 
@@ -122,7 +122,7 @@ class ConceptAnalyzer:
                     blissymbol = blissymbols.pop()
                     blissymbols.add(blissymbol)
 
-            img = blissymbol.bliss_image(int(img_w), int(img_w))
+            img = blissymbol.image(int(img_w), int(img_w))
             x_add = img.size[0] + space
 
             if highest_height is None:

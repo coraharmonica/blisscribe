@@ -59,7 +59,7 @@ PARSE_LEXICA:
 import os
 import json
 from openpyxl import load_workbook
-from .blissymbols import Blissymbol, NEW_BLISSYMBOLS
+from blissymbols import Blissymbol, NEW_BLISSYMBOLS
 
 
 class LexiconParser:
@@ -136,7 +136,7 @@ class LexiconParser:
         :return: None
         """
         path = self.DATA_PATH + "/" + filename + ".json"
-        json.dump(data, open(path, 'w'), indent=1, sort_keys=True)
+        json.dump(data, open(path, 'w', encoding='utf-8'), indent=1, sort_keys=True, ensure_ascii=False)
 
     def load_json(self, filename):
         """
@@ -145,7 +145,7 @@ class LexiconParser:
         :param filename: str, name of .json file to fetch
         :return: X, content of given .json file
         """
-        return json.load(open(self.DATA_PATH + filename + ".json"))
+        return json.load(open(self.DATA_PATH + filename + ".json", encoding='utf-8'))
 
     # BLISS DATA
     # ==========
@@ -481,7 +481,7 @@ class LexiconParser:
 
     def refresh_bliss_lexicon(self):
         """
-        Refreshes the Blissymbols JSON lexicon to include all new entries in this
+        Refreshes the Blissymbols JSON lexicon to include all new entry in this
         LexiconParser's bliss_dict.
 
         :return: None
@@ -706,7 +706,7 @@ class LexiconParser:
         """
         Returns a dictionary mapping from WordNet 3.0 to 3.1.
         ~
-        Map only contains entries where 3.0 differs from 3.1.
+        Map only contains entry where 3.0 differs from 3.1.
 
         :return: dict(str, str), where...
             key (str) - WordNet 3.0 synset ID
@@ -785,7 +785,7 @@ class LexiconParser:
         filename = "/resources/lexica/" + language + ".txt"
         lexicon = None
 
-        with open(self.FILE_PATH + filename, "rb") as lex:
+        with open(self.FILE_PATH + filename, "r", encoding='utf-8') as lex:
             if language == "Polish":
                 lexicon = self.parse_polish_lexicon(lex)
             elif language == "French":
@@ -811,7 +811,7 @@ class LexiconParser:
 
         e.g. "grande, grand" -> {"grande":"grand", "grand":"grand"}
 
-        :param lex: List[str], entries in French lexicon
+        :param lex: List[str], entry in French lexicon
         :return: dict, where...
             key (str) - any lexical form of a word
             val (str) - lemmatized form of lemma
@@ -850,7 +850,7 @@ class LexiconParser:
 
         e.g. "kota, kot, kocie" -> {"kota":"kota", "kot":"kota", "kocie":"kota"}
 
-        :param lex: List[str], entries in Polish lexicon
+        :param lex: List[str], entry in Polish lexicon
         :return: dict, where...
             key (str) - any lexical form of a word
             val (str) - lemmatized form of lemma
@@ -858,7 +858,7 @@ class LexiconParser:
         lexicon = {}
 
         for line in lex:
-            line = line.decode("utf-8")
+            line = str(line)
             line = line.strip("\n")
             line = line.strip("\r")
             inflexions = line.split(",")
@@ -1021,8 +1021,8 @@ class LexiconParser:
         :return: tab file, WordNet file for given language
         """
         try:
-            return open(self.FILE_PATH + "/resources/omw_tabs/" +
-                        "wn-cldr-" + lang_code + ".tab")
+            tab_path = "/resources/omw_tabs/" + "wn-cldr-" + lang_code + ".tab"
+            return open(self.FILE_PATH + tab_path, encoding='utf-8')
         except IOError:
             return None
 

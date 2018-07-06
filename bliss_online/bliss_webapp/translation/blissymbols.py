@@ -6,7 +6,7 @@ BLISSYMBOLS:
     created from a language-to-Blissymbols dictionary file or
     by a user.
 """
-from .bliss_images import *
+from images import *
 import re
 
 NEW_BLISSYMBOLS = []    # stores new Blissymbols from Blissymbol.make_new_blissymbol() for deletion
@@ -26,34 +26,17 @@ class Blissymbol:
                        "MD", "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$",
                        "RB", "RBR", "RBS", "RP", "TO", "UH", "VB", "VBD", "VBG",
                        "VBN", "VBP", "VBZ", "WDT", "WP", "WP$", "WRB"]
+    NOUNS = ["NN", "NNP", "NNS", "NNPS"]
+    PRONOUNS = ["PRP", "PRP$"]
+    VERBS = ["VB", "VBD", "VBG", "VBN", "VBP", "VBZ"]
+    ADJS = ["JJ", "JJR", "JJS"]
+    ADVS = ["RB", "RBR", "RBS"]
     POS_COLOUR_CODE = {"GRAY": ["INDICATOR"],
                        "WHITE": PARTS_OF_SPEECH,  # WHITE is catch-all for other parts of speech
-                       "YELLOW": ["NN",
-                                  "NNS",
-                                  "NNP",
-                                  "NNPS",
-                                  ],
-                       "RED": ["VB",
-                               "VBD",
-                               "VBG",
-                               "VBN",
-                               "VBP",
-                               "VBZ",
-                               ],
-                       "BLUE": ["NN",  # personal (pro-)nouns
-                                "NNS",
-                                "NNP",
-                                "NNPS",
-                                "PRP",
-                                "PRP$",
-                                ],
-                       "GREEN": ["JJ",
-                                 "JJR",
-                                 "JJS",
-                                 "RB",
-                                 "RBR",
-                                 "RBS",
-                                 ]}
+                       "YELLOW": NOUNS,
+                       "RED": VERBS,
+                       "BLUE": NOUNS + PRONOUNS,
+                       "GREEN": ADJS + ADVS}
     PUNCT_MAP = {",": u"comma",
                  ".": u"period,point,full_stop,decimal_point",
                  "?": u"question_mark",
@@ -70,7 +53,7 @@ class Blissymbol:
         self.pos = self.init_pos(pos)
         self.paren_phrase = self.get_parens(self.bliss_name)
         self.derivation = derivation
-        self.is_atom = self.find_is_atom()
+        self.is_atomic = self.find_is_atomic()
         self.derivations = self.find_derivations()
         self.check_img_filename()  # creates new blissymbol image from derivations if none exists
         self.translations = self.clean_translations(translations)  # hold translations in different languages
@@ -99,7 +82,7 @@ class Blissymbol:
         """
         self.pos = pos
 
-    def bliss_image(self, max_width=None, max_height=None):
+    def image(self, max_width=None, max_height=None):
         """
         Returns the Image for this Blissymbol, with a
         maximum width of max_width and maximum height of max_height.
@@ -331,7 +314,7 @@ class Blissymbol:
         """
         if self.bliss_name in self.translator.lex_parser.init_derivations():
             return self.translator.lex_parser.init_derivations()[self.bliss_name]
-        elif self.is_atom:
+        elif self.is_atomic:
             return [self.bliss_name]
         elif self.derivation == "":
             return []
@@ -460,7 +443,7 @@ class Blissymbol:
 
         :return: str, Blissymbol's part-of-speech
         """
-        if self.pos is not None:
+        if self.pos is not None and len(self.pos) != 0:
             return self.pos[0]
 
     def get_parens(self, word):
@@ -535,7 +518,21 @@ class Blissymbol:
 
         if self.get_parens(self.bliss_name) == "(to)":
             # all verbs have (to) indicator
-            poses = self.POS_COLOUR_CODE["RED"]
+            poses = self.VERBS
+        elif self.pos_code == "GRAY":
+            pos_name = self.bliss_name.split("(")[:-1]  # extract pos from parens
+            if pos_name == "thing":
+                poses = ["NN", "NNP"]
+            if pos_name == "plural":
+                poses = ["NNS", "NNPS"]
+            if pos_name == "things":
+                poses = ["NNS"]
+            elif pos_name == "adverb":
+                poses = self.ADVS
+            elif pos_name == "description":
+                poses = self.ADJS
+            elif pos_name == "action":
+                poses = self.VERBS
         elif pos is not None:
             try:
                 poses = self.POS_COLOUR_CODE[pos]
@@ -556,8 +553,10 @@ class Blissymbol:
         :return: None
         """
         if self.get_parens(self.bliss_name) == "(to)":
-            # all verbs have (to) indicator
+            # bliss verbs end w/ -(to)
             self.pos_code = "RED"
+        elif "indicator" in self.bliss_name:
+            self.pos_code = "GRAY"
         elif pos_code is not None:
             try:
                 self.POS_COLOUR_CODE[pos_code]
@@ -588,14 +587,17 @@ class Blissymbol:
         """
         return Blissymbol.POS_COLOUR_CODE[colour]
 
-    def find_is_atom(self):
+    def find_is_atomic(self):
         """
         Identifies whether this Blissymbol is atomic or not.
+        Atomic Blissymbols serve as derivative characters for all Blissymbols.
+        All non-atomic Blissymbols are a combination of atomic Blissymbols.
         ~
-        is_atom is True when a Blissymbol is atomic, False otherwise.
+        is_atomic is True when a Blissymbol is atomic, False otherwise.
         ~
-        N.B. Only specified Blissymbols are atomic, all others are non-atomic.
-             All characters with derivations ending in "Character" are atomic.
+        N.B. Only few Blissymbols are atomic, all others are non-atomic.
+             All Blissymbols with derivations ending in "Character" or
+             "pictograph" are atomic.
 
         :return: bool, whether this Blissymbol is atomic
         """
@@ -624,7 +626,7 @@ class Blissymbol:
 
         :return: List[str], this Blissymbol's derivations' unicode IDs
         """
-        return [self.unicode] if self.is_atom else self.find_deriv_unicode(atomic=atomic)
+        return [self.unicode] if self.is_atomic else self.find_deriv_unicode(atomic=atomic)
 
     def add_unicode_to_bliss(self, uni, bliss):
         """
@@ -762,7 +764,7 @@ class Blissymbol:
 
         :return: str, unicode representation of part of speech
         """
-        if not self.is_atom:
+        if not self.is_atomic:
             try:
                 indicator = self.translator.bliss_to_uni[self.pos_to_indicator(self.get_pos())]
             except KeyError:
@@ -967,7 +969,7 @@ class Blissymbol:
         glyph = BlissGlyph()
         pos = self.get_pos()
 
-        if self.is_atom:
+        if self.is_atomic:
             glyph.set_bliss_unit(self.bliss_name)
             return
         else:

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 BLISSLEARN:
 
@@ -20,7 +19,7 @@ BLISSLEARN:
 import os
 from sklearn.tree import DecisionTreeClassifier
 from random import shuffle
-from parts_of_speech import POS_FEATURE_DICT, POS_CODE_DICT, POS_ABBREVS_SORTED
+from .parts_of_speech import POS_FEATURE_DICT, POS_CODE_DICT, POS_ABBREVS_SORTED
 
 
 class BlissClassifier:
@@ -655,7 +654,7 @@ class BlissClassifier:
         return ["U+" + uni for uni in unicodes if uni != ""]
 
     def choose_translation(self, trans_word):
-        ans = raw_input("Enter y to translate " + trans_word.eng_lemma + " to Blissymbols yourself, " +
+        ans = input("Enter y to translate " + trans_word.eng_lemma + " to Blissymbols yourself, " +
                         "or n to choose not to translate it to Blissymbols.\n")
         if ans == "y":
             trans_word.add_new_derivations()
@@ -663,7 +662,7 @@ class BlissClassifier:
     def verify_translation(self, trans_word, blissymbol):
         print("I'm about to translate the word " + trans_word.eng_lemma +
               ", " + trans_word.pos + " with the Blissymbol " + str(blissymbol) + ".  Is that ok?")
-        answer = raw_input("Enter y for yes, n for no.  Enter s to skip to the next Blissymbol.\n")
+        answer = input("Enter y for yes, n for no.  Enter s to skip to the next Blissymbol.\n")
 
         if answer == "n":
             self.choose_translation(trans_word)
@@ -673,7 +672,7 @@ class BlissClassifier:
     def verify_translations(self, trans_word, blissymbols):
         print("I'm about to translate the word " + trans_word.eng_lemma +
               ", " + trans_word.pos + " with the Blissymbols " + str(blissymbols) + ".  Is that ok?")
-        answer = raw_input("Enter y for yes, n for no.\n")
+        answer = input("Enter y for yes, n for no.\n")
 
         if answer == "n":
             self.choose_translation(trans_word)

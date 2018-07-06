@@ -31,18 +31,18 @@ bt.set_translate_all(False)         # translate ALL words, taking user input if 
 bt.set_machine_translate(False)     # enable machine learning translations for unknown words
 bt.set_safe_translate(False)        # translate words with uncertain Blissymbols
 
-bt.translate(excerpts.alice_in_wonderland[:1000], title="Alice in Wonderland")
+# bt.translate(excerpts.alice_in_wonderland[:1000], title="Alice in Wonderland")
 # bt.translate(excerpts.hitchhikers_guide[:500], title="The Hitchhiker's Guide to the Galaxy")
 # bt.translate(excerpts.kjv[:500], title="The Bible")
 # bt.translate(excerpts.leaves_of_grass[:500], title="Leaves of Grass", title_page=False)
 
+'''
 # Polish
 bt.set_language("Polish")
-#bt.set_machine_translate(False)
-#bt.set_safe_translate(True)
-bt.translate(excerpts.alice_in_wonderland_polish[:500], title='Alicja w Krainie Czar\xc3\xb3w')
+bt.set_machine_translate(False)
+bt.set_safe_translate(True)
+bt.translate(excerpts.alice_in_wonderland_polish[:500], title='Alicja w Krainie Czarów')
 
-'''
 # French
 bt.set_language("French")
 # bt.translate(excerpts.petit_prince[:500], title="Le petit prince")

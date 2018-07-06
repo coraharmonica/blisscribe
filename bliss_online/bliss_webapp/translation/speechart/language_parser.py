@@ -6,7 +6,7 @@ LANGUAGE_PARSER:
     a particular language from Wiktionary.
 """
 from nltk.tokenize import WordPunctTokenizer, PunktSentenceTokenizer
-from .wiktionary_parser import *
+from speechart.wiktionary_parser import *
 
 
 class LanguageParser(WiktionaryParser):
@@ -20,6 +20,8 @@ class LanguageParser(WiktionaryParser):
         # --> alphabets
         self.alphabets = self.load_alphabets()
         self.alphabet = self.find_alphabet(self.language)
+        # --> english translations
+        self.english_translations = self.load_english_translations()
         # --> tokenizers
         self.word_tokenizer = None
         self.sent_tokenizer = None
@@ -116,7 +118,7 @@ class LanguageParser(WiktionaryParser):
 
         e.g. "grande, grand" -> {"grand": ["grand", "grande"]}
 
-        :param lex: List[str], entries in French lexicon
+        :param lex: List[str], entry in French lexicon
         :return: dict, where...
             key (str) - word lemma
             val (List[str]) - all lexical forms of word lemma
@@ -156,7 +158,7 @@ class LanguageParser(WiktionaryParser):
 
         e.g. "kot, kota, kocie" -> {"kot": ["kot", "kota", "kocie"]}
 
-        :param lex: List[str], entries in Polish lexicon
+        :param lex: List[str], entry in Polish lexicon
         :return: dict, where...
             key (str) - word lemma
             val (List[str]) - all lexical forms of word lemma
@@ -251,11 +253,11 @@ class LanguageParser(WiktionaryParser):
         :return: List[str], alphabet letters in this language
         """
         cells = []
-        rows = alphabet_table.findAll("tr")
+        rows = alphabet_table.find_all("tr")
         if len(rows) > 1:
             rows = rows[1:]
         for row in rows:
-            cells.extend(row.findAll("td")[-1].findAll("a"))
+            cells.extend(row.find_all("td")[-1].find_all("a"))
         return cells
 
     def word_in_alphabet(self, word, language=None):
@@ -398,6 +400,15 @@ class LanguageParser(WiktionaryParser):
         language = self.verify_language(language)
         return self.alphabets.setdefault(language, list())
 
+    def load_english_translations(self):
+        """
+        Returns a memoized dict of words in every language
+        translated to English.
+
+        :return: dict(str, dict)
+        """
+        return self.load_json("english_translations")
+
     def refresh_data(self):
         """
         Dumps this LanguageParser's data from...
@@ -408,6 +419,7 @@ class LanguageParser(WiktionaryParser):
         """
         self.refresh_alphabets()
         self.refresh_wiktionary_entries()
+        self.refresh_english_translations()
 
     def refresh_dict(self, dict_name):
         """
@@ -457,7 +469,9 @@ class LanguageParser(WiktionaryParser):
         :param poses: Set[str], parts-of-speech for output lemma
         :return: str, lemma for given word
         """
-        word = self.entry_word(word, language)
+        language = self.verify_language(language)
+        self.find_wiktionary_entry(word, language)
+        #word = self.entry_word(word, language)
         lemmas = self.word_lemmas(word, language, pos)
         if len(lemmas) != 0:
             return lemmas[0]
@@ -619,7 +633,7 @@ class LanguageParser(WiktionaryParser):
                             ^^^^^
                           head word
 
-        Part-of-speech entries contain only 1 head word but may
+        Part-of-speech entry contain only 1 head word but may
         contain >=1 stem words.
 
         :param word: str, word of Wiktionary entry to lookup
@@ -675,61 +689,6 @@ class LanguageParser(WiktionaryParser):
                 stemwords += stems
 
         return OrderedSet(stemwords).rank_items()
-
-    def find_english_translation(self, word, language=None, pos=None):
-        """
-        Returns this word's translation from this language to English,
-        according to Wiktionary.
-
-        :param word: str, word to translate
-        :param language: str, language of word
-        :param pos: str, part-of-speech of word
-        :return: str, word's translation in English
-        """
-        translations = self.find_english_translations(word, language, pos)
-        try:
-            return translations[0]
-        except IndexError:
-            return
-
-    def find_english_translations(self, word, language=None, pos=None):
-        """
-        Returns this word's translations from this language to English,
-        according to Wiktionary.
-
-        :param word: str, word to translate
-        :param language: str, language of word
-        :param pos: str, part-of-speech of word
-        :return: List[str], word's translations in English
-        """
-        language = self.verify_language(language)
-        word = str(word)
-        eng_translations = OrderedSet([])
-
-        if language != "English":
-            translations = OrderedSet([])
-            print("finding pos entries for", word)
-            pos_entries = self.find_pos_entries(word, language, poses={pos})
-            if len(pos_entries) == 0:
-                pos_entries = self.find_pos_entries(word, language)
-            print("found pos entries for", word)
-
-            print("\t", pos_entries)
-            for pos_entry in pos_entries:
-                entry = pos_entries[pos_entry]
-                eng_entry = entry[1:]
-                translations.update([e[1] for e in eng_entry if e[1] is not None and e[1] != word])
-
-            print("\t", translations)
-
-            for translation in translations.items():
-                translation = self.clean_parentheticals(translation.strip())
-                if self.word_in_wiktionary(translation, "English"):
-                    print("\t", translation, "is an English word")
-                    eng_translations.add(translation)
-
-            print
-        return eng_translations.items()
 
     def find_word_ipas(self, word, language=None):
         """
@@ -914,10 +873,17 @@ class LanguageParser(WiktionaryParser):
         sents_tokens = self.tokenize_words(str(sentences))
         return self.words_morphemes(sents_tokens, language)
 
+    # MINIMAL PAIRS
+    # -------------
+    # Find "minimal pairs" in a language of words
+    # which differ by only 1 IPA, or sentences which
+    # differ by only 1 word.
+    # -------------
+
     # LOOKUPS & FINDS
     # ---------------
-    # Use lookup to "look up" existing entries,
-    # use find to "find" new entries if none exist.
+    # Use lookup to "look up" existing entry,
+    # use find to "find" new entry if none exist.
     # ---------------
     def lookup_word_inflections(self, word, language):
         """
@@ -1144,17 +1110,18 @@ class LanguageParser(WiktionaryParser):
 
     def add_common_wiktionary_entries(self, language=None, lim=50000):
         """
-        Adds Wiktionary entries for the most common words in
+        Adds Wiktionary entry for the most common words in
         this language to this WiktionaryParser's wiktionary_entries.
 
-        :param words: List[str], words of Wiktionary entries to add
-        :param language: Optional[str], language of entries to add
+        :param words: List[str], words of Wiktionary entry to add
+        :param language: Optional[str], language of entry to add
         :return: dict(str, dict), where str is language and dict is...
             key (str) - title of subentry heading (e.g. Etymology)
             val (list) - value(s) associated with subentry
         """
         language = self.verify_language(language)
-        return self.add_wiktionary_entries(self.common_words(language, lim), language)
+        self.find_wiktionary_entries(self.common_words(language, lim), language)
+        return self.wiktionary_entries
 
     # URLS
     # ----

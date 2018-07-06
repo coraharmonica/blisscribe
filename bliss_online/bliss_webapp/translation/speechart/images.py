@@ -82,7 +82,7 @@ def overlay(front, back, equate=True):
     return img
 
 
-def beside(left, right, align='bottom'):
+def beside(left, right, align='bottom', trim_imgs=True):
     """
     Places left image beside right image.
     ~
@@ -93,9 +93,11 @@ def beside(left, right, align='bottom'):
     :param left: Image, image to place to left
     :param right: Image, image to place to right
     :param align: str, alignment of right image relative to left
+    :param trim_imgs: bool, whether to trim left & right images
     :return: Image, left image beside right image
     """
-    left, right = trim(left), trim(right)
+    if trim_imgs:
+        left, right = trim(left), trim(right)
     w, h = left.size[0] + right.size[0], max(left.size[1], right.size[1])
     img = Image.new(mode="RGBA", size=(w, h))
 
@@ -113,7 +115,7 @@ def beside(left, right, align='bottom'):
     return img
 
 
-def beside_all(imgs, align='bottom', space=0):
+def beside_all(imgs, align='bottom', space=0, trim_imgs=True):
     """
     Places each image in imgs beside each other.
     ~
@@ -124,14 +126,15 @@ def beside_all(imgs, align='bottom', space=0):
     :param imgs: List[Image], images to place beside each other
     :param align: str, alignment of images relative to each other
     :param space: int, space between each image
+    :param trim_imgs: bool, whether to trim left & right images
     :return: Image, imgs beside one another
     """
     final_img = make_blank_img(0, 0, opacity=0)
     space_img = make_blank_img(space, space, opacity=0)
     for img in imgs:
         if space > 0:
-            final_img = beside(final_img, space_img, align=align)
-        final_img = beside(final_img, img, align=align)
+            final_img = beside(final_img, space_img, align=align, trim_imgs=trim_imgs)
+        final_img = beside(final_img, img, align=align, trim_imgs=trim_imgs)
     return final_img
 
 
@@ -275,6 +278,7 @@ def triangle(width, height, fill='white', vertical=True, outline=None, opacity=0
         dims = [(min_w, 0), (min_w, height), (max_w, height//2)]
     draw.polygon(dims, fill, outline)
     return img
+
 
 def polygon(width, height, num_sides, fill='white', vertical=True, outline=None, opacity=0):
     if num_sides > 2:
@@ -461,4 +465,59 @@ def flower_diagram(colours, diameter=100):
         angle += offset
 
     return diagram
+
+
+def draw_ellipse(image, bounds, width=1, outline='white', antialias=4):
+    """Improved ellipse drawing function, based on PIL.ImageDraw."""
+    # Source: https://stackoverflow.com/questions/32504246/draw-ellipse-in-python-pil-with-line-thickness
+
+    # Use a single channel image (mode='L') as mask.
+    # The size of the mask can be increased relative to the imput image
+    # to get smoother looking results.
+    mask = Image.new(
+        size=[int(dim * antialias) for dim in image.size],
+        mode='L', color='black')
+    draw = ImageDraw.Draw(mask)
+
+    # draw outer shape in white (color) and inner shape in black (transparent)
+    for offset, fill in (width/-2.0, 'white'), (width/2.0, 'black'):
+        left, top = [(value + offset) * antialias for value in bounds[:2]]
+        right, bottom = [(value - offset) * antialias for value in bounds[2:]]
+        draw.ellipse([left, top, right, bottom], fill=fill)
+
+    # downsample the mask using PIL.Image.LANCZOS
+    # (a high-quality downsampling filter).
+    mask = mask.resize(image.size, Image.LANCZOS)
+    # paste outline color to input image through the mask
+    image.paste(outline, mask=mask)
+
+
+def draw_arc(image, bounds, width=1, outline='white', antialias=4):
+    """Improved arc drawing function, based on PIL.ImageDraw."""
+    # Adapted from: https://stackoverflow.com/questions/32504246/draw-ellipse-in-python-pil-with-line-thickness
+
+    # Use a single channel image (mode='L') as mask.
+    # The size of the mask can be increased relative to the imput image
+    # to get smoother looking results.
+
+    mask = Image.new(
+        size=[int(dim * antialias) for dim in image.size],
+        mode='L', color='black')
+    draw = ImageDraw.Draw(mask)
+
+    # draw outer shape in white (color) and inner shape in black (transparent)
+    for offset, fill in (width/-2.0, 'white'), (width/2.0, 'black'):
+        left, top = [(value + offset) * antialias for value in bounds[:2]]
+        right, bottom = [(value - offset) * antialias for value in bounds[2:]]
+        draw.ellipse((left, top, right, bottom), fill=fill)
+
+    # downsample the mask using PIL.Image.LANCZOS
+    # (a high-quality downsampling filter).
+    mask = mask.resize(image.size, Image.LANCZOS)
+    # paste outline color to input image through the mask
+    halfmask = make_blank_img(mask.size[0], mask.size[1], opacity=0)
+    halfmask.paste(outline, mask=mask)
+    halfmask = trim(halfmask)
+    halfmask = trim(halfmask, bbox=(0, halfmask.size[1]/2.0, halfmask.size[0], halfmask.size[1]))
+    image.paste(halfmask)
 

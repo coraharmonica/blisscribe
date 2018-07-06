@@ -4,7 +4,7 @@ DEMO:
 
     Used for demoing MorphemeParser, MorphemeChart, and more.
 """
-from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.speecharts import *
+from speechart.speecharts import *
 
 
 # construct a MorphemeChart to create a DFA for words in your desired language

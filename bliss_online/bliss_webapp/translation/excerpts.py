@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 EXCERPTS:
 
@@ -41,7 +40,7 @@ def parse_plaintext(filename):
     contents = []
     slash = "/" if filename[0] != "/" else ""
 
-    with open(FILE_PATH + slash + filename, "r") as text:
+    with open(FILE_PATH + slash + filename, "r", encoding='utf-8') as text:
         for line in text:
             contents.append(line)
 
@@ -53,7 +52,7 @@ def parse_excerpts(filenames):
     Parses plaintext files with given filenames and returns a dictionary of words
     with corresponding image file links.
     If a line in the file contains multiple words, this function splits the line
-    and adds each word to the dict as separate entries linking to the same Blissymbol.
+    and adds each word to the dict as separate entry linking to the same Blissymbol.
     If a word in the file has no corresponding Blissymbol, the {key,val} pair
     is not added to the output dict.
 
@@ -81,7 +80,7 @@ def write_plaintext(text, filename):
     """
     slash = "/" if filename[0] != "/" else ""
 
-    with open(FILE_PATH + slash + filename, mode=u"w+") as out:
+    with open(FILE_PATH + slash + filename, mode="w+", encoding='utf-8') as out:
         out.write(text)
         out.close()
 

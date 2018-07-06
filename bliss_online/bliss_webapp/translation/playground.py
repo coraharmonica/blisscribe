@@ -7,15 +7,34 @@ DEMO:
 
     Not for GitHub.
 """
-#import excerpts
+import excerpts
 #from speechart.blisschart import BlissChart
-from .blisscribe import *
+from blisscribe import *
 
 
-bt = BlissTranslator(language="English")
+bt = BlissTranslator(language='Polish')
+bt.set_sub_all(True)                # add subtitles below all Blissymbols
+bt.set_fast_translate(True)         # translate words to Blissymbols immediately
+bt.set_translatables(other=True)    # translate all parts of speech to Blissymbols
+bt.set_translate_all(False)         # translate ALL words, taking user input if necessary
+bt.set_machine_translate(False)     # enable machine learning translations for unknown words
+bt.set_safe_translate(False)        # translate words with uncertain Blissymbols
+
+# bt.translate(excerpts.alice_in_wonderland[:1000], title="Alice in Wonderland")
+# bt.translate(excerpts.hitchhikers_guide[:500], title="The Hitchhiker's Guide to the Galaxy")
+# bt.translate(excerpts.kjv[:500], title="The Bible")
+# bt.translate(excerpts.leaves_of_grass[:500], title="Leaves of Grass", title_page=False)
+
+# Polish
+#bt.set_language("Polish")
+bt.set_machine_translate(False)
+bt.set_safe_translate(True)
+bt.translate(excerpts.alice_in_wonderland_polish[:8000], title='Alicja w Krainie Czarów')
+bt.init_lang_parser().refresh_data()
 
 
 '''
+bt = BlissTranslator(language="English")
 bt.set_fast_translate(True)
 bt.set_safe_translate(False)
 bt.set_sub_all(True)

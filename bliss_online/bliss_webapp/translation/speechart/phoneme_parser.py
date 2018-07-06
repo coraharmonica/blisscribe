@@ -209,7 +209,7 @@ class PhonemeParser(LanguageParser):
     def common_ipa_words(self, lim=50000):
         """
         Returns a set of IPAWords corresponding to the
-        Wiktionary entries of this PhonemeParser's language's most
+        Wiktionary entry of this PhonemeParser's language's most
         common words (up to 50,000).
 
         :param lim: int, lim <= 50000, number of words to retrieve
@@ -1253,7 +1253,7 @@ class IPAWord:
         returns the input ipa modified to contain with the same number of syllables as
         the input word.
         ~
-        This method was designed to correct Wiktionary IPA entries which have no
+        This method was designed to correct Wiktionary IPA entry which have no
         syllable marks added as yet.
 
         :param word: str, word to check whether syllables equal to IPA
@@ -1277,7 +1277,7 @@ class IPAWord:
         returns the input ipa modified to contain with the same number of syllables as
         the input word.
         ~
-        This method was designed to correct Wiktionary IPA entries which have no
+        This method was designed to correct Wiktionary IPA entry which have no
         syllable marks added as yet.
 
         :param word: str, word to check whether syllables equal to IPA

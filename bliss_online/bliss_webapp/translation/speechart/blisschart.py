@@ -477,7 +477,7 @@ class BlissChart(speecharts.LanguageChart):
         :return: Image, image for Blissymbol
         """
         max_height = self.bliss_height/2 if mini else self.bliss_height
-        return blissymbol.bliss_image(max_height=max_height)
+        return blissymbol.image(max_height=max_height)
 
     def empty_bliss_image(self):
         """

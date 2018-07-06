@@ -111,7 +111,7 @@ def abs__file__():
         m.__file__ = os.path.abspath(f)
 
 def removeduppaths():
-    """ Remove duplicate entries from sys.path along with making them
+    """ Remove duplicate entry from sys.path along with making them
     absolute"""
     # This ensures that the initial path provided by the interpreter contains
     # only absolute pathnames, even if we're running from the build directory.
@@ -141,7 +141,7 @@ def addbuilddir():
     sys.path.append(s)
 
 def _init_pathinfo():
-    """Return a set containing all existing directory entries from sys.path"""
+    """Return a set containing all existing directory entry from sys.path"""
     d = set()
     for dir in sys.path:
         try:
@@ -644,8 +644,8 @@ def virtual_addsitepackages(known_paths):
     return addsitepackages(known_paths, sys_prefix=sys.real_prefix)
 
 def fixclasspath():
-    """Adjust the special classpath sys.path entries for Jython. These
-    entries should follow the base virtualenv lib directories.
+    """Adjust the special classpath sys.path entry for Jython. These
+    entry should follow the base virtualenv lib directories.
     """
     paths = []
     classpaths = []

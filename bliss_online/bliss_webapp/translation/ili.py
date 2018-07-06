@@ -3,7 +3,7 @@
 ILI:
 
     Contains classes for representing ILI dictionaries
-    and their entries.
+    and their entry.
 
     Purpose TBD.  Hoping to incorporate Blissymbols into
     conceptual dictionary after creating Blissymbols
@@ -47,7 +47,7 @@ class ILIParser(LexiconParser):
         ~
         Used for cross-lingual translation.
 
-        :param clean_defns: List[ILIEntry], list of word entries to write
+        :param clean_defns: List[ILIEntry], list of word entry to write
         :return: None
         """
         out = self.ILI_PATH + "ili-wn-mapping-cleaned.txt"
@@ -86,7 +86,7 @@ class ILIParser(LexiconParser):
 
 class ILIDict:
     """
-    A class representing a set of word entries in the
+    A class representing a set of word entry in the
     Interlingual Language Index (ILI).
     ~
     In ILI, each entry is a unique cross-lingual
