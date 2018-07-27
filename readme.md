@@ -62,12 +62,13 @@ To translate online, open the package in command line and cd to the [bliss_onlin
 
 Then cd into bliss_app and run these prompts:
 
-> manage.py makemigrations
-> manage.py migrate
+> python manage.py makemigrations
+
+> python manage.py migrate
 
 If all files have been migrated then run the final prompt:
 
-> manage.py runserver
+> python manage.py runserver
 
 If the server connects properly you'll see a web address in command line.  Go to the address and visit the 'translate' section of the Blisscribe website to translate using the interface.
 
