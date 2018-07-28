@@ -56,11 +56,9 @@ To translate in Python, head to the [translation folder](https://github.com/cora
 
 <h3>Online</h3>
 
-To translate online, open the package in command line and cd to the [bliss_online folder](https://github.com/coraharmonica/blisscribe/tree/master/bliss_online), where the env folder is located.  If you're not already in a virtualenv, run the following prompt:
+To translate online, open the package in command line and cd to the [bliss_online folder](https://github.com/coraharmonica/blisscribe/tree/master/bliss_online), where the env folder is located.  If you're not already in a virtualenv, run the following prompts:
 
 > source env/bin/activate
-
-Then cd into bliss_app and run these prompts:
 
 > python manage.py makemigrations
 
