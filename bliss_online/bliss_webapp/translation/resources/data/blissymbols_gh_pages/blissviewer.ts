@@ -97,7 +97,7 @@ class BlissViewer {
 
     // Private methods
 
-    private get_data(id) : any {
+    private compile_to_svg(id) : any {
         var data : any = this.chardata.paths[id];
         if (data) return data;
         data = this.chardata.shapes[id];
@@ -136,7 +136,7 @@ class BlissViewer {
 
     private to_svg_obj(x, y, obj) {
         if (typeof obj == "string") {
-            return this.to_svg_obj(x, y, this.get_data(obj));
+            return this.to_svg_obj(x, y, this.compile_to_svg(obj));
 
         } else if (obj instanceof Array) {
             var svg = "";

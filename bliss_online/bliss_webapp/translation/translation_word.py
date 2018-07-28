@@ -5,7 +5,6 @@ TRANSLATION_WORD:
     A class for representing a word-in-translation as
     part of a BlissTranslator.
 """
-from images import *
 
 
 class TranslationWord:
@@ -49,13 +48,14 @@ class TranslationWord:
         if self.translator.language != "English" and not self.translator.is_nonalpha(self.lemma):
             self.get_multilingual_pos()
 
-    def init_lang_parser(self):
+    def lang_parser(self):
         """
         Returns this TranslationWord's translator's LanguageParser.
 
         :return: LanguageParser, a parser for Wiktionary lookups
         """
-        return self.translator.init_lang_parser()
+        self.translator.init_lang_parser()
+        return self.translator.lang_parser
 
     def init_eng_lemmas(self):
         """
@@ -393,7 +393,7 @@ class TranslationWord:
         :param etym: str, a word's etymology
         :return: List[str], Blissymbol names for word's etymologies
         """
-        lang_parser = self.init_lang_parser()
+        lang_parser = self.lang_parser()
         etyms = lang_parser.find_word_etymology(word)
         bliss_etyms = []
 
@@ -416,7 +416,7 @@ class TranslationWord:
         if self.in_bliss_dict(etym, self.language):
             return etym
         else:
-            lang_parser = self.init_lang_parser()
+            lang_parser = self.lang_parser()
             etym_stemwords = lang_parser.find_stemwords(etym, self.language)
 
             if len(etym_stemwords) == 0 and etym[0] == u"-":
@@ -466,7 +466,7 @@ class TranslationWord:
             translations = dict()
             translations["English"] = self.eng_lemmas
             translations[self.language] = [lemma]
-            blissymbol = self.translator.make_blissymbol(img_filename=img_filename + ".png",
+            blissymbol = self.translator.make_blissymbol(bliss_name=img_filename + ".png",
                                                          pos=self.pos,
                                                          derivation=derivation,
                                                          translations=translations,
@@ -499,10 +499,9 @@ class TranslationWord:
         :return: str, this Blissymbol's lemma
         """
         if self.language != "English":
-            lemma = self.translator.lemmatize(word, language=language)
+            return self.translator.lemmatize(word, language=language)
         else:
-            lemma = self.translator.lemmatize(word, language="English", pos=pos)
-        return lemma
+            return self.translator.lemmatize(word, language="English", pos=pos)
 
     def find_english_translation(self, word, pos=None):
         """
@@ -539,13 +538,14 @@ class TranslationWord:
         #if len(eng_translations) != 0:
         #    return self.translator.remove_duplicates(eng_translations)
         if wikt:
-            lang_parser = self.init_lang_parser()
+            lang_parser = self.lang_parser()
             wikt_pos = self.translator.convert_pos_to_wikt(pos)
             eng_lemmas = lang_parser.find_english_translations(word, pos=wikt_pos, language=self.language)
             #return eng_lemmas
 
         if len(eng_lemmas) == 0:
-            synsets = self.translator.lookup_word_synsets(word, language=self.language, pos=pos)
+            synsets = self.translator.lookup_word_synsets(word, pos=pos,
+                                                          lang_code=self.translator.find_lang_code(self.language))
             eng_translations = self.translator.synsets_lemmas(synsets, eng=True)
             eng_lemmas = self.translator.remove_duplicates(eng_translations)
 
@@ -587,10 +587,10 @@ class TranslationWord:
         """
         word = self.lemma
         pos = self.translator.abbreviate_pos(self.pos)
-        synsets = self.translator.lookup_word_synsets(word, pos=pos, language=self.translator.language)
+        synsets = self.translator.lookup_word_synsets(word, pos=pos, lang_code=self.translator.lang_code)
 
         if len(synsets) == 0 and self.language != "English":
-            synsets = self.translator.lookup_word_synsets(word, language=self.translator.language)
+            synsets = self.translator.lookup_word_synsets(word, lang_code=self.translator.lang_code)
 
         return synsets
 

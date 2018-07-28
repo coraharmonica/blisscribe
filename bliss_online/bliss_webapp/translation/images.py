@@ -159,13 +159,10 @@ def make_font(font_path, font_size):
 
 def get_bliss_img(bliss_name, max_width=None, max_height=None):
     """
-    Draws and returns a thumbnail Image of the given word's
-    Blissymbol, with width not exceeding max_width.
-    ~
-    If a word has multiple meanings, then return the Blissymbol
-    corresponding to the best meaning in bliss_dict.
+    Draws and returns a thumbnail Image for the Blissymbol with
+    this bliss_name, with width not exceeding max_width.
 
-    :param bliss_name: str, Blissymbol image filename
+    :param bliss_name: str, name of a Blissymbol with an image filename
     :param max_width: int, maximum width of Image (in pixels)
     :param max_height: int, maximum height of Image (in pixels)
     :return: Image, image of input str's Blissymbol

@@ -14,10 +14,25 @@
    ]
   }
  },
+ "albo": {
+  "Polish": {
+   "Conjunction": [
+    "or",
+    "exclusive or"
+   ]
+  }
+ },
  "ale": {
   "Polish": {
    "Conjunction": [
     "but"
+   ]
+  }
+ },
+ "ananas": {
+  "Polish": {
+   "Noun": [
+    "pineapple"
    ]
   }
  },
@@ -35,6 +50,55 @@
    "Adverb": [
     "very",
     "much"
+   ]
+  }
+ },
+ "bestia": {
+  "Polish": {
+   "Noun": [
+    "beast"
+   ]
+  }
+ },
+ "bez": {
+  "Polish": {
+   "Preposition": [
+    "without",
+    "lacking"
+   ]
+  }
+ },
+ "blisko": {
+  "Polish": {
+   "Adverb": [
+    "near",
+    "close"
+   ]
+  }
+ },
+ "butelka": {
+  "Polish": {
+   "Noun": [
+    "bottle"
+   ]
+  }
+ },
+ "by": {
+  "Polish": {
+   "Conjunction": [
+    "in order to",
+    "so that"
+   ],
+   "Particle": [
+    "would",
+    "should"
+   ]
+  }
+ },
+ "bynajmniej": {
+  "Polish": {
+   "Particle": [
+    "at all"
    ]
   }
  },
@@ -82,6 +146,17 @@
    ]
   }
  },
+ "chociaż": {
+  "Polish": {
+   "Conjunction": [
+    "although",
+    "though"
+   ],
+   "Particle": [
+    "at least"
+   ]
+  }
+ },
  "chodzić": {
   "Polish": {
    "Verb": [
@@ -90,6 +165,13 @@
     "frequent",
     "mean",
     "about"
+   ]
+  }
+ },
+ "chrust": {
+  "Polish": {
+   "Noun": [
+    "brushwood"
    ]
   }
  },
@@ -124,6 +206,14 @@
    ]
   }
  },
+ "ciasto": {
+  "Polish": {
+   "Noun": [
+    "dough",
+    "cake"
+   ]
+  }
+ },
  "ciekawość": {
   "Polish": {
    "Noun": [
@@ -146,10 +236,35 @@
    ]
   }
  },
+ "ciągnąć": {
+  "Polish": {
+   "Verb": [
+    "pull",
+    "drag",
+    "draw",
+    "haul",
+    "blowjob"
+   ]
+  }
+ },
  "co": {
   "Polish": {
    "Pronoun": [
     "what"
+   ]
+  }
+ },
+ "coś": {
+  "Polish": {
+   "Pronoun": [
+    "something"
+   ]
+  }
+ },
+ "cukierek": {
+  "Polish": {
+   "Noun": [
+    "sweet"
    ]
   }
  },
@@ -196,6 +311,13 @@
    ]
   }
  },
+ "dal": {
+  "Polish": {
+   "Noun": [
+    "distance"
+   ]
+  }
+ },
  "dalej": {
   "Polish": {
    "Adverb": [
@@ -219,6 +341,13 @@
     "put out",
     "consent",
     "sex"
+   ]
+  }
+ },
+ "dlatego": {
+  "Polish": {
+   "Pronoun": [
+    "therefore"
    ]
   }
  },
@@ -264,6 +393,15 @@
    ]
   }
  },
+ "doskonały": {
+  "Polish": {
+   "Adjective": [
+    "perfect",
+    "excellent",
+    "flawless"
+   ]
+  }
+ },
  "dotychczas": {
   "Polish": {
    "Adverb": [
@@ -294,10 +432,31 @@
    ]
   }
  },
+ "drugi": {
+  "Polish": {
+   "Numeral": [
+    "second"
+   ]
+  }
+ },
+ "drzwi": {
+  "Polish": {
+   "Noun": [
+    "door"
+   ]
+  }
+ },
  "dwa": {
   "Polish": {
    "Numeral": [
     "two"
+   ]
+  }
+ },
+ "dziecko": {
+  "Polish": {
+   "Noun": [
+    "child"
    ]
   }
  },
@@ -310,12 +469,34 @@
    ]
   }
  },
+ "dziki": {
+  "Polish": {
+   "Adjective": [
+    "wild",
+    "untamed",
+    "inhibition",
+    "moderation",
+    "party",
+    "asocial",
+    "shut-in",
+    "introverted"
+   ]
+  }
+ },
  "dziwić": {
   "Polish": {
    "Verb": [
     "surprise",
     "astonish",
     "wonder"
+   ]
+  }
+ },
+ "dziwny": {
+  "Polish": {
+   "Adjective": [
+    "strange",
+    "odd"
    ]
   }
  },
@@ -334,6 +515,20 @@
    ]
   }
  },
+ "długi": {
+  "Polish": {
+   "Adjective": [
+    "long"
+   ]
+  }
+ },
+ "długo": {
+  "Polish": {
+   "Adverb": [
+    "long"
+   ]
+  }
+ },
  "długość": {
   "Polish": {
    "Noun": [
@@ -348,6 +543,22 @@
     "voiced",
     "booming",
     "resonating"
+   ]
+  }
+ },
+ "gacek": {
+  "Polish": {
+   "Noun": [
+    "long-eared bat",
+    "Plecotus"
+   ]
+  }
+ },
+ "gdy": {
+  "Polish": {
+   "Conjunction": [
+    "when",
+    "as"
    ]
   }
  },
@@ -382,6 +593,31 @@
    ]
   }
  },
+ "gruby": {
+  "Polish": {
+   "Adjective": [
+    "awesome",
+    "great",
+    "excellent"
+   ]
+  }
+ },
+ "góra": {
+  "Polish": {
+   "Noun": [
+    "mountain",
+    "top",
+    "higher-ups"
+   ]
+  }
+ },
+ "głowa": {
+  "Polish": {
+   "Noun": [
+    "head"
+   ]
+  }
+ },
  "głupi": {
   "Polish": {
    "Adjective": [
@@ -413,6 +649,36 @@
    ]
   }
  },
+ "inaczej": {
+  "Polish": {
+   "Pronoun": [
+    "otherwise",
+    "differently"
+   ]
+  }
+ },
+ "indyk": {
+  "Polish": {
+   "Noun": [
+    "turkey"
+   ]
+  }
+ },
+ "inny": {
+  "Polish": {
+   "Pronoun": [
+    "different",
+    "another"
+   ]
+  }
+ },
+ "iż": {
+  "Polish": {
+   "Conjunction": [
+    "that"
+   ]
+  }
+ },
  "jak": {
   "Polish": {
    "Conjunction": [
@@ -435,6 +701,24 @@
    ]
   }
  },
+ "jakiś": {
+  "Polish": {
+   "Pronoun": [
+    "some"
+   ]
+  }
+ },
+ "jasny": {
+  "Polish": {
+   "Adjective": [
+    "bright",
+    "light",
+    "evident",
+    "obvious",
+    "clear"
+   ]
+  }
+ },
  "jeden": {
   "Polish": {
    "Numeral": [
@@ -446,6 +730,21 @@
   "Polish": {
    "Particle": [
     "however"
+   ]
+  }
+ },
+ "jednoczesny": {
+  "Polish": {
+   "Adjective": [
+    "simultaneous",
+    "coincidental"
+   ]
+  }
+ },
+ "jednocześnie": {
+  "Polish": {
+   "Adverb": [
+    "simultaneously"
    ]
   }
  },
@@ -512,6 +811,16 @@
    ]
   }
  },
+ "każdy": {
+  "Polish": {
+   "Pronoun": [
+    "each",
+    "every",
+    "everyone",
+    "everybody"
+   ]
+  }
+ },
  "kiedy": {
   "Polish": {
    "Conjunction": [
@@ -524,11 +833,34 @@
    ]
   }
  },
+ "kiedykolwiek": {
+  "Polish": {
+   "Pronoun": [
+    "whenever"
+   ]
+  }
+ },
  "kochany": {
   "Polish": {
    "Noun": [
     "loved one",
     "love"
+   ]
+  }
+ },
+ "kolej": {
+  "Polish": {
+   "Noun": [
+    "railway",
+    "railroad",
+    "turn"
+   ]
+  }
+ },
+ "korytarz": {
+  "Polish": {
+   "Noun": [
+    "corridor"
    ]
   }
  },
@@ -546,6 +878,22 @@
    "Noun": [
     "country",
     "land"
+   ]
+  }
+ },
+ "krem": {
+  "Polish": {
+   "Noun": [
+    "cream"
+   ]
+  }
+ },
+ "krwawy": {
+  "Polish": {
+   "Adjective": [
+    "bloody",
+    "gory",
+    "bloodshed"
    ]
   }
  },
@@ -580,6 +928,46 @@
    ]
   }
  },
+ "ku": {
+  "Polish": {
+   "Preposition": [
+    "towards",
+    "to"
+   ]
+  }
+ },
+ "kwietnik": {
+  "Polish": {
+   "Noun": [
+    "goldenrod crab spider",
+    "Misumena vatia"
+   ]
+  }
+ },
+ "leczyć": {
+  "Polish": {
+   "Verb": [
+    "cure",
+    "heal",
+    "treat"
+   ]
+  }
+ },
+ "leżeć": {
+  "Polish": {
+   "Verb": [
+    "lie"
+   ]
+  }
+ },
+ "liść": {
+  "Polish": {
+   "Noun": [
+    "leaf",
+    "bitch slap"
+   ]
+  }
+ },
  "lub": {
   "Polish": {
    "Conjunction": [
@@ -601,10 +989,34 @@
    ]
   }
  },
+ "marzyć": {
+  "Polish": {
+   "Verb": [
+    "dream"
+   ]
+  }
+ },
+ "masło": {
+  "Polish": {
+   "Noun": [
+    "butter"
+   ]
+  }
+ },
  "mały": {
   "Polish": {
    "Adjective": [
     "small"
+   ]
+  }
+ },
+ "metr": {
+  "Polish": {
+   "Noun": [
+    "metre",
+    "meter",
+    "measuring",
+    "tape"
    ]
   }
  },
@@ -637,6 +1049,14 @@
    "Verb": [
     "crumple",
     "crease"
+   ]
+  }
+ },
+ "miękki": {
+  "Polish": {
+   "Adjective": [
+    "soft",
+    "palatal"
    ]
   }
  },
@@ -689,10 +1109,27 @@
    ]
   }
  },
+ "mówić": {
+  "Polish": {
+   "Verb": [
+    "say",
+    "tell",
+    "speak",
+    "talk"
+   ]
+  }
+ },
  "mądrość": {
   "Polish": {
    "Noun": [
     "wisdom"
+   ]
+  }
+ },
+ "mądry": {
+  "Polish": {
+   "Adjective": [
+    "wise"
    ]
   }
  },
@@ -758,6 +1195,13 @@
    ]
   }
  },
+ "najpierw": {
+  "Polish": {
+   "Adverb": [
+    "first"
+   ]
+  }
+ },
  "naklejka": {
   "Polish": {
    "Noun": [
@@ -771,6 +1215,22 @@
     "piece",
     "text",
     "inscription"
+   ]
+  }
+ },
+ "naprawdę": {
+  "Polish": {
+   "Adverb": [
+    "really",
+    "truly"
+   ]
+  }
+ },
+ "nauka": {
+  "Polish": {
+   "Noun": [
+    "learning",
+    "teaching"
    ]
   }
  },
@@ -828,6 +1288,14 @@
    ]
   }
  },
+ "niewiele": {
+  "Polish": {
+   "Adjective": [
+    "few",
+    "little"
+   ]
+  }
+ },
  "niewątpliwie": {
   "Polish": {
    "Adverb": [
@@ -840,6 +1308,21 @@
   "Polish": {
    "Adverb": [
     "never"
+   ]
+  }
+ },
+ "nigdzie": {
+  "Polish": {
+   "Adverb": [
+    "nowhere"
+   ]
+  }
+ },
+ "niski": {
+  "Polish": {
+   "Adjective": [
+    "low",
+    "deep"
    ]
   }
  },
@@ -858,6 +1341,13 @@
     "burrow",
     "hovel",
     "kennel"
+   ]
+  }
+ },
+ "norka": {
+  "Polish": {
+   "Noun": [
+    "mink"
    ]
   }
  },
@@ -907,6 +1397,21 @@
    ]
   }
  },
+ "odpowiedzieć": {
+  "Polish": {
+   "Verb": [
+    "answer",
+    "reply"
+   ]
+  }
+ },
+ "ogród": {
+  "Polish": {
+   "Noun": [
+    "garden"
+   ]
+  }
+ },
  "około": {
   "Polish": {
    "Preposition": [
@@ -931,6 +1436,28 @@
    ]
   }
  },
+ "ostatnio": {
+  "Polish": {
+   "Adverb": [
+    "lately",
+    "recently"
+   ]
+  }
+ },
+ "otwierać": {
+  "Polish": {
+   "Verb": [
+    "open"
+   ]
+  }
+ },
+ "otworzyć": {
+  "Polish": {
+   "Verb": [
+    "open"
+   ]
+  }
+ },
  "otwór": {
   "Polish": {
    "Noun": [
@@ -939,6 +1466,14 @@
     "orifice",
     "vent",
     "gap"
+   ]
+  }
+ },
+ "palec": {
+  "Polish": {
+   "Noun": [
+    "finger",
+    "toe"
    ]
   }
  },
@@ -951,6 +1486,14 @@
    ],
    "Pronoun": [
     "your"
+   ]
+  }
+ },
+ "panować": {
+  "Polish": {
+   "Verb": [
+    "widespread",
+    "prevail"
    ]
   }
  },
@@ -969,6 +1512,27 @@
   "Polish": {
    "Adjective": [
     "full"
+   ]
+  }
+ },
+ "piec": {
+  "Polish": {
+   "Noun": [
+    "fire"
+   ],
+   "Verb": [
+    "bake",
+    "roast",
+    "burn",
+    "sting",
+    "smart"
+   ]
+  }
+ },
+ "piękny": {
+  "Polish": {
+   "Adjective": [
+    "beautiful"
    ]
   }
  },
@@ -1044,6 +1608,15 @@
    ]
   }
  },
+ "pomoc": {
+  "Polish": {
+   "Noun": [
+    "help",
+    "aid",
+    "assistance"
+   ]
+  }
+ },
  "pomyśleć": {
   "Polish": {
    "Verb": [
@@ -1071,6 +1644,21 @@
    ]
   }
  },
+ "potrafić": {
+  "Polish": {
+   "Verb": [
+    "can"
+   ]
+  }
+ },
+ "powiedzieć": {
+  "Polish": {
+   "Verb": [
+    "tell",
+    "say"
+   ]
+  }
+ },
  "powietrze": {
   "Polish": {
    "Noun": [
@@ -1085,10 +1673,26 @@
    ]
   }
  },
+ "pożreć": {
+  "Polish": {
+   "Verb": [
+    "devour"
+   ]
+  }
+ },
  "pożyteczny": {
   "Polish": {
    "Adjective": [
     "useful"
+   ]
+  }
+ },
+ "pragnąć": {
+  "Polish": {
+   "Verb": [
+    "desire",
+    "long for",
+    "thirst"
    ]
   }
  },
@@ -1111,6 +1715,22 @@
    ]
   }
  },
+ "prowadzić": {
+  "Polish": {
+   "Verb": [
+    "lead",
+    "drive"
+   ]
+  }
+ },
+ "przeczytać": {
+  "Polish": {
+   "Verb": [
+    "read",
+    "read up"
+   ]
+  }
+ },
  "przed": {
   "Polish": {
    "Preposition": [
@@ -1125,6 +1745,15 @@
     "fly",
     "do",
     "have sex"
+   ]
+  }
+ },
+ "przepis": {
+  "Polish": {
+   "Noun": [
+    "recipe",
+    "regulation",
+    "rule"
    ]
   }
  },
@@ -1172,7 +1801,21 @@
    ]
   }
  },
+ "przykład": {
+  "Polish": {
+   "Noun": [
+    "example"
+   ]
+  }
+ },
  "przypominać": {
+  "Polish": {
+   "Verb": [
+    "remind"
+   ]
+  }
+ },
+ "przypomnieć": {
   "Polish": {
    "Verb": [
     "remind"
@@ -1196,6 +1839,13 @@
     "put on",
     "play",
     "recording"
+   ]
+  }
+ },
+ "pytanie": {
+  "Polish": {
+   "Noun": [
+    "question"
    ]
   }
  },
@@ -1224,11 +1874,29 @@
    ]
   }
  },
+ "późno": {
+  "Polish": {
+   "Adverb": [
+    "late"
+   ]
+  }
+ },
  "pęd": {
   "Polish": {
    "Noun": [
     "momentum",
     "shoot"
+   ]
+  }
+ },
+ "pędzić": {
+  "Polish": {
+   "Verb": [
+    "rush",
+    "dash",
+    "scamper",
+    "scurry",
+    "drive"
    ]
   }
  },
@@ -1245,6 +1913,13 @@
    ]
   }
  },
+ "płyn": {
+  "Polish": {
+   "Noun": [
+    "fluid"
+   ]
+  }
+ },
  "raczej": {
   "Polish": {
    "Conjunction": [
@@ -1252,10 +1927,52 @@
    ]
   }
  },
+ "radość": {
+  "Polish": {
+   "Noun": [
+    "joy",
+    "pleasure"
+   ]
+  }
+ },
+ "ramię": {
+  "Polish": {
+   "Noun": [
+    "arm"
+   ]
+  }
+ },
  "raz": {
   "Polish": {
    "Noun": [
     "one"
+   ]
+  }
+ },
+ "razem": {
+  "Polish": {
+   "Adverb": [
+    "together",
+    "altogether"
+   ]
+  }
+ },
+ "reszta": {
+  "Polish": {
+   "Noun": [
+    "rest",
+    "change",
+    "remainder"
+   ]
+  }
+ },
+ "robić": {
+  "Polish": {
+   "Verb": [
+    "make",
+    "do",
+    "act",
+    "work"
    ]
   }
  },
@@ -1291,10 +2008,39 @@
    ]
   }
  },
+ "rzadki": {
+  "Polish": {
+   "Adjective": [
+    "sparse",
+    "rare",
+    "uncommon",
+    "thin",
+    "runny",
+    "smooth"
+   ]
+  }
+ },
+ "rzadko": {
+  "Polish": {
+   "Adverb": [
+    "rarely",
+    "seldom"
+   ]
+  }
+ },
  "rzecz": {
   "Polish": {
    "Noun": [
     "thing"
+   ]
+  }
+ },
+ "rząd": {
+  "Polish": {
+   "Noun": [
+    "government",
+    "cabinet",
+    "executive branch"
    ]
   }
  },
@@ -1316,6 +2062,24 @@
    ]
   }
  },
+ "ręka": {
+  "Polish": {
+   "Noun": [
+    "hand",
+    "arm"
+   ]
+  }
+ },
+ "sala": {
+  "Polish": {
+   "Noun": [
+    "hall",
+    "room",
+    "audience",
+    "auditorium"
+   ]
+  }
+ },
  "sam": {
   "Polish": {
    "Adjective": [
@@ -1333,12 +2097,27 @@
    ]
   }
  },
+ "scyzoryk": {
+  "Polish": {
+   "Noun": [
+    "pocketknife",
+    "penknife"
+   ]
+  }
+ },
  "senny": {
   "Polish": {
    "Adjective": [
     "dreams",
     "sleep",
     "sleepy"
+   ]
+  }
+ },
+ "sens": {
+  "Polish": {
+   "Noun": [
+    "sense"
    ]
   }
  },
@@ -1383,6 +2162,42 @@
    ]
   }
  },
+ "składać": {
+  "Polish": {
+   "Verb": [
+    "put together",
+    "assemble",
+    "fold",
+    "stockpile",
+    "typeset",
+    "lay"
+   ]
+  }
+ },
+ "smaczny": {
+  "Polish": {
+   "Adjective": [
+    "tasty",
+    "delicious"
+   ]
+  }
+ },
+ "smak": {
+  "Polish": {
+   "Noun": [
+    "taste",
+    "flavour"
+   ]
+  }
+ },
+ "spacer": {
+  "Polish": {
+   "Noun": [
+    "stroll",
+    "walk"
+   ]
+  }
+ },
  "spadać": {
   "Polish": {
    "Verb": [
@@ -1414,12 +2229,39 @@
    ]
   }
  },
+ "sposób": {
+  "Polish": {
+   "Noun": [
+    "way",
+    "method"
+   ]
+  }
+ },
  "spróbować": {
   "Polish": {
    "Verb": [
     "try",
     "rehearse",
     "taste"
+   ]
+  }
+ },
+ "stać": {
+  "Polish": {
+   "Verb": [
+    "happen",
+    "bechance"
+   ]
+  }
+ },
+ "stały": {
+  "Polish": {
+   "Adjective": [
+    "constant",
+    "permanent",
+    "fixed",
+    "ongoing",
+    "solid"
    ]
   }
  },
@@ -1430,10 +2272,65 @@
    ]
   }
  },
+ "stos": {
+  "Polish": {
+   "Noun": [
+    "stack",
+    "pile",
+    "heap",
+    "pyre"
+   ]
+  }
+ },
+ "stosować": {
+  "Polish": {
+   "Verb": [
+    "use",
+    "apply",
+    "employ"
+   ]
+  }
+ },
+ "stracić": {
+  "Polish": {
+   "Verb": [
+    "lose"
+   ]
+  }
+ },
+ "straszny": {
+  "Polish": {
+   "Adjective": [
+    "scary",
+    "frightening",
+    "horrid",
+    "horrible",
+    "terrible",
+    "dreaded",
+    "awful",
+    "frightful",
+    "dire"
+   ]
+  }
+ },
  "studnia": {
   "Polish": {
    "Noun": [
     "well"
+   ]
+  }
+ },
+ "suchy": {
+  "Polish": {
+   "Adjective": [
+    "dry"
+   ]
+  }
+ },
+ "sufit": {
+  "Polish": {
+   "Noun": [
+    "ceiling"
    ]
   }
  },
@@ -1443,6 +2340,14 @@
     "cupboard",
     "wardrobe",
     "closet"
+   ]
+  }
+ },
+ "szczurzy": {
+  "Polish": {
+   "Adjective": [
+    "rats",
+    "ratlike"
    ]
   }
  },
@@ -1465,6 +2370,13 @@
   "Polish": {
    "Noun": [
     "school"
+   ]
+  }
+ },
+ "szkło": {
+  "Polish": {
+   "Noun": [
+    "glass"
    ]
   }
  },
@@ -1493,6 +2405,16 @@
    ]
   }
  },
+ "ta": {
+  "Polish": {
+   "Interjection": [
+    "yes"
+   ],
+   "Pronoun": [
+    "this"
+   ]
+  }
+ },
  "tak": {
   "Polish": {
    "Adverb": [
@@ -1507,6 +2429,20 @@
   "Polish": {
    "Pronoun": [
     "such"
+   ]
+  }
+ },
+ "tam": {
+  "Polish": {
+   "Pronoun": [
+    "there"
+   ]
+  }
+ },
+ "teleskop": {
+  "Polish": {
+   "Noun": [
+    "telescope"
    ]
   }
  },
@@ -1529,6 +2465,37 @@
   "Polish": {
    "Pronoun": [
     "this"
+   ]
+  }
+ },
+ "trochę": {
+  "Polish": {
+   "Adverb": [
+    "a little",
+    "slightly"
+   ]
+  }
+ },
+ "trucizna": {
+  "Polish": {
+   "Noun": [
+    "poison"
+   ]
+  }
+ },
+ "trzy": {
+  "Polish": {
+   "Numeral": [
+    "three"
+   ]
+  }
+ },
+ "trzymać": {
+  "Polish": {
+   "Verb": [
+    "hold",
+    "hold on",
+    "stick"
    ]
   }
  },
@@ -1561,6 +2528,22 @@
    ]
   }
  },
+ "tyle": {
+  "Polish": {
+   "Pronoun": [
+    "so much",
+    "so many"
+   ]
+  }
+ },
+ "tylko": {
+  "Polish": {
+   "Particle": [
+    "only",
+    "just"
+   ]
+  }
+ },
  "tymczasem": {
   "Polish": {
    "Adverb": [
@@ -1582,6 +2565,23 @@
    ]
   }
  },
+ "ucho": {
+  "Polish": {
+   "Noun": [
+    "ear",
+    "handle",
+    "eye"
+   ]
+  }
+ },
+ "uczucie": {
+  "Polish": {
+   "Noun": [
+    "feeling",
+    "emotion"
+   ]
+  }
+ },
  "uczyć": {
   "Polish": {
    "Verb": [
@@ -1593,6 +2593,13 @@
   "Polish": {
    "Noun": [
     "thigh"
+   ]
+  }
+ },
+ "umieć": {
+  "Polish": {
+   "Verb": [
+    "know"
    ]
   }
  },
@@ -1623,6 +2630,22 @@
    ]
   }
  },
+ "uroczy": {
+  "Polish": {
+   "Adjective": [
+    "sweet",
+    "adorable",
+    "charming"
+   ]
+  }
+ },
+ "usiąść": {
+  "Polish": {
+   "Verb": [
+    "sit down"
+   ]
+  }
+ },
  "w": {
   "Polish": {
    "Preposition": [
@@ -1647,6 +2670,14 @@
   "Polish": {
    "Adverb": [
     "still"
+   ]
+  }
+ },
+ "wejść": {
+  "Polish": {
+   "Verb": [
+    "enter",
+    "go"
    ]
   }
  },
@@ -1683,6 +2714,16 @@
    ]
   }
  },
+ "wielki": {
+  "Polish": {
+   "Adjective": [
+    "big",
+    "large",
+    "great",
+    "grand"
+   ]
+  }
+ },
  "wierzchołek": {
   "Polish": {
    "Noun": [
@@ -1708,6 +2749,13 @@
    ]
   }
  },
+ "wiśnia": {
+  "Polish": {
+   "Noun": [
+    "cherry"
+   ]
+  }
+ },
  "wolno": {
   "Polish": {
    "Adverb": [
@@ -1716,10 +2764,56 @@
    ]
   }
  },
+ "wreszcie": {
+  "Polish": {
+   "Adverb": [
+    "eventually",
+    "after all"
+   ]
+  }
+ },
+ "wrócić": {
+  "Polish": {
+   "Verb": [
+    "return",
+    "get back",
+    "come back",
+    "restore",
+    "give back"
+   ]
+  }
+ },
+ "wszystek": {
+  "Polish": {
+   "Adjective": [
+    "all",
+    "every",
+    "whole"
+   ]
+  }
+ },
+ "wszystkie": {
+  "Polish": {
+   "Pronoun": [
+    "all",
+    "everybody",
+    "everyone"
+   ]
+  }
+ },
  "wszystko": {
   "Polish": {
    "Pronoun": [
     "everything"
+   ]
+  }
+ },
+ "wychodzić": {
+  "Polish": {
+   "Verb": [
+    "go out",
+    "leave",
+    "lead"
    ]
   }
  },
@@ -1748,6 +2842,42 @@
   "Polish": {
    "Verb": [
     "take  out"
+   ]
+  }
+ },
+ "wysokość": {
+  "Polish": {
+   "Noun": [
+    "height",
+    "altitude",
+    "level",
+    "pitch"
+   ]
+  }
+ },
+ "wytłumaczyć": {
+  "Polish": {
+   "Verb": [
+    "explain"
+   ]
+  }
+ },
+ "wzrost": {
+  "Polish": {
+   "Noun": [
+    "height",
+    "growth",
+    "increase"
+   ]
+  }
+ },
+ "wzór": {
+  "Polish": {
+   "Noun": [
+    "formula",
+    "pattern",
+    "design",
+    "motif"
    ]
   }
  },
@@ -1804,11 +2934,34 @@
    ]
   }
  },
+ "zabrać": {
+  "Polish": {
+   "Verb": [
+    "take",
+    "take  away",
+    "take  out"
+   ]
+  }
+ },
  "zacząć": {
   "Polish": {
    "Verb": [
     "start",
     "begin"
+   ]
+  }
+ },
+ "zamek": {
+  "Polish": {
+   "Noun": [
+    "castle"
+   ]
+  }
+ },
+ "zasłona": {
+  "Polish": {
+   "Noun": [
+    "curtain"
    ]
   }
  },
@@ -1829,6 +2982,17 @@
     "remark",
     "observe",
     "discern"
+   ]
+  }
+ },
+ "zbyt": {
+  "Polish": {
+   "Adverb": [
+    "too"
+   ],
+   "Noun": [
+    "market",
+    "sale"
    ]
   }
  },
@@ -1881,6 +3045,13 @@
    ]
   }
  },
+ "znajdować": {
+  "Polish": {
+   "Verb": [
+    "find"
+   ]
+  }
+ },
  "znaleźć": {
   "Polish": {
    "Verb": [
@@ -1896,11 +3067,37 @@
    ]
   }
  },
+ "znowu": {
+  "Polish": {
+   "Adverb": [
+    "again",
+    "anew",
+    "once more"
+   ]
+  }
+ },
  "zobaczyć": {
   "Polish": {
    "Verb": [
     "see",
     "sight"
+   ]
+  }
+ },
+ "zostać": {
+  "Polish": {
+   "Verb": [
+    "stay",
+    "remain"
+   ]
+  }
+ },
+ "zresztą": {
+  "Polish": {
+   "Particle": [
+    "besides",
+    "anyway",
+    "in any case"
    ]
   }
  },
@@ -1910,6 +3107,43 @@
     "make",
     "do",
     "done"
+   ]
+  }
+ },
+ "zupełnie": {
+  "Polish": {
+   "Adverb": [
+    "completely",
+    "absolutely",
+    "all"
+   ]
+  }
+ },
+ "złożyć": {
+  "Polish": {
+   "Verb": [
+    "put together",
+    "assemble",
+    "fold",
+    "lay",
+    "file",
+    "submit",
+    "give up"
+   ]
+  }
+ },
+ "ćwierć": {
+  "Polish": {
+   "Numeral": [
+    "quarter"
+   ]
+  }
+ },
+ "łatwy": {
+  "Polish": {
+   "Adjective": [
+    "easy",
+    "simple"
    ]
   }
  },
@@ -1927,6 +3161,13 @@
    ]
   }
  },
+ "śnić": {
+  "Polish": {
+   "Verb": [
+    "dream"
+   ]
+  }
+ },
  "środek": {
   "Polish": {
    "Noun": [
@@ -1935,6 +3176,13 @@
     "heart",
     "agent",
     "drug"
+   ]
+  }
+ },
+ "świat": {
+  "Polish": {
+   "Noun": [
+    "world"
    ]
   }
  },

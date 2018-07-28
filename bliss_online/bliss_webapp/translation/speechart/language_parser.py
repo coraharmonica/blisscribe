@@ -5,8 +5,13 @@ LANGUAGE_PARSER:
     Contains LanguageParser class for parsing data in
     a particular language from Wiktionary.
 """
-from nltk.tokenize import WordPunctTokenizer, PunktSentenceTokenizer
-from speechart.wiktionary_parser import *
+import os, sys
+sys.path.append(os.path.realpath(__file__))
+try:
+    import tokenizers as tokenizers
+except ImportError:
+    from . import tokenizers as tokenizers
+from .wiktionary_parser import *
 
 
 class LanguageParser(WiktionaryParser):
@@ -22,9 +27,6 @@ class LanguageParser(WiktionaryParser):
         self.alphabet = self.find_alphabet(self.language)
         # --> english translations
         self.english_translations = self.load_english_translations()
-        # --> tokenizers
-        self.word_tokenizer = None
-        self.sent_tokenizer = None
 
     def reset_language(self, language):
         """
@@ -123,19 +125,19 @@ class LanguageParser(WiktionaryParser):
             key (str) - word lemma
             val (List[str]) - all lexical forms of word lemma
         """
-        lexicon = dict()
+        lexicon = {}
 
         for line in lex:
             line = str(line).strip("\n")
             if line[-1] == "=":
                 lemma = line[:-2]
-                lexicon.setdefault(lemma, list())
+                lexicon.setdefault(lemma, [])
                 lexicon[lemma].append(lemma)
             else:
                 entry = line.split("\t")
                 lemma = entry[1]
                 lexeme = entry[0]
-                lexicon.setdefault(lexeme, list())
+                lexicon.setdefault(lexeme, [])
                 lexicon[lexeme].append(lemma)
 
         return lexicon
@@ -163,7 +165,7 @@ class LanguageParser(WiktionaryParser):
             key (str) - word lemma
             val (List[str]) - all lexical forms of word lemma
         """
-        lexicon = dict()
+        lexicon = {}
 
         for line in lex:
             line = str(line).strip("\n")
@@ -230,20 +232,20 @@ class LanguageParser(WiktionaryParser):
         if len(alphabet) == 0:
             alphabet = self.init_alphabet(language)
             self.alphabets[language] = alphabet
+            self.refresh_alphabets()
 
-        self.refresh_alphabets()
         return sorted(alphabet)
 
     def valid_letter(self, letter):
         """
-        Returns True if this alphabet letter has at least 1 character
-        and no parentheses (which indicate a non-native letter).
+        Returns True if this alphabet letter has 1 character,
+        no digits, and no parentheses (for non-native letters).
         Otherwise, returns False.
 
         :param letter: str, alphabet letter to check whether valid
         :return: bool, True if letter is valid, False otherwise
         """
-        return len(letter) != 0 and "(" not in letter
+        return len(letter) == 1 and not letter.isdigit() and "(" not in letter
 
     def alphabet_cells(self, alphabet_table):
         """
@@ -283,9 +285,12 @@ class LanguageParser(WiktionaryParser):
 
         :return: None
         """
-        self.init_word_tokenizer()
-        self.init_sent_tokenizer()
+        tokenizers.init_word_tokenizer()
+        tokenizers.init_sent_tokenizer()
+        #self.init_word_tokenizer()
+        #self.init_sent_tokenizer()
 
+    '''
     def init_word_tokenizer(self):
         """
         Initializes this LanguageParser's word_tokenizer if it
@@ -305,6 +310,7 @@ class LanguageParser(WiktionaryParser):
         """
         if self.sent_tokenizer is None:
             self.sent_tokenizer = PunktSentenceTokenizer()
+    '''
 
     def tokenize_words(self, words):
         """
@@ -313,8 +319,8 @@ class LanguageParser(WiktionaryParser):
         :param words: str, string to tokenize by word
         :return: List[str], phrase tokenized by word
         """
-        self.init_word_tokenizer()
-        words = self.word_tokenizer.tokenize(str(words))
+        tokenizers.init_word_tokenizer()
+        words = tokenizers.word_tokenizer.tokenize(str(words))  #self.word_tokenizer.tokenize(str(words))
         return words
 
     def tokenize_sents(self, sents):
@@ -324,8 +330,9 @@ class LanguageParser(WiktionaryParser):
         :param sents: str, string to tokenize by sentence
         :return: List[str], phrase tokenized by sentence
         """
-        self.init_sent_tokenizer()
-        sentences = self.sent_tokenizer.tokenize(str(sents))
+        #self.init_sent_tokenizer()
+        tokenizers.init_sent_tokenizer()
+        sentences = tokenizers.sent_tokenizer.tokenize(str(sents))
         return sentences
 
     def tokenize_punct(self, text):
@@ -339,17 +346,17 @@ class LanguageParser(WiktionaryParser):
         :param text: str, string to tokenize by word and split by punctuation
         :return: List[List[str]], phrase separated by punctuation
         """
-        self.init_sent_tokenizer()
+        #self.init_sent_tokenizer()
         text = str(text)
         words = self.tokenize_words(text)
-        sentences = list()
-        curr_sentence = list()
+        sentences = []
+        curr_sentence = []
 
         for word in words:
             if self.is_punct(word) and word != u"'":
                 if len(curr_sentence) != 0:
                     sentences.append(curr_sentence)
-                    curr_sentence = list()
+                    curr_sentence = []
             else:
                 curr_sentence.append(word)
 
@@ -398,7 +405,7 @@ class LanguageParser(WiktionaryParser):
         :return: dict(str, list), where str is language and list is alphabet
         """
         language = self.verify_language(language)
-        return self.alphabets.setdefault(language, list())
+        return self.alphabets.setdefault(language, [])
 
     def load_english_translations(self):
         """
@@ -455,7 +462,7 @@ class LanguageParser(WiktionaryParser):
 
     # LEMMAS
     # ------
-    def lemmatize(self, word, language=None, pos=None):
+    def lemmatize(self, word, language=None, pos=None, add_new=False):
         """
         Returns the lemma for this word in this language.
         ~
@@ -470,7 +477,7 @@ class LanguageParser(WiktionaryParser):
         :return: str, lemma for given word
         """
         language = self.verify_language(language)
-        self.find_wiktionary_entry(word, language)
+        self.find_wiktionary_entry(word, language, add_new=add_new)
         #word = self.entry_word(word, language)
         lemmas = self.word_lemmas(word, language, pos)
         if len(lemmas) != 0:
@@ -597,7 +604,7 @@ class LanguageParser(WiktionaryParser):
         language = self.verify_language(language)
         entry = self.find_wiktionary_subentry(word, language, u"Pronunciation")
         if entry is None:
-            entry = list()
+            entry = []
         if len(entry) == 0:
             ipa = self.etymology_ipa(word, language)
             if ipa is not None:
@@ -612,7 +619,7 @@ class LanguageParser(WiktionaryParser):
         :param word: List[str], words to transcribe to IPA
         :return: List[unicode], IPA transcriptions of words
         """
-        ipas = list()
+        ipas = []
 
         for word in words:
             ipa = self.word_ipa(word)
@@ -642,7 +649,7 @@ class LanguageParser(WiktionaryParser):
         :return: List[str], given word's head words for this language
         """
         pos_entries = self.find_pos_entries(word, language, poses)
-        headwords = list()
+        headwords = []
 
         for pos in pos_entries:
             pos_entry = pos_entries[pos]
@@ -676,7 +683,7 @@ class LanguageParser(WiktionaryParser):
         :return: List[str], given word's stem words for this language
         """
         pos_entries = self.find_pos_entries(word, language, poses)
-        stemwords = list()
+        stemwords = []
 
         for pos in pos_entries:
             pos_entry = pos_entries[pos]
@@ -702,7 +709,7 @@ class LanguageParser(WiktionaryParser):
         try:
             return self.wiktionary_entries[word][language][u"Pronunciation"]
         except KeyError:
-            return list()
+            return []
 
     def etymology_ipa(self, word, language=None):
         """
@@ -755,7 +762,7 @@ class LanguageParser(WiktionaryParser):
             pos_set = OrderedSet(poses)
             return pos_set.items()
         else:
-            return list()
+            return []
 
     def words_pos(self, words, language=None):
         """
@@ -765,7 +772,7 @@ class LanguageParser(WiktionaryParser):
         :param language: str, words' language
         :return: List[str], words' parts of speech
         """
-        pos = list()
+        pos = []
         for word in words:
             pos.append(self.word_pos(word, language))
         return pos
@@ -778,7 +785,7 @@ class LanguageParser(WiktionaryParser):
         :param language: str, words' language
         :return: List[Set(str)], words' parts of speech
         """
-        poses = list()
+        poses = []
         for word in words:
             poses.append(self.word_poses(word, language))
         return poses
@@ -852,7 +859,7 @@ class LanguageParser(WiktionaryParser):
         :return: List[str], words' morphemes
         """
         language = self.verify_language(language)
-        morphemes = list()
+        morphemes = []
         for word in words:
             if not self.is_punct(word):
                 word = self.entry_word(word, language)
@@ -939,7 +946,7 @@ class LanguageParser(WiktionaryParser):
         :return: dict(str, Set(str)), inflection-lemma pairs in this language
         """
         language = self.verify_language(language)
-        all_inflections = dict()
+        all_inflections = {}
 
         for word in self.wiktionary_entries:
             inflections = self.lookup_word_inflections(word, language)
@@ -958,7 +965,7 @@ class LanguageParser(WiktionaryParser):
         :return: List[str], all morphemes in this language
         """
         language = self.verify_language(language)
-        morphemes = list()
+        morphemes = []
 
         for word in self.wiktionary_entries:
             etyms = self.word_morphemes(word, language)
@@ -975,12 +982,12 @@ class LanguageParser(WiktionaryParser):
         :return: dict(str, str), inflection-lemma pairs in this language
         """
         language = self.verify_language(language)
-        ipas = dict()
+        ipas = {}
 
         for word in self.wiktionary_entries:
             word_ipas = self.find_word_ipas(word, language)
             if word_ipas is not None:
-                ipas.setdefault(word, list())
+                ipas.setdefault(word, [])
                 ipas[word] = OrderedSet(ipas[word] + word_ipas).items()
 
         return ipas
@@ -1049,7 +1056,7 @@ class LanguageParser(WiktionaryParser):
         if lang_code is None:
             return
 
-        words = list()
+        words = []
         path = self.PATH + "/resources/frequency_words/content/2016/%s/%s_50k.txt" % (lang_code, lang_code)
 
         with open(path, 'r') as fifty_k:
@@ -1080,7 +1087,7 @@ class LanguageParser(WiktionaryParser):
             return [word_pair for word_pair in word_pairs if word_pair[0] in common_words]
         else:
             poses = self.words_poses(common_words)
-            word_pairs = list()
+            word_pairs = []
 
             for i in range(len(common_words)):
                 word = common_words[i]

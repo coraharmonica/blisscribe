@@ -1,5 +1,6 @@
+# encoding: utf-8
 from django.shortcuts import render
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, FileResponse
 from django.utils.encoding import smart_str
 from django.views.generic import *
 from django.views.generic.edit import *
@@ -73,15 +74,17 @@ def downloadPdf(request):
                                             page_nums=page_nums,
                                             fast_translate=fast_translate)
         translator.translate()
-        title = title.decode('utf-8')
         filename = title + ".pdf"
-        f = open(path + filename, str("r+"))
-        response = HttpResponse(FileWrapper(f), content_type='application/pdf')
-        f.close()
+
+        with open(path + filename, "rb") as pdf:
+            response = HttpResponse(FileWrapper(pdf), content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="'+filename+'"'
+            response['X-Sendfile'] = smart_str(path)
+
+        pdf.close()
         translator.deleteTranslation(filename=filename)
-        response['Content-Disposition'] = 'attachment; filename='+filename
-        response['X-Sendfile'] = smart_str(path)
         return response
+
     else:
         print(form.errors)
         return render(request, 'translate.html', {'form': TranslationForm()})
@@ -93,7 +96,7 @@ def getTranslationText(request):
         # populate form w/ user input
         return render(request, 'translated.html')
 
-    # if a GET (or any translate_other method) we'll create a blank form
+    # if a GET (or any translate method) we'll create a blank form
     else:
         form = TranslationForm()
 

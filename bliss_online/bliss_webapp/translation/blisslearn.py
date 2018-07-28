@@ -48,6 +48,69 @@ class BlissClassifier:
         """
         samples = self.wordnet_indices
         test_questions, test_answers = list(), list()
+        #common_words = self.read_common_words()
+        all_blissymbols = self.blissymbols
+        print("initializing Bliss classifier...")
+
+        # percent on-target: 0.0%
+        # percent on-target: 2.64700321422%
+        # percent on-target: 9.88755331524%
+        # percent on-target: 95.6051873199%
+        # percent on-target: 79.5349488724% -> whyyy
+        # percent on-target: 85.8133669609% -> ok better...
+        # percent on-target: 87.3926796204%
+        # percent on-target: 34.1225626741% -> nooooo but ok it's still getting better
+        # percent on-target: 40.9489916963%
+        # percent on-target: 44.6297700278%
+        # percent on-target: 45.0088450847%
+        # percent on-target: 62.2127313402%
+
+        for blissymbol in all_blissymbols:
+            if not blissymbol.is_atom:
+                synsets = blissymbol.synsets
+                bci_nums = blissymbol.get_deriv_bci_nums()
+                #bci_num = " ".join([str(n) for n in bci_nums])
+                eng_lemmas = set(blissymbol.get_translation("English"))
+
+                for synset in synsets:
+                    pos_code = self.pos_to_int(synset.pos())
+                    wn_num = self.synset_id(synset)
+                    word_features = [wn_num, pos_code]
+                    intersection = eng_lemmas.intersection(synset.lemma_names())
+
+                    if len(intersection) != 0:
+                        self.add_question_answer(word_features, bci_nums)  # bci_num
+                    elif word_features not in test_questions and word_features not in self.questions:
+                        test_questions.append(word_features)
+                        test_answers.append(bci_nums)  # bci_num
+
+        train_questions, train_answers = self.questions, self.answers
+        test_questions, test_answers = test_questions, test_answers
+
+        print("\ntraining classifier...")
+        self.classifier.fit(train_questions, train_answers)
+        print("training complete.\n")
+
+        print("\ntesting classifier...")
+        self.test_classifier(test_questions, test_answers)
+        print("testing complete.")
+
+        print("")
+        print("trained with " + str(len(self.questions)) + " question-answer sets")
+        print("tested with " + str(len(test_questions)) + " question-answer sets")
+        print("word coverage: " + str(len(self.questions)/float(len(samples))))
+        print("")
+
+        self.train_classifier(test_questions, test_answers)
+
+    def init_classifier2(self):
+        """
+        Fits data to this BlissClassifier's classifier for future predicting.
+
+        :return: None
+        """
+        samples = self.wordnet_indices
+        test_questions, test_answers = list(), list()
         common_words = self.read_common_words()
         all_blissymbols = self.blissymbols
         print("initializing Bliss classifier...")
@@ -676,7 +739,9 @@ class BlissClassifier:
 
         if answer == "n":
             self.choose_translation(trans_word)
-            unicodes = [self.unicode_to_str(bs.unicode) for bs in trans_word.blissymbol.derivation_blissymbols()]
+            unicodes = [self.unicode_to_str(bs.unicode)
+                        for bs in trans_word.blissymbol.derivation_blissymbols(trans_word.blissymbol,
+                                                                               atomic=trans_word.blissymbol.is_atomic)]
             prediction = " ".join(unicodes)
             return prediction
 

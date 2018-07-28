@@ -4,7 +4,7 @@ IPA_PARSER:
 
     Contains PhonemeParser class for parsing IPA pronunciation data.
 """
-from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.language_parser import *
+from .language_parser import *
 
 
 class PhonemeParser(LanguageParser):

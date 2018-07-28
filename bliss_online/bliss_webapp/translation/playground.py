@@ -10,6 +10,7 @@ DEMO:
 import excerpts
 #from speechart.blisschart import BlissChart
 from blisscribe import *
+import time
 
 
 bt = BlissTranslator(language='Polish')
@@ -25,12 +26,26 @@ bt.set_safe_translate(False)        # translate words with uncertain Blissymbols
 # bt.translate(excerpts.kjv[:500], title="The Bible")
 # bt.translate(excerpts.leaves_of_grass[:500], title="Leaves of Grass", title_page=False)
 
+
+#print("Timing translation of Alice of Wonderland...")
+#t1 = time.time()
+#bt.translate(excerpts.alice_in_wonderland_polish[:1000], title="Alicja w Krainie Czarów")
+#t2 = time.time()
+#print("Finished translating Alice of Wonderland! It took", t2-t1, "seconds.\n\n")
+
+print("Timing translation of Alice of Wonderland...")
+t1 = time.time()
+bt.translate(excerpts.alice_in_wonderland[:6000], title="Alice in Wonderland")
+t2 = time.time()
+print("Finished translating Alice of Wonderland! It took", t2-t1, "seconds.\n\n")
+
 # Polish
 #bt.set_language("Polish")
 bt.set_machine_translate(False)
 bt.set_safe_translate(True)
-bt.translate(excerpts.alice_in_wonderland_polish[:8000], title='Alicja w Krainie Czarów')
-bt.init_lang_parser().refresh_data()
+bt.translate(excerpts.alice_in_wonderland_polish[:1000], title='Alicja w Krainie Czarów')
+bt.init_lang_parser()
+bt.lang_parser.refresh_data()
 
 
 '''

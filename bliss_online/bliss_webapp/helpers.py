@@ -4,7 +4,7 @@ from .translation import blisscribe
 
 
 class FormTranslator:
-    FILE_PATH = blisscribe.BlissTranslator.PATH + '/out'
+    FILE_PATH = blisscribe.PATH + '/out'
     
     def __init__(self, phrase, title, title_page,
                  lang, font_fam, font_size,
@@ -36,12 +36,6 @@ class FormTranslator:
 
     def translate(self):
         self.translator.translate(self.phrase, self.title, title_page=self.title_page)
-        
-    def savePdf(self):
-        self.translator.translate(self.phrase, self.title, title_page=self.title_page)
-
-    def getTitle(self):
-        return self.title
 
     def deleteTranslation(self, filename):
         self.translator.delete_pdf(filename)

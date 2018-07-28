@@ -4471,6 +4471,6 @@ BLISS_WORD_DATA = {
 		"zombie": ["make-believe_person,imaginary_person","death","legs_and_feet"],
 		"zoo": ["park","animal,beast"],
 		"zoologist": ["person,human_being,individual,human","zoology"],
-		"zoology": ["science,body_of_learning","animal,beast"],
-	},
-};
+		"zoology": ["science,body_of_learning","animal,beast"]
+	}
+}

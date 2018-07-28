@@ -11,8 +11,12 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
-from ordered_set import OrderedSet
-from speechart.ipa_symbols import *
+try:
+    from bliss_online.bliss_webapp.translation.ordered_set import OrderedSet
+except ImportError:
+    from bliss_webapp.translation.ordered_set import OrderedSet
+
+from .ipa_symbols import *
 
 
 class WiktionaryParser:
@@ -217,7 +221,7 @@ class WiktionaryParser:
         :return: None
         """
         path = self.PATH + "/resources/data/" + filename + ".json"
-        print(data)
+        #print(data)
         json.dump(data, open(path, 'w', encoding='utf-8'), indent=1, sort_keys=True, ensure_ascii=False)
 
     def load_json(self, filename):
@@ -351,7 +355,7 @@ class WiktionaryParser:
     # Use lookup to "look up" existing entry,
     # use find to "find" new entry if none exist.
     # ---------------
-    def find_wiktionary_entry(self, word, language=None):
+    def find_wiktionary_entry(self, word, language=None, add_new=False):
         """
         If a Wiktionary page corresponding to this word already
         exists, returns the memoized page.  Otherwise, retrieves new
@@ -373,8 +377,8 @@ class WiktionaryParser:
             else:
                 entry = self.wiktionary_entries.get(word, dict())
                 entry = entry.get(language, None)
-                if entry is None and not self.is_punct(word):
-                    print("adding " + word + " to wikt")
+                if add_new and entry is None and not self.is_punct(word):
+                    print("adding", word, "to wikt")
                     entry = self.word_wikt_page(word, language).entry
                     if language is not None:
                         entry = entry.get(language, None)
@@ -494,7 +498,7 @@ class WiktionaryParser:
 
         return pos_entries
 
-    def find_word_poses(self, word, language):
+    def find_word_poses(self, word, language, add_new=False):
         """
         Returns a list of this word's parts of speech from its
         Wiktionary entry in this language.
@@ -504,7 +508,7 @@ class WiktionaryParser:
         :return: List[str], word's parts of speech in this language
         """
         language = self.verify_language(language)
-        lang_entries = self.find_wiktionary_entry(word, language)
+        lang_entries = self.find_wiktionary_entry(word, language, add_new=add_new)
         if lang_entries is not None:
             return [h for h in lang_entries if h in self.PARTS_OF_SPEECH]
         else:

@@ -5,7 +5,7 @@ MORPHEME_PARSER:
     Contains MorphemeParser class for parsing morpheme data
     in a given language from Wiktionary.
 """
-from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.phoneme_parser import *
+from .phoneme_parser import *
 
 
 class MorphemeParser(PhonemeParser):
