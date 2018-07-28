@@ -221,7 +221,6 @@ class WiktionaryParser:
         :return: None
         """
         path = self.PATH + "/resources/data/" + filename + ".json"
-        #print(data)
         json.dump(data, open(path, 'w', encoding='utf-8'), indent=1, sort_keys=True, ensure_ascii=False)
 
     def load_json(self, filename):

@@ -440,17 +440,17 @@ class LanguageParser(WiktionaryParser):
         :return: None
         """
         dict_obj = getattr(self, dict_name, None)
-        print("fetching", dict_name, "from this LanguageParser...")
+        #print("fetching", dict_name, "from this LanguageParser...")
 
         if dict_obj is not None:
             entry = getattr(self, dict_name[:-1], None)
             if entry is not None:
                 dict_obj[self.language] = sorted(entry)
-            print("dumping", dict_name, "to JSON...")
+            #print("dumping", dict_name, "to JSON...")
             self.dump_json(dict_obj, dict_name)
-            print("complete :)")
-        else:
-            print("could not dump", dict_name, "to JSON :(")
+            #print("complete :)")
+        #else:
+        #    print("could not dump", dict_name, "to JSON :(")
 
     def refresh_alphabets(self):
         """
@@ -462,14 +462,14 @@ class LanguageParser(WiktionaryParser):
 
     # LEMMAS
     # ------
-    def lemmatize(self, word, language=None, pos=None, add_new=False):
+    def lemmatize(self, word, language=None, poses=None, add_new=False):
         """
         Returns the lemma for this word in this language.
         ~
         If word has no lemma, this method returns the given word.
         ~
-        e.g. lemmatize("drove", "English", "Verb") -> "drive"
-             lemmatize("yeux", "French", "Noun") -> "œil"
+        e.g. lemmatize("drove", "English", {"Verb"}) -> "drive"
+             lemmatize("yeux", "French", {"Noun"}) -> "œil"
 
         :param word: str, word to find lemma for
         :param language: str, language of given word
@@ -479,7 +479,7 @@ class LanguageParser(WiktionaryParser):
         language = self.verify_language(language)
         self.find_wiktionary_entry(word, language, add_new=add_new)
         #word = self.entry_word(word, language)
-        lemmas = self.word_lemmas(word, language, pos)
+        lemmas = self.word_lemmas(word, language, poses)
         if len(lemmas) != 0:
             return lemmas[0]
         else:

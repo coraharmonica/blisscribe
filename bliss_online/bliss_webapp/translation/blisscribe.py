@@ -15,8 +15,8 @@ import collections
 
 from nltk.tag import pos_tag
 from nltk.corpus import wordnet
-from pattern3 import text
-from pattern3.text import en, es, fr, de, it, nl
+#from pattern3 import text
+#from pattern3.text import en, es, fr, de, it, nl
 from fpdf import FPDF
 
 PATH = os.path.dirname(os.path.realpath(__file__))
@@ -80,7 +80,8 @@ class BlissTranslator:
            --> set_sub_all()
     """
     DEFAULT_LANG = "English"
-    DIMS = (816, 1056)
+    WIDTH = 816
+    HEIGHT = 1056
 
     def __init__(self, language=DEFAULT_LANG, font_path=SANS_FONT, font_size=30):
         self.lex_parser = LexiconParser(translator=self)
@@ -1201,6 +1202,7 @@ class BlissTranslator:
         assert pos in POS_UNABBREVS
         return POS_UNABBREVS[pos]
 
+    '''
     def get_singular(self, noun):
         """
         Returns the singular form of this noun
@@ -1212,6 +1214,8 @@ class BlissTranslator:
         :param noun: str, noun to singularize
         :return: str, singularized input
         """
+        return self.lang_parser.lemmatize(noun)
+
         if self.language == "English":
             return en.singularize(noun)
         elif self.language == "Spanish":
@@ -1238,6 +1242,8 @@ class BlissTranslator:
         :param verb: str, verb
         :return: str, lemma of verb
         """
+        return self.lang_parser.lemmatize(verb)
+
         if self.language == "English":
             return en.lemma(verb)
         elif self.language == "Spanish":
@@ -1267,6 +1273,8 @@ class BlissTranslator:
         :param adj: str, adjective
         :return: str, base form of input adj
         """
+        return self.lang_parser.lemmatize(adj)
+
         if self.language == "English":
             return en.predicative(adj)
         elif self.language == "Spanish":
@@ -1281,6 +1289,7 @@ class BlissTranslator:
             return nl.predicative(adj)
         else:
             return adj
+    '''
 
     def is_whitespace(self, word):
         """
@@ -1544,8 +1553,14 @@ class BlissTranslator:
         else:
             # otherwise, lemmatize word based on
             # best guess for its pos
+            wikt_pos = self.convert_pos_to_wikt(pos) if pos is not None else None
+            self.init_lang_parser()
+            return self.lang_parser.lemmatize(word, language=self.language, poses={wikt_pos})
+
+            '''
+            short_pos = pos[:2]
+            
             if pos is not None:
-                short_pos = pos[:2]
                 if pos == "NNS":
                     return self.get_singular(word)
                 elif short_pos == "VB":
@@ -1557,6 +1572,8 @@ class BlissTranslator:
                 else:
                     return word.lower()
             else:
+                return self.lang_parser.lemmatize(word, language=self.language)
+
                 if self.is_valid_word(self.get_singular(word)):
                     return self.get_singular(word)
                 elif self.is_valid_word(self.get_infinitive(word)):
@@ -1565,6 +1582,7 @@ class BlissTranslator:
                     return self.get_predicative(word)
                 else:
                     return word.lower()
+            '''
 
     def lemmatize_multilingual(self, word, language):
         """
@@ -2224,7 +2242,7 @@ class BlissTranslator:
 
     # TRANSLATOR
     # ==========
-    def translate(self, phrase, title="translation", title_page=False, img_w=DIMS[0], img_h=DIMS[1]):
+    def translate(self, phrase, title="translation", title_page=False, img_w=WIDTH, img_h=HEIGHT):
         """
         Translates input phrase to Blissymbols according to this
         BlissTranslator's part-of-speech and language preferences.
@@ -2248,7 +2266,7 @@ class BlissTranslator:
         self.refresh_bliss_dicts()
         return pdf
 
-    def translate_to_pages(self, phrase, title="translation", title_page=False, img_w=DIMS[0], img_h=DIMS[1]):
+    def translate_to_pages(self, phrase, title="translation", title_page=False, img_w=WIDTH, img_h=HEIGHT):
         """
         Translates input phrase to Blissymbols according to this
         BlissTranslator's part-of-speech and language preferences.
@@ -2323,7 +2341,7 @@ class BlissTranslator:
         self.init_seen_changed()
         return imgs
 
-    def images_to_lines(self, images, w=DIMS[0], init_indent=True):
+    def images_to_lines(self, images, w=WIDTH, init_indent=True):
         space = self.get_space_size()
         indent = self.font_size
 
@@ -2359,7 +2377,7 @@ class BlissTranslator:
 
         return lines
 
-    def lines_to_pages(self, lines, h=DIMS[1]):
+    def lines_to_pages(self, lines, h=HEIGHT):
         """
         Pastes each line Image in lines to a list of pages and
         returns the list.
@@ -2399,7 +2417,7 @@ class BlissTranslator:
             blank_page = make_blank_img(page.size[0], h)
             return [overlay(page, blank_page) for page in pages]
 
-    def images_to_pages(self, images, w=DIMS[0], h=DIMS[1]):
+    def images_to_pages(self, images, w=WIDTH, h=HEIGHT):
         """
         Pastes each image in images to a list of pages.
         ~
