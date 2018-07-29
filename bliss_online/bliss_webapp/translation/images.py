@@ -157,8 +157,18 @@ def make_font(font_path, font_size):
     try:
         return ImageFont.truetype(font_path, font_size)
     except OSError:
-        font_path = font_path.replace("Library", "Windows")
-        return ImageFont.truetype(font_path, font_size)
+        try:
+            font_path = font_path.replace("/Library", "Windows")
+            return ImageFont.truetype(font_path, font_size)
+        except OSError:
+            try:
+                font = font_path.split("/")[-1].lower()
+                return ImageFont.truetype(font=font, size=font_size)
+            except OSError:
+                try:
+                    return ImageFont.truetype(font="arial.ttf", size=font_size)
+                except OSError:
+                    return ImageFont.load_default()
 
 
 def get_bliss_img(bliss_name, max_width=None, max_height=None):
