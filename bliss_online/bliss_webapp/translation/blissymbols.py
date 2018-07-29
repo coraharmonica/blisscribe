@@ -1,5 +1,7 @@
 import os, sys
 sys.path.append(os.path.realpath(__file__))
+from imports import *
+safe_import("blissymbol")
 from blissymbol import Blissymbol
 
 

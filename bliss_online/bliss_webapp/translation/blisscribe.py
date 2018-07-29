@@ -9,30 +9,24 @@ BLISSCRIBE:
     https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
     These can also be found in the top-level docstring of parse_lexica.
 """
-import os
-import sys
+import os, sys
+PATH = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(PATH)
 import collections
-
 from nltk.tag import pos_tag
 from nltk.corpus import wordnet
 #from pattern3 import text
 #from pattern3.text import en, es, fr, de, it, nl
 from fpdf import FPDF
-
-PATH = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(PATH)
-
 from imports import safe_import
-
-safe_import("fonts")
-safe_import("punctuation")
-safe_import("parts_of_speech")
-safe_import("images")
-safe_import("lexicon_parser")
-safe_import("translation_word")
-safe_import("speechart")
-safe_import("ordered_set")
-
+safe_import('fonts')
+safe_import('punctuation')
+safe_import('parts_of_speech')
+safe_import('images')
+safe_import('lexicon_parser')
+safe_import('translation_word')
+safe_import('speechart')
+safe_import('ordered_set')
 from fonts import *
 from punctuation import *
 from parts_of_speech import *
@@ -1007,12 +1001,13 @@ class BlissTranslator:
         """
         Returns a set of the languages currently supported by Blisscribe.
 
-        :return: Set(str), languages supported by Blisscribe
+        :return: Set(str), languages supported in Blissymbols and WordNet
         """
-        supported_langs = self.lex_parser.BLISS_LANGS.intersection(self.wordnet_langs())
-        pattern_langs = text.LANGUAGES
-        supported_langs.update(pattern_langs)
-        return supported_langs
+        return self.lex_parser.BLISS_LANGS.intersection(self.wordnet_langs())
+        #supported_langs = self.lex_parser.BLISS_LANGS.intersection(self.wordnet_langs())
+        #pattern_langs = text.LANGUAGES
+        #supported_langs.update(pattern_langs)
+        #return supported_langs
 
     def load_multilingual_lemmas(self, lang_code):
         """
@@ -1030,8 +1025,8 @@ class BlissTranslator:
 
             if tab_file is not None:
                 wordnet.custom_lemmas(tab_file, lang_code)
-            else:
-                raise ValueError("Blisscribe doesn't support this language yet... oops!")
+            #else:
+            #    raise ValueError("Blisscribe doesn't support this language yet... oops!")
 
     # LANGUAGE PROCESSING
     # -------------------

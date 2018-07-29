@@ -377,7 +377,6 @@ class WiktionaryParser:
                 entry = self.wiktionary_entries.get(word, dict())
                 entry = entry.get(language, None)
                 if add_new and entry is None and not self.is_punct(word):
-                    print("adding", word, "to wikt")
                     entry = self.word_wikt_page(word, language).entry
                     if language is not None:
                         entry = entry.get(language, None)
@@ -1057,6 +1056,7 @@ class WiktionaryPage:
         self.add_wikt_entry(self.word, self.entry)
 
     def add_wikt_entry(self, word, entry):
+        print("adding", word, "to wikt")
         langs = list(entry.keys())
         for lang in langs:
             lang_contents = entry[lang]

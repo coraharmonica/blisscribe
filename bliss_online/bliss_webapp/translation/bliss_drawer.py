@@ -4,7 +4,9 @@ BLISS_DRAWER:
     An adaptation of the BlissViewer class from JavaScript to Python
     for writing and displaying SVG files.
 """
-import os
+import os, sys
+PATH = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(PATH)
 import json
 import math
 import re
@@ -12,14 +14,13 @@ from bs4 import BeautifulSoup
 from speechart.images import *
 from math import degrees, pi, sin, cos, asin, acos
 
-PATH = os.path.dirname(os.path.realpath(__file__))
-BLISS_PATH = PATH + "/resources/data/blissymbols_gh_pages/"
-
 
 class BlissDrawer:
     """
     A class for drawing Blissymbols in SVG from numerical data.
     """
+    BLISS_PATH = PATH + "/resources/data/blissymbols_gh_pages/"
+
     BLISS_WORD_DATA = json.load(open(BLISS_PATH + "blissdata_words.json"))
     BLISS_CHAR_DATA = json.load(open(BLISS_PATH + "blissdata_chars.json"))
 
@@ -100,11 +101,11 @@ class BlissDrawer:
         self.reset_blissoup()
 
     def reload_word_data(self):
-        self.BLISS_WORD_DATA = json.load(open(BLISS_PATH + "blissdata_words.json", 'r', encoding='utf-8'))
+        self.BLISS_WORD_DATA = json.load(open(self.BLISS_PATH + "blissdata_words.json", 'r', encoding='utf-8'))
         self.BLISS_WORDS = self.BLISS_WORD_DATA['words']
 
     def dump_word_data(self):
-        json.dump(self.BLISS_WORD_DATA, open(BLISS_PATH + "blissdata_words.json", 'w', encoding='utf-8'),
+        json.dump(self.BLISS_WORD_DATA, open(self.BLISS_PATH + "blissdata_words.json", 'w', encoding='utf-8'),
                   ensure_ascii=False, indent=1, sort_keys=True)
 
     def reset_blissoup(self):
