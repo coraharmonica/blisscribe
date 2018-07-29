@@ -14,7 +14,6 @@ Blisscribe depends on the following libraries:
 - nltk
 - beautifulsoup4
 - fpdf
-- openpyxl
 - requests
 - sklearn
 - lxml**
