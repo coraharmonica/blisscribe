@@ -16,11 +16,10 @@ SPEECHARTS:
     Define word meaning as by use: where do these words occur, which words precede them,
     which words follow them (PREDICTIVELY)?  Extrapolate from there for semantics.
 """
-from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.ordered_set import OrderedSet
-from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.morpheme_parser import MorphemeParser
-from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.speechart.images import *
 from random import shuffle
 from nltk import pos_tag
+from .morpheme_parser import MorphemeParser
+from .images import *
 
 
 class Chart(MorphemeParser):

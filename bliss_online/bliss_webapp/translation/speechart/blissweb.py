@@ -1,5 +1,5 @@
-from blisschart import *
-from neural_net.neural_net import NeuralNet
+from .blisschart import *
+from .neural_net.neural_net import NeuralNet
 
 
 class BlissWeb(BlissChart):
@@ -18,7 +18,7 @@ class BlissWeb(BlissChart):
     """
     def __init__(self, language="English"):
         BlissChart.__init__(self, language)
-        self.connections = dict()
+        self.connections = {}
         self.neural_net = NeuralNet(blissweb=self)
 
     def add_node(self, label, outgoing):
@@ -32,21 +32,21 @@ class BlissWeb(BlissChart):
         self.add_outgoing(state, outgoing)
 
     def add_state_label(self, state, label):
-        state_cxn = self.connections.setdefault(state, dict())
+        state_cxn = self.connections.setdefault(state, {})
         state_cxn["label"] = label
 
     def add_state_labels(self, state, labels):
-        state_cxn = self.connections.setdefault(state, dict())
+        state_cxn = self.connections.setdefault(state, {})
         state_cxn.setdefault("label", set())
         state_cxn["label"].update(labels)
 
     def add_incoming(self, state, incoming):
-        state_cxn = self.connections.setdefault(state, dict())
+        state_cxn = self.connections.setdefault(state, {})
         state_cxn.setdefault("in", set())
         state_cxn["in"].update(incoming)
 
     def add_outgoing(self, state, outgoing):
-        state_cxn = self.connections.setdefault(state, dict())
+        state_cxn = self.connections.setdefault(state, {})
         state_cxn.setdefault("out", set())
         state_cxn["out"].update(outgoing)
 
@@ -62,7 +62,7 @@ class BlissWeb(BlissChart):
         :return: dict[int, Set], all destinations for this state
         """
         state_connections = [c for c in self.connections if c == state]
-        destinations = dict()
+        destinations = {}
 
         for statechar in state_connections:
             dests = self.connections[statechar]["out"]
@@ -125,7 +125,7 @@ class BlissWeb(BlissChart):
         :return: List[NeuralNode], nodes in path from node1 to node2
         """
         seen = {node1}
-        goal_paths = list()
+        goal_paths = []
 
         def below_min_path(p): return len(goal_paths) == 0 or len(p) < len(goal_paths[0])
 
@@ -145,7 +145,7 @@ class BlissWeb(BlissChart):
                             short_path(nd, p)
                             seen.add(nd)
 
-        short_path(node1, path=list())
+        short_path(node1, path=[])
 
         if len(goal_paths) != 0:
             return goal_paths[0]
@@ -166,7 +166,7 @@ class BlissWeb(BlissChart):
         :return: List[NeuralNode], nodes in path from node1 to node2
         """
         seen = {node1}
-        goal_paths = list()
+        goal_paths = []
 
         def above_max_path(p): return len(goal_paths) == 0 or len(p) > len(goal_paths[0])
 
@@ -174,10 +174,10 @@ class BlissWeb(BlissChart):
             # TODO: make this a more effective depth-first search!
             p = path[:]
             p.append(node)
-            print "goal paths:", goal_paths
+            print("goal paths:", goal_paths)
 
             if above_max_path(p):
-                print "\tpath:", p
+                print("\tpath:", p)
                 if node2 is None or node2 in node.outgoing:
                     if node2 is not None:
                         p.append(node2)
@@ -186,11 +186,11 @@ class BlissWeb(BlissChart):
                 else:
                     for nd in node.outgoing:
                         if nd not in seen:
-                            print "\tnode:", nd
+                            print("\tnode:", nd)
                             long_path(nd, p)
                             seen.add(nd)
 
-        long_path(node1, path=list())
+        long_path(node1, path=[])
 
         if len(goal_paths) != 0:
             return goal_paths[0]
@@ -208,7 +208,7 @@ class BlissWeb(BlissChart):
         cxn = self.neural_net.find_node_cxns(node)
         outs = list(cxn[1])
         img = self.node_img(node)
-        print "cxns:", node.all_connections()
+        print("cxns:", node.all_connections())
         angle_inc = int(180.0 / len(node.all_connections()))
 
         for i in range(len(outs)):
@@ -221,7 +221,7 @@ class BlissWeb(BlissChart):
             img = self.connect_states(img, out_img, angle=angle_inc * i, length=100*len(outs))
             # TODO: vary angle by len of shortest path from out back to original node(?)
             #angle += angle_inc
-            print angle_inc * i
+            print(angle_inc * i)
 
         return img
 

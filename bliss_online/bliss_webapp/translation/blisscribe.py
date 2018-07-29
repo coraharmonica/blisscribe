@@ -15,7 +15,6 @@ sys.path.append(PATH)
 import collections
 import nltk
 nltk.download('wordnet', quiet=True)
-nltk.download('gutenberg', quiet=True)
 nltk.download('averaged_perceptron_tagger', quiet=True)
 from nltk.tag import pos_tag
 from nltk.corpus import wordnet

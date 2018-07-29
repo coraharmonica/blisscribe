@@ -12,13 +12,10 @@ import string
 import json
 import requests
 from bs4 import BeautifulSoup
-
-
 try:
     from bliss_online.bliss_webapp.translation.ordered_set import OrderedSet
 except (ModuleNotFoundError, ImportError):
     from bliss_webapp.translation.ordered_set import OrderedSet
-
 from .ipa_symbols import *
 
 
