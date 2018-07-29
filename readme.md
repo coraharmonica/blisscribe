@@ -5,7 +5,7 @@ Blisscribe is a translator designed for visual reading, allowing you to input te
 
 <h2>Setup</h2>
 
-Ensure you're working in Python 2.7 or above.  You can setup Blisscribe either locally or with a virtualenv.
+Ensure you're working in Python 3.6 or above.  You can setup Blisscribe either locally or with a virtualenv.
 
 Blisscribe depends on the following libraries:
 
@@ -124,5 +124,5 @@ Blisscribe also provides options for users to select which parts of speech to tr
 ![other](https://github.com/coraharmonica/blisscribe/blob/master/bliss_online/bliss_webapp/translation/sample%20translations/quickbrownfox_other.png?raw=true)
 
 
-Blisscribe is currently maintained in Python 3.6 (as of 06/22/2018), with backwards compatibility for Python 2.7 and above.
+Blisscribe is currently maintained in Python 3.6 (as of 06/22/2018).
 To learn more about Blisscribe, visit the website:  blisscribe.tumblr.com.  You can also contact me through Blisscribe at blisscribe [at] gmail [dot] com.
