@@ -29,7 +29,7 @@ You will need a virtualenv to use the Blisscribe web interface.
 
 <h3>Virtualenv</h3>
 
-Ensure you've installed virtualenv.  Open blisscribe in command prompt and cd to the [bliss_online folder](https://github.com/coraharmonica/blisscribe/tree/master/bliss_online), where the env folder is located.
+Ensure you've installed virtualenv.  Open command prompt and cd to the [bliss_online folder](https://github.com/coraharmonica/blisscribe/tree/master/bliss_online), where the env folder is located.
 
 If you are a Windows user, enter the following prompts to activate a virtualenv:
 
@@ -55,7 +55,7 @@ After setting up Blisscribe, you can translate either from command line, Python,
 
 <h3>Command Line</h3>
 
-Open blisscribe on command line and enter this command:
+Open blisscribe-master in command line and enter the prompt:
 
 > cd bliss_online/bliss_webapp/translation
 
@@ -71,9 +71,7 @@ To translate in Python, head to the [translation folder](https://github.com/cora
 
 <h3>Online</h3>
 
-To translate online, open the package in command line and cd to the [bliss_online folder](https://github.com/coraharmonica/blisscribe/tree/master/bliss_online), where the env folder is located.  If you're not already in a virtualenv, run the following prompts:
-
-> source env/bin/activate
+To translate online, open the package in command line and cd to the [bliss_online folder](https://github.com/coraharmonica/blisscribe/tree/master/bliss_online), where the env folder is located.  If you're not already in a virtualenv, follow the steps above (under Setup>Virtualenv) to activate one.
 
 Then run manage.py's makemigrations and migrate with Python:
 
