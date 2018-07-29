@@ -1,6 +1,6 @@
 # coding: utf-8
 
-FONT_PATH = "/Library/Fonts/"
+FONT_PATH = "/Library/Fonts/"  # OR Windows/Fonts
 ROMAN_FONT = "{}Times New Roman.ttf".format(FONT_PATH)
 SANS_FONT = "{}Arial.ttf".format(FONT_PATH)
 HIP_FONT = "{}Helvetica.dfont".format(FONT_PATH)

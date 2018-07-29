@@ -33,6 +33,8 @@ bt.translate(excerpts.alice_in_wonderland_polish[:1000], title="Alicja w Krainie
 t2 = time.time()
 print("Finished translating Polish Alice of Wonderland! It took", t2-t1, "seconds.\n\n")
 
+bt.lang_parser.refresh_data()
+
 '''
 print("Timing translation of Alice of Wonderland...")
 t1 = time.time()

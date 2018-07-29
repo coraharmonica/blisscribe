@@ -154,7 +154,11 @@ def make_font(font_path, font_size):
     :param font_size: int, desired font size
     :return: ImageFont, font with given path and font size
     """
-    return ImageFont.truetype(font_path, font_size)
+    try:
+        return ImageFont.truetype(font_path, font_size)
+    except OSError:
+        font_path = font_path.replace("Library", "Windows")
+        return ImageFont.truetype(font_path, font_size)
 
 
 def get_bliss_img(bliss_name, max_width=None, max_height=None):

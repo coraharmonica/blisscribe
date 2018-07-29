@@ -57,14 +57,14 @@ PARSE_LEXICA:
     36.	    WRB	    Wh-adverb
 """
 import os, sys
-import json
-from openpyxl import load_workbook
 PATH = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(PATH)
+import json
+from openpyxl import load_workbook
 from imports import safe_import
 safe_import("blissymbol")
 safe_import("blissymbols")
-from blissymbol import Blissymbol, NEW_BLISSYMBOLS
+from blissymbol import *  #Blissymbol, NEW_BLISSYMBOLS
 from blissymbols import BlissLexicon
 
 
@@ -178,9 +178,6 @@ class LexiconParser:
         """
         return self.load_json("all_blissymbols")
 
-    def get_translator(self):
-        return self.translator
-
     def all_blissymbols(self):
         """
         Returns a set of all Blissymbols.
@@ -188,13 +185,6 @@ class LexiconParser:
         :return: Set[Blissymbol], all Blissymbols from Blissymbol lexicon
         """
         return BlissLexicon(self.translator).blissymbols
-
-        blissymbols = self.load_all_blissymbols()
-        all_blissymbols = {self.dict_to_blissymbol(bs) for bs in blissymbols}
-        if None in all_blissymbols:
-            all_blissymbols.remove(None)
-        #self.write_blissymbols(blissymbols)
-        return all_blissymbols
 
     def fresh_all_blissymbols(self):
         blissymbols = self.load_all_blissymbols()
@@ -1104,10 +1094,10 @@ class LexiconParser:
         :return: tab file, WordNet file for given language
         """
         try:
-            tab_path = "/resources/omw_tabs/" + "wn-cldr-" + lang_code + ".tab"
-            return open(PATH + tab_path, encoding='utf-8')
+            tab_path = PATH + "/resources/omw_tabs/" + "wn-cldr-" + lang_code + ".tab"
+            return open(tab_path, encoding='utf-8')
         except IOError:
-            return None
+            raise IOError("Blisscribe doesn't support this language yet... oops!")
 
     # BLISS MANIPULATION
     # ==================

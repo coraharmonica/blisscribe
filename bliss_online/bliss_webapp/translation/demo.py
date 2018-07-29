@@ -19,8 +19,8 @@ DEMO:
     To use custom texts, place them in the sample texts folder,
     then call excerpts.parse_plaintext() on the filename.
 """
-from blisscribe import BlissTranslator
-import excerpts
+from bliss_online.bliss_webapp.translation.blisscribe import BlissTranslator
+import bliss_online.bliss_webapp.translation.excerpts as excerpts
 
 
 bt = BlissTranslator(language="English")
