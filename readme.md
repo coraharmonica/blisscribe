@@ -5,33 +5,46 @@ Blisscribe is a translator designed for visual reading, allowing you to input te
 
 <h2>Setup</h2>
 
-Ensure you're working in Python 2.7 or above.  You can setup Blisscribe either through command line or Python.
-
-
-<h3>Command Line</h3>
-
-Ensure you've installed virtualenv.  Open blisscribe in command line and cd to the [bliss_online folder](https://github.com/coraharmonica/blisscribe/tree/master/bliss_online), where the env folder is located.  Enter the command:
-
-> source env/bin/activate
-
-If successful, your command line prompt should now begin with (env).
-
-
-<h3>Python</h3>
+Ensure you're working in Python 2.7 or above.  You can setup Blisscribe either locally or with a virtualenv.
 
 Blisscribe depends on the following libraries:
 
-- nltk
-- pattern3
-- Pillow
 - Django
+- Pillow
+- nltk
 - beautifulsoup4
 - fpdf
 - openpyxl
-- scikit-learn
 - requests
+- sklearn
+- lxml**
 
-Ensure you have these all installed to your Python interpreter to run Blisscribe smoothly.
+** The lxml binding can be downloaded [here](https://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml) and then installed with pip, like so:
+
+> pip install C:\Users\me\lxml‑4.2.3‑cp37‑cp37m‑win_amd64.whl
+
+Ensure you have these all installed either to your local Python interpreter or to a virtualenv.
+You will need a virtualenv to use the Blisscribe web interface.
+
+
+<h3>Virtualenv</h3>
+
+Ensure you've installed virtualenv.  Open blisscribe in command prompt and cd to the [bliss_online folder](https://github.com/coraharmonica/blisscribe/tree/master/bliss_online), where the env folder is located.
+
+If you are a Windows user, enter the following prompts to activate a virtualenv:
+
+> py -m virtualenv env
+> cd env/Scripts
+> activate.bat
+
+Otherwise, enter this (works for OS X):
+
+> source env/bin/activate
+
+If successful, your command prompt should now begin with (env).
+
+Install any missing packages to your virtualenv.  You'll likely need all the dependencies listed above under Setup.
+
 
 
 <h2>Translation</h2>
@@ -44,11 +57,11 @@ Open blisscribe on command line and enter this command:
 
 > cd bliss_online/bliss_webapp/translation
 
-Then enter:
+Then run blisscript.py with your version of Python:
 
 > python blisscript.py
 
-This will run a prompt asking which language and text you wish to translate.  To modify the script simply modify blisscript.py.
+This will run a prompt asking which language and text you wish to translate.  To change the script simply modify blisscript.py.
 
 <h3>Python</h3>
 
@@ -60,8 +73,9 @@ To translate online, open the package in command line and cd to the [bliss_onlin
 
 > source env/bin/activate
 
-> python manage.py makemigrations
+Then run manage.py's makemigrations and migrate with Python:
 
+> python manage.py makemigrations
 > python manage.py migrate
 
 If all files have been migrated then run the final prompt:
