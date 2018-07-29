@@ -3,9 +3,11 @@ BLISSCHART:
 
     A module for representing semantics in graphs with Blissymbols.
 """
-from main.bliss_web.bliss_app.bliss_webapp.blisscribe_py.blisscribe import *
-import speecharts
-from images import *
+import os, sys
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+from bliss_online.bliss_webapp.translation.blisscribe import *
+from . import speecharts
+from .images import *
 
 
 class BlissChart(speecharts.LanguageChart):
@@ -165,7 +167,7 @@ class BlissChart(speecharts.LanguageChart):
             Blissymbol derivations
         :return: List[List[Blissymbol]], Blissymbols for sentences in text
         """
-        text = self.unicodize(text)
+        text = str(text)
         sentences = self.tokenize_words_sents(text)
         bliss_sentences = list()
 
@@ -339,7 +341,7 @@ class BlissChart(speecharts.LanguageChart):
         labels = self.transitions_labels(state)
 
         if len(labels) != 0:
-            print labels
+            print(labels)
             return [", ".join([bliss.bliss_name for bliss in label]) for label in labels.values()]
         else:
             return list()
@@ -402,7 +404,7 @@ class BlissChart(speecharts.LanguageChart):
         :return: None
         """
         states = self.blissword_states(blissword)
-        start_states = filter(self.is_start_state, states)
+        start_states = list(filter(self.is_start_state, states))
         length = self.arrow_length()
         if len(start_states) != 0:
             state = start_states[0]  # find first state with this label

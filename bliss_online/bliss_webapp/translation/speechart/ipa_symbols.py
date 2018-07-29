@@ -260,22 +260,16 @@ class IPAConsonant(IPALetter):
         """
         IPALetter.__init__(self, symbol, False)
         self.symbol = symbol
-        self.place = place #self.parse_part("Place", place)
-        self.manner = manner #self.parse_part("Manner", manner)
+        self.place = place
+        self.manner = manner
         self.voiced = voiced
         self.velarized = velarized
 
-    def get_place(self):
+    def place_num(self):
         return self.PLACE[self.place]
 
-    def get_manner(self):
+    def manner_num(self):
         return self.MANNER[self.manner]
-
-    def voiced(self):
-        return self.voiced
-
-    def velarized(self):
-        return self.velarized
 
     def compare_consonants(self, other):
         p = self.compare_place(other)
@@ -289,11 +283,11 @@ class IPAConsonant(IPALetter):
 
     def compare_place(self, other):
         total = float(len(self.PLACE))
-        return (total - (abs(self.get_place() - other.get_place())/total)) #/total
+        return (total - (abs(self.place_num() - other.place_num()) / total)) #/total
 
     def compare_manner(self, other):
         total = float(len(self.MANNER))
-        return (total - (abs(self.get_manner() - other.get_manner())/total)) #/total
+        return (total - (abs(self.manner_num() - other.manner_num()) / total)) #/total
 
     def compare_voiced(self, other):
         return self.voiced == other.voiced
