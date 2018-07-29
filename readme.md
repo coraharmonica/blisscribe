@@ -34,7 +34,9 @@ Ensure you've installed virtualenv.  Open blisscribe in command prompt and cd to
 If you are a Windows user, enter the following prompts to activate a virtualenv:
 
 > py -m virtualenv env
+
 > cd env/Scripts
+
 > activate.bat
 
 Otherwise, enter this (works for OS X):
@@ -76,6 +78,7 @@ To translate online, open the package in command line and cd to the [bliss_onlin
 Then run manage.py's makemigrations and migrate with Python:
 
 > python manage.py makemigrations
+
 > python manage.py migrate
 
 If all files have been migrated then run the final prompt:
