@@ -2,18 +2,14 @@
 """
 PARSE_LEXICA:
 
-    Contains a class for parsing a language-to-Blissymbols
-    dictionary from plaintext (.txt) and Excel (.xlsx) files.
-
-    Allows ease of changing Bliss dictionaries, including
-    adding languages beyond English.
+    Used for parsing Blissymbols to dictionaries.
 
     Throughout Blisscribe, "lemma" is meant to be the dictionary
-    entry of a word, while "lemma" is meant to be any form of a
+    entry of a word, while "lexeme" is meant to be any form of a
     word.  All lemmas are lexemes, but only 1 in a set of lexemes
     is chosen as the lemma.
-    e.g. dog == lemma (and == lemma)
-         dogs == lemma (and != lemma)
+    e.g. "dog": lexeme and lemma
+         "dogs": lexeme but not lemma
 
     Alphabetical list of part-of-speech tags used in the
     Penn Treebank Project:
@@ -60,11 +56,10 @@ import os, sys
 PATH = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(PATH)
 import json
-from openpyxl import load_workbook
 from imports import safe_import
 safe_import("blissymbol")
 safe_import("blissymbols")
-from blissymbol import *  #Blissymbol, NEW_BLISSYMBOLS
+from blissymbol import Blissymbol, NEW_BLISSYMBOLS
 from blissymbols import BlissLexicon
 
 
@@ -73,7 +68,6 @@ class LexiconParser:
     DATA_PATH = RESOURCE_PATH + "data/"
     WORDNET_PATH = RESOURCE_PATH + "wordnet/"
     LEXICA_PATH = RESOURCE_PATH + "lexica/"
-    LEXICON_PATH = LEXICA_PATH + "universal bliss lexicon.xlsx"
     LEXICON_COLS = ["BCI-AV#",
                     "English",
                     "POS",
@@ -890,8 +884,7 @@ class LexiconParser:
         lexicon = {}
 
         for line in lex:
-            line = line.decode("utf-8")
-            line = line.strip("\n")
+            line = str(line).strip("\n")
             if line[-1] == "=":
                 lemma = line[:-2]
                 lexicon[lemma] = lemma
@@ -1205,154 +1198,4 @@ class LexiconParser:
                                     self.translator,
                                     num=d["BCI-AV"])
             return blissymbol
-
-    # XLSX ENTRIES
-    # ============
-    def load_bliss_xlsx(self):
-        """
-        Loads a new Blissymbols lexicon from the
-        "universal bliss lexicon.xlsx" file.
-
-        :return: List[dict], list of dicts for all Blissymbols
-        """
-        book = load_workbook(self.LEXICON_PATH)
-        sheet = book.worksheets[0]
-        bliss_dicts = []
-
-        def split_translation(entry): return [self.translator.deunderscore(e)
-                                              for e in entry.split(",") if len(e) != 0]
-
-        for cells in sheet.iter_rows(min_row=2):
-            eng_cell = cells[1]
-            eng_word = eng_cell.value
-            eng_words = split_translation(eng_word)
-
-            pos_cell = cells[2]
-            pos_colour = pos_cell.value
-
-            derivs_cell = cells[3]
-            derivation = derivs_cell.value
-
-            translations_dict = {"English": eng_words}
-
-            for i in range(5, len(self.LEXICON_COLS), 2):
-                lang_cell = cells[i]
-                cell_language = self.LEXICON_COLS[i]
-                translation = lang_cell.value
-                translations = split_translation(translation) if translation is not None else []
-                translation_dict = {cell_language: translations}
-                translations_dict.update(translation_dict)
-
-            bliss_poses = Blissymbol.find_colour_pos(pos_colour)
-            pos = self.translator.token_pos(eng_words[0])
-            pos_lst = [pos]
-            poses = list(set(bliss_poses).intersection(pos_lst))
-            if len(poses) == 0:
-                poses = bliss_poses
-            pos = poses[0]
-            bci_num = cells[0].value
-            entry = self.blissymbol_entry(eng_word, pos, bci_num, derivation, translations_dict)
-            #entry["BCI-AV"] = bci_num
-            bliss_dicts.append(entry)
-
-        self.dump_json(bliss_dicts, "all_blissymbols")
-        return bliss_dicts
-
-    def blissymbol_to_xlsx_entry(self, blissymbol):
-        """
-        Converts this Blissymbol to a list of
-        information constituting a Bliss lexicon entry.
-        ~
-        Must be in order of LEXICON_COLS.
-
-        :param blissymbol: Blissymbol, symbol to convert to entry
-        :return: List[str], Bliss lexicon entry
-        """
-        row = []
-        bci_col = self.LEXICON_COLS[0]
-        pos_col = self.LEXICON_COLS[2]
-        deriv_col = self.LEXICON_COLS[3]
-        uni = blissymbol.unicode
-        uni = uni[2:]
-
-        for col in self.LEXICON_COLS:
-            if col == bci_col:
-                row.append("C+" + uni)
-            elif col == pos_col:
-                row.append(blissymbol.pos_to_int())
-            elif col == deriv_col:
-                row.append(blissymbol.derivation)
-            else:
-                translations = blissymbol.get_translation(col)
-                translations = ",".join(translations)
-                #translations = self.translator.deunicodize(translations)
-                row.append(translations)
-
-        return row
-
-    def append_bliss_xlsx_entry(self, blissymbol=None):
-        """
-        Adds data to bliss lexicon file for later use.
-        ~
-        If no Blissymbol is provided, prompts you to create your
-        own custom symbol.
-
-        :param blissymbol: Blissymbol, entry to add to Bliss lexicon
-        :return: None
-        """
-        if not blissymbol:
-            blissymbol = self.make_blissymbol()
-
-        print("making new Blissymbol entry for", str(blissymbol))
-        bliss_entry = self.blissymbol_to_xlsx_entry(blissymbol)
-
-        book = load_workbook(self.LEXICON_PATH)
-        sheet = book.worksheets[0]
-        sheet.append(bliss_entry)
-
-        book.save(self.LEXICON_PATH)
-
-    def extend_bliss_xlsx_entry(self, blissymbol):
-        """
-        Extends data in bliss lexicon file for later use.
-
-        :param bliss_entry: Blissymbol, entry to add to Bliss lexicon
-        :return: None
-        """
-        print("extending entry for", blissymbol.get_bliss_name())
-        book = load_workbook(self.LEXICON_PATH)
-        sheet = book.worksheets[0]
-        start_row = sheet.min_row
-        end_row = sheet.max_row
-
-        for row_idx in range(start_row, end_row):
-            cell = sheet.cell(row=row_idx, column=2)
-            eng_word = cell.value
-            eng_words = eng_word.split(",")
-            for synonym in eng_words:
-                synonym = synonym.strip()
-                if synonym == blissymbol.get_bliss_name():
-                    print("found English Blissymbol synonym:", eng_word)
-                    translations = blissymbol.translations
-                    for language in translations:
-                        defns = translations[language]
-                        if len(defns) != 0:
-                            lang_idx = self.LEXICON_COLS.index(language)
-                            edit = sheet.cell(row=row_idx, column=lang_idx+1)
-
-                            if edit.value is None:
-                                edit.value = ""
-                            else:
-                                edit.value = str(edit.value)
-                            values = []
-                            for defn in defns:
-                                values = edit.value.split(",")
-                                if defn not in values:
-                                    values.append(defn)
-                            values = self.translator.remove_duplicates(values)
-                            edit.value = ",".join(values)
-                            print("edited", language, "to be", edit.value)
-                    break
-
-        book.save(self.LEXICON_PATH)
 

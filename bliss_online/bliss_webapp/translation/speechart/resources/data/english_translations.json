@@ -45,6 +45,26 @@
    ]
   }
  },
+ "assis": {
+  "French": {
+   "Adjective": [
+    "sat",
+    "sat down",
+    "seated"
+   ]
+  }
+ },
+ "avoir": {
+  "French": {
+   "Verb": [
+    "have",
+    "have ",
+    "must",
+    "measure",
+    "age"
+   ]
+  }
+ },
  "bardzo": {
   "Polish": {
    "Adverb": [
@@ -65,6 +85,29 @@
    "Preposition": [
     "without",
     "lacking"
+   ]
+  }
+ },
+ "bien": {
+  "French": {
+   "Adjective": [
+    "good",
+    "all right",
+    "great",
+    "good looking",
+    "nice"
+   ],
+   "Adverb": [
+    "well",
+    "indeed",
+    "so",
+    "a lot of",
+    "really"
+   ],
+   "Noun": [
+    "good",
+    "commodity",
+    "possession"
    ]
   }
  },
@@ -254,6 +297,40 @@
    ]
   }
  },
+ "commencer": {
+  "French": {
+   "Verb": [
+    "begin",
+    "commence"
+   ]
+  }
+ },
+ "contenir": {
+  "French": {
+   "Verb": [
+    "contain",
+    "hold back",
+    "keep in check",
+    "hold",
+    "take",
+    "seat"
+   ]
+  }
+ },
+ "coup": {
+  "French": {
+   "Noun": [
+    "marks",
+    "firearm",
+    "load",
+    "blow",
+    "hit",
+    "strike",
+    "game",
+    "lay"
+   ]
+  }
+ },
  "coś": {
   "Polish": {
    "Pronoun": [
@@ -311,6 +388,14 @@
    ]
   }
  },
+ "côté": {
+  "French": {
+   "Noun": [
+    "side",
+    "edge"
+   ]
+  }
+ },
  "dal": {
   "Polish": {
    "Noun": [
@@ -341,6 +426,40 @@
     "put out",
     "consent",
     "sex"
+   ]
+  }
+ },
+ "de": {
+  "French": {
+   "Article": [
+    "any",
+    "some",
+    "a",
+    "an"
+   ],
+   "Preposition": [
+    "of",
+    "from",
+    "by"
+   ]
+  }
+ },
+ "deux": {
+  "French": {
+   "Noun": [
+    "two"
+   ],
+   "Numeral": [
+    "two"
+   ]
+  }
+ },
+ "dialoguer": {
+  "French": {
+   "Verb": [
+    "dialogue",
+    "discuss",
+    "negotiate"
    ]
   }
  },
@@ -546,6 +665,37 @@
    ]
   }
  },
+ "elle": {
+  "French": {
+   "Pronoun": [
+    "she",
+    "it"
+   ]
+  }
+ },
+ "et": {
+  "French": {
+   "Conjunction": [
+    "and"
+   ]
+  }
+ },
+ "faire": {
+  "French": {
+   "Verb": [
+    "do",
+    "make",
+    "be",
+    "say",
+    "go",
+    "ripen",
+    "mature",
+    "used to",
+    "become",
+    "get"
+   ]
+  }
+ },
  "gacek": {
   "Polish": {
    "Noun": [
@@ -641,11 +791,27 @@
    ]
   }
  },
+ "il": {
+  "French": {
+   "Pronoun": [
+    "it",
+    "he"
+   ]
+  }
+ },
  "ile": {
   "Polish": {
    "Pronoun": [
     "how much",
     "how many"
+   ]
+  }
+ },
+ "image": {
+  "French": {
+   "Noun": [
+    "picture",
+    "frame"
    ]
   }
  },
@@ -775,6 +941,17 @@
    "Particle": [
     "yet",
     "still"
+   ]
+  }
+ },
+ "jeter": {
+  "French": {
+   "Verb": [
+    "throw away",
+    "discard",
+    "throw",
+    "run in",
+    "rush"
    ]
   }
  },
@@ -944,6 +1121,31 @@
    ]
   }
  },
+ "lasser": {
+  "French": {
+   "Verb": [
+    "tire",
+    "weary",
+    "bore",
+    "exhausted"
+   ]
+  }
+ },
+ "le": {
+  "French": {
+   "Article": [
+    "The",
+    "my",
+    "your",
+    "A",
+    "an"
+   ],
+   "Pronoun": [
+    "Him",
+    "it"
+   ]
+  }
+ },
  "leczyć": {
   "Polish": {
    "Verb": [
@@ -960,6 +1162,23 @@
    ]
   }
  },
+ "lire": {
+  "French": {
+   "Noun": [
+    "lira"
+   ],
+   "Verb": [
+    "read"
+   ]
+  }
+ },
+ "livre": {
+  "French": {
+   "Noun": [
+    "pound"
+   ]
+  }
+ },
  "liść": {
   "Polish": {
    "Noun": [
@@ -972,6 +1191,14 @@
   "Polish": {
    "Conjunction": [
     "or"
+   ]
+  }
+ },
+ "mais": {
+  "French": {
+   "Conjunction": [
+    "but",
+    "although"
    ]
   }
  },
@@ -1248,6 +1475,22 @@
    ]
   }
  },
+ "ne": {
+  "French": {
+   "Particle": [
+    "not",
+    "no"
+   ]
+  }
+ },
+ "ni": {
+  "French": {
+   "Conjunction": [
+    "neither",
+    "nor"
+   ]
+  }
+ },
  "niby": {
   "Polish": {
    "Adverb": [
@@ -1469,6 +1712,24 @@
    ]
   }
  },
+ "ou": {
+  "French": {
+   "Conjunction": [
+    "or",
+    "either"
+   ]
+  }
+ },
+ "où": {
+  "French": {
+   "Adverb": [
+    "where",
+    "time",
+    "when",
+    "whither"
+   ]
+  }
+ },
  "palec": {
   "Polish": {
    "Noun": [
@@ -1494,6 +1755,47 @@
    "Verb": [
     "widespread",
     "prevail"
+   ]
+  }
+ },
+ "penser": {
+  "French": {
+   "Verb": [
+    "believe",
+    "opinion",
+    "think",
+    "reflect",
+    "concentrate",
+    "mind",
+    "estimate",
+    "imagine",
+    "absorbed",
+    "worry",
+    "depressing",
+    "thoughts",
+    "conceive",
+    "project",
+    "evoke",
+    "image",
+    "remembrance",
+    "attach",
+    "thinking",
+    "lovingly",
+    "try",
+    "prepare",
+    "bear",
+    "keep",
+    "consider",
+    "intend",
+    "aim",
+    "take care",
+    "accordance",
+    "agreed",
+    "principles",
+    "intellectual",
+    "tendency",
+    "preference",
+    "property"
    ]
   }
  },
@@ -1648,6 +1950,20 @@
   "Polish": {
    "Verb": [
     "can"
+   ]
+  }
+ },
+ "pouvoir": {
+  "French": {
+   "Noun": [
+    "power",
+    "authority",
+    "power of attorney"
+   ],
+   "Verb": [
+    "can",
+    "be able to",
+    "may"
    ]
   }
  },
@@ -1920,6 +2236,28 @@
    ]
   }
  },
+ "que": {
+  "French": {
+   "Conjunction": [
+    "than"
+   ]
+  }
+ },
+ "quoi": {
+  "French": {
+   "Adverb": [
+    "you know",
+    "like",
+    "y'know"
+   ],
+   "Pronoun": [
+    "what",
+    "aught",
+    "anything",
+    "something"
+   ]
+  }
+ },
  "raczej": {
   "Polish": {
    "Conjunction": [
@@ -1957,12 +2295,30 @@
    ]
   }
  },
+ "rester": {
+  "French": {
+   "Verb": [
+    "stay",
+    "remain",
+    "left over",
+    "rest"
+   ]
+  }
+ },
  "reszta": {
   "Polish": {
    "Noun": [
     "rest",
     "change",
     "remainder"
+   ]
+  }
+ },
+ "rien": {
+  "French": {
+   "Pronoun": [
+    "nothing",
+    "anything"
    ]
   }
  },
@@ -2070,6 +2426,16 @@
    ]
   }
  },
+ "sa": {
+  "French": {
+   "Determiner": [
+    "His",
+    "her",
+    "its",
+    "one's"
+   ]
+  }
+ },
  "sala": {
   "Polish": {
    "Noun": [
@@ -2105,6 +2471,18 @@
    ]
   }
  },
+ "se": {
+  "French": {
+   "Pronoun": [
+    "himself",
+    "herself",
+    "oneself",
+    "itself",
+    "themselves",
+    "each other"
+   ]
+  }
+ },
  "senny": {
   "Polish": {
    "Adjective": [
@@ -2118,6 +2496,38 @@
   "Polish": {
    "Noun": [
     "sense"
+   ]
+  }
+ },
+ "sentir": {
+  "French": {
+   "Verb": [
+    "feel",
+    "smell",
+    "taste",
+    "odor",
+    "smack of",
+    "indicate",
+    "foreshadow",
+    "character",
+    "manner",
+    "feeling",
+    "appearance",
+    "aware",
+    "conscious",
+    "show"
+   ]
+  }
+ },
+ "servir": {
+  "French": {
+   "Verb": [
+    "serve",
+    "useful",
+    "set up",
+    "help oneself",
+    "use",
+    "make use"
    ]
   }
  },
@@ -2334,6 +2744,23 @@
    ]
   }
  },
+ "sur": {
+  "French": {
+   "Adjective": [
+    "sour"
+   ],
+   "Preposition": [
+    "on top of",
+    "on",
+    "upon",
+    "from",
+    "above",
+    "out of",
+    "about",
+    "concerning"
+   ]
+  }
+ },
  "szafa": {
   "Polish": {
    "Noun": [
@@ -2402,6 +2829,14 @@
   "Polish": {
    "Verb": [
     "hear"
+   ]
+  }
+ },
+ "sœur": {
+  "French": {
+   "Noun": [
+    "sister",
+    "nun"
    ]
   }
  },
@@ -2496,6 +2931,13 @@
     "hold",
     "hold on",
     "stick"
+   ]
+  }
+ },
+ "très": {
+  "French": {
+   "Adverb": [
+    "very"
    ]
   }
  },
@@ -2600,6 +3042,34 @@
   "Polish": {
    "Verb": [
     "know"
+   ]
+  }
+ },
+ "un": {
+  "French": {
+   "Article": [
+    "an",
+    "a"
+   ],
+   "Noun": [
+    "one"
+   ],
+   "Numeral": [
+    "one"
+   ],
+   "Pronoun": [
+    "one"
+   ]
+  }
+ },
+ "une": {
+  "French": {
+   "Article": [
+    "a",
+    "an"
+   ],
+   "Noun": [
+    "front page"
    ]
   }
  },
@@ -3132,6 +3602,23 @@
    ]
   }
  },
+ "à": {
+  "French": {
+   "Preposition": [
+    "to",
+    "on",
+    "at",
+    "in",
+    "of",
+    "till",
+    "until",
+    "cooked",
+    "with",
+    "by",
+    "or"
+   ]
+  }
+ },
  "ćwierć": {
   "Polish": {
    "Numeral": [
@@ -3151,6 +3638,15 @@
   "Polish": {
    "Noun": [
     "bench"
+   ]
+  }
+ },
+ "œil": {
+  "French": {
+   "Noun": [
+    "eye",
+    "see",
+    "glyph"
    ]
   }
  },

@@ -1,4 +1,11 @@
 {
+ "Alice": {
+  "French": {
+   "Pronunciation": [
+    "alis"
+   ]
+  }
+ },
  "Alicja": {
   "Polish": {
    "Declension": {
@@ -483,6 +490,383 @@
    ]
   }
  },
+ "assis": {
+  "French": {
+   "Adjective": {
+    "definitions": [
+     "sat, sat down, seated"
+    ],
+    "head": "assis",
+    "lemmas": {
+     "English": [
+      "sat",
+      "sat down",
+      "seated"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Participle": {
+    "definitions": [
+     "masculine plural of the past participle of asseoir"
+    ],
+    "head": "assis",
+    "lemmas": {
+     "English": [],
+     "French": [
+      "asseoir"
+     ]
+    },
+    "terms": [
+     "masculine",
+     "plural",
+     "past",
+     "participle"
+    ]
+   },
+   "Pronunciation": [
+    "asi"
+   ],
+   "Verb": {
+    "definitions": [
+     "past participle of asseoir",
+     "first-person plural past historic of asseoir",
+     "second-person plural past historic of asseoir"
+    ],
+    "head": "assis",
+    "lemmas": {
+     "English": [],
+     "French": [
+      "asseoir"
+     ]
+    },
+    "terms": [
+     "past",
+     "participle",
+     "first-person",
+     "plural",
+     "second-person"
+    ]
+   }
+  }
+ },
+ "avoir": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "ayons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "aie"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "ayez"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "eusse"
+           ],
+           "present": [
+            "aie"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "eussions"
+           ],
+           "present": [
+            "ayons"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "eusses"
+           ],
+           "present": [
+            "aies"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "eussiez"
+           ],
+           "present": [
+            "ayez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "eût"
+           ],
+           "present": [
+            "ait"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "eussent"
+           ],
+           "present": [
+            "aient"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant eu",
+      "en ayant eu",
+      "en ayant eu"
+     ],
+     "infinitive": [
+      "avoir eu",
+      "avoir eu",
+      "avoir eu"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "aurions"
+        ],
+        "future": [
+         "aurons"
+        ],
+        "imperfect": [
+         "avions"
+        ],
+        "past historic 1": [
+         "eûmes"
+        ],
+        "present": [
+         "avons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "auriez"
+        ],
+        "future": [
+         "aurez"
+        ],
+        "imperfect": [
+         "aviez"
+        ],
+        "past historic 1": [
+         "eûtes"
+        ],
+        "present": [
+         "avez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "auraient"
+        ],
+        "future": [
+         "auront"
+        ],
+        "imperfect": [
+         "avaient"
+        ],
+        "past historic 1": [
+         "eurent"
+        ],
+        "present": [
+         "ont"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en ayant",
+      "en ayant",
+      "en ayant"
+     ],
+     "infinitive": [
+      "avoir",
+      "avoir",
+      "avoir"
+     ],
+     "past participle": [
+      "eu"
+     ],
+     "present participle": [
+      "ayant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "aurais"
+        ],
+        "future": [
+         "aurai"
+        ],
+        "imperfect": [
+         "avais"
+        ],
+        "past historic 1": [
+         "eus"
+        ],
+        "present": [
+         "ai"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "aurais"
+        ],
+        "future": [
+         "auras"
+        ],
+        "imperfect": [
+         "avais"
+        ],
+        "past historic 1": [
+         "eus"
+        ],
+        "present": [
+         "as"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "aurait"
+        ],
+        "future": [
+         "aura"
+        ],
+        "imperfect": [
+         "avait"
+        ],
+        "past historic 1": [
+         "eut"
+        ],
+        "present": [
+         "a"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Noun": {
+    "definitions": [
+     "asset, possession"
+    ],
+    "head": "avoir",
+    "lemmas": {
+     "English": [],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "avwaʁ"
+   ],
+   "Verb": {
+    "definitions": [
+     "(transitive) to have (to own; to possess)",
+     "(intransitive, with à) to have (to), must",
+     "(auxiliary) to have (auxiliary verb to form compound past tenses of most verbs)",
+     "(transitive) to have (a condition)",
+     "(transitive) to have (a measure or age)",
+     "to have (to trick)",
+     "to have (to participate in an experience)"
+    ],
+    "head": "avoir",
+    "lemmas": {
+     "English": [
+      "have",
+      "have ",
+      "must",
+      "measure",
+      "age"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "J' ai à vous parler. ― I have to talk to you.",
+     "J' ai à vous parler.",
+     "J' ai parlé. ― I have spoken.",
+     "J' ai parlé.",
+     "J' ai faim. ― I'm hungry. (literally, “ I have hunger. ”)",
+     "J' ai faim.",
+     "J' ai froid. ― I'm cold. (literally, “ I have cold. ”)",
+     "J' ai froid.",
+     "Elle a 19 ans. ― She is 19 years old. (literally, “ She has 19 years. ”)",
+     "Elle a 19 ans.",
+     "Tu t'es fait avoir . ― You've been had .",
+     "Tu t'es fait avoir .",
+     "avoir des relations sexuelles"
+    ],
+    "terms": [
+     "transitive",
+     "intransitive",
+     "à"
+    ]
+   }
+  }
+ },
  "bardzo": {
   "Polish": {
    "Adverb": {
@@ -799,6 +1183,73 @@
    },
    "Pronunciation": [
     "bʲawɨ"
+   ]
+  }
+ },
+ "bien": {
+  "French": {
+   "Adjective": {
+    "definitions": [
+     "good, all right, great",
+     "good looking, nice"
+    ],
+    "head": "bien",
+    "lemmas": {
+     "English": [
+      "good",
+      "all right",
+      "great",
+      "good looking",
+      "nice"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Adverb": {
+    "definitions": [
+     "well",
+     "indeed ; so",
+     "(+ de, des, du) a lot of",
+     "(colloquial) really (used as an intensifier)"
+    ],
+    "head": "bien",
+    "lemmas": {
+     "English": [
+      "well",
+      "indeed",
+      "so",
+      "a lot of",
+      "really"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "Macy Gray a traversé bien des épreuves."
+    ],
+    "terms": [
+     "colloquial"
+    ]
+   },
+   "Noun": {
+    "definitions": [
+     "good as opposed to evil",
+     "a commodity, a good",
+     "a possession"
+    ],
+    "head": "bien",
+    "lemmas": {
+     "English": [
+      "good",
+      "commodity",
+      "possession"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "bjɛ̃"
    ]
   }
  },
@@ -4482,6 +4933,611 @@
    ]
   }
  },
+ "commencer": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "commençons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "commence"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "commencez"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "commençasse"
+           ],
+           "present": [
+            "commence"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "commençassions"
+           ],
+           "present": [
+            "commencions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "commençasses"
+           ],
+           "present": [
+            "commences"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "commençassiez"
+           ],
+           "present": [
+            "commenciez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "commençât"
+           ],
+           "present": [
+            "commence"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "commençassent"
+           ],
+           "present": [
+            "commencent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant commencé",
+      "en ayant commencé",
+      "en ayant commencé"
+     ],
+     "infinitive": [
+      "avoir commencé",
+      "avoir commencé",
+      "avoir commencé"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "commencerions"
+        ],
+        "future": [
+         "commencerons"
+        ],
+        "imperfect": [
+         "commencions"
+        ],
+        "past historic 1": [
+         "commençâmes"
+        ],
+        "present": [
+         "commençons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "commenceriez"
+        ],
+        "future": [
+         "commencerez"
+        ],
+        "imperfect": [
+         "commenciez"
+        ],
+        "past historic 1": [
+         "commençâtes"
+        ],
+        "present": [
+         "commencez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "commenceraient"
+        ],
+        "future": [
+         "commenceront"
+        ],
+        "imperfect": [
+         "commençaient"
+        ],
+        "past historic 1": [
+         "commencèrent"
+        ],
+        "present": [
+         "commencent"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en commençant",
+      "en commençant",
+      "en commençant"
+     ],
+     "infinitive": [
+      "commencer",
+      "commencer",
+      "commencer"
+     ],
+     "past participle": [
+      "commencé"
+     ],
+     "present participle": [
+      "commençant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "commencerais"
+        ],
+        "future": [
+         "commencerai"
+        ],
+        "imperfect": [
+         "commençais"
+        ],
+        "past historic 1": [
+         "commençai"
+        ],
+        "present": [
+         "commence"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "commencerais"
+        ],
+        "future": [
+         "commenceras"
+        ],
+        "imperfect": [
+         "commençais"
+        ],
+        "past historic 1": [
+         "commenças"
+        ],
+        "present": [
+         "commences"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "commencerait"
+        ],
+        "future": [
+         "commencera"
+        ],
+        "imperfect": [
+         "commençait"
+        ],
+        "past historic 1": [
+         "commença"
+        ],
+        "present": [
+         "commence"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Pronunciation": [
+    "kɔmɑ̃se"
+   ],
+   "Verb": {
+    "definitions": [
+     "to begin, commence"
+    ],
+    "head": "commencer",
+    "lemmas": {
+     "English": [
+      "begin",
+      "commence"
+     ],
+     "French": []
+    },
+    "terms": []
+   }
+  }
+ },
+ "contenir": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "contenons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "contiens"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "contenez"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "continsse"
+           ],
+           "present": [
+            "contienne"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "continssions"
+           ],
+           "present": [
+            "contenions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "continsses"
+           ],
+           "present": [
+            "contiennes"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "continssiez"
+           ],
+           "present": [
+            "conteniez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "contînt"
+           ],
+           "present": [
+            "contienne"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "continssent"
+           ],
+           "present": [
+            "contiennent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant contenu",
+      "en ayant contenu",
+      "en ayant contenu"
+     ],
+     "infinitive": [
+      "avoir contenu",
+      "avoir contenu",
+      "avoir contenu"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "contiendrions"
+        ],
+        "future": [
+         "contiendrons"
+        ],
+        "imperfect": [
+         "contenions"
+        ],
+        "past historic 1": [
+         "contînmes"
+        ],
+        "present": [
+         "contenons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "contiendriez"
+        ],
+        "future": [
+         "contiendrez"
+        ],
+        "imperfect": [
+         "conteniez"
+        ],
+        "past historic 1": [
+         "contîntes"
+        ],
+        "present": [
+         "contenez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "contiendraient"
+        ],
+        "future": [
+         "contiendront"
+        ],
+        "imperfect": [
+         "contenaient"
+        ],
+        "past historic 1": [
+         "continrent"
+        ],
+        "present": [
+         "contiennent"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en contenant",
+      "en contenant",
+      "en contenant"
+     ],
+     "infinitive": [
+      "contenir",
+      "contenir",
+      "contenir"
+     ],
+     "past participle": [
+      "contenu"
+     ],
+     "present participle": [
+      "contenant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "contiendrais"
+        ],
+        "future": [
+         "contiendrai"
+        ],
+        "imperfect": [
+         "contenais"
+        ],
+        "past historic 1": [
+         "contins"
+        ],
+        "present": [
+         "contiens"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "contiendrais"
+        ],
+        "future": [
+         "contiendras"
+        ],
+        "imperfect": [
+         "contenais"
+        ],
+        "past historic 1": [
+         "contins"
+        ],
+        "present": [
+         "contiens"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "contiendrait"
+        ],
+        "future": [
+         "contiendra"
+        ],
+        "imperfect": [
+         "contenait"
+        ],
+        "past historic 1": [
+         "contint"
+        ],
+        "present": [
+         "contient"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Pronunciation": [
+    "kɔ̃tniʁ"
+   ],
+   "Verb": {
+    "definitions": [
+     "to contain (To have in)",
+     "to contain, to hold back (control, e.g. a disease, tears), to keep in check (control something that might hurt you, e.g. emotions)",
+     "to hold, to take, to seat (To have a capacity of)"
+    ],
+    "head": "contenir",
+    "lemmas": {
+     "English": [
+      "contain",
+      "hold back",
+      "keep in check",
+      "hold",
+      "take",
+      "seat"
+     ],
+     "French": []
+    },
+    "terms": []
+   }
+  }
+ },
+ "coup": {
+  "French": {
+   "Noun": {
+    "definitions": [
+     "blow, hit, strike \n sound of the action\n \n physical consequences of the action (marks)",
+     "sound of the action",
+     "physical consequences of the action (marks)",
+     "fast and instantaneous action",
+     "elementary action that may be repeated (e.g. in a game)\n \n for a firearm, load \n pistolet à six coups",
+     "for a firearm, load",
+     "small quantity: mettre un coup de peinture",
+     "planned action",
+     "(slang) lay"
+    ],
+    "head": "coup",
+    "lemmas": {
+     "English": [
+      "marks",
+      "firearm",
+      "load",
+      "blow",
+      "hit",
+      "strike",
+      "game",
+      "lay"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "marqué de coups",
+     "jeter un coup d'œil",
+     "boire un coup",
+     "pistolet à six coups",
+     "préparer son coup",
+     "Cette meuf, c'était le meilleur coup de ma vie."
+    ],
+    "terms": [
+     "slang"
+    ]
+   },
+   "Pronunciation": [
+    "ku"
+   ]
+  }
+ },
  "coś": {
   "Polish": {
    "Declension": {
@@ -5552,6 +6608,35 @@
    ]
   }
  },
+ "côté": {
+  "French": {
+   "Noun": {
+    "definitions": [
+     "side",
+     "edge"
+    ],
+    "head": "côté",
+    "lemmas": {
+     "English": [
+      "side",
+      "edge"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "kote"
+   ]
+  }
+ },
+ "d": {
+  "French": {
+   "Pronunciation": [
+    "de"
+   ]
+  }
+ },
  "dal": {
   "Polish": {
    "Declension": {
@@ -6144,6 +7229,428 @@
      "intransitive",
      "vulgar"
     ]
+   }
+  }
+ },
+ "de": {
+  "French": {
+   "Article": {
+    "definitions": [
+     "(indefinite) some ; any (in questions or negatives)",
+     "(negative) a, an, any"
+    ],
+    "head": "de",
+    "lemmas": {
+     "English": [
+      "any",
+      "some",
+      "a",
+      "an"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "Elle n'a pas de mère. ― She does not have a mother.",
+     "Elle n'a pas de mère.",
+     "Il n'a pas de crayon. ― He does not have a pencil.",
+     "Il n'a pas de crayon.",
+     "Je n'ai pas de temps. ― I do not have any time.",
+     "Je n'ai pas de temps."
+    ],
+    "terms": []
+   },
+   "Preposition": {
+    "definitions": [
+     "of (expresses belonging)",
+     "of (used to express property or association)",
+     "from (used to indicate origin)",
+     "of (indicates an amount)",
+     "used attributively, often translated into English as a compound word",
+     "from (used to indicate the start of a time or range)",
+     "used after certain verbs before an infinitive, often translated into English as a gerund or an infinitive",
+     "by (indicates the amount of change)"
+    ],
+    "head": "de",
+    "lemmas": {
+     "English": [
+      "of",
+      "from",
+      "by"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "Paris est la capitale de la France. ― Paris is the capital of France.",
+     "Paris est la capitale de la France.",
+     "Œuvres de Fermat ― Fermat ’s Works",
+     "Œuvres de Fermat",
+     "Elle est la femme de mon ami. ― She is my friend’ s wife.",
+     "Elle est la femme de mon ami.",
+     "le voisin de Gabriel ― Gabriel' s neighbor",
+     "le voisin de Gabriel",
+     "Elle vient de France. ― She comes from France.",
+     "Elle vient de France.",
+     "Êtes-vous de Suisse? ― Are you from Switzerland?",
+     "Êtes-vous de Suisse?",
+     "Ce fromage vient d’ Espagne. ― This cheese is from Spain.",
+     "Ce fromage vient d’ Espagne.",
+     "C’est de l’ouest de la France. ― It’s from the west of France.",
+     "C’est de l’ouest de la France.",
+     "Le train va de Paris à Bordeaux. ― The train goes from Paris to Bordeaux.",
+     "Le train va de Paris à Bordeaux.",
+     "5 kilos de pommes. ― 5 kilograms of apples.",
+     "5 kilos de pommes.",
+     "Un verre de vin ― A glass of wine",
+     "Un verre de vin",
+     "Une portion de frites ― A portion of fries",
+     "Une portion de frites",
+     "Un jus de pomme ― Apple juice",
+     "Un jus de pomme",
+     "Une boîte de nuit ― A nightclub",
+     "Une boîte de nuit",
+     "Un chien de garde ― A guarddog",
+     "Un chien de garde",
+     "Une voiture de sport ― A sportscar",
+     "Une voiture de sport",
+     "Un stade de football ― A football stadium",
+     "Un stade de football",
+     "De 9:00 à 11:00 je ne serai pas libre. ― From 9 to 11 I won’t be free.",
+     "De 9:00 à 11:00 je ne serai pas libre.",
+     "Je travaille de huit heures à midi. ― I work from 8 o'clock to noon.",
+     "Je travaille de huit heures à midi.",
+     "un groupe de cinq à huit personnes ― a group of [ from ] five to eight people",
+     "un groupe de cinq à huit personnes",
+     "J’ai arrêté de fumer. ― I stopped smoking.",
+     "J’ai arrêté de fumer.",
+     "Il continue de m’embêter. ― He keeps annoying me.",
+     "Il continue de m’embêter.",
+     "Elle m’a dit de venir. ― She told me to come.",
+     "Elle m’a dit de venir.",
+     "Nous vous exhortons de venir. ― We urge you to come.",
+     "Nous vous exhortons de venir.",
+     "Boire trois tasses par jour réduirait de 20% les risques de contracter une maladie. ― Drinking three cups a day would reduce the risks of catching an illness by 20%.",
+     "Boire trois tasses par jour réduirait de 20% les risques de contracter une maladie."
+    ],
+    "terms": []
+   },
+   "Pronunciation": [
+    "də"
+   ]
+  }
+ },
+ "deux": {
+  "French": {
+   "Noun": {
+    "definitions": [
+     "two",
+     "(in the plural) twos"
+    ],
+    "head": "deux",
+    "lemmas": {
+     "English": [
+      "two"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Numeral": {
+    "definitions": [
+     "two"
+    ],
+    "head": "deux",
+    "lemmas": {
+     "English": [
+      "two"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "dø"
+   ]
+  }
+ },
+ "dialoguer": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "dialoguons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "dialogue"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "dialoguez"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "dialoguasse"
+           ],
+           "present": [
+            "dialogue"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "dialoguassions"
+           ],
+           "present": [
+            "dialoguions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "dialoguasses"
+           ],
+           "present": [
+            "dialogues"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "dialoguassiez"
+           ],
+           "present": [
+            "dialoguiez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "dialoguât"
+           ],
+           "present": [
+            "dialogue"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "dialoguassent"
+           ],
+           "present": [
+            "dialoguent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant dialogué",
+      "en ayant dialogué",
+      "en ayant dialogué"
+     ],
+     "infinitive": [
+      "avoir dialogué",
+      "avoir dialogué",
+      "avoir dialogué"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "dialoguerions"
+        ],
+        "future": [
+         "dialoguerons"
+        ],
+        "imperfect": [
+         "dialoguions"
+        ],
+        "past historic 1": [
+         "dialoguâmes"
+        ],
+        "present": [
+         "dialoguons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "dialogueriez"
+        ],
+        "future": [
+         "dialoguerez"
+        ],
+        "imperfect": [
+         "dialoguiez"
+        ],
+        "past historic 1": [
+         "dialoguâtes"
+        ],
+        "present": [
+         "dialoguez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "dialogueraient"
+        ],
+        "future": [
+         "dialogueront"
+        ],
+        "imperfect": [
+         "dialoguaient"
+        ],
+        "past historic 1": [
+         "dialoguèrent"
+        ],
+        "present": [
+         "dialoguent"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en dialoguant",
+      "en dialoguant",
+      "en dialoguant"
+     ],
+     "infinitive": [
+      "dialoguer",
+      "dialoguer",
+      "dialoguer"
+     ],
+     "past participle": [
+      "dialogué"
+     ],
+     "present participle": [
+      "dialoguant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "dialoguerais"
+        ],
+        "future": [
+         "dialoguerai"
+        ],
+        "imperfect": [
+         "dialoguais"
+        ],
+        "past historic 1": [
+         "dialoguai"
+        ],
+        "present": [
+         "dialogue"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "dialoguerais"
+        ],
+        "future": [
+         "dialogueras"
+        ],
+        "imperfect": [
+         "dialoguais"
+        ],
+        "past historic 1": [
+         "dialoguas"
+        ],
+        "present": [
+         "dialogues"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "dialoguerait"
+        ],
+        "future": [
+         "dialoguera"
+        ],
+        "imperfect": [
+         "dialoguait"
+        ],
+        "past historic 1": [
+         "dialogua"
+        ],
+        "present": [
+         "dialogue"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Etymology": [
+    "dialogue",
+    "-er"
+   ],
+   "Pronunciation": [
+    "djalɔɡe"
+   ],
+   "Verb": {
+    "definitions": [
+     "to dialogue, discuss, negotiate"
+    ],
+    "head": "dialoguer",
+    "lemmas": {
+     "English": [
+      "dialogue",
+      "discuss",
+      "negotiate"
+     ],
+     "French": []
+    },
+    "terms": []
    }
   }
  },
@@ -8703,6 +10210,411 @@
    ]
   }
  },
+ "elle": {
+  "French": {
+   "Noun": {
+    "definitions": [
+     "The name of the Latin-script letter L / l ."
+    ],
+    "head": "elle",
+    "lemmas": {
+     "English": [],
+     "French": [
+      "L",
+      "l"
+     ]
+    },
+    "terms": []
+   },
+   "Pronoun": {
+    "definitions": [
+     "she",
+     "it (feminine gender third-person singular subject pronoun)",
+     "disjunctive form of elle ; her ; à elle = hers"
+    ],
+    "head": "elle",
+    "lemmas": {
+     "English": [
+      "she",
+      "it"
+     ],
+     "French": [
+      "à"
+     ]
+    },
+    "sentences": [
+     "C’est à elle ."
+    ],
+    "terms": []
+   },
+   "Pronunciation": [
+    "ɛl"
+   ]
+  }
+ },
+ "et": {
+  "French": {
+   "Conjunction": {
+    "definitions": [
+     "and"
+    ],
+    "head": "et",
+    "lemmas": {
+     "English": [
+      "and"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "e"
+   ]
+  }
+ },
+ "faire": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "faisons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "fais"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "faites"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "fisse"
+           ],
+           "present": [
+            "fasse"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "fissions"
+           ],
+           "present": [
+            "fassions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "fisses"
+           ],
+           "present": [
+            "fasses"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "fissiez"
+           ],
+           "present": [
+            "fassiez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "fît"
+           ],
+           "present": [
+            "fasse"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "fissent"
+           ],
+           "present": [
+            "fassent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant fait",
+      "en ayant fait",
+      "en ayant fait"
+     ],
+     "infinitive": [
+      "avoir fait",
+      "avoir fait",
+      "avoir fait"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "ferions"
+        ],
+        "future": [
+         "ferons"
+        ],
+        "imperfect": [
+         "faisions"
+        ],
+        "past historic 1": [
+         "fîmes"
+        ],
+        "present": [
+         "faisons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "feriez"
+        ],
+        "future": [
+         "ferez"
+        ],
+        "imperfect": [
+         "faisiez"
+        ],
+        "past historic 1": [
+         "fîtes"
+        ],
+        "present": [
+         "faites"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "feraient"
+        ],
+        "future": [
+         "feront"
+        ],
+        "imperfect": [
+         "faisaient"
+        ],
+        "past historic 1": [
+         "firent"
+        ],
+        "present": [
+         "font"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en faisant",
+      "en faisant",
+      "en faisant"
+     ],
+     "infinitive": [
+      "faire",
+      "faire",
+      "faire"
+     ],
+     "past participle": [
+      "fait"
+     ],
+     "present participle": [
+      "faisant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "ferais"
+        ],
+        "future": [
+         "ferai"
+        ],
+        "imperfect": [
+         "faisais"
+        ],
+        "past historic 1": [
+         "fis"
+        ],
+        "present": [
+         "fais"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "ferais"
+        ],
+        "future": [
+         "feras"
+        ],
+        "imperfect": [
+         "faisais"
+        ],
+        "past historic 1": [
+         "fis"
+        ],
+        "present": [
+         "fais"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "ferait"
+        ],
+        "future": [
+         "fera"
+        ],
+        "imperfect": [
+         "faisait"
+        ],
+        "past historic 1": [
+         "fit"
+        ],
+        "present": [
+         "fait"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Pronunciation": [
+    "fɛʁ"
+   ],
+   "Verb": {
+    "definitions": [
+     "(transitive) to do",
+     "(transitive) to make",
+     "(transitive) to say (of a person), to go (of an animal)",
+     "(transitive) to make (cause someone or something to do something)",
+     "(impersonal) To be (of the weather or various situations) .",
+     "(reflexive) to do, to make (oneself)",
+     "(reflexive, followed by an infinitive) to be (used for a passive action)",
+     "(reflexive) to ripen (of fruit), to mature (, etc.)",
+     "(reflexive, ~ à) to become used to, to get used to",
+     "(slang, reflexive, transitive) to do (to have sex with)",
+     "(reflexive) to become, to get"
+    ],
+    "head": "faire",
+    "lemmas": {
+     "English": [
+      "do",
+      "make",
+      "be",
+      "say",
+      "go",
+      "ripen",
+      "mature",
+      "used to",
+      "become",
+      "get"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "Faire une erreur. ― To make a mistake.",
+     "Faire une erreur.",
+     "\"Je t'aime,\" fit -il. ― \"I love you,\" he said .",
+     "\"Je t'aime,\" fit -il.",
+     "Le chat fait \"miaou\". ― The cat goes \"meow\".",
+     "Le chat fait \"miaou\".",
+     "Tu me fais rire. ― You make me laugh.",
+     "Tu me fais rire.",
+     "La chanson me fait pleurer. ― The song makes me cry.",
+     "La chanson me fait pleurer.",
+     "Il fait chaud/froid/noir/beau dehors.",
+     "Ça fait dix ans que nous nous connaissons.",
+     "Elle se fait les ongles. ― She is doing her nails.",
+     "Elle se fait les ongles.",
+     "Se faire piquer. ― To be stung.",
+     "Se faire piquer.",
+     "Je me suis fait avoir. ― I got screwed.",
+     "Je me suis fait avoir."
+    ],
+    "terms": [
+     "transitive",
+     "impersonal",
+     "reflexive",
+     "infinitive",
+     "slang"
+    ]
+   }
+  }
+ },
+ "fois": {
+  "French": {
+   "Noun": {
+    "definitions": [
+     "plural of foi"
+    ],
+    "head": "fois",
+    "lemmas": {
+     "English": [],
+     "French": [
+      "foi"
+     ]
+    },
+    "terms": [
+     "plural"
+    ]
+   },
+   "Pronunciation": [
+    "fwa"
+   ]
+  }
+ },
  "gacek": {
   "Polish": {
    "Noun": {
@@ -9811,6 +11723,29 @@
    ]
   }
  },
+ "il": {
+  "French": {
+   "Pronoun": {
+    "definitions": [
+     "he (third-person singular masculine subject pronoun for human subject)",
+     "it (third-person singular subject pronoun for grammatically masculine objects)",
+     "Impersonal subject; it"
+    ],
+    "head": "il",
+    "lemmas": {
+     "English": [
+      "it",
+      "he"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "il"
+   ]
+  }
+ },
  "ile": {
   "Polish": {
    "Pronoun": {
@@ -9830,6 +11765,56 @@
    "Pronunciation": [
     "ilɛ"
    ]
+  }
+ },
+ "image": {
+  "French": {
+   "Noun": {
+    "definitions": [
+     "picture, image",
+     "(TV, film) frame"
+    ],
+    "head": "image",
+    "lemmas": {
+     "English": [
+      "picture",
+      "frame"
+     ],
+     "French": []
+    },
+    "terms": [
+     "film"
+    ]
+   },
+   "Pronunciation": [
+    "imaʒ"
+   ],
+   "Verb": {
+    "definitions": [
+     "first-person singular present indicative of imager",
+     "third-person singular present indicative of imager",
+     "first-person singular present subjunctive of imager",
+     "third-person singular present subjunctive of imager",
+     "second-person singular imperative of imager"
+    ],
+    "head": "image",
+    "lemmas": {
+     "English": [],
+     "French": [
+      "imager"
+     ]
+    },
+    "terms": [
+     "first-person",
+     "singular",
+     "present",
+     "indicative",
+     "third-person",
+     "subjunctive",
+     "second-person",
+     "imperative"
+    ]
+   }
   }
  },
  "imponować": {
@@ -11759,6 +13744,295 @@
    ]
   }
  },
+ "jeter": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "jetons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "jette"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "jetez"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "jetasse"
+           ],
+           "present": [
+            "jette"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "jetassions"
+           ],
+           "present": [
+            "jetions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "jetasses"
+           ],
+           "present": [
+            "jettes"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "jetassiez"
+           ],
+           "present": [
+            "jetiez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "jetât"
+           ],
+           "present": [
+            "jette"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "jetassent"
+           ],
+           "present": [
+            "jettent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant jeté",
+      "en ayant jeté",
+      "en ayant jeté"
+     ],
+     "infinitive": [
+      "avoir jeté",
+      "avoir jeté",
+      "avoir jeté"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "jetterions"
+        ],
+        "future": [
+         "jetterons"
+        ],
+        "imperfect": [
+         "jetions"
+        ],
+        "past historic 1": [
+         "jetâmes"
+        ],
+        "present": [
+         "jetons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "jetteriez"
+        ],
+        "future": [
+         "jetterez"
+        ],
+        "imperfect": [
+         "jetiez"
+        ],
+        "past historic 1": [
+         "jetâtes"
+        ],
+        "present": [
+         "jetez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "jetteraient"
+        ],
+        "future": [
+         "jetteront"
+        ],
+        "imperfect": [
+         "jetaient"
+        ],
+        "past historic 1": [
+         "jetèrent"
+        ],
+        "present": [
+         "jettent"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en jetant",
+      "en jetant",
+      "en jetant"
+     ],
+     "infinitive": [
+      "jeter",
+      "jeter",
+      "jeter"
+     ],
+     "past participle": [
+      "jeté"
+     ],
+     "present participle": [
+      "jetant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "jetterais"
+        ],
+        "future": [
+         "jetterai"
+        ],
+        "imperfect": [
+         "jetais"
+        ],
+        "past historic 1": [
+         "jetai"
+        ],
+        "present": [
+         "jette"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "jetterais"
+        ],
+        "future": [
+         "jetteras"
+        ],
+        "imperfect": [
+         "jetais"
+        ],
+        "past historic 1": [
+         "jetas"
+        ],
+        "present": [
+         "jettes"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "jetterait"
+        ],
+        "future": [
+         "jettera"
+        ],
+        "imperfect": [
+         "jetait"
+        ],
+        "past historic 1": [
+         "jeta"
+        ],
+        "present": [
+         "jette"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Pronunciation": [
+    "ʒəte",
+    "ʃte",
+    "ʒete"
+   ],
+   "Verb": {
+    "definitions": [
+     "to throw",
+     "to throw away, discard of",
+     "(card games) to throw away, discard",
+     "(reflexive) to run in, as of a river",
+     "(reflexive, with \" sur \") to rush oneself onto something or someone"
+    ],
+    "head": "jeter",
+    "lemmas": {
+     "English": [
+      "throw away",
+      "discard",
+      "throw",
+      "run in",
+      "rush"
+     ],
+     "French": []
+    },
+    "terms": [
+     "card games",
+     "reflexive"
+    ]
+   }
+  }
+ },
  "już": {
   "Polish": {
    "Adverb": {
@@ -13472,6 +15746,339 @@
    }
   }
  },
+ "lasser": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "lassons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "lasse"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "lassez"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lassasse"
+           ],
+           "present": [
+            "lasse"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lassassions"
+           ],
+           "present": [
+            "lassions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lassasses"
+           ],
+           "present": [
+            "lasses"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lassassiez"
+           ],
+           "present": [
+            "lassiez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lassât"
+           ],
+           "present": [
+            "lasse"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lassassent"
+           ],
+           "present": [
+            "lassent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant lassé",
+      "en ayant lassé",
+      "en ayant lassé"
+     ],
+     "infinitive": [
+      "avoir lassé",
+      "avoir lassé",
+      "avoir lassé"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "lasserions"
+        ],
+        "future": [
+         "lasserons"
+        ],
+        "imperfect": [
+         "lassions"
+        ],
+        "past historic 1": [
+         "lassâmes"
+        ],
+        "present": [
+         "lassons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "lasseriez"
+        ],
+        "future": [
+         "lasserez"
+        ],
+        "imperfect": [
+         "lassiez"
+        ],
+        "past historic 1": [
+         "lassâtes"
+        ],
+        "present": [
+         "lassez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "lasseraient"
+        ],
+        "future": [
+         "lasseront"
+        ],
+        "imperfect": [
+         "lassaient"
+        ],
+        "past historic 1": [
+         "lassèrent"
+        ],
+        "present": [
+         "lassent"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en lassant",
+      "en lassant",
+      "en lassant"
+     ],
+     "infinitive": [
+      "lasser",
+      "lasser",
+      "lasser"
+     ],
+     "past participle": [
+      "lassé"
+     ],
+     "present participle": [
+      "lassant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "lasserais"
+        ],
+        "future": [
+         "lasserai"
+        ],
+        "imperfect": [
+         "lassais"
+        ],
+        "past historic 1": [
+         "lassai"
+        ],
+        "present": [
+         "lasse"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "lasserais"
+        ],
+        "future": [
+         "lasseras"
+        ],
+        "imperfect": [
+         "lassais"
+        ],
+        "past historic 1": [
+         "lassas"
+        ],
+        "present": [
+         "lasses"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "lasserait"
+        ],
+        "future": [
+         "lassera"
+        ],
+        "imperfect": [
+         "lassait"
+        ],
+        "past historic 1": [
+         "lassa"
+        ],
+        "present": [
+         "lasse"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Pronunciation": [
+    "lɑse",
+    "lase"
+   ],
+   "Verb": {
+    "definitions": [
+     "(transitive) to tire, weary, bore",
+     "(reflexive) to become exhausted"
+    ],
+    "head": "lasser",
+    "lemmas": {
+     "English": [
+      "tire",
+      "weary",
+      "bore",
+      "exhausted"
+     ],
+     "French": []
+    },
+    "terms": [
+     "transitive",
+     "reflexive"
+    ]
+   }
+  }
+ },
+ "le": {
+  "French": {
+   "Article": {
+    "definitions": [
+     "The (definite article).",
+     "Used before abstract nouns; not translated in English.",
+     "(before parts of the body) The ; my, your, etc.",
+     "(before units) A, an ."
+    ],
+    "head": "le",
+    "lemmas": {
+     "English": [
+      "The",
+      "my",
+      "your",
+      "A",
+      "an"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "Il s’est cassé la jambe . ― He has broken his leg.",
+     "Il s’est cassé la jambe .",
+     "Cinquante kilomètres à l’ heure . ― fifty kilometres an hour",
+     "Cinquante kilomètres à l’ heure ."
+    ],
+    "terms": []
+   },
+   "Pronoun": {
+    "definitions": [
+     "(direct object) Him, it .",
+     "(used to refer to something previously mentioned or implied; not translated in English)."
+    ],
+    "head": "le",
+    "lemmas": {
+     "English": [
+      "Him",
+      "it"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "lə",
+    "l"
+   ]
+  }
+ },
  "leczyć": {
   "Polish": {
    "Conjugation": {
@@ -14222,6 +16829,346 @@
    }
   }
  },
+ "lire": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "lisons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "lis"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "lisez"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lusse"
+           ],
+           "present": [
+            "lise"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lussions"
+           ],
+           "present": [
+            "lisions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lusses"
+           ],
+           "present": [
+            "lises"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lussiez"
+           ],
+           "present": [
+            "lisiez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lût"
+           ],
+           "present": [
+            "lise"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "lussent"
+           ],
+           "present": [
+            "lisent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant lu",
+      "en ayant lu",
+      "en ayant lu"
+     ],
+     "infinitive": [
+      "avoir lu",
+      "avoir lu",
+      "avoir lu"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "lirions"
+        ],
+        "future": [
+         "lirons"
+        ],
+        "imperfect": [
+         "lisions"
+        ],
+        "past historic 1": [
+         "lûmes"
+        ],
+        "present": [
+         "lisons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "liriez"
+        ],
+        "future": [
+         "lirez"
+        ],
+        "imperfect": [
+         "lisiez"
+        ],
+        "past historic 1": [
+         "lûtes"
+        ],
+        "present": [
+         "lisez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "liraient"
+        ],
+        "future": [
+         "liront"
+        ],
+        "imperfect": [
+         "lisaient"
+        ],
+        "past historic 1": [
+         "lurent"
+        ],
+        "present": [
+         "lisent"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en lisant",
+      "en lisant",
+      "en lisant"
+     ],
+     "infinitive": [
+      "lire",
+      "lire",
+      "lire"
+     ],
+     "past participle": [
+      "lu"
+     ],
+     "present participle": [
+      "lisant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "lirais"
+        ],
+        "future": [
+         "lirai"
+        ],
+        "imperfect": [
+         "lisais"
+        ],
+        "past historic 1": [
+         "lus"
+        ],
+        "present": [
+         "lis"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "lirais"
+        ],
+        "future": [
+         "liras"
+        ],
+        "imperfect": [
+         "lisais"
+        ],
+        "past historic 1": [
+         "lus"
+        ],
+        "present": [
+         "lis"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "lirait"
+        ],
+        "future": [
+         "lira"
+        ],
+        "imperfect": [
+         "lisait"
+        ],
+        "past historic 1": [
+         "lut"
+        ],
+        "present": [
+         "lit"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Noun": {
+    "definitions": [
+     "lira (unit of currency)"
+    ],
+    "head": "lire",
+    "lemmas": {
+     "English": [
+      "lira"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "liʁ"
+   ],
+   "Verb": {
+    "definitions": [
+     "(transitive, intransitive) to read",
+     "(reflexive, se lire) to be read"
+    ],
+    "head": "lire",
+    "lemmas": {
+     "English": [
+      "read"
+     ],
+     "French": []
+    },
+    "terms": [
+     "transitive",
+     "intransitive"
+    ]
+   }
+  }
+ },
+ "livre": {
+  "French": {
+   "Noun": {
+    "definitions": [
+     "pound (unit of weight)",
+     "pound (unit of currency)"
+    ],
+    "head": "livre",
+    "lemmas": {
+     "English": [
+      "pound"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "livʁ"
+   ],
+   "Verb": {
+    "definitions": [
+     "first-person singular present indicative of livrer",
+     "third-person singular present indicative of livrer",
+     "first-person singular present subjunctive of livrer",
+     "third-person singular present subjunctive of livrer",
+     "second-person singular imperative of livrer"
+    ],
+    "head": "livre",
+    "lemmas": {
+     "English": [],
+     "French": [
+      "livrer"
+     ]
+    },
+    "terms": [
+     "first-person",
+     "singular",
+     "present",
+     "indicative",
+     "third-person",
+     "subjunctive",
+     "second-person",
+     "imperative"
+    ]
+   }
+  }
+ },
  "liść": {
   "Polish": {
    "Declension": {
@@ -14386,6 +17333,39 @@
    },
    "Pronunciation": [
     "lud͡ʑɛ"
+   ]
+  }
+ },
+ "mais": {
+  "French": {
+   "Conjunction": {
+    "definitions": [
+     "but, although"
+    ],
+    "head": "mais",
+    "lemmas": {
+     "English": [
+      "but",
+      "although"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Interjection": {
+    "definitions": [
+     "an expression of surprise, disbelief, or frustration roughly equivalent to the English well, or sometimes yeah"
+    ],
+    "head": "mais",
+    "lemmas": {
+     "English": [],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "mɛ",
+    "me"
    ]
   }
  },
@@ -18917,6 +21897,13 @@
    }
   }
  },
+ "n": {
+  "French": {
+   "Pronunciation": [
+    "ɛn"
+   ]
+  }
+ },
  "na": {
   "Polish": {
    "Adjective": {
@@ -20213,6 +23200,72 @@
   "Polish": {
    "Pronunciation": [
     "naɲ"
+   ]
+  }
+ },
+ "ne": {
+  "French": {
+   "Particle": {
+    "definitions": [
+     "(literary) not (used alone to negate a verb; now chiefly with the verbs pouvoir, savoir, cesser and oser)",
+     "not, no (used before a verb, with a subsequent element following; see Usage Notes, below)",
+     "",
+     "",
+     "",
+     "Used in a subordinate clause before a subjunctive verb (especially when the main verb expresses doubt or fear), to provide extra overtones of doubt or uncertainty (but not negating its verb); the so-called \"pleonastic\" or \"expletive\" ne .",
+     "",
+     "",
+     "In comparative clauses usually translated with the positive sense of the subsequent negative"
+    ],
+    "head": "ne",
+    "lemmas": {
+     "English": [
+      "not",
+      "no"
+     ],
+     "French": [
+      "pouvoir",
+      "savoir",
+      "cesser",
+      "oser"
+     ]
+    },
+    "sentences": [
+     "Je ne sais rien de plus odieux que l'hypocrisie.",
+     "Bruno se rendit compte qu'il ne serait jamais accepté par les hippies [ … ] .",
+     "hippies",
+     "\"Il n’ y a pas eu un truc auquel on ne s'attendait pas\", affirme Stéphane Le Foll.",
+     "Ah! mes cheveux blanchiront avant que ma tête ne tombe!",
+     "Oui, mais je crains qu'elle ne soit plus malade qu'elle ne l'avoue, repartit l'abbé.",
+     "apprendre le français est plus facile qu'on ne pense"
+    ],
+    "terms": [
+     "literary"
+    ]
+   },
+   "Pronunciation": [
+    "nə"
+   ]
+  }
+ },
+ "ni": {
+  "French": {
+   "Conjunction": {
+    "definitions": [
+     "neither ; nor"
+    ],
+    "head": "ni",
+    "lemmas": {
+     "English": [
+      "neither",
+      "nor"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "ni"
    ]
   }
  },
@@ -22976,6 +26029,60 @@
    ]
   }
  },
+ "ou": {
+  "French": {
+   "Conjunction": {
+    "definitions": [
+     "or",
+     "either"
+    ],
+    "head": "ou",
+    "lemmas": {
+     "English": [
+      "or",
+      "either"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "u"
+   ]
+  }
+ },
+ "où": {
+  "French": {
+   "Adverb": {
+    "definitions": [
+     "where (interrogative)",
+     "where (relative pronoun)",
+     "At that time ; when .",
+     "(poetic) whither"
+    ],
+    "head": "où",
+    "lemmas": {
+     "English": [
+      "where",
+      "time",
+      "when",
+      "whither"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "Dans un monde où l'homme propose et la femme dispose, le célibataire a fait un choix conscient, dont il est pleinement responsable - Jean-Claude Bologne, Histoire du célibat et des célibataires, 2007",
+     "Dans un monde où l'homme propose et la femme dispose, le célibataire a fait un choix conscient, dont il est pleinement responsable",
+     "Au moment où nous parlons, le téléphone sonne.",
+     "Un ciel plus pur et des dieux meilleurs, je t'offre à Rome où je me rends."
+    ],
+    "terms": []
+   },
+   "Pronunciation": [
+    "u"
+   ]
+  }
+ },
  "palec": {
   "Polish": {
    "Declension": {
@@ -23551,6 +26658,388 @@
      "third-person",
      "singular",
      "present"
+    ]
+   }
+  }
+ },
+ "penser": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "pensons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "pense"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "pensez"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pensasse"
+           ],
+           "present": [
+            "pense"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pensassions"
+           ],
+           "present": [
+            "pensions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pensasses"
+           ],
+           "present": [
+            "penses"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pensassiez"
+           ],
+           "present": [
+            "pensiez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pensât"
+           ],
+           "present": [
+            "pense"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pensassent"
+           ],
+           "present": [
+            "pensent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant pensé",
+      "en ayant pensé",
+      "en ayant pensé"
+     ],
+     "infinitive": [
+      "avoir pensé",
+      "avoir pensé",
+      "avoir pensé"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "penserions"
+        ],
+        "future": [
+         "penserons"
+        ],
+        "imperfect": [
+         "pensions"
+        ],
+        "past historic 1": [
+         "pensâmes"
+        ],
+        "present": [
+         "pensons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "penseriez"
+        ],
+        "future": [
+         "penserez"
+        ],
+        "imperfect": [
+         "pensiez"
+        ],
+        "past historic 1": [
+         "pensâtes"
+        ],
+        "present": [
+         "pensez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "penseraient"
+        ],
+        "future": [
+         "penseront"
+        ],
+        "imperfect": [
+         "pensaient"
+        ],
+        "past historic 1": [
+         "pensèrent"
+        ],
+        "present": [
+         "pensent"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en pensant",
+      "en pensant",
+      "en pensant"
+     ],
+     "infinitive": [
+      "penser",
+      "penser",
+      "penser"
+     ],
+     "past participle": [
+      "pensé"
+     ],
+     "present participle": [
+      "pensant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "penserais"
+        ],
+        "future": [
+         "penserai"
+        ],
+        "imperfect": [
+         "pensais"
+        ],
+        "past historic 1": [
+         "pensai"
+        ],
+        "present": [
+         "pense"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "penserais"
+        ],
+        "future": [
+         "penseras"
+        ],
+        "imperfect": [
+         "pensais"
+        ],
+        "past historic 1": [
+         "pensas"
+        ],
+        "present": [
+         "penses"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "penserait"
+        ],
+        "future": [
+         "pensera"
+        ],
+        "imperfect": [
+         "pensait"
+        ],
+        "past historic 1": [
+         "pensa"
+        ],
+        "present": [
+         "pense"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Pronunciation": [
+    "pɑ̃se"
+   ],
+   "Verb": {
+    "definitions": [
+     "(intransitive) to think, reflect, concentrate one's mind on something [late 10th century in Passion, ed. D'Arco Silvio Avalle, 55]",
+     "(intransitive) to estimate, imagine, believe [late 10th century in Passion, 339]",
+     "",
+     "(originally with a que sentence) to be of the opinion that, believe [1155 in Wace, Brut, ed. I. Arnold, 263]",
+     "",
+     "(intransitive) to be absorbed by a worry or depressing thoughts [c. 1160 in Éneas, ed. J.-J. Salverda de Grave, 2221]",
+     "(intransitive) to conceive a project [c. 1160 in Éneas, 1692]",
+     "(with de + object) to evoke the image or remembrance of someone in one's mind [c. 1160 in Éneas, 1223]",
+     "(with à + object) to attach one's thinking to someone, especially lovingly [c. 1165 in Troie, 17621 ds T.-L.]",
+     "(with infinitive) to believe being or doing something [c. 1165 in Troie, 29997 ds T.-L.]",
+     "",
+     "(with mal or bien + de + object) to think well or badly, to have a high or low opinion of someone [c. 1170 in Beroul, Tristan, ed. E. Muret, 110]",
+     "(with de + infinitive) to try or prepare to do something [1160–74 in Wace, Rou, ed. A. J. Holden, III, 10814]",
+     "(transitive, reflexive, obsolete) to reflect on something [late 11th century in Roland, ed. J. Bédier, 355]",
+     "(with à + object) to bear, keep something in mind, to consider something [c. 1200 in Poème moral, 161a]",
+     "",
+     "",
+     "(with infinitive) to intend to do, aim at doing something [c. 1200 in Hist. Joseph, 299 ds T.-L.]",
+     "(transitive) to have something in one's mind (c. 1220 in Barlaam et Josaphat, ed. C. Appel, 5623)",
+     "(with à + infinitive) to intend to do, aim at doing something [1306 in Joinville, ed. N. L. Corbett, § 612]",
+     "(with mal, obsolete) to intend to do something bad [15th century in Isopet III de Paris, ed. J. Bastin, vol. 2, p. 401]",
+     "(with à + object) to take care of [since 1636, in Monet]",
+     "(with bien, in politics, religion, moral) to have opinions in accordance with the agreed principles [1823, in Courier ]",
+     "(with adverb or adverbial expression) to have a certain intellectual tendency, preference or property"
+    ],
+    "head": "penser",
+    "lemmas": {
+     "English": [
+      "believe",
+      "opinion",
+      "think",
+      "reflect",
+      "concentrate",
+      "mind",
+      "estimate",
+      "imagine",
+      "absorbed",
+      "worry",
+      "depressing",
+      "thoughts",
+      "conceive",
+      "project",
+      "evoke",
+      "image",
+      "remembrance",
+      "attach",
+      "thinking",
+      "lovingly",
+      "try",
+      "prepare",
+      "bear",
+      "keep",
+      "consider",
+      "intend",
+      "aim",
+      "take care",
+      "accordance",
+      "agreed",
+      "principles",
+      "intellectual",
+      "tendency",
+      "preference",
+      "property"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "Vous n'en êtes pas où vous pensez .",
+     "Il y a, je pense, dix kilomètres de chez vous chez moi.",
+     "J'irai vous voir demain, je pense .",
+     "La chose n'est pas si facile qu'on le pense .",
+     "Je ne pensais pas que vous vous méprendriez sur le sens de mes paroles.",
+     "Je pensai que j'avais été trop aimable ou familière avec Adam Johnson et je rédigeai un texte froid et distant: […].",
+     "Je pensais qu'il était de vos amis.",
+     "Je veux être d'accord avec toi, mais je ne pense pas que nous ayons besoin de son aide.",
+     "Je pense comme vous.",
+     "Il ne dit rien qu'il ne pense .",
+     "Dites librement ce que vous pensez .",
+     "J'espère qu'il ne pense pas ce qu'il dit.",
+     "Faites-moi connaître votre façon de penser .",
+     "Pensez -vous?",
+     "Cette feuille ne craignait pas de dire ce qu'elle pensait, même aux personnages les plus hauts placés.",
+     "Penser d'aucun.",
+     "Pensez à moi.",
+     "Il ne pense qu'à celle qu'il aime.",
+     "Il pense être plus habile que les autres.",
+     "Il ne pensait pas être observé.",
+     "J'ai pensé mourir.",
+     "Le lendemain pensa nous être funeste.",
+     "C'est un homme qui pense toujours mal des autres.",
+     "Je ne pense de cette affaire ni bien ni mal.",
+     "Que pensez -vous de cet homme?",
+     "Penser de faire qqc.",
+     "Soi penser qqc.",
+     "Le mal vient sans qu'on y pense .",
+     "Faire ou dire une chose sans penser à mal.",
+     "À quoi pensez -vous?",
+     "Penser à mal.",
+     "Rebaudengo était une fripouille et, si je pense à tout ce que j'ai fait après, j'ai l'impression de n'avoir fait des fripouilleries qu'à des fripouilles.",
+     "Je pensais aller vous voir.",
+     "Que pensez -vous faire?",
+     "C'est un homme qui ne dit jamais ce qu'il pense .",
+     "Il pense beaucoup de choses qu'il ne dit pas.",
+     "À quoi pensez -vous de vous conduire ainsi?",
+     "Je suis trop de vos amis pour avoir pensé à vous nuire.",
+     "Je pensais à aller vous voir hier.",
+     "Penser mal.",
+     "Il nous a reçus admirablement, il a pensé à tout.",
+     "Bien penser .",
+     "Penser finement, noblement, singulièrement, hardiment.",
+     "Penser avec justesse.",
+     "Penser juste."
+    ],
+    "terms": [
+     "intransitive"
     ]
    }
   }
@@ -26081,6 +29570,311 @@
     "terms": [
      "auxiliary"
     ]
+   }
+  }
+ },
+ "pouvoir": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "—"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "—"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "—"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pusse"
+           ],
+           "present": [
+            "puisse"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pussions"
+           ],
+           "present": [
+            "puissions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pusses"
+           ],
+           "present": [
+            "puisses"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pussiez"
+           ],
+           "present": [
+            "puissiez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pût"
+           ],
+           "present": [
+            "puisse"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "pussent"
+           ],
+           "present": [
+            "puissent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant pu",
+      "en ayant pu",
+      "en ayant pu"
+     ],
+     "infinitive": [
+      "avoir pu",
+      "avoir pu",
+      "avoir pu"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "pourrions"
+        ],
+        "future": [
+         "pourrons"
+        ],
+        "imperfect": [
+         "pouvions"
+        ],
+        "past historic 1": [
+         "pûmes"
+        ],
+        "present": [
+         "pouvons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "pourriez"
+        ],
+        "future": [
+         "pourrez"
+        ],
+        "imperfect": [
+         "pouviez"
+        ],
+        "past historic 1": [
+         "pûtes"
+        ],
+        "present": [
+         "pouvez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "pourraient"
+        ],
+        "future": [
+         "pourront"
+        ],
+        "imperfect": [
+         "pouvaient"
+        ],
+        "past historic 1": [
+         "purent"
+        ],
+        "present": [
+         "peuvent"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en pouvant",
+      "en pouvant",
+      "en pouvant"
+     ],
+     "infinitive": [
+      "pouvoir",
+      "pouvoir",
+      "pouvoir"
+     ],
+     "past participle": [
+      "pu"
+     ],
+     "present participle": [
+      "pouvant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "pourrais"
+        ],
+        "future": [
+         "pourrai"
+        ],
+        "imperfect": [
+         "pouvais"
+        ],
+        "past historic 1": [
+         "pus"
+        ],
+        "present": [
+         "peux"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "pourrais"
+        ],
+        "future": [
+         "pourras"
+        ],
+        "imperfect": [
+         "pouvais"
+        ],
+        "past historic 1": [
+         "pus"
+        ],
+        "present": [
+         "peux"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "pourrait"
+        ],
+        "future": [
+         "pourra"
+        ],
+        "imperfect": [
+         "pouvait"
+        ],
+        "past historic 1": [
+         "put"
+        ],
+        "present": [
+         "peut"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Noun": {
+    "definitions": [
+     "(countable or uncountable) power, a power.",
+     "authority",
+     "(law) power of attorney"
+    ],
+    "head": "pouvoir",
+    "lemmas": {
+     "English": [
+      "power",
+      "authority",
+      "power of attorney"
+     ],
+     "French": []
+    },
+    "terms": [
+     "countable",
+     "uncountable",
+     "law"
+    ]
+   },
+   "Pronunciation": [
+    "puvwaʁ",
+    "puwɒɾ"
+   ],
+   "Verb": {
+    "definitions": [
+     "can, to be able to",
+     "may"
+    ],
+    "head": "pouvoir",
+    "lemmas": {
+     "English": [
+      "can",
+      "be able to",
+      "may"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "désastre qui peut nous frapper ― disaster which may strike us",
+     "désastre qui peut nous frapper"
+    ],
+    "terms": []
    }
   }
  },
@@ -32388,6 +36182,92 @@
    ]
   }
  },
+ "que": {
+  "French": {
+   "Conjunction": {
+    "definitions": [
+     "than (introduces a comparison)"
+    ],
+    "head": "que",
+    "lemmas": {
+     "English": [
+      "than"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "Je ne mange que des fruits. — I eat only fruits.",
+     "Je ne mange que des fruits.",
+     "Si le temps est beau et que tout le monde est d'accord, nous mangerons en plein air. — If the weather is nice and if everyone likes the idea, we'll eat outside.",
+     "Si le temps est beau et que tout le monde est d'accord, nous mangerons en plein air.",
+     "Il était à peine parti qu' elle a téléphoné à la police. — No sooner had he left when she called the police.",
+     "Il était à peine parti qu' elle a téléphoné à la police."
+    ],
+    "terms": []
+   },
+   "Pronoun": {
+    "definitions": [
+     "The direct object relative pronoun."
+    ],
+    "head": "que",
+    "lemmas": {
+     "English": [],
+     "French": []
+    },
+    "sentences": [
+     "Qu' est-il arrivé?",
+     "Que me vaut cette visite?"
+    ],
+    "terms": []
+   },
+   "Pronunciation": [
+    "kə"
+   ]
+  }
+ },
+ "quoi": {
+  "French": {
+   "Adverb": {
+    "definitions": [
+     "(colloquial) you know, like, y'know ."
+    ],
+    "head": "quoi",
+    "lemmas": {
+     "English": [
+      "you know",
+      "like",
+      "y'know"
+     ],
+     "French": []
+    },
+    "terms": [
+     "colloquial"
+    ]
+   },
+   "Pronoun": {
+    "definitions": [
+     "what (oblique pronoun)",
+     "(slang) aught, anything, something"
+    ],
+    "head": "quoi",
+    "lemmas": {
+     "English": [
+      "what",
+      "aught",
+      "anything",
+      "something"
+     ],
+     "French": []
+    },
+    "terms": [
+     "slang"
+    ]
+   },
+   "Pronunciation": [
+    "kwa"
+   ]
+  }
+ },
  "raczej": {
   "Polish": {
    "Conjunction": {
@@ -32645,6 +36525,300 @@
    ]
   }
  },
+ "rester": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of être followed by the past participle": {
+     "Use the imperfect subjunctive tense of être followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "restons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "reste"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "restez"
+       ]
+      }
+     }
+    },
+    "Use the present tense of être followed by the past participle": {
+     "Use the imperfect tense of être followed by the past participle": {
+      "Use the past historic tense of être followed by the past participle": {
+       "Use the future tense of être followed by the past participle": {
+        "Use the conditional tense of être followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "restasse"
+           ],
+           "present": [
+            "reste"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "restassions"
+           ],
+           "present": [
+            "restions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "restasses"
+           ],
+           "present": [
+            "restes"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "restassiez"
+           ],
+           "present": [
+            "restiez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "restât"
+           ],
+           "present": [
+            "reste"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "restassent"
+           ],
+           "present": [
+            "restent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en étant resté",
+      "en étant resté",
+      "en étant resté"
+     ],
+     "infinitive": [
+      "être resté",
+      "être resté",
+      "être resté"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "resterions"
+        ],
+        "future": [
+         "resterons"
+        ],
+        "imperfect": [
+         "restions"
+        ],
+        "past historic 1": [
+         "restâmes"
+        ],
+        "present": [
+         "restons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "resteriez"
+        ],
+        "future": [
+         "resterez"
+        ],
+        "imperfect": [
+         "restiez"
+        ],
+        "past historic 1": [
+         "restâtes"
+        ],
+        "present": [
+         "restez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "resteraient"
+        ],
+        "future": [
+         "resteront"
+        ],
+        "imperfect": [
+         "restaient"
+        ],
+        "past historic 1": [
+         "restèrent"
+        ],
+        "present": [
+         "restent"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en restant",
+      "en restant",
+      "en restant"
+     ],
+     "infinitive": [
+      "rester",
+      "rester",
+      "rester"
+     ],
+     "past participle": [
+      "resté"
+     ],
+     "present participle": [
+      "restant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "resterais"
+        ],
+        "future": [
+         "resterai"
+        ],
+        "imperfect": [
+         "restais"
+        ],
+        "past historic 1": [
+         "restai"
+        ],
+        "present": [
+         "reste"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "resterais"
+        ],
+        "future": [
+         "resteras"
+        ],
+        "imperfect": [
+         "restais"
+        ],
+        "past historic 1": [
+         "restas"
+        ],
+        "present": [
+         "restes"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "resterait"
+        ],
+        "future": [
+         "restera"
+        ],
+        "imperfect": [
+         "restait"
+        ],
+        "past historic 1": [
+         "resta"
+        ],
+        "present": [
+         "reste"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Pronunciation": [
+    "ʁɛste"
+   ],
+   "Verb": {
+    "definitions": [
+     "(intransitive) to stay",
+     "to remain, be left over",
+     "to stay, to remain (to continue to have a particular quality)",
+     "(rare) to rest",
+     "(Louisiana, Canada) to live"
+    ],
+    "head": "rester",
+    "lemmas": {
+     "English": [
+      "stay",
+      "remain",
+      "left over",
+      "rest"
+     ],
+     "French": [
+      "Louisiana"
+     ]
+    },
+    "sentences": [
+     "Il reste un peu de riz dans le frigo, si tu veux.",
+     "Elle est restée comme elle était quand je l'ai rencontrée.",
+     "Moi, je reste au Texas."
+    ],
+    "terms": [
+     "intransitive",
+     "Louisiana",
+     "Canada"
+    ]
+   }
+  }
+ },
  "reszta": {
   "Polish": {
    "Declension": {
@@ -32716,6 +36890,34 @@
    },
    "Pronunciation": [
     "rɛʂta"
+   ]
+  }
+ },
+ "rien": {
+  "French": {
+   "Pronoun": {
+    "definitions": [
+     "nothing",
+     "(archaic) anything",
+     ""
+    ],
+    "head": "rien",
+    "lemmas": {
+     "English": [
+      "nothing",
+      "anything"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "En tous les bienfaits d'importance, la preuve ne peut avoir de lieu; car il n'y a bien souvent que deux qui en sachent rien ."
+    ],
+    "terms": [
+     "archaic"
+    ]
+   },
+   "Pronunciation": [
+    "ʁjɛ̃"
    ]
   }
  },
@@ -35092,6 +39294,29 @@
    ]
   }
  },
+ "sa": {
+  "French": {
+   "Determiner": {
+    "definitions": [
+     "(possessive) His, her, its, one's ."
+    ],
+    "head": "sa",
+    "lemmas": {
+     "English": [
+      "His",
+      "her",
+      "its",
+      "one's"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "sa"
+   ]
+  }
+ },
  "sala": {
   "Polish": {
    "Declension": {
@@ -35400,6 +39625,37 @@
    ]
   }
  },
+ "se": {
+  "French": {
+   "Pronoun": {
+    "definitions": [
+     "The third-person reflexive and reciprocal direct and indirect object pronoun. \n (to) himself \n (to) herself \n (to) oneself \n (to) itself \n (to) themselves \n (to) each other",
+     "(to) himself",
+     "(to) herself",
+     "(to) oneself",
+     "(to) itself",
+     "(to) themselves",
+     "(to) each other"
+    ],
+    "head": "se",
+    "lemmas": {
+     "English": [
+      "himself",
+      "herself",
+      "oneself",
+      "itself",
+      "themselves",
+      "each other"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "sə"
+   ]
+  }
+ },
  "senny": {
   "Polish": {
    "Adjective": {
@@ -35612,6 +39868,604 @@
    "Pronunciation": [
     "sens"
    ]
+  }
+ },
+ "sentir": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "sentons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "sens"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "sentez"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "sentisse"
+           ],
+           "present": [
+            "sente"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "sentissions"
+           ],
+           "present": [
+            "sentions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "sentisses"
+           ],
+           "present": [
+            "sentes"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "sentissiez"
+           ],
+           "present": [
+            "sentiez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "sentît"
+           ],
+           "present": [
+            "sente"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "sentissent"
+           ],
+           "present": [
+            "sentent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant senti",
+      "en ayant senti",
+      "en ayant senti"
+     ],
+     "infinitive": [
+      "avoir senti",
+      "avoir senti",
+      "avoir senti"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "sentirions"
+        ],
+        "future": [
+         "sentirons"
+        ],
+        "imperfect": [
+         "sentions"
+        ],
+        "past historic 1": [
+         "sentîmes"
+        ],
+        "present": [
+         "sentons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "sentiriez"
+        ],
+        "future": [
+         "sentirez"
+        ],
+        "imperfect": [
+         "sentiez"
+        ],
+        "past historic 1": [
+         "sentîtes"
+        ],
+        "present": [
+         "sentez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "sentiraient"
+        ],
+        "future": [
+         "sentiront"
+        ],
+        "imperfect": [
+         "sentaient"
+        ],
+        "past historic 1": [
+         "sentirent"
+        ],
+        "present": [
+         "sentent"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en sentant",
+      "en sentant",
+      "en sentant"
+     ],
+     "infinitive": [
+      "sentir",
+      "sentir",
+      "sentir"
+     ],
+     "past participle": [
+      "senti"
+     ],
+     "present participle": [
+      "sentant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "sentirais"
+        ],
+        "future": [
+         "sentirai"
+        ],
+        "imperfect": [
+         "sentais"
+        ],
+        "past historic 1": [
+         "sentis"
+        ],
+        "present": [
+         "sens"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "sentirais"
+        ],
+        "future": [
+         "sentiras"
+        ],
+        "imperfect": [
+         "sentais"
+        ],
+        "past historic 1": [
+         "sentis"
+        ],
+        "present": [
+         "sens"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "sentirait"
+        ],
+        "future": [
+         "sentira"
+        ],
+        "imperfect": [
+         "sentait"
+        ],
+        "past historic 1": [
+         "sentit"
+        ],
+        "present": [
+         "sent"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Pronunciation": [
+    "sɑ̃tiʁ"
+   ],
+   "Verb": {
+    "definitions": [
+     "(intransitive) to smell (to have a certain odor)",
+     "(transitive) to taste",
+     "(transitive) to feel (physical perception)",
+     "(transitive) to smell of, taste of",
+     "(transitive, informal) to smack of ; to indicate, foreshadow",
+     "(transitive) to have the character, manner, feeling or appearance of; to give a feeling of",
+     "(transitive) to feel, be aware of, be conscious of",
+     "(reflexive) to feel (in oneself)",
+     "(reflexive) to show, be felt (of effect, improvement etc.)"
+    ],
+    "head": "sentir",
+    "lemmas": {
+     "English": [
+      "feel",
+      "smell",
+      "taste",
+      "odor",
+      "smack of",
+      "indicate",
+      "foreshadow",
+      "character",
+      "manner",
+      "feeling",
+      "appearance",
+      "aware",
+      "conscious",
+      "show"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "Ce repas sent l'ail.",
+     "Ça sent la pluie."
+    ],
+    "terms": [
+     "intransitive",
+     "transitive",
+     "informal",
+     "reflexive"
+    ]
+   }
+  }
+ },
+ "servir": {
+  "French": {
+   "Conjugation": {
+    "Use the present subjunctive tense of avoir followed by the past participle": {
+     "Use the imperfect subjunctive tense of avoir followed by the past participle": {
+      "imperative": [
+       "—",
+       "—",
+       "—"
+      ],
+      "nous": {
+       "imperative": [
+        "servons"
+       ]
+      },
+      "tu": {
+       "imperative": [
+        "sers"
+       ]
+      },
+      "vous": {
+       "imperative": [
+        "servez"
+       ]
+      }
+     }
+    },
+    "Use the present tense of avoir followed by the past participle": {
+     "Use the imperfect tense of avoir followed by the past participle": {
+      "Use the past historic tense of avoir followed by the past participle": {
+       "Use the future tense of avoir followed by the past participle": {
+        "Use the conditional tense of avoir followed by the past participle": {
+         "que je (j’)": {
+          "simple tenses": {
+           "imperfect 1": [
+            "servisse"
+           ],
+           "present": [
+            "serve"
+           ]
+          }
+         },
+         "que nous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "servissions"
+           ],
+           "present": [
+            "servions"
+           ]
+          }
+         },
+         "que tu": {
+          "simple tenses": {
+           "imperfect 1": [
+            "servisses"
+           ],
+           "present": [
+            "serves"
+           ]
+          }
+         },
+         "que vous": {
+          "simple tenses": {
+           "imperfect 1": [
+            "servissiez"
+           ],
+           "present": [
+            "serviez"
+           ]
+          }
+         },
+         "qu’il": {
+          "simple tenses": {
+           "imperfect 1": [
+            "servît"
+           ],
+           "present": [
+            "serve"
+           ]
+          }
+         },
+         "qu’ils": {
+          "simple tenses": {
+           "imperfect 1": [
+            "servissent"
+           ],
+           "present": [
+            "servent"
+           ]
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "compound": {
+     "gerund": [
+      "en ayant servi",
+      "en ayant servi",
+      "en ayant servi"
+     ],
+     "infinitive": [
+      "avoir servi",
+      "avoir servi",
+      "avoir servi"
+     ]
+    },
+    "plural": {
+     "first": {
+      "nous": {
+       "simple tenses": {
+        "conditional": [
+         "servirions"
+        ],
+        "future": [
+         "servirons"
+        ],
+        "imperfect": [
+         "servions"
+        ],
+        "past historic 1": [
+         "servîmes"
+        ],
+        "present": [
+         "servons"
+        ]
+       }
+      }
+     },
+     "second": {
+      "vous": {
+       "simple tenses": {
+        "conditional": [
+         "serviriez"
+        ],
+        "future": [
+         "servirez"
+        ],
+        "imperfect": [
+         "serviez"
+        ],
+        "past historic 1": [
+         "servîtes"
+        ],
+        "present": [
+         "servez"
+        ]
+       }
+      }
+     },
+     "third": {
+      "ils": {
+       "simple tenses": {
+        "conditional": [
+         "serviraient"
+        ],
+        "future": [
+         "serviront"
+        ],
+        "imperfect": [
+         "servaient"
+        ],
+        "past historic 1": [
+         "servirent"
+        ],
+        "present": [
+         "servent"
+        ]
+       }
+      }
+     }
+    },
+    "simple": {
+     "gerund": [
+      "en servant",
+      "en servant",
+      "en servant"
+     ],
+     "infinitive": [
+      "servir",
+      "servir",
+      "servir"
+     ],
+     "past participle": [
+      "servi"
+     ],
+     "present participle": [
+      "servant"
+     ]
+    },
+    "singular": {
+     "first": {
+      "je (j’)": {
+       "simple tenses": {
+        "conditional": [
+         "servirais"
+        ],
+        "future": [
+         "servirai"
+        ],
+        "imperfect": [
+         "servais"
+        ],
+        "past historic 1": [
+         "servis"
+        ],
+        "present": [
+         "sers"
+        ]
+       }
+      }
+     },
+     "second": {
+      "tu": {
+       "simple tenses": {
+        "conditional": [
+         "servirais"
+        ],
+        "future": [
+         "serviras"
+        ],
+        "imperfect": [
+         "servais"
+        ],
+        "past historic 1": [
+         "servis"
+        ],
+        "present": [
+         "sers"
+        ]
+       }
+      }
+     },
+     "third": {
+      "il": {
+       "simple tenses": {
+        "conditional": [
+         "servirait"
+        ],
+        "future": [
+         "servira"
+        ],
+        "imperfect": [
+         "servait"
+        ],
+        "past historic 1": [
+         "servit"
+        ],
+        "present": [
+         "sert"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Pronunciation": [
+    "sɛʁviʁ"
+   ],
+   "Verb": {
+    "definitions": [
+     "to serve (to bring a meal to someone)",
+     "to be used for",
+     "(with à) to be useful for someone, to be of use, come in handy.",
+     "(sports) to serve (start a point with service)",
+     "(sports) to set up (pass to, in order to give a scoring chance)",
+     "(reflexive) to help oneself, to serve oneself",
+     "(reflexive, with de) to use, make use of"
+    ],
+    "head": "servir",
+    "lemmas": {
+     "English": [
+      "serve",
+      "useful",
+      "set up",
+      "help oneself",
+      "use",
+      "make use"
+     ],
+     "French": []
+    },
+    "terms": [
+     "à",
+     "sports",
+     "reflexive",
+     "de"
+    ]
+   }
   }
  },
  "siebie": {
@@ -41180,6 +46034,52 @@
    }
   }
  },
+ "sur": {
+  "French": {
+   "Adjective": {
+    "definitions": [
+     "sour"
+    ],
+    "head": "sur",
+    "lemmas": {
+     "English": [
+      "sour"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Preposition": {
+    "definitions": [
+     "on, upon",
+     "on top of",
+     "from on top of",
+     "above",
+     "out of",
+     "in the case of",
+     "about, concerning"
+    ],
+    "head": "sur",
+    "lemmas": {
+     "English": [
+      "on top of",
+      "on",
+      "upon",
+      "from",
+      "above",
+      "out of",
+      "about",
+      "concerning"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "syʁ"
+   ]
+  }
+ },
  "szafa": {
   "Polish": {
    "Declension": {
@@ -42908,6 +47808,34 @@
    ]
   }
  },
+ "sœur": {
+  "French": {
+   "Noun": {
+    "definitions": [
+     "sister",
+     "(Christianity) nun"
+    ],
+    "head": "sœur",
+    "lemmas": {
+     "English": [
+      "sister",
+      "nun"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "Bonjour ma sœur .",
+     "Comment allez-vous, sœur Marie?"
+    ],
+    "terms": [
+     "Christianity"
+    ]
+   },
+   "Pronunciation": [
+    "sœʁ"
+   ]
+  }
+ },
  "ta": {
   "Polish": {
    "Declension": {
@@ -43208,6 +48136,24 @@
    },
    "Pronunciation": [
     "t̪aci"
+   ]
+  }
+ },
+ "talus": {
+  "French": {
+   "Noun": {
+    "definitions": [
+     "slope, embankment"
+    ],
+    "head": "talus",
+    "lemmas": {
+     "English": [],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "taly"
    ]
   }
  },
@@ -44122,6 +49068,26 @@
      "reflexive"
     ]
    }
+  }
+ },
+ "très": {
+  "French": {
+   "Adverb": {
+    "definitions": [
+     "very"
+    ],
+    "head": "très",
+    "lemmas": {
+     "English": [
+      "very"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "tʁɛ"
+   ]
   }
  },
  "tu": {
@@ -45758,6 +50724,120 @@
     },
     "terms": []
    }
+  }
+ },
+ "un": {
+  "French": {
+   "Article": {
+    "definitions": [
+     "an, a"
+    ],
+    "head": "un",
+    "lemmas": {
+     "English": [
+      "an",
+      "a"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Noun": {
+    "definitions": [
+     "one"
+    ],
+    "head": "un",
+    "lemmas": {
+     "English": [
+      "one"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Numeral": {
+    "definitions": [
+     "one"
+    ],
+    "head": "un",
+    "lemmas": {
+     "English": [
+      "one"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronoun": {
+    "definitions": [
+     "one"
+    ],
+    "head": "un",
+    "lemmas": {
+     "English": [
+      "one"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "œ̃",
+    "ɛ̃",
+    "ɝ̃"
+   ]
+  }
+ },
+ "une": {
+  "French": {
+   "Article": {
+    "definitions": [
+     "a / an (feminine indefinite article)"
+    ],
+    "head": "une",
+    "lemmas": {
+     "English": [
+      "a",
+      "an"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Noun": {
+    "definitions": [
+     "front page (of a publication)"
+    ],
+    "head": "une",
+    "lemmas": {
+     "English": [
+      "front page"
+     ],
+     "French": []
+    },
+    "terms": []
+   },
+   "Numeral": {
+    "definitions": [
+     "feminine singular of un"
+    ],
+    "head": "une",
+    "lemmas": {
+     "English": [],
+     "French": [
+      "un"
+     ]
+    },
+    "terms": [
+     "feminine",
+     "singular"
+    ]
+   },
+   "Pronunciation": [
+    "yn",
+    "ʏn",
+    "œ̃n"
+   ]
   }
  },
  "upadek": {
@@ -52559,6 +57639,45 @@
    ]
   }
  },
+ "y": {
+  "French": {
+   "Pronoun": {
+    "definitions": [
+     "(Quebec, France, colloquial) He : Alternative form of il",
+     "(Quebec, France, colloquial) They : Alternative form of ils",
+     "(Quebec, colloquial) They : Alternative form of elles"
+    ],
+    "head": "y",
+    "lemmas": {
+     "English": [],
+     "French": [
+      "il",
+      "ils",
+      "elles"
+     ]
+    },
+    "sentences": [
+     "Nous allons au Mexique. Nous y allons.",
+     "personnes y nommées ― (please add an English translation of this usage example)",
+     "personnes y nommées",
+     "procédures y afférentes ― (please add an English translation of this usage example)",
+     "procédures y afférentes",
+     "documents y relatifs ― (please add an English translation of this usage example)",
+     "documents y relatifs",
+     "eaux y affluentes ― (please add an English translation of this usage example)",
+     "eaux y affluentes"
+    ],
+    "terms": [
+     "colloquial",
+     "France"
+    ]
+   },
+   "Pronunciation": [
+    "iɡʁɛk",
+    "i"
+   ]
+  }
+ },
  "z": {
   "Polish": {
    "Preposition": {
@@ -59315,6 +64434,131 @@
    }
   }
  },
+ "à": {
+  "French": {
+   "Preposition": {
+    "definitions": [
+     "to (destination)",
+     "to (until)",
+     "on the, to (some directions)",
+     "at (said of a particular time)",
+     "at, in, on (said of a particular place)",
+     "of (belonging to)",
+     "till, until (used in farewells)",
+     "(cooking) cooked in or with",
+     "Used to make compound nouns to state what something is used for",
+     "(before an infinitive) to (used to express something not completed)",
+     "Used to describe a part of something, often translated into English as a compound adjective",
+     "by",
+     "or, to (used to express an approximate number)",
+     "Used to indicate the recipient of certain phrasal verb."
+    ],
+    "head": "à",
+    "lemmas": {
+     "English": [
+      "to",
+      "on",
+      "at",
+      "in",
+      "of",
+      "till",
+      "until",
+      "cooked",
+      "with",
+      "by",
+      "or"
+     ],
+     "French": []
+    },
+    "sentences": [
+     "Le spectacle sera de 18h à 21h. ― The show will be from 6 pm to 9 pm.",
+     "Le spectacle sera de 18h à 21h.",
+     "tournez à gauche! ― turn [ to the] left!",
+     "tournez à gauche!",
+     "tournez à droite! ― turn [ to the] right!",
+     "tournez à droite!",
+     "Le vent vire au nord. ― The wind turns north.",
+     "Le vent vire au nord.",
+     "L'école est à gauche. ― The school is on the left.",
+     "L'école est à gauche.",
+     "Je pars à cinq heures ― I am leaving at five.",
+     "Je pars à cinq heures",
+     "à dix heures et quart ― at quarter past ten",
+     "à dix heures et quart",
+     "à la maison ― at home",
+     "à la maison",
+     "à l'hôtel ― at the hotel",
+     "à l'hôtel",
+     "au bar ― in the bar",
+     "au bar",
+     "au bois ― in the woods",
+     "au bois",
+     "J'habite à trois kilomètres d'ici. ― I live three kilometers from here.",
+     "J'habite à trois kilomètres d'ici.",
+     "C'est un ami à moi. ― This is a friend of mine.",
+     "C'est un ami à moi.",
+     "Cette voiture est à John. ― This is John's car.",
+     "Cette voiture est à John.",
+     "le chien à Marie ― Mary's dog [nonstandard]",
+     "le chien à Marie",
+     "Salut, à demain. ― Bye, till tomorrow. / Bye, see you tomorrow.",
+     "Salut, à demain.",
+     "à plus tard ― see you later",
+     "à plus tard",
+     "Steak au poivre ― Steak with pepper sauce",
+     "Steak au poivre",
+     "moulin à poivre ― pepper mill",
+     "moulin à poivre",
+     "sac à dos ― backpack",
+     "sac à dos",
+     "boite à musique ― music box",
+     "boite à musique",
+     "Il y a de nombreuses choses à faire. ― There are many things to do.",
+     "Il y a de nombreuses choses à faire.",
+     "Il reste deux tâches à finir. ― There are two things left to finish.",
+     "Il reste deux tâches à finir.",
+     "Il y a de la bière à boire. ― There's some beer to drink.",
+     "Il y a de la bière à boire.",
+     "l'équipe à battre ― the team to beat",
+     "l'équipe à battre",
+     "un animal à quatre pattes ― a four-legged animal",
+     "un animal à quatre pattes",
+     "une femme au visage pâle ― a pale-faced woman",
+     "une femme au visage pâle",
+     "un homme à longue barbe ― a long-bearded man OR a man with a long beard",
+     "un homme à longue barbe",
+     "une chemise à manches courtes ― a short-sleeved shirt",
+     "une chemise à manches courtes",
+     "une maison aux murs de brique ― a brick-walled house / a house with brick walls",
+     "une maison aux murs de brique",
+     "peu à peu ― bit by bit",
+     "peu à peu",
+     "minute à minute ― minute by minute",
+     "minute à minute",
+     "jour à jour ― day by day",
+     "jour à jour",
+     "six à sept personnes ― six or seven people",
+     "six à sept personnes",
+     "vingt à trente ans ― twenty/thirty years",
+     "vingt à trente ans",
+     "tous les cinq à six ans ― every five or six years",
+     "tous les cinq à six ans",
+     "mettre le feu à ― to set fire to",
+     "mettre le feu à",
+     "clouer le bec à ― to shut (someone) up",
+     "clouer le bec à",
+     "donner la chasse à ― to give chase to",
+     "donner la chasse à"
+    ],
+    "terms": [
+     "infinitive"
+    ]
+   },
+   "Pronunciation": [
+    "a"
+   ]
+  }
+ },
  "ćwierć": {
   "Polish": {
    "Declension": {
@@ -59616,6 +64860,34 @@
    },
    "Pronunciation": [
     "wafka"
+   ]
+  }
+ },
+ "œil": {
+  "French": {
+   "Noun": {
+    "definitions": [
+     "(anatomy, plural yeux) eye, organ that is sensitive to light, helping organisms to see",
+     "(plural œils) glyph, rendering of a single character",
+     "(plural œils) eye (of a needle)"
+    ],
+    "head": "œil",
+    "lemmas": {
+     "English": [
+      "eye",
+      "see",
+      "glyph"
+     ],
+     "French": []
+    },
+    "terms": [
+     "anatomy",
+     "yeux",
+     "œils"
+    ]
+   },
+   "Pronunciation": [
+    "œj"
    ]
   }
  },

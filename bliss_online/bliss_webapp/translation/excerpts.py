@@ -5,7 +5,7 @@ EXCERPTS:
     and reading.
 """
 import os
-from nltk.corpus import gutenberg, brown
+from nltk.corpus import gutenberg #, brown
 
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -119,14 +119,14 @@ sample_texts = ["/sample texts/adams-hitchhiker's_guide.txt",
                 "/sample texts/rimbaud-saison_en_enfer.txt",
                 "/sample texts/frost-woods.txt",
                 "/sample texts/ievan_polkka.txt"]
-brown_texts = {file_id: " ".join(brown.words(file_id)) for file_id in brown.fileids()}
+#brown_texts = {file_id: " ".join(brown.words(file_id)) for file_id in brown.fileids()}
 # remove Gutenberg header for analysis
 gutenberg_texts = {file_id[:-4].replace("-", " "): " ".join(gutenberg.words(file_id)).split("]", 1)[1]
                    for file_id in gutenberg.fileids()}
 
 books = {}
 books.update(parse_excerpts(sample_texts))
-books.update(brown_texts)
+#books.update(brown_texts)
 books.update(gutenberg_texts)
 
 

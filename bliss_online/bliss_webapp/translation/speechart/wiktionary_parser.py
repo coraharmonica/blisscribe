@@ -4,16 +4,19 @@ WIKTIONARY_PARSER:
 
     Contains WiktionaryParser class for parsing Wiktionary entry in any language.
 """
-import os
+import os, sys
+PATH = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(PATH)
 import re
 import string
 import json
 import requests
 from bs4 import BeautifulSoup
 
+
 try:
     from bliss_online.bliss_webapp.translation.ordered_set import OrderedSet
-except ImportError:
+except (ModuleNotFoundError, ImportError):
     from bliss_webapp.translation.ordered_set import OrderedSet
 
 from .ipa_symbols import *
@@ -23,7 +26,6 @@ class WiktionaryParser:
     """
     A class for parsing Wiktionary pages.
     """
-    PATH = os.path.dirname(os.path.realpath(__file__))
     LEXICA = {}
     LANG_CODES = {"Afrikaans": "af",
                   "Albanian": "sq",
@@ -196,7 +198,7 @@ class WiktionaryParser:
         words = list()
 
         if lang_code is not None:
-            path = self.PATH + "/resources/frequency_words/content/2016/%s/%s_full.txt" % (lang_code, lang_code)
+            path = PATH + "/resources/frequency_words/content/2016/%s/%s_full.txt" % (lang_code, lang_code)
 
             with open(path, 'r', encoding='utf-8') as lexicon:
                 line_no = 0
@@ -220,7 +222,7 @@ class WiktionaryParser:
         :param filename: str, name of .json file to dump to
         :return: None
         """
-        path = self.PATH + "/resources/data/" + filename + ".json"
+        path = PATH + "/resources/data/" + filename + ".json"
         json.dump(data, open(path, 'w', encoding='utf-8'), indent=1, sort_keys=True, ensure_ascii=False)
 
     def load_json(self, filename):
@@ -230,7 +232,7 @@ class WiktionaryParser:
         :param filename: str, name of .json file to load
         :return: X, content of given .json file
         """
-        path = self.PATH + "/resources/data/" + filename + ".json"
+        path = PATH + "/resources/data/" + filename + ".json"
         return json.load(open(path, encoding='utf-8'))
 
     def load_wiktionary_entries(self):
@@ -2078,7 +2080,7 @@ class WiktionaryTable:
                 list of words for given row & column
         """
         coords = self.parse_table(table)
-        self.visualize_inflections(coords)
+        #self.visualize_inflections(coords)
         sorted_coords = sorted(coords)
         inflections = dict()
         line_names = lambda line: [l for l in line

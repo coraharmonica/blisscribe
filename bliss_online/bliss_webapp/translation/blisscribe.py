@@ -13,10 +13,12 @@ import os, sys
 PATH = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(PATH)
 import collections
+import nltk
+nltk.download('wordnet', quiet=True)
+nltk.download('gutenberg', quiet=True)
+nltk.download('averaged_perceptron_tagger', quiet=True)
 from nltk.tag import pos_tag
 from nltk.corpus import wordnet
-#from pattern3 import text
-#from pattern3.text import en, es, fr, de, it, nl
 from fpdf import FPDF
 from imports import safe_import
 safe_import('fonts')
@@ -36,6 +38,8 @@ from translation_word import TranslationWord
 from speechart.language_parser import LanguageParser
 import speechart.tokenizers as tokenizers
 from ordered_set import OrderedSet
+#from pattern3 import text
+#from pattern3.text import en, es, fr, de, it, nl
 
 
 class BlissTranslator:
@@ -88,6 +92,7 @@ class BlissTranslator:
         self.font_path = font_path
         self.font_fam = FONT_PATHS[self.font_path]
         self.font = make_font(self.font_path, self.font_size)
+        self.sub_font = make_font(self.font_path, self.subtitle_size())
 
         # Language
         self.bliss_dicts = {}
@@ -674,10 +679,9 @@ class BlissTranslator:
 
         :return: None
         """
-        #self.lex_parser.refresh_bliss_encoding()
-        #self.lex_parser.refresh_bliss_decoding()
-        #self.lex_parser.refresh_bliss_unicode()
         self.lex_parser.refresh_bliss_lexicon()
+        if self.lang_parser is not None:
+            self.lang_parser.refresh_data()
 
     def clear_new_blissymbols(self):
         """
@@ -700,6 +704,14 @@ class BlissTranslator:
         """
         return self.font_size * 2
 
+    def sub_heights(self):
+        """
+        Returns the height of subtitles in pixels.
+
+        :return: int, height of subtitles
+        """
+        return self.sub_font.getsize("ÉÇ")[1] #top + bottom - avg
+
     def subtitle_size(self):
         """
         Returns a font size suitable as a subtitle for this
@@ -708,30 +720,6 @@ class BlissTranslator:
         :return: int, subtitle font size
         """
         return int(self.font_size * 0.5)
-
-    def bliss_image(self, trans_word):
-        """
-        Returns a thumbnail Image of this TranslationWord's
-        Blissymbol, with height as its translator's image_heights.
-        ~
-        If this TranslationWord's Blissymbol is None,
-        returns an Image with its word as text_image instead.
-
-        :param trans_word: TranslationWord, word to render to Image
-        :return: Image, image of input str's Blissymbol
-        """
-        return trans_word.image()
-
-        height = self.image_heights()
-
-        if not trans_word.has_blissymbol():
-            return self.trans_word_image(trans_word, height)
-        else:
-            blissymbol = trans_word.blissymbol
-            img = blissymbol.image(max_height=height)
-            if trans_word.is_plural_noun():
-                img = blissymbol.pluralize_image(img)
-            return img
 
     def subbed_bliss_image(self, trans_word, subs=False):
         """
@@ -745,15 +733,23 @@ class BlissTranslator:
         :return: Image, subtitled Blissymbol image
         """
         if trans_word.has_blissymbol():
-            img = self.bliss_image(trans_word)
+            img = trans_word.image()
         else:
             subs = False
             img = self.trans_word_image(trans_word, subs=False)
 
         subtitle = self.trans_word_image(trans_word, subs)
         subtitle = trim(subtitle)
+
         if not subs:
             subtitle = make_blank_img(1, subtitle.size[1])
+
+        subtitle_h = self.sub_heights()
+
+        if subtitle.size[1] != subtitle_h:
+            subtitle_fill = make_blank_img(subtitle.size[0], subtitle_h - subtitle.size[1])
+            subtitle = above(subtitle_fill, subtitle)
+
         img = above(img, subtitle)
         return img
 
@@ -776,7 +772,8 @@ class BlissTranslator:
         font_path = self.font_path
         font_size = self.subtitle_size() if subs else self.font_size
         height = self.image_heights()
-        return get_word_img(word, font_path, font_size, height)
+        img = get_word_img(word, font_path, font_size, height)
+        return img
 
     def trans_word_image(self, trans_word, subs=False):
         """
