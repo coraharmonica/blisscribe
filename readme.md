@@ -5,9 +5,9 @@ Blisscribe is a translator designed for visual reading, allowing you to input te
 
 <h2>Setup</h2>
 
-Ensure you're working in Python 3.6 or above.  You can setup Blisscribe either locally or with a virtualenv.
+Ensure you're working in Python 3.6 or above.  You can set up Blisscribe either locally or with a virtualenv.
 
-Blisscribe depends on the following libraries:
+Blisscribe depends on these libraries:
 
 - Django
 - Pillow
