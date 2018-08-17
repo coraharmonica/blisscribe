@@ -44,7 +44,11 @@ class TranslationWord:
             self.init_pos()
             if self.pos != prev_pos:
                 lemma = self.translator.lemmatize(self.word, self.pos, self.language)
-        return [lemma] if type(lemma) == str else self.translator.ordered_set(lemma).items()
+        lemmas = [lemma] if type(lemma) == str or len(lemma) == 0 \
+            else self.translator.ordered_set(lemma).items()
+        for lemma in lemmas:
+            self.init_pos(lemma)
+        return lemmas
 
     @property
     def lemma(self):
@@ -54,7 +58,7 @@ class TranslationWord:
         lemmas = self.translator.find_lemmas(self.word, self.pos, self.language)
         return [self.word] if lemmas is None else lemmas
 
-    def init_pos(self):
+    def init_pos(self, word=None):
         """
         If language is not English, this method cross-references
         this TranslationWord's pos with other likely parts of speech
@@ -62,8 +66,9 @@ class TranslationWord:
 
         :return: None
         """
-        if self.translator.language != "English" and not self.translator.is_nonalpha(self.word):
-            pos = self.translator.word_poses(self.word, self.language)
+        word = self.word if word is None else word
+        if self.translator.language != "English" and not self.translator.is_nonalpha(word):
+            pos = self.translator.word_poses(word, self.language)
             self.pos.update(pos)
 
     def find_eng_lemmas(self):
@@ -516,6 +521,7 @@ class TranslationWord:
         :param pos: str or Iterable, word's Penn Treebank part(s) of speech
         :return: List[str], word's English translations
         """
+        '''
         synsets = self.translator.word_synsets(word, pos, self.translator.lang_code(self.language))
         # check synsets for English translations first
         if len(synsets) != 0:
@@ -525,6 +531,7 @@ class TranslationWord:
             eng_lemmas = eng_lemmas.intersections()  # most common lemmas
             if len(eng_lemmas) != 0:
                 return eng_lemmas
+        '''
         # if synsets provide no lemmas, check Wiktionary
         return self.translator.find_english_translations(word, pos, self.language)
 

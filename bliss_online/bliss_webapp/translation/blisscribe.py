@@ -28,7 +28,7 @@ from fonts import *
 from punctuation import *
 from parts_of_speech import *
 from images import *
-from lexicon_parser import LexiconParser, Blissymbol, NEW_BLISSYMBOLS
+from lexicon_parser import LexiconParser, Blissymbol, NEW_BLISSYMBOLS, BCI_BLISSNET
 from translation_word import TranslationWord
 from speechart.language_parser import LanguageParser
 import speechart.tokenizers as tokenizers
@@ -1075,24 +1075,26 @@ class BlissTranslator:
         ~
         If blissymbol is not in blissnet, returns None.
 
-        :param blissymbol: Blissymbol, symbol to lookup in blissnet
+        :keyword synset: Synset, WordNet Synset to lookup in blissnet
+        :keyword bci_num: int, BCI-AV# to lookup in blissnet
+        :keyword blissymbol: Blissymbol, symbol to lookup in blissnet
         :return: List[str], synset strings corresponding to given Blissymbol
         """
         synset = kwargs.get("synset", None)
         if synset is not None:
             bliss_num, match = None, 0
-            for bci_num in self.blissnet:
-                synsets = self.blissnet[bci_num]
+            for bci_num in BCI_BLISSNET:
+                synsets = BCI_BLISSNET[bci_num]
                 if synset.name() in synsets:
                     curr_match = 1/len(synsets)
                     if curr_match > match:
                         bliss_num, match = bci_num, curr_match
-            return self.bci_num_to_blissymbol(bliss_num) if bliss_num is not None else None
+            return self.bci_num_to_blissymbol(int(bliss_num)) if bliss_num is not None else None
         else:
             bci_num = kwargs.get("bci_num", None)
             if bci_num is None:
                 bci_num = kwargs.get("blissymbol").bci_num
-            return self.blissnet.get(bci_num, None)
+            return BCI_BLISSNET.get(bci_num, None)
 
     def lookup_bliss_dict(self, word, language):
         """
@@ -1946,11 +1948,13 @@ class BlissTranslator:
         add_new = word not in self.words_seen
         return self.lang_parser.find_english_translations(word, wikt_pos, lang, add_new)
 
-    def word_poses(self, word, lang, add_new=False):
+    def word_poses(self, word, lang):
+        add_new = word not in self.words_seen
         poses = self.lang_parser.word_poses(word, lang, add_new=add_new)
         return self.convert_wikt_to_pos(poses)
 
-    def word_pos(self, word, lang, add_new=False):
+    def word_pos(self, word, lang):
+        add_new = word not in self.words_seen
         pos = self.lang_parser.word_pos(word, lang, add_new=add_new)
         return self.convert_wikt_to_pos(pos)
 

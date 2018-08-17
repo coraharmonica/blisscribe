@@ -11696,6 +11696,32 @@
    }
   }
  },
+ "siedzieć": {
+  "Polish": {
+   "Pronunciation": [
+    "ɕɛd͡ʑɛt͡ɕ"
+   ],
+   "Verb": {
+    "definitions": [
+     "(intransitive) to sit, to be seated",
+     "(colloquial) to be in prison"
+    ],
+    "head": "siedzieć",
+    "lemmas": {
+     "English": [
+      "sit",
+      "be seated",
+      "prison"
+     ],
+     "Polish": []
+    },
+    "terms": [
+     "intransitive",
+     "colloquial"
+    ]
+   }
+  }
+ },
  "siostra": {
   "Polish": {
    "Declension": {
