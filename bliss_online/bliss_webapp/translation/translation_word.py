@@ -36,6 +36,10 @@ class TranslationWord:
         self.init_blissymbol()
         if self.blissymbol is not None:
             self.synsets.extend(self.blissymbol.synsets)
+            self.blissymbol.add_translations(self.language, self.lemmas)
+            if self.language != "English":
+                self.blissymbol.add_translations("English", self.eng_lemmas)
+            self.translator.add_bliss_entry(self.blissymbol)
 
     def lemmatize(self):
         lemma = self.translator.lemmatize(self.word, self.pos, self.language)

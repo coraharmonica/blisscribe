@@ -1722,6 +1722,20 @@
    ]
   }
  },
+ "Biały": {
+  "Polish": {
+   "Pronunciation": [
+    "bʲawɨ"
+   ]
+  }
+ },
+ "Królik": {
+  "Polish": {
+   "Pronunciation": [
+    "krulʲik"
+   ]
+  }
+ },
  "a": {
   "Polish": {
    "Conjunction": {
@@ -1745,6 +1759,26 @@
    },
    "Pronunciation": [
     "a"
+   ]
+  }
+ },
+ "aby": {
+  "Polish": {
+   "Conjunction": {
+    "definitions": [
+     "to, in order to, so that"
+    ],
+    "head": "aby",
+    "lemmas": {
+     "English": [
+      "to"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "abɨ"
    ]
   }
  },
@@ -2430,6 +2464,27 @@
     "əz",
     "æs",
     "eɪz"
+   ]
+  }
+ },
+ "bardzo": {
+  "Polish": {
+   "Adverb": {
+    "definitions": [
+     "very ; very much"
+    ],
+    "head": "bardzo",
+    "lemmas": {
+     "English": [
+      "very",
+      "much"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "bard͡zɔ"
    ]
   }
  },
@@ -5917,6 +5972,93 @@
    ]
   }
  },
+ "jak": {
+  "Polish": {
+   "Conjunction": {
+    "definitions": [
+     "as",
+     "like",
+     "(colloquial) when ; replaces kiedy, gdy",
+     "(colloquial) if ; replaces jeśli, jeżeli",
+     "(colloquial) than ; replaces niż"
+    ],
+    "head": "jak",
+    "lemmas": {
+     "English": [
+      "as",
+      "like"
+     ],
+     "Polish": [
+      "kiedy",
+      "gdy",
+      "jeśli",
+      "jeżeli",
+      "niż"
+     ]
+    },
+    "sentences": [
+     "Wyglądasz jak obcokrajowiec.",
+     "Jak byłem w lesie, to widziałem niedźwiedzia.",
+     "Jak będziesz dalej tak robiła, to w końcu cię rzuci.",
+     "Typ nie miał więcej jak metr sześćdziesiąt."
+    ],
+    "terms": [
+     "colloquial"
+    ]
+   },
+   "Noun": {
+    "definitions": [
+     "yak (mammal)"
+    ],
+    "head": "jak",
+    "lemmas": {
+     "English": [
+      "yak"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronoun": {
+    "definitions": [
+     "how"
+    ],
+    "head": "jak",
+    "lemmas": {
+     "English": [
+      "how"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "jak"
+   ]
+  }
+ },
+ "jaka": {
+  "Polish": {
+   "Pronoun": {
+    "definitions": [
+     "feminine of jaki"
+    ],
+    "head": "jaka",
+    "lemmas": {
+     "English": [],
+     "Polish": [
+      "jaki"
+     ]
+    },
+    "terms": [
+     "feminine"
+    ]
+   },
+   "Pronunciation": [
+    "jaka"
+   ]
+  }
+ },
  "jego": {
   "Polish": {
    "Pronoun": {
@@ -5938,6 +6080,27 @@
    },
    "Pronunciation": [
     "jɛɡɔ"
+   ]
+  }
+ },
+ "jej": {
+  "Polish": {
+   "Pronoun": {
+    "definitions": [
+     "genitive of ona",
+     "dative of ona"
+    ],
+    "head": "jej",
+    "lemmas": {
+     "English": [],
+     "Polish": [
+      "ona"
+     ]
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "jɛj"
    ]
   }
  },
@@ -6078,6 +6241,26 @@
    ]
   }
  },
+ "ją": {
+  "Polish": {
+   "Pronoun": {
+    "definitions": [
+     "Accusative singular form of ona"
+    ],
+    "head": "ją",
+    "lemmas": {
+     "English": [],
+     "Polish": [
+      "ona"
+     ]
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "jɔ̃"
+   ]
+  }
+ },
  "kamizelka": {
   "Polish": {
    "Declension": {
@@ -6143,6 +6326,41 @@
    },
    "Pronunciation": [
     "kamʲizɛlka"
+   ]
+  }
+ },
+ "kiedy": {
+  "Polish": {
+   "Conjunction": {
+    "definitions": [
+     "when, as ; while"
+    ],
+    "head": "kiedy",
+    "lemmas": {
+     "English": [
+      "when",
+      "as",
+      "while"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronoun": {
+    "definitions": [
+     "when"
+    ],
+    "head": "kiedy",
+    "lemmas": {
+     "English": [
+      "when"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "kʲɛdɨ"
    ]
   }
  },
@@ -6558,6 +6776,43 @@
    "Pronunciation": [
     "lup"
    ]
+  }
+ },
+ "ma": {
+  "Polish": {
+   "Pronoun": {
+    "definitions": [
+     "feminine nominative singular of mój"
+    ],
+    "head": "ma",
+    "lemmas": {
+     "English": [],
+     "Polish": [
+      "mój"
+     ]
+    },
+    "terms": [
+     "feminine",
+     "nominative",
+     "singular"
+    ]
+   },
+   "Pronunciation": [
+    "ma"
+   ],
+   "Verb": {
+    "definitions": [
+     "Third-person singular present indicative form of mieć ."
+    ],
+    "head": "ma",
+    "lemmas": {
+     "English": [
+      "mieć"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   }
   }
  },
  "made": {
@@ -7171,6 +7426,88 @@
    }
   }
  },
+ "myśl": {
+  "Polish": {
+   "Noun": {
+    "definitions": [
+     "thought (an idea)"
+    ],
+    "head": "myśl",
+    "lemmas": {
+     "English": [
+      "thought"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "mɨɕl"
+   ],
+   "Verb": {
+    "definitions": [
+     "second-person singular imperative of myśleć"
+    ],
+    "head": "myśl",
+    "lemmas": {
+     "English": [],
+     "Polish": [
+      "myśleć"
+     ]
+    },
+    "terms": [
+     "second-person",
+     "singular",
+     "imperative"
+    ]
+   }
+  }
+ },
+ "mój": {
+  "Polish": {
+   "Pronoun": {
+    "definitions": [
+     "my, mine"
+    ],
+    "head": "mój",
+    "lemmas": {
+     "English": [
+      "my",
+      "mine"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "muj"
+   ]
+  }
+ },
+ "męczyć": {
+  "Polish": {
+   "Pronunciation": [
+    "mɛnt͡ʂɨt͡ɕ"
+   ],
+   "Verb": {
+    "definitions": [
+     "to torment (to cause severe suffering)",
+     "to nag",
+     "to tire"
+    ],
+    "head": "męczyć",
+    "lemmas": {
+     "English": [
+      "torment",
+      "nag",
+      "tire"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   }
+  }
+ },
  "na": {
   "English": {
    "Adverb": {},
@@ -7549,6 +7886,82 @@
    ]
   }
  },
+ "nawet": {
+  "Polish": {
+   "Particle": {
+    "definitions": [
+     "even"
+    ],
+    "head": "nawet",
+    "lemmas": {
+     "English": [
+      "even"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "navɛt"
+   ]
+  }
+ },
+ "nań": {
+  "Polish": {
+   "Pronunciation": [
+    "naɲ"
+   ]
+  }
+ },
+ "nic": {
+  "Polish": {
+   "Pronoun": {
+    "definitions": [
+     "nothing, not any thing."
+    ],
+    "head": "nic",
+    "lemmas": {
+     "English": [
+      "nothing"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "ɲit͡s"
+   ]
+  }
+ },
+ "nich": {
+  "Polish": {
+   "Pronoun": {
+    "definitions": [
+     "genitive of oni",
+     "accusative of oni",
+     "locative of oni",
+     "genitive of one",
+     "locative of one"
+    ],
+    "head": "nich",
+    "lemmas": {
+     "English": [],
+     "Polish": [
+      "oni",
+      "one"
+     ]
+    },
+    "terms": [
+     "genitive",
+     "accusative",
+     "locative"
+    ]
+   },
+   "Pronunciation": [
+    "ɲix"
+   ]
+  }
+ },
  "nie": {
   "Polish": {
    "Particle": {
@@ -7651,6 +8064,26 @@
    },
    "Pronunciation": [
     "ɲɛstɛtɨ"
+   ]
+  }
+ },
+ "nigdy": {
+  "Polish": {
+   "Adverb": {
+    "definitions": [
+     "never"
+    ],
+    "head": "nigdy",
+    "lemmas": {
+     "English": [
+      "never"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "ɲiɡdɨ"
    ]
   }
  },
@@ -8068,6 +8501,37 @@
    }
   }
  },
+ "od": {
+  "Polish": {
+   "Preposition": {
+    "definitions": [
+     "from",
+     "since",
+     "for",
+     "than"
+    ],
+    "head": "od",
+    "lemmas": {
+     "English": [
+      "from",
+      "since",
+      "for",
+      "than"
+     ],
+     "Polish": []
+    },
+    "sentences": [
+     "Czekam na ciebie od osiemnastej.",
+     "Czekam na ciebie od godziny.",
+     "Janusz jest wyższy od Piotra."
+    ],
+    "terms": []
+   },
+   "Pronunciation": [
+    "ɔt"
+   ]
+  }
+ },
  "oda": {
   "Polish": {
    "Declension": {
@@ -8474,6 +8938,27 @@
     "terms": [
      "auxiliary"
     ]
+   }
+  }
+ },
+ "pewno": {
+  "Polish": {
+   "Adverb": {
+    "definitions": [
+     "absolutely, for certain, certainly, definitely, for sure"
+    ],
+    "head": "pewno",
+    "lemmas": {
+     "English": [
+      "absolutely",
+      "for certain",
+      "certainly",
+      "definitely",
+      "for sure"
+     ],
+     "Polish": []
+    },
+    "terms": []
    }
   }
  },
@@ -8894,6 +9379,26 @@
    }
   }
  },
+ "ponieważ": {
+  "Polish": {
+   "Conjunction": {
+    "definitions": [
+     "because"
+    ],
+    "head": "ponieważ",
+    "lemmas": {
+     "English": [
+      "because"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "pɔɲɛvaʂ"
+   ]
+  }
+ },
  "praca": {
   "Polish": {
    "Declension": {
@@ -8962,6 +9467,28 @@
    ]
   }
  },
+ "przedtem": {
+  "Polish": {
+   "Adverb": {
+    "definitions": [
+     "formerly, before"
+    ],
+    "head": "przedtem",
+    "lemmas": {
+     "English": [],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Etymology": [
+    "przed",
+    "tem"
+   ],
+   "Pronunciation": [
+    "pʂɛttɛm"
+   ]
+  }
+ },
  "przez": {
   "Polish": {
    "Preposition": {
@@ -8987,6 +9514,30 @@
    },
    "Pronunciation": [
     "pʂɛs"
+   ]
+  }
+ },
+ "przy": {
+  "Polish": {
+   "Preposition": {
+    "definitions": [
+     "by, at, next to",
+     "in front of"
+    ],
+    "head": "przy",
+    "lemmas": {
+     "English": [
+      "by",
+      "at",
+      "next to",
+      "in front of"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "pʂɨ"
    ]
   }
  },
@@ -9374,6 +9925,8 @@
   "Polish": {
    "Pronunciation": [
     "pʂɨʂwɔ",
+    "pʂɨʂwɔ",
+    "pʂɨʂwɔ",
     "pʂɨʂwɔ"
    ],
    "Verb": {
@@ -9723,6 +10276,31 @@
      "informal"
     ]
    }
+  }
+ },
+ "pęd": {
+  "Polish": {
+   "Noun": {
+    "definitions": [
+     "(physics) momentum",
+     "(botany) shoot"
+    ],
+    "head": "pęd",
+    "lemmas": {
+     "English": [
+      "momentum",
+      "shoot"
+     ],
+     "Polish": []
+    },
+    "terms": [
+     "physics",
+     "botany"
+    ]
+   },
+   "Pronunciation": [
+    "pɛnt"
+   ]
   }
  },
  "płonąć": {
@@ -10107,6 +10685,26 @@
    }
   }
  },
+ "raczej": {
+  "Polish": {
+   "Conjunction": {
+    "definitions": [
+     "rather"
+    ],
+    "head": "raczej",
+    "lemmas": {
+     "English": [
+      "rather"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "rat͡ʂɛj"
+   ]
+  }
+ },
  "ran": {
   "English": {
    "Noun": {
@@ -10410,6 +11008,27 @@
    },
    "Pronunciation": [
     "rɔd͡zaj"
+   ]
+  }
+ },
+ "rozdział": {
+  "Polish": {
+   "Noun": {
+    "definitions": [
+     "chapter"
+    ],
+    "head": "rozdział",
+    "lemmas": {
+     "English": [
+      "chapter"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "rɔz̪d͡ʑaw",
+    "rɔʑd͡ʑaw"
    ]
   }
  },
@@ -13534,6 +14153,92 @@
    }
   }
  },
+ "to": {
+  "Polish": {
+   "Adverb": {
+    "definitions": [
+     "(adverb) Then (In that case)"
+    ],
+    "head": "to",
+    "lemmas": {
+     "English": [
+      "Then"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronoun": {
+    "definitions": [
+     "(demonstrative) this (nearby, neuter)"
+    ],
+    "head": "to",
+    "lemmas": {
+     "English": [
+      "this"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "tɔ"
+   ]
+  }
+ },
+ "tuż": {
+  "Polish": {
+   "Noun": {
+    "definitions": [
+     "almost, nearly"
+    ],
+    "head": "tuż",
+    "lemmas": {
+     "English": [
+      "almost",
+      "nearly"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "tuʂ"
+   ]
+  }
+ },
+ "tym": {
+  "Polish": {
+   "Pronoun": {
+    "definitions": [
+     "masculine instrumental singular of ten",
+     "neuter instrumental singular of ten",
+     "masculine locative singular of ten",
+     "neuter locative singular of ten",
+     "dative plural of ten"
+    ],
+    "head": "tym",
+    "lemmas": {
+     "English": [],
+     "Polish": [
+      "ten"
+     ]
+    },
+    "terms": [
+     "masculine",
+     "instrumental",
+     "singular",
+     "neuter",
+     "locative",
+     "dative",
+     "plural"
+    ]
+   },
+   "Pronunciation": [
+    "tɨm"
+   ]
+  }
+ },
  "up": {
   "English": {
    "Adjective": {
@@ -13799,6 +14504,26 @@
      "computing"
     ]
    }
+  }
+ },
+ "upał": {
+  "Polish": {
+   "Noun": {
+    "definitions": [
+     "heatwave"
+    ],
+    "head": "upał",
+    "lemmas": {
+     "English": [
+      "heatwave"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "upaw"
+   ]
   }
  },
  "upon": {
@@ -14144,6 +14869,21 @@
    }
   }
  },
+ "warto": {
+  "Polish": {
+   "Verb": {
+    "definitions": [
+     "it is worth"
+    ],
+    "head": "warto",
+    "lemmas": {
+     "English": [],
+     "Polish": []
+    },
+    "terms": []
+   }
+  }
+ },
  "was": {
   "English": {
    "Pronunciation": [
@@ -14338,6 +15078,25 @@
    "Pronunciation": [
     "wɛðəɹ",
     "ʍɛðəɹ"
+   ]
+  }
+ },
+ "wianek": {
+  "Polish": {
+   "Noun": {
+    "definitions": [
+     "garland",
+     "(obsolete) virginity"
+    ],
+    "head": "wianek",
+    "lemmas": {
+     "English": [],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "vʲanɛk"
    ]
   }
  },
@@ -15314,6 +16073,27 @@
    }
   }
  },
+ "właściwie": {
+  "Polish": {
+   "Adverb": {
+    "definitions": [
+     "actually, in fact"
+    ],
+    "head": "właściwie",
+    "lemmas": {
+     "English": [
+      "actually",
+      "in fact"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "vwaɕt͡ɕivʲɛ"
+   ]
+  }
+ },
  "właściwy": {
   "Polish": {
    "Adjective": {
@@ -15459,6 +16239,48 @@
    ]
   }
  },
+ "właśnie": {
+  "Polish": {
+   "Interjection": {
+    "definitions": [
+     "exactly !"
+    ],
+    "head": "właśnie",
+    "lemmas": {
+     "English": [
+      "exactly"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Particle": {
+    "definitions": [
+     "exactly",
+     "just",
+     "just now, just then"
+    ],
+    "head": "właśnie",
+    "lemmas": {
+     "English": [
+      "exactly",
+      "just",
+      "just now",
+      "just then"
+     ],
+     "Polish": []
+    },
+    "sentences": [
+     "Właśnie miałem to zrobić. – I was about to do that.",
+     "Właśnie miałem to zrobić."
+    ],
+    "terms": []
+   },
+   "Pronunciation": [
+    "vwaɕɲɛ"
+   ]
+  }
+ },
  "z": {
   "Polish": {
    "Preposition": {
@@ -15558,6 +16380,33 @@
    },
    "Pronunciation": [
     "zdaɲɛ"
+   ]
+  }
+ },
+ "zegarek": {
+  "Polish": {
+   "Etymology": [
+    "zegar",
+    "-ek"
+   ],
+   "Noun": {
+    "definitions": [
+     "diminutive of zegar",
+     "watch (a portable or wearable timepiece)"
+    ],
+    "head": "zegarek",
+    "lemmas": {
+     "English": [
+      "watch"
+     ],
+     "Polish": [
+      "zegar"
+     ]
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "zɛɡarɛk"
    ]
   }
  },
@@ -16364,6 +17213,37 @@
    },
    "Pronunciation": [
     "wafka"
+   ]
+  }
+ },
+ "że": {
+  "Polish": {
+   "Conjunction": {
+    "definitions": [
+     "Introduces a nounal subordinate clause ; that"
+    ],
+    "head": "że",
+    "lemmas": {
+     "English": [
+      "that"
+     ],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Particle": {
+    "definitions": [
+     "Intensifier."
+    ],
+    "head": "że",
+    "lemmas": {
+     "English": [],
+     "Polish": []
+    },
+    "terms": []
+   },
+   "Pronunciation": [
+    "ʐɛ"
    ]
   }
  }

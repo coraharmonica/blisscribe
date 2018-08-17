@@ -309,11 +309,8 @@ class BlissTranslator:
         :return: None
         """
         self.clear_new_blissymbols()
-        self.refresh_blissymbols()
+        self.lex_parser.refresh_blissymbols()
         self.lang_parser.refresh_data()
-
-    def refresh_blissymbols(self):
-        return
 
     def clear_new_blissymbols(self):
         """
@@ -1598,14 +1595,6 @@ class BlissTranslator:
                 for translation in translations:
                     bliss_dict.setdefault(translation, set())
                     bliss_dict[translation].add(blissymbol)
-        '''
-        for language in self.bliss_dicts:
-            bliss_dict = self.bliss_dicts[language]
-            translations = blissymbol.get_translation(language)
-            for translation in translations:
-                bliss_dict.setdefault(translation, set())
-                bliss_dict[translation].add(blissymbol)
-        '''
 
     @staticmethod
     def ordered_set(items):
