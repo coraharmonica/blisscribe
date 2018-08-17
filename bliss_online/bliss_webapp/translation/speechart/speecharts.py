@@ -55,9 +55,9 @@ class Chart(MorphemeParser):
            "advs.": POS_RGB['r'],
            "other": POS_RGB['o']}
 
-    def __init__(self, language):
-        MorphemeParser.__init__(self, language)
-        self.language = language
+    def __init__(self, lang):
+        MorphemeParser.__init__(lang)
+        self.language = lang
         self.chart_lang = self.language
         # dfa states
         self.start_state = int()
@@ -132,11 +132,10 @@ class Speechart(Chart):
     """
     An instance of a Chart to base all language charts off of.
     """
-    def __init__(self, language):
-        Chart.__init__(self, language)
+    def __init__(self, lang):
+        Chart.__init__(lang)
         self.init_states()
         self.init_fonts()
-        self.init_tokenizers()
 
     # STATES
     # ------
@@ -720,8 +719,8 @@ class LanguageChart(Speechart):
     """
     A class for charting language data in a DFA.
     """
-    def __init__(self, language):
-        Speechart.__init__(self, language)
+    def __init__(self, lang):
+        Speechart.__init__(lang)
 
     def before(self, **kwargs):
         """
@@ -1113,7 +1112,7 @@ class LanguageChart(Speechart):
         :return: None
         """
         self.current_state = self.transition_all(self.current_state, word)
-        self.add_success_state(self.current_state, self.word_poses(word))
+        self.add_success_state(self.current_state, self.word_poses(word, ))
         self.current_state = 0
 
     def add_words(self, words):
@@ -1193,8 +1192,8 @@ class WordChart(LanguageChart):
     """
     A class for charting words.
     """
-    def __init__(self, language):
-        LanguageChart.__init__(self, language)
+    def __init__(self, lang):
+        LanguageChart.__init__(lang)
 
     def add_word(self, word):
         """
@@ -1305,8 +1304,8 @@ class LetterChart(LanguageChart):
     """
     A class for charting language letters in a DFA.
     """
-    def __init__(self, language):
-        LanguageChart.__init__(self, language)
+    def __init__(self, lang):
+        LanguageChart.__init__(lang)
 
     def add_word_pair(self, word, pos):
         """
@@ -1342,8 +1341,8 @@ class MorphemeChart(LanguageChart):
     """
     A class for constructing DFAs from morphemes in a language.
     """
-    def __init__(self, language):
-        LanguageChart.__init__(self, language)
+    def __init__(self, lang):
+        LanguageChart.__init__(lang)
 
     def add_states(self, language=None, lim=50000):
         """
@@ -1394,8 +1393,8 @@ class PhonemeChart(LanguageChart):
     """
     A class for constructing DFAs from IPA pronunciations in a language.
     """
-    def __init__(self, language):
-        LanguageChart.__init__(self, language)
+    def __init__(self, lang):
+        LanguageChart.__init__(lang)
         self.chart_lang = "English"
 
     def add_states(self, language=None, lim=50000, only_top=False):
@@ -1435,14 +1434,14 @@ class PhonemeChart(LanguageChart):
             self.add_start_state(ipas[0])
             for ipa in ipas[:2]:
                 curr_state = Speechart.transition_all(self, state, ipa)
-                self.add_success_state(curr_state, self.word_poses(chars))
+                self.add_success_state(curr_state, self.word_poses(chars, ))
                 self.current_state = 0
 
 
 class SentenceChart(LanguageChart):
 
-    def __init__(self, language):
-        LanguageChart.__init__(self, language)
+    def __init__(self, lang):
+        LanguageChart.__init__(lang)
 
     def speak(self, start="", length=None):
         """
@@ -1636,8 +1635,8 @@ class StemChart(SentenceChart):
     inputs and outputs.
     """
 
-    def __init__(self, language):
-        SentenceChart.__init__(self, language)
+    def __init__(self, lang):
+        SentenceChart.__init__(lang)
 
     def visualize_label(self, label):
         ins = self.label_incoming_states(label)

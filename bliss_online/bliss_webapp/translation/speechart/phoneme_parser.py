@@ -11,8 +11,10 @@ class PhonemeParser(LanguageParser):
     """
     A class for parsing IPA data from Wiktionary in a given language.
     """
-    def __init__(self, language):
-        LanguageParser.__init__(self, language)
+    STRESS_MARKS = "ˈˌ"
+
+    def __init__(self, lang):
+        LanguageParser.__init__(self, lang)
         self.ipas = set()        # this language's IPA symbols
         self.vowels = OrderedSet([])
         self.consonants = OrderedSet([])
@@ -215,7 +217,7 @@ class PhonemeParser(LanguageParser):
         :param lim: int, lim <= 50000, number of words to retrieve
         :return: Set(IPAWord), common IPAWords in this PhonemeParser's language
         """
-        words = self.common_words(language=self.language, lim=lim)
+        words = self.common_words(lang=self.language, lim=lim)
         transcriptions = self.words_ipawords(words)
         return transcriptions
 
@@ -295,7 +297,7 @@ class PhonemeParser(LanguageParser):
 
         return ipa_words
 
-    def word_declension(self, word, language=None):
+    def word_declension(self, word, language=None, add_new=False):
         """
         Returns the declension for the word in the given language.
         ~
@@ -310,7 +312,7 @@ class PhonemeParser(LanguageParser):
             val (List[str]) - all word's inflections for given type
         """
         language = self.verify_language(language)
-        declension = self.find_wiktionary_subentry(word, language, u"Declension")
+        declension = self.find_wiktionary_subentry(word, language, u"Declension", add_new=add_new)
         return declension
 
     def words_declensions(self, words, language=None):

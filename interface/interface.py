@@ -273,19 +273,26 @@ class BlissGame:
             verbs = True
             adjvs = True
             other = True
-            uncommon = True
             page_nums = False
             fast_translate = True
+            poses = {}
 
-            self.translator.set_translatables(nouns, verbs, adjvs, other)
-            self.translator.set_translate_all(uncommon)
-            self.translator.set_page_nums(page_nums)
-            self.translator.set_fast_translate(fast_translate)
+            if nouns:
+                poses.update(blisscribe.NOUNS)
+            if verbs:
+                poses.update(blisscribe.VERBS)
+            if adjvs:
+                poses.update(blisscribe.ADJS)
+                poses.update(blisscribe.ADVS)
+            if other:
+                poses.update(blisscribe.OTHER)
+
             self.blit_bg()
-            pdf = self.translator.translate(text, title=title, img_w=self.WIDTH, imgls_h=self.HEIGHT)
+            pdf = self.translator.translate(text, title=title, img_w=self.WIDTH, imgls_h=self.HEIGHT,
+                                            page_nums=page_nums)
             '''
             pages = self.translator.translate_to_pages(text, title=title, img_w=self.WIDTH, img_h=self.HEIGHT)
-            pages = [self.img_to_surface(blisscribe.overlay(pg, blisscribe.make_blank_img(pg.size[0], pg.size[1])))
+            pages = [self.img_to_surface(blisscribe.overlay(pg, blisscribe.blank_image(pg.size[0], pg.size[1])))
                      for pg in pages]
             page_count = 0
 
@@ -606,7 +613,7 @@ class BlissGame:
         return image
 
     def background_img(self, tile_img, width=WIDTH, height=HEIGHT):
-        bg_img = blisscribe.make_blank_img(0, 0)
+        bg_img = blisscribe.blank_image(0, 0)
         while bg_img.size[0] < width:
             bg_img = blisscribe.beside(bg_img, tile_img)
         bg_row = bg_img

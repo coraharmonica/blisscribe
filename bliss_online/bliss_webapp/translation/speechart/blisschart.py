@@ -21,15 +21,15 @@ class BlissChart(speecharts.LanguageChart):
     - Blissymbols are internally represented by 4-digit unicode IDs.
     - Graphs are visualized in Blissymbol characters.
     """
-    def __init__(self, language):
-        speecharts.LanguageChart.__init__(self, language)
-        self.translator = BlissTranslator(language)
-        self.translator.set_lang_parser(self)
+    def __init__(self, lang):
+        speecharts.LanguageChart.__init__(self, lang)
+        self.translator = BlissTranslator(lang)
+        self.translator._lang_parser = self
         self.bliss_height = self.FONT_SIZE * 3
 
     def refresh(self):
         self.refresh_data()
-        self.translator.refresh_bliss_dicts()
+        self.translator.refresh_data()
 
     def is_start_state(self, state):
         """
@@ -49,15 +49,15 @@ class BlissChart(speecharts.LanguageChart):
         """
         return blissymbol in self.start_labels
 
-    def pos_abbrevs(self, poses):
+    def pos_abbrev(self, pos):
         """
         Returns a list of abbreviated parts of speech for all
         parts of speech in poses.
 
-        :param poses: List[str], Penn Treebank parts of speech
+        :param pos: str or Set[str], Penn Treebank part(s) of speech
         :return: List[str], abbreviated parts of speech
         """
-        return [self.translator.abbreviate_pos(pos) for pos in poses]
+        return self.translator.abbreviate_pos(pos)
 
     def punct_blissymbol(self, punct):
         """
@@ -69,7 +69,7 @@ class BlissChart(speecharts.LanguageChart):
         blissword = Blissymbol.PUNCT_MAP.get(punct, None)
 
         if blissword is not None:
-            blissymbol = self.translator.make_blissymbol(blissword+".png", pos="WHITE", derivation="", num=None)
+            blissymbol = self.translator.blissymbol(blissword, pos="WHITE", derivation="", num=None)
             return blissymbol
         else:
             return
@@ -83,19 +83,21 @@ class BlissChart(speecharts.LanguageChart):
         """
         return self.translator.blissword_to_blissymbol(blissword)
 
-    def word_blissymbol(self, word):
+    def word_blissymbol(self, word, pos=None):
         """
         Returns this word's Blissymbol.
 
         :param word: str, word to translate to Blissymbol
+        :param pos: Optional[Set], this word's part(s) of speech
+        :param lang: Optional[str], this word's language
         :return: Blissymbol, this word's Blissymbol
         """
         if self.is_punct(word):
             blissymbol = self.punct_blissymbol(word)
         else:
-            poses = None  # self.translator.convert_wikt_pos(self.word_pos(word, self.language))
-            pos = poses[0] if poses is not None else self.translator.token_pos(word)
-            trans_word = self.translator.make_translation_word(word, pos, language=self.language)
+            if pos is None:
+                pos = self.translator.convert_wikt_to_pos(self.word_poses(word, self.language))
+            trans_word = self.translator.translation_word(word, pos, lang=self.language)
             blissymbol = trans_word.blissymbol
 
             if blissymbol is None and word[0].isupper():
@@ -204,7 +206,7 @@ class BlissChart(speecharts.LanguageChart):
         :param word: str, word with Blissymbol to add as state
         :return: None
         """
-        blissymbol = self.translator.word_to_blissymbol(word, self.language)
+        blissymbol = self.translator.word_to_blissymbol(word, lang=self.language)
         self.add_bliss_state(blissymbol)
 
     def add_blissword_state(self, blissword):
@@ -226,7 +228,7 @@ class BlissChart(speecharts.LanguageChart):
         :return: None
         """
         if blissymbol is not None:
-            poses = self.pos_abbrevs(blissymbol.pos)
+            pos = self.pos_abbrev(blissymbol.pos)
             self.add_bliss_pair(blissymbol, poses)
 
     def add_bliss_states(self, blissymbols, derivations=True):
@@ -414,7 +416,7 @@ class BlissChart(speecharts.LanguageChart):
         length = self.RADIUS * 2
 
         if num_arrows != 0:
-            state0 = make_blank_img(0, 0, opacity=0)
+            state0 = blank_image(0, 0, opacity=0)
             inc = 90 / num_arrows
             apex = (num_arrows - 1) * inc
             angle = apex / 2
@@ -450,7 +452,7 @@ class BlissChart(speecharts.LanguageChart):
         dfa = self.state_circle(state)
 
         if len(destinations) != 0:
-            state0 = make_blank_img(0, 0, opacity=0)
+            state0 = blank_image(0, 0, opacity=0)
             inc = 5
             apex = (len(destinations) - 1) * inc
             angle = apex / 2
@@ -547,7 +549,7 @@ class BlissChart(speecharts.LanguageChart):
 
                 if not is_punct:
                     curr_state = self.transition(curr_state, blissymbol)
-                    poses = self.pos_abbrevs(blissymbol.pos)
+                    poses = self.pos_abbrev(blissymbol.pos)
                     self.add_state_colours(curr_state, poses)
                     if is_end:
                         self.add_success_state(curr_state, set(poses))

@@ -13,8 +13,8 @@ class MorphemeParser(PhonemeParser):
     A class for extracting and analyzing morphemes in a
     given language.
     """
-    def __init__(self, language):
-        PhonemeParser.__init__(self, language)
+    def __init__(self, lang):
+        PhonemeParser.__init__(lang)
         self.affixes = set()
         self.morphemes = set()
 

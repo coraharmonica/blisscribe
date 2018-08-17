@@ -5,13 +5,14 @@ TRANSLATION_WORD:
     A class for representing a word-in-translation as
     part of a BlissTranslator.
 """
+from parts_of_speech import INDICATORS_MAP
 
 
 class TranslationWord:
     """
     Represents a word-in-translation, including:
      - word token
-        i.e. word as it appears in text_image
+        i.e. word as it appears in text
         e.g. kept, mice, funnest, Alice
      - Penn Treebank part(s) of speech
      - associated BlissTranslator
@@ -23,169 +24,168 @@ class TranslationWord:
      - synonyms
      - native language
     """
-    def __init__(self, word, pos, translator, language=None, debug=False):
-        self.translator = translator
-        self.language = self.translator.language if language is None else language
-        self.debug = debug
+    def __init__(self, word, pos, translator, lang=None):
         self.word = word
-        self.pos = pos
-        self.lemma = self.find_lemma(self.word, self.language, self.pos)
+        self.pos = set(pos) if type(pos) != str else {pos}  # Set of 1 or more parts of speech
+        self.translator = translator
+        self.language = self.translator.language if lang is None else lang
+        self.lemmas = self.lemmatize()
         self.blissymbol = None
+        self.eng_lemmas = self.find_eng_lemmas()
         self.synsets = self.find_synsets()
-        self.synset = self.synsets[0] if len(self.synsets) != 0 else None
-        self.init_pos()
-        self.eng_lemmas = None
         self.init_blissymbol()
+        if self.blissymbol is not None:
+            self.synsets.extend(self.blissymbol.synsets)
+
+    def lemmatize(self):
+        lemma = self.translator.lemmatize(self.word, self.pos, self.language)
+        if lemma is None or len(lemma) == 0:
+            prev_pos = self.pos.copy()
+            self.init_pos()
+            if self.pos != prev_pos:
+                lemma = self.translator.lemmatize(self.word, self.pos, self.language)
+        return [lemma] if type(lemma) == str else self.translator.ordered_set(lemma).items()
+
+    @property
+    def lemma(self):
+        return self.lemmas[0]
+
+    def init_lemmas(self):
+        lemmas = self.translator.find_lemmas(self.word, self.pos, self.language)
+        return [self.word] if lemmas is None else lemmas
 
     def init_pos(self):
         """
         If language is not English, this method cross-references
         this TranslationWord's pos with other likely parts of speech
-        to determine most likely part of speech.
+        to determine the most likely part of speech.
 
         :return: None
         """
-        if self.translator.language != "English" and not self.translator.is_nonalpha(self.lemma):
-            self.get_multilingual_pos()
+        if self.translator.language != "English" and not self.translator.is_nonalpha(self.word):
+            pos = self.translator.word_poses(self.word, self.language)
+            self.pos.update(pos)
 
-    def lang_parser(self):
+    def find_eng_lemmas(self):
         """
-        Returns this TranslationWord's translator's LanguageParser.
+        Returns a list of English words synonymous with this
+        TranslationWord's lemma.
 
-        :return: LanguageParser, a parser for Wiktionary lookups
+        :return: List[str], this TranslationWord's English lemmas
         """
-        self.translator.init_lang_parser()
-        return self.translator.lang_parser
+        if not self.translator.is_word(self.word):
+            return []
+        elif self.language == "English":
+            return self.lemmas
+        else:
+            eng_lemmas = self.translator.ordered_set([])
+            eng_lemmas += self.find_english_translations(self.lemma, self.pos)
+            eng_lemmas += self.find_english_translations(self.word, self.pos)
+            eng_lemmas += self.find_english_translations(self.lemma)
+            eng_lemmas += self.find_english_translations(self.word)
+            return eng_lemmas.items()
 
-    def init_eng_lemmas(self):
-        """
-        Initializes this TranslationWord's eng_lemmas with a list of
-        English words synonymous with this TranslationWord's lemma.
+    def image(self, subs=False):
+        return self.subbed_bliss_image(subs=subs)
 
-        :return: None
-        """
-        if self.eng_lemmas is None:
-            if not self.translator.is_word(self.word):
-                return
-            elif self.language == "English":
-                eng_lemmas = [self.lemma]
-            else:
-                eng_lemmas = self.find_english_translations(self.word, self.pos)
-                if len(eng_lemmas) == 0:
-                    eng_lemmas = self.find_english_translations(self.lemma, self.pos)
-
-            self.eng_lemmas = eng_lemmas
-
-    def image(self):
+    def word_image(self):
         """
         Returns a thumbnail Image of this TranslationWord's
         Blissymbol, with height as its translator's image_heights.
         ~
         If this TranslationWord's Blissymbol is None,
-        returns an Image with its word as text_image instead.
+        returns an Image with its word as text instead.
 
         :return: Image, image of this TW's Blissymbol
         """
-        height = self.translator.image_heights()
+        return self.translator.word_image(self.word, subs=False)
 
-        if not self.has_blissymbol():
-            return self.translator.trans_word_image(self, height)
+    def subtitle(self):
+        """
+        Returns a thumbnail Image of this TranslationWord's
+        Blissymbol, with height as its translator's image_heights.
+        ~
+        If this TranslationWord's Blissymbol is None,
+        returns an Image with its word as text instead.
+
+        :return: Image, image of this TW's Blissymbol
+        """
+        return self.translator.trim(image=self.translator.word_image(self.word, subs=True))
+
+    def overlay_indicators(self, img):
+        wikt_pos = self.translator.convert_pos_to_wikt(self.pos)
+        terms = self.translator.lang_parser.find_terms(self.word, wikt_pos, self.language, add_new=False)
+        if 'plural' in terms:
+            if 'singular' in terms:
+                # if can be plural or singular, remove plural
+                if 'NNS' not in self.pos:
+                    terms.remove('plural')
+            else:
+                self.pos.add('NNS')
+        if len(terms) != 0:
+            if len({'neutral', 'feminine', 'masculine'}.intersection(terms)) >= 2:
+                if 'neutral' in terms:
+                    terms.remove('neutral')
+                if 'feminine' in terms:
+                    terms.remove('feminine')
+                if 'masculine' in terms:
+                    terms.remove('masculine')
+            if len({'past', 'present', 'future'}.intersection(terms)) >= 2:
+                if 'past' in terms:
+                    terms.remove('past')
+                if 'present' in terms:
+                    terms.remove('present')
+                if 'future' in terms:
+                    terms.remove('future')
+            if len({'first-person', 'second-person', 'third-person'}.intersection(terms)) >= 2:
+                if 'first-person' in terms:
+                    terms.remove('first-person')
+                if 'second-person' in terms:
+                    terms.remove('second-person')
+                if 'third-person' in terms:
+                    terms.remove('third-person')
+            indicators = ["indicator_(" + INDICATORS_MAP[t] + ")" for t in terms if t in INDICATORS_MAP]
+            if len(indicators) != 0:
+                return self.blissymbol.overlay_indicators(img, indicators)
+        return img
+
+    def subbed_bliss_image(self, subs=False):
+        """
+        Returns this TranslationWord's Blissymbol subtitled with its word.
+        ~
+        If subs is set to False, output Image has no subtitles, but
+        still offsets as if there were.
+
+        :param subs: bool, whether to subtitle output image
+        :return: Image, subtitled Blissymbol image
+        """
+        if self.has_blissymbol():
+            img = self.overlay_indicators(self.blissymbol.image())
         else:
-            img = self.blissymbol.image(max_height=height)
-            if self.is_plural_noun():
-                img = self.blissymbol.pluralize_image(img)
-            return img
+            subs = False  # never subtitle a word with itself
+            img = self.word_image()
 
-    def find_pos_abbrev(self):
-        """
-        Returns this TranslationWord's abbreviated part-of-speech tag.
+        subtitle = self.subtitle()
+        if not subs:
+            subtitle = self.translator.blank_image(1, subtitle.size[1])
+        subtitle_h = self.translator.sub_heights()
 
-        :return: str, TW's pos tag
-        """
-        return self.translator.abbreviate_pos(self.pos)
+        if subtitle.size[1] != subtitle_h:
+            subtitle_fill = self.translator.blank_image(subtitle.size[0], max(0, subtitle_h - subtitle.size[1]))
+            subtitle = self.translator.above(subtitle_fill, subtitle)
+
+        img = self.translator.above(img, subtitle)
+        return img
 
     def set_pos(self, pos):
         """
         Sets this TranslationWord's part-of-speech
         tag to given pos.
 
-        :param pos: str, TW's pos tag
+        :param pos: str or Iterable, TW's part(s) of speech
         :return: None
         """
-        self.pos = pos
-
-    def get_multilingual_pos(self):
-        """
-        Only invoked when language is not English.
-        ~
-        Returns part-of-speech tag for this
-        non-English TranslationWord.
-
-        :return: str, TW's pos tag
-        """
-        return self.translator.get_word_tag(self)
-
-    def is_noun(self):
-        """
-        Returns True if word is a noun, False otherwise.
-
-        :param trans_word: TranslationWord, word to test whether a noun
-        :return: bool, whether given word is a noun
-        """
-        return self.pos[0:2] == "NN"
-
-    def is_plural_noun(self):
-        """
-        Returns True if word is a plural noun, False otherwise.
-
-        :param trans_word: TranslationWord, word to test whether a plural noun
-        :return: bool, whether given word is a plural noun
-        """
-        return self.pos == "NNS"
-
-    def is_proper_noun(self):
-        """
-        Returns True if word is a proper noun, False otherwise.
-
-        :param trans_word: TranslationWord, word to test whether a proper noun
-        :return: bool, whether given word is a proper noun
-        """
-        return self.pos == "NNP"
-
-    def is_verb(self):
-        """
-        Returns True if word is a verb, False otherwise.
-
-        :param trans_word: TranslationWord, word to test whether a verb
-        :return: bool, whether given word is a verb
-        """
-        return self.pos[0:2] == "VB"
-
-    def is_adj(self):
-        """
-        Returns True if word is an adjective, False otherwise.
-
-        :param trans_word: TranslationWord, word to test whether an adjective
-        :return: bool, whether given word is an adjective
-        """
-        return self.pos[0:2] == "JJ"
-
-    def is_adv(self):
-        """
-        Returns True if word is an adverb, False otherwise.
-
-        :param trans_word: TranslationWord, word to test whether an adverb
-        :return: bool, whether given word is an adverb
-        """
-        return self.pos[0:2] == "RB"
-
-    def get_lemma(self):
-        """
-        Returns this TranslationWord's lemma.
-
-        :return: str, TW's lemma
-        """
-        return self.lemma
+        self.pos = set(pos) if type(pos) != str else {pos}
 
     def has_blissymbol(self):
         """
@@ -195,7 +195,8 @@ class TranslationWord:
         """
         return (self.blissymbol is not None) and self.blissymbol.valid_filename()
 
-    def get_bliss_name(self):
+    @property
+    def bliss_name(self):
         """
         Returns this TranslationWord's blissymbol's name.
 
@@ -216,7 +217,7 @@ class TranslationWord:
         if self.blissymbol is not None:
             return self.blissymbol.derivations
         else:
-            return list()
+            return []
 
     def add_new_derivations(self):
         """
@@ -229,8 +230,7 @@ class TranslationWord:
         :return: List[str], list of Blissymbol names for entered derivations
         """
         keep_going = True
-        derivations = list()
-        self.init_eng_lemmas()
+        derivations = []
         eng_lemma = self.eng_lemmas[0]
 
         print("\n")
@@ -266,7 +266,7 @@ class TranslationWord:
                         continue
 
         derivation = self.words_to_derivation(derivations)
-        blissymbol = self.translator.make_blissymbol(eng_lemma + ".png", pos=self.pos, derivation=derivation)
+        blissymbol = self.translator.blissymbol(eng_lemma, pos=self.pos, derivation=derivation)
         self.reset_blissymbol(blissymbol)
         return self.blissymbol.derivations
 
@@ -318,7 +318,7 @@ class TranslationWord:
         :return: None
         """
         if self.blissymbol is None:
-            if self.pos in blissymbol.pos:
+            if any(p in blissymbol.pos for p in self.pos):
                 self.blissymbol = blissymbol
 
     def init_blissymbol(self):
@@ -330,24 +330,53 @@ class TranslationWord:
 
         :return: None
         """
-        blissymbol = self.translator.word_to_blissymbol(self.lemma, self.language)
+        blissymbol = self.translator.word_to_blissymbol(self.lemma, pos=self.pos, lang=self.language)
 
         if blissymbol is not None:
             self.blissymbol = blissymbol
-        else:
-            blissymbol = self.translator.word_to_blissymbol(self.word, self.language)
+            return
+
+        if len(self.lemmas) != 1:
+            blissymbol = self.translator.words_to_blissymbol(self.lemmas, pos=self.pos, lang=self.language)
+            if blissymbol is None:
+                blissymbol = self.translator.words_to_blissymbol(self.lemmas, lang=self.language)
             if blissymbol is not None:
                 self.blissymbol = blissymbol
-                self.lemma = self.word
-            else:
-                blissymbol = self.translator.synsets_to_blissymbol(self.synsets)
+                return
+
+        if self.word != self.lemma:
+            blissymbol = self.translator.word_to_blissymbol(self.word, pos=self.pos, lang=self.language)
+            if blissymbol is not None:
+                self.blissymbol = blissymbol
+                self.lemmas = [self.word] + self.lemmas
+                return
+
+        if len(self.eng_lemmas) != 0:
+            blissymbol = self.translator.words_to_blissymbol(self.eng_lemmas, pos=self.pos)
+            if blissymbol is not None:
+                self.blissymbol = blissymbol
+                return
+
+        if len(self.synsets) != 0:
+            for synset in self.synsets:
+                blissymbol = self.translator.lookup_blissnet(synset=synset)
                 if blissymbol is not None:
                     self.blissymbol = blissymbol
-                else:
-                    self.find_blissymbol()
-                    self.add_blissymbol_translations()
+                    return
+            else:
+                hypernym = self.translator.common_hypernym(self.synsets)
+                if hypernym is not None:
+                    self.blissymbol = self.translator.lookup_blissnet(synset=hypernym)
+                    return
+        else:
+            blissymbol = self.translator.synsets_to_blissymbol(self.synsets)
+            if blissymbol is not None:
+                self.blissymbol = blissymbol
+            else:
+                self.find_blissymbol(machine_learn=False)
+                self.add_blissymbol_translations()
 
-    def find_blissymbol(self):
+    def find_blissymbol(self, machine_learn=False):
         """
         Finds this TranslationWord's Blissymbol
         according to whichever Blissymbol can be found.
@@ -362,16 +391,18 @@ class TranslationWord:
         definitions exist, return a best guess definition from
         a BlissClassifier.
 
+        :param machine_learn: bool, whether to predict Blissymbol with classifier
         :return: None
         """
         if self.blissymbol is None:
-            self.init_eng_lemmas()
-            if self.eng_lemmas is not None:
-                self.blissymbol = self.translator.words_to_blissymbol(self.eng_lemmas, "English", self.pos)
-                if self.blissymbol is None:
-                    self.blissymbol = self.translator.words_to_blissymbol(self.eng_lemmas, "English")
-            elif self.translator.is_word(self.word) and self.translator.classifier is not None:
-                self.predict_blissymbol()
+            self.blissymbol = self.translator.words_to_blissymbol(self.eng_lemmas, "English", self.pos)
+
+            if self.blissymbol is None:
+                self.blissymbol = self.translator.words_to_blissymbol(self.eng_lemmas, "English")
+
+            if self.blissymbol is None:
+                if machine_learn and self.translator.is_word(self.word):
+                    self.predict_blissymbol()
 
     def add_blissymbol_translations(self):
         """
@@ -381,7 +412,6 @@ class TranslationWord:
         :return: None
         """
         if self.blissymbol is not None:
-            self.init_eng_lemmas()
             self.blissymbol.add_translations("English", self.eng_lemmas)
             self.blissymbol.add_translation(self.language, self.lemma)
             self.translator.add_bliss_entry(self.blissymbol)
@@ -393,8 +423,7 @@ class TranslationWord:
         :param etym: str, a word's etymology
         :return: List[str], Blissymbol names for word's etymologies
         """
-        lang_parser = self.lang_parser()
-        etyms = lang_parser.find_word_etymology(word)
+        etyms = self.translator.lang_parser.find_word_etymology(word)
         bliss_etyms = []
 
         if etyms is not None:
@@ -413,11 +442,10 @@ class TranslationWord:
         :param etym: str, a word's etymology
         :return: str, name of Blissymbol for etym
         """
-        if self.in_bliss_dict(etym, self.language):
+        if self.translator.in_bliss_dict(etym, self.language):
             return etym
         else:
-            lang_parser = self.lang_parser()
-            etym_stemwords = lang_parser.find_stemwords(etym, self.language)
+            etym_stemwords = self.translator.lang_parser.find_stemwords(etym, self.language)
 
             if len(etym_stemwords) == 0 and etym[0] == u"-":
                 clean_etym = etym[1:]
@@ -433,12 +461,12 @@ class TranslationWord:
         :return: None
         """
         print(self.language + u": " + self.lemma)
-        print("If the above is the true lemma for " + self.word + ", press enter." +
-              "\nOtherwise, enter " + self.word + "'s true lemma.")
+        print("If the above is the true lemma for", self.word, ", press enter.\n",
+              "Otherwise, enter", self.word, "'s true lemma(s), separated by commas if necessary.")
         ans = str(input(""))
 
         if ans != "":
-            self.lemma = ans
+            self.lemmas = ans.split(",")
 
     def predict_blissymbol(self):
         """
@@ -447,77 +475,35 @@ class TranslationWord:
 
         :return: Blissymbol, this word's Blissymbol
         """
-        self.init_eng_lemmas()
         classifier = self.translator.classifier
-        bliss_words = classifier.predict_word(self, debug=self.debug)
+        bliss_words = classifier.predict_word(self)
         lemma = self.translator.underscore(self.lemma)
         eng_lemma = self.translator.underscore(self.eng_lemmas[0])
 
         if len(bliss_words) == 0:
             return
         if len(bliss_words) == 1:
-            img_filename = bliss_words[0]
+            bliss_name = bliss_words[0]
         else:
-            img_filename = eng_lemma
+            bliss_name = eng_lemma
 
         if len(bliss_words) > 0:
             derivation = self.words_to_derivation(bliss_words)
-            print("making Blissymbol with " + img_filename)
+            print("making Blissymbol with " + bliss_name)
             translations = dict()
             translations["English"] = self.eng_lemmas
             translations[self.language] = [lemma]
-            blissymbol = self.translator.make_blissymbol(bliss_name=img_filename + ".png",
-                                                         pos=self.pos,
-                                                         derivation=derivation,
-                                                         translations=translations,
-                                                         num=0)
+            blissymbol = self.translator.blissymbol(bliss_name=bliss_name,
+                                                    pos=self.pos,
+                                                    derivation=derivation,
+                                                    translations=translations,
+                                                    num=0)
             blissymbol.add_synsets(self.synsets)
             self.reset_blissymbol(blissymbol)
             self.translator.add_bliss_entry(self.blissymbol)
             return self.blissymbol
 
-    def get_filename(self):
-        """
-        If this Blissymbol has an associated image file,
-        return the image filename including extension.
-        ~
-        If this Blissymbol has no associated image file,
-        return None.
-
-        :return: str, this Blissymbol's image filename
-        """
-        if self.blissymbol:
-            return self.blissymbol.img_filename
-
-    def find_lemma(self, word, language, pos):
-        """
-        Retrieves this Blissymbol's lemma,
-        i.e., its "dictionary entry" form.
-        ~
-        Determines lemma from this Blissymbol's word and pos.
-
-        :return: str, this Blissymbol's lemma
-        """
-        if self.language != "English":
-            return self.translator.lemmatize(word, language=language)
-        else:
-            return self.translator.lemmatize(word, language="English", pos=pos)
-
-    def find_english_translation(self, word, pos=None):
-        """
-        Returns the English translation of this word from Wiktionary.
-        ~
-        If no English translation is found, returns None.
-
-        :param word: str, word to translate to English
-        :param pos: str, word's part-of-speech
-        :return: str, word's English translation
-        """
-        eng_lemmas = self.find_english_translations(word, pos)
-        blissymbol = self.translator.words_to_blissymbol(eng_lemmas, "English", pos)
-        return blissymbol.get_translation("English")[0]
-
-    def find_english_translations(self, word, pos=None, wikt=True):
+    def find_english_translations(self, word, pos=None):
         """
         Returns all English translations of this word from its synsets.
         ~
@@ -527,51 +513,29 @@ class TranslationWord:
         If no English translations are found, returns None.
 
         :param word: str, word to translate to English
-        :param pos: str, word's Penn Treebank part-of-speech
-        :param wikt: bool, whether to search Wiktionary for translations if no synsets found
+        :param pos: str or Iterable, word's Penn Treebank part(s) of speech
         :return: List[str], word's English translations
         """
-        #synsets = self.translator.lookup_word_synsets(word, language=self.language, pos=pos)
-        #eng_translations = self.translator.synsets_lemmas(synsets, eng=True)
-        eng_lemmas = list()
-
-        #if len(eng_translations) != 0:
-        #    return self.translator.remove_duplicates(eng_translations)
-        if wikt:
-            lang_parser = self.lang_parser()
-            wikt_pos = self.translator.convert_pos_to_wikt(pos)
-            eng_lemmas = lang_parser.find_english_translations(word, pos=wikt_pos, language=self.language)
-            #return eng_lemmas
-
-        if len(eng_lemmas) == 0:
-            synsets = self.translator.lookup_word_synsets(word, pos=pos,
-                                                          lang_code=self.translator.find_lang_code(self.language))
-            eng_translations = self.translator.synsets_lemmas(synsets, eng=True)
-            eng_lemmas = self.translator.remove_duplicates(eng_translations)
-
-        return eng_lemmas
+        synsets = self.translator.word_synsets(word, pos, self.translator.lang_code(self.language))
+        # check synsets for English translations first
+        if len(synsets) != 0:
+            eng_lemmas = self.translator.ordered_set([])
+            for synset in synsets:
+                eng_lemmas.update(synset.lemma_names())
+            eng_lemmas = eng_lemmas.intersections()  # most common lemmas
+            if len(eng_lemmas) != 0:
+                return eng_lemmas
+        # if synsets provide no lemmas, check Wiktionary
+        return self.translator.find_english_translations(word, pos, self.language)
 
     def add_eng_lemma(self, eng_lemma):
         """
-        Adds eng_lemma to this TranslationWord's eng_lemmas.
+        Adds eng_lemma to this TranslationWord's find_eng_lemmas.
 
         :param eng_lemma: str, English lemma synonymous with this TW's lemma
         :return: None
         """
-        self.init_eng_lemmas()
         self.eng_lemmas.append(eng_lemma)
-
-    def in_bliss_dict(self, word, language):
-        """
-        Returns True if this word is in this TranslationWord's
-        BlissTranslator's Blissymbols dictionary for this language.
-        Otherwise, returns False.
-
-        :param word: str, word to lookup in bliss_dict
-        :param language: str, language of Blissymbols dict
-        :return: bool, whether word found in bliss_dict
-        """
-        return self.translator.in_bliss_dict(word, language)
 
     def find_synsets(self):
         """
@@ -585,40 +549,13 @@ class TranslationWord:
 
         :return: List[Synset], the word's synsets
         """
-        word = self.lemma
-        pos = self.translator.abbreviate_pos(self.pos)
-        synsets = self.translator.lookup_word_synsets(word, pos=pos, lang_code=self.translator.lang_code)
+        synsets = self.translator.words_synsets(self.lemmas, pos=self.pos, lang_code=self.translator.lang_code)
 
         if len(synsets) == 0 and self.language != "English":
-            synsets = self.translator.lookup_word_synsets(word, lang_code=self.translator.lang_code)
+            synsets += self.translator.word_synsets(self.lemma, lang_code=self.translator.lang_code)
+            synsets += self.translator.words_synsets(self.eng_lemmas, pos=self.pos, lang_code="eng")
 
         return synsets
-
-    def set_synset(self, synset):
-        """
-        Sets this TranslationWord's synset to this synset.
-
-        :param synset: Synset, synset to set as self.synset
-        :return: None
-        """
-        self.synset = synset
-
-    def set_synsets(self, synsets):
-        """
-        Sets this TranslationWord's synsets list to given synsets.
-
-        :param synsets: List[Synset], synsets
-        :return: None
-        """
-        self.synsets = synsets
-
-    def get_synset(self):
-        """
-        Returns this TranslationWord's corresponding Wordnet Synset.
-
-        :return: Synset, this TW's WN synset
-        """
-        return self.synset
 
     def __str__(self):
         """
@@ -627,10 +564,10 @@ class TranslationWord:
         :return: str, string representation of this Blissymbol
         """
         return "word:\t\t" + str(self.word) + "\n" + \
-               "pos:\t\t" + self.pos + "\n" + \
+               "pos:\t\t" + str(self.pos) + "\n" + \
                "lemma:\t\t" + str(self.lemma) + "\n" + \
                "eng lemmas:\t\t" + str("    ".join(self.eng_lemmas) if self.eng_lemmas is not None else "") + "\n" + \
-               "bliss:\t\t" + str(self.get_bliss_name()) + "\n"
+               "bliss:\t\t" + str(self.bliss_name) + "\n"
 
     __repr__ = __str__
 

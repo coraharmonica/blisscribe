@@ -19,21 +19,13 @@ DEMO:
     To use custom texts, place them in the sample texts folder,
     then call excerpts.parse_plaintext() on the filename.
 """
-from bliss_online.bliss_webapp.translation.blisscribe import BlissTranslator
 import bliss_online.bliss_webapp.translation.excerpts as excerpts
+from bliss_online.bliss_webapp.translation.blisscribe import *
 
 
 bt = BlissTranslator(language="English")
 
-bt.set_sub_all(True)                # add subtitles below all Blissymbols
-bt.set_fast_translate(True)         # translate words to Blissymbols immediately
-bt.set_translatables(other=True)    # translate all parts of speech to Blissymbols
-bt.set_translate_all(False)         # translate ALL words, taking user input if necessary
-bt.set_machine_translate(False)     # enable machine learning translations for unknown words
-bt.set_safe_translate(False)        # translate words with uncertain Blissymbols
-
-
-bt.translate(excerpts.alice_in_wonderland[:1000], title="Alice in Wonderland")
+bt.translate(excerpts.alice_in_wonderland[:1000], title="Alice in Wonderland", pos=PARTS_OF_SPEECH)
 # bt.translate(excerpts.hitchhikers_guide[:500], title="The Hitchhiker's Guide to the Galaxy")
 # bt.translate(excerpts.kjv[:500], title="The Bible")
 # bt.translate(excerpts.leaves_of_grass[:500], title="Leaves of Grass", title_page=False)
@@ -42,16 +34,13 @@ bt.translate(excerpts.alice_in_wonderland[:1000], title="Alice in Wonderland")
 '''
 # Polish
 bt.set_language("Polish")
-bt.set_machine_translate(False)
-bt.set_safe_translate(True)
 bt.translate(excerpts.alice_in_wonderland_polish[:500], title='Alicja w Krainie Czarów')
 
 # French
 bt.set_language("French")
-# bt.translate(excerpts.petit_prince[:500], title="Le petit prince")
+bt.translate(excerpts.petit_prince[:500], title="Le petit prince")
 
 # Spanish
 bt.set_language("Spanish")
-# bt.translate("el partido de futbol es esta noche", title="My translation")
-
+bt.translate("el partido de futbol es esta noche", title="My translation")
 '''

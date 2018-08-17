@@ -17,9 +17,14 @@ BLISSLEARN:
         - official Blissymbol derived vocabulary
 """
 import os
+try:
+    import sklearn
+except ImportError:
+    import scipy
+    import sklearn
 from sklearn.tree import DecisionTreeClassifier
 from random import shuffle
-from .parts_of_speech import POS_FEATURE_DICT, POS_CODE_DICT, POS_ABBREVS_SORTED
+from parts_of_speech import POS_FEATURE_DICT, POS_CODE_DICT, POS_ABBREVS_SORTED
 
 
 class BlissClassifier:
@@ -48,8 +53,6 @@ class BlissClassifier:
         """
         samples = self.wordnet_indices
         test_questions, test_answers = list(), list()
-        #common_words = self.read_common_words()
-        all_blissymbols = self.blissymbols
         print("initializing Bliss classifier...")
 
         # percent on-target: 0.0%
@@ -65,11 +68,10 @@ class BlissClassifier:
         # percent on-target: 45.0088450847%
         # percent on-target: 62.2127313402%
 
-        for blissymbol in all_blissymbols:
+        for blissymbol in self.blissymbols:
             if not blissymbol.is_atom:
                 synsets = blissymbol.synsets
-                bci_nums = blissymbol.get_deriv_bci_nums()
-                #bci_num = " ".join([str(n) for n in bci_nums])
+                bci_nums = blissymbol.derivation_bci_nums()
                 eng_lemmas = set(blissymbol.get_translation("English"))
 
                 for synset in synsets:
@@ -131,7 +133,7 @@ class BlissClassifier:
         for blissymbol in all_blissymbols:
             if not blissymbol.is_atom:
                 synsets = blissymbol.synsets
-                unis = blissymbol.get_deriv_unicode()
+                unis = blissymbol.derivation_unicodes()
                 uni = self.unicodes_to_str(unis)
                 eng_lemmas = set(blissymbol.get_translation("English"))
 
@@ -182,7 +184,7 @@ class BlissClassifier:
                 q_word = self.find_id_synsets(qa[0][0])[0]
                 q_pos = self.int_to_pos(qa[0][1])
 
-                ans_desc = ("/".join(self.translator.lookup_unicode_to_bliss(self.hex_to_unicode(ans)))
+                ans_desc = ("/".join(self.translator.lookup_bliss_unicode(uni=self.hex_to_unicode(ans)))
                             for ans in qa[1].split(" "))
                 ans_desc = " + ".join(ans_desc)
 
@@ -333,7 +335,7 @@ class BlissClassifier:
         :param uni: str, unicode string for a Blissymbol
         :return: str, name of Blissymbol for uni
         """
-        defns = self.translator.lookup_unicode_to_bliss(uni)
+        defns = self.translator.lookup_bliss_unicode(uni=uni)
 
         if len(defns) != 0:
             defn = defns[0]
@@ -496,12 +498,6 @@ class BlissClassifier:
 
         return descriptions
 
-    def get_bliss_to_unicode(self):
-        return self.translator.get_bliss_to_unicode()
-
-    def get_unicode_to_bliss(self):
-        return self.translator.get_unicode_to_bliss()
-
     def hex_to_unicode(self, string):
         """
         Prefixes this string with "U+".
@@ -663,7 +659,7 @@ class BlissClassifier:
             synset = self.translator.id_synset(word_id)
             trans_word.set_pos(new_pos)
             trans_word.add_eng_lemma(lemma)
-            trans_word.set_synset(synset)
+            trans_word.synsets.insert(0, synset)
             return trans_word
 
     def lookup_wordnet_entry(self, trans_word):
@@ -739,9 +735,7 @@ class BlissClassifier:
 
         if answer == "n":
             self.choose_translation(trans_word)
-            unicodes = [self.unicode_to_str(bs.unicode)
-                        for bs in trans_word.blissymbol.derivation_blissymbols(trans_word.blissymbol,
-                                                                               atomic=trans_word.blissymbol.is_atomic)]
+            unicodes = [self.unicode_to_str(bs.unicode) for bs in trans_word.blissymbol.derivation_blissymbols(True)]
             prediction = " ".join(unicodes)
             return prediction
 
@@ -763,7 +757,7 @@ class BlissClassifier:
             unicodes = self.prediction_to_unicodes(prediction)
 
             for uni in unicodes:
-                blisswords = self.translator.lookup_unicode_to_bliss(uni)
+                blisswords = self.translator.lookup_bliss_unicode(uni=uni)
 
                 for blissword in blisswords:
                     entries = self.translator.lookup_bliss_dict(blissword, "English")

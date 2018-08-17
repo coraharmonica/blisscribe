@@ -10,7 +10,7 @@ class OrderedSet:
     """
     def __init__(self, items=list()):
         self.items_set = set(items)
-        self.all_items = items
+        self.all_items = list(items)
 
     def items(self, min_ct=None, max_ct=None):
         """
@@ -19,42 +19,6 @@ class OrderedSet:
         :return: List[X], list ordered by frequency
         """
         return self.rank(self.all_items, min_ct=min_ct, max_ct=max_ct)
-
-    def get_items_set(self):
-        """
-        Returns the set of this OrderedSet's items.
-
-        :return: Set(X), set of this OrderedSet's items
-        """
-        return self.items_set
-
-    def get_all_items(self):
-        """
-        Returns this OrderedSet's all_items, a list representing
-        all items added to this OrderedSet.
-
-        :return: List[X], list of all items added to this OrderedSet
-        """
-        return self.all_items
-
-    @staticmethod
-    def remove_duplicates(items):
-        """
-        Removes duplicates from given items while preserving rank.
-        ~
-        Returns the result.
-        ~
-        e.g. remove_duplicates(['a', 'b', 'b', 'e', 's', 's']) -> ['a', 'b', 'e', 's']
-
-        :param items: List[X], list of items
-        :return: List[X], list with duplicate items removed
-        """
-        if len(items) == 0:
-            return items
-        else:
-            seen = set()
-            seen_add = seen.add
-            return [item for item in items if not (item in seen or seen_add(item))]
 
     def union(self, other):
         """
@@ -108,7 +72,7 @@ class OrderedSet:
         :return: None
         """
         if type(other) == type(self):
-            self.add_items(other.get_all_items())
+            self.add_items(other.all_items)
         else:
             self.add_items(other)
 
@@ -200,16 +164,18 @@ class OrderedSet:
         for item in items:
             self.add(item)
 
-    def intersections(self):
+    def intersections(self, **kwargs):
         """
         Returns a set of the most common items in this OrderedSet.
 
         :return: List[X], items in OrderedSet occurring the most
         """
         counts = self.frequency_counts()
-        max_intersection = max(counts.values()) if len(counts) != 0 else 0
+        min_i = kwargs.get('min_i', None)
+        if min_i is None:
+            min_i = max(counts.values()) if len(counts) != 0 else 0
         items = self.remove_duplicates(self.all_items)
-        return [i for i in items if counts[i] == max_intersection]
+        return [i for i in items if counts[i] >= min_i]
 
     def intersection(self, other):
         """
@@ -230,19 +196,40 @@ class OrderedSet:
         intersection = self.intersection(other)
         self.__init__(list(intersection))
 
+    @staticmethod
+    def remove_duplicates(items):
+        """
+        Removes duplicates from items while preserving rank and returns the result.
+        ~
+        e.g. remove_duplicates(['a', 'b', 'b', 'e', 's', 's']) -> ['a', 'b', 'e', 's']
+
+        :param items: List[X], list of items
+        :return: List[X], list with duplicate items removed
+        """
+        if len(items) == 0:
+            return items
+        else:
+            seen = set()
+            seen_add = seen.add
+            return [item for item in items if not (item in seen or seen_add(item))]
+
     def __iter__(self):
         return iter(self.items())
 
     def __len__(self):
-        return len(self.items_set) #len(self.items())
+        return len(self.items_set)
 
     def __getitem__(self, index):
         return self.items()[index]
 
-    def __str__(self):
-        return str(self.items())
+    #def __str__(self):
+    #    return str(self.items())
 
-    def __repr__(self):
-        return str(self)
+    #def __repr__(self):
+    #    return str(self)
+
+    def __add__(self, other):
+        self.update(other)
+        return self
 
 

@@ -8,10 +8,7 @@ from blisscribe import *
 
 def basic_bliss_translator(language, text):
     bt = BlissTranslator(language)
-    bt.set_translatables(all=True)
-    bt.set_fast_translate(True)
-    bt.set_sub_all(True)
-    bt.translate(text)
+    bt.translate(text, pos=PARTS_OF_SPEECH, fast=True, sub_all=True)
 
 
 if __name__ == '__main__':
