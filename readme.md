@@ -38,7 +38,7 @@ If you are a Windows user, enter the following prompts to activate a virtualenv:
 
 > activate.bat
 
-Otherwise, enter this (works for OS X):
+Otherwise, enter this for Unix-like systems (OS X, Linux):
 
 > source env/bin/activate
 
